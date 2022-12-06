@@ -47,56 +47,57 @@ We need to create a website with the following usages :
 
 Here is an image of our landing page.
 **As user non logged** i am able to interact with the following buttons:
-- The red button play:
-	When I click on it, I am able to go to the 42 API to connect.
-- The login button: 
-	When I click on it, I am able to go to the 42 API to connect.
-- The moon icon:
-	When I click on it, I launch the dark mode.
-- The spectate button:
-	When I click on it, I go the the spectate Game selection page (Link to the spectate part) 
- 
+- **Play button**
+	- When I click on it, I am able to go to the 42 API to connect.
+- **The login button** 
+	- When I click on it, I am able to go to the 42 API to connect.
+- **Menu bar**
+	- The moon icon: 
+		When I click on it, I launch the dark mode.  
+
+	- The spectate button: 
+		When I click on it, I go the spectate Game selection page (Link to the spectate part)  
  
 ## <p align=center>**Registration page**
 
 ![Registration](./Images/Registration.png)
 **As a non logged** user after connecting to the 42 API, this page aims to finalize the registration to the website. 
-- The profil picture icon: 
-	By default, you have the one from 42 school.
-	When I click on the icon, I can upload from my computer a new icon, the size of the icon will be automatically cropped, It is not mandatory.  
+- **The profil picture icon** 
+	- By default, you have the one from 42 school.
+	- When I click on the icon, I can upload from my computer a new icon, the size of the icon will be automatically cropped, It is not mandatory.  
 
-- Choose a nickname field: 
-	You have to choose a nickmane, 8 caracters maximum, this part is mandatory to go to the next page. 
+- **Choose a nickname field**  
+You have to choose a nickmane, 8 caracters maximum, this part is mandatory to go to the next page. 
 
-- The moon icon: 
-	When I click on it, I launch the dark mode.  
-
-- The spectate button: 
-	When I click on it, I go the spectate Game selection page (Link to the spectate part)  
-
-- The button "Continue": 
+- **The button "Continue"**
 	- If you enter a valid nickname, you can go to the next page.
 	- If you don't have a valid nickname or you don't enter one, you have an error message "please enter a valid nickname".
 	- If you entered a nickname already user, you have an error message "nickname already used" 
+- **Menu bar**
+	- The moon icon: 
+		When I click on it, I launch the dark mode.  
+
+	- The spectate button: 
+		When I click on it, I go the spectate Game selection page (Link to the spectate part) 
 
 ## <p align=center>**Double Factor Authentication page**
 
 ![2FA](./Images/2FA.png)
 
 **As a user who already has an account + enable double factor authentication** you see this page. It aims to add a protection for your account.
-- The back button:
+- **The back button**
 	If I click on it, I go to the landing page.  
 
-- The moon icon: 
+- **The moon icon** 
 	When I click on it, I launch the dark mode.  
 
-- The spectate button: 
+- **The spectate button** 
 	When I click on it, I go the spectate Game selection page (Link to the spectate part). 
 
-- The field number: 
-	It requires to enter the 6 valid numbers from your authenticator app. 
+- **The field number** 
+	- It requires to enter the 6 valid numbers from your authenticator app. 
 
-- The "continue" button:
+- **The "continue" button**
 	- If the 6 digit numbers are valid, you can go the play page.
 	- If the 6 digit number are wrong, you have an error message "The code is not valid".
 
@@ -104,50 +105,52 @@ Here is an image of our landing page.
 
 ![PlayPage](./Images/Play.png)
 **As a user logged**, now I have access to the functionnality of the website
-- The "play" button, when I click on it, I am now waiting for a game with a timer a cross in the menu bar:
+- **Play button**
+	-  when I click on it, I am now waiting for a game with a timer a cross in the menu bar:
 		- If I click on the cross, I am not waiting for a game anymore
 		- If I click on the play button again while I am still waiting for a game, it does not do anything. 
+	![Waiting4players](./Images/Waiting4Players.png)
+- **Menu bar**
+	-  The nickname + icon**
+			When I click on it, it opens the menu (link to the menu). 
+			When I click again on it, it closes the menu. 
 
--  The nickname + icon:
-		When I click on it, it opens the menu (link to the menu). 
-		When I click again on it, it closes the menu. 
-
-- The moon icon: 
-		When I click on it, I launch the dark mode. 
+	- The moon icon: 
+			When I click on it, I launch the dark mode. 
 
 ## <p align=center>**The menu**
 ![menu](./Images/Menu.png)
 **As a user logged** you are able a new menu and click on your nickname with your image. The menu contains the following things:
-- Play button:  
+- **Play**  
 
 	When I click on it, I am able to launch a wait for a game (link to the wait4game page).
 	If I already launched a game, it does not do anything. 
 
-- Spectate button: 
+- **Spectate** 
 
 	When I click on it, I am going the spectate Game selection page (link to the spectate page). 
 
-- Social button: 
+- **Social** 
 
 	When I click on it, I am going the social page (link to the social page). 
 
-- Chat button: 
+- **Chat** 
 
 	When I click on it, I am going the chat page (link to the chat page). 
 
-- leaderboard button: 
+- **Leaderboard**
 
 	When I click on it, I am going the leaderboard page (link to the leaderboard page). 
 
-- Stats button: 
+- **Stats**
 
 	When I click on it, I am going the Stats page (link to the Stats page). 
 
-- Settings button: 
+- **Settings**
 
 	When I click on it, I am going the settings page (link to the settings page). 
 
-- Logout: 
+- **Logout**
 
 	It opens a popup to confirm if you want to log out:
 	- If you click on the cross or "cancel", the pop up is closed.
@@ -159,13 +162,13 @@ Here is an image of our landing page.
 ## <p align=center>**The Pong Game Page**
 ![PongGame](./Images/PongGame.png)
 **As a user logged** I am able to play the pong game after matching with someone else.
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		- When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
 		- When I click on it, it opens the menu (link to the menu). 
 		- When I click again on it, it closes the menu. 
-- The game: 
+- **The game** 
 	- I can move my bar by using the arrows of my keyboards. 
 	- When I scored, the numbers are changing accordingly on the screen. 
 	- The first one to be at 10 points wins the game, has a victory, the other one has a defeat. 
@@ -176,14 +179,14 @@ Here is an image of our landing page.
 ![SpectateGameSelection](./Images/SpectateGameSelection.png)
 **As a user logged In or not logged In** I can select among the 4 last games started to spectate on this page. 
 
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu. 
 
-- The game to spectate:
+- **The game to spectate**
 	- The firt one, is the last game started.
 		If I click on it I am redirected to the spectate page of this game.
 	- Then it is in the order the second one is the second last game started etc..
@@ -193,29 +196,29 @@ Here is an image of our landing page.
 ## <p align=center>**Spectate game page**
 ![SpectateGame](./Images/SpectateGame.png)
 **The difference here is you can be logged in or not**, if you are not logged in you have an image by default and a random username
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu. 
 
-- Game part:
+- **Game part**
 	- I can see the name of the 2 players.
 	- It is redirection to the game part, I can't interact with the screen 
 
-- Chat part:
-	- I can send and see messages:
+- **Chat part**
+	- **I can send and see messages**
 		- My messages are red and displayed on the right
 		- the messages from the other are grey and displayed on the left.
 		- When the screen is full of messages, the oldest one on the top disappears (to approve)
-	- About the message itself: 
+	- **About the message itself**
 		- I have the name, picture and the message. If i am not logged in iI have a random picture and a random name choose by our team.
 
 ## <p align=center>**Learderboard**
 ![Leaderboard](./Images/Leaderboard.png)
 **As a user logged in** I have information about the global leaderboard of the game with information about the player.
-- Each player on this page has the following information:
+- **Each player on this page has the following information**
 	- Your Rank, this is decided by the number of victory you did.
 	- Your name and your profile picture.
 	- The number of game you played.
@@ -223,10 +226,10 @@ Here is an image of our landing page.
 	- Ratio total games played / wins.
 	- achievement you have made. 
 
-- Click on a player information
+- **Click on a player information**
 	- You will be redirected directly on the player "My stats" page. 
 
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
@@ -237,26 +240,26 @@ Here is an image of our landing page.
 ![MyStats](./Images/MyStats.png)
 **As a user logged in** I have personnal game information about the user in this page.
 I can see the following information about the user:
-- Your nickname
-- Your 42 coalition
-- You ratio Total game/win
-- The number of: 
+- **Your nickname**
+- **Your 42 coalition**
+- **You ratio Total game/win**
+- **The number of**
 	- matches
 	- wins
 	- achievements earns
-- Your last matches:
+- **Your last matches**
 	- The opponent name
 	- The score
 	- The ratio win / defeat 
 
-- Achievment earned:
+- **Achievement earned**
 	- When I hover with my mouse on one of the achievment, I see information about how to have it. 
 
-- Top 3 players (Not available on mobile version)
+- **Top 3 players** (Not available on mobile version)
 	- I see a resume about the top 3 player from the leaderboard
 	- If I click on "see full leaderboard", I am redirected to the leaderboard page. 
 
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
@@ -273,7 +276,7 @@ I can see the following information about the user:
 		- "Nickname is 8 caracters maximum".
 		- "Nickname already used".
 
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
@@ -282,7 +285,7 @@ I can see the following information about the user:
 
 ## <p align=center>**Chat page**
 **As a logged in user** I can search, create channels, discuss in channels, give rights to my channels, send direct messages, have more information about a user.
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
@@ -291,12 +294,12 @@ I can see the following information about the user:
 
 ### <p align=center>**Left discussion bar**
 ![LeftDiscussionBar](./Images/ChatDirectMessages.png)
-- The search bar
-	- The channel part:
+- **The search bar**
+	- **The channel part**
 		- I can see the channels i've joined or i was invited, the last one is the first in the list.
 		- I click on a channel name, it opens the channel in the center of the screen with the historic of the conversation.
 		- If I click on "+" it opens a pop up to create a new channel (explanations below).
-	- The creation channel pop up: 
+	- **The creation channel pop up**
 		- If I click on the cross or "cancel button", it closes the channel, 
 		- I have to give a name to the channel (xxxx caracters maximum), it is mandatory.
 		-  If I click on private channel, the channel will be visible only by the people who were invited.
@@ -305,7 +308,7 @@ I can see the following information about the user:
 			- If the name is good. It creates the channel and the name appears on Ir channel bar.
 			- If the name is already taken, I have an error message, "this name is already used". 
 			- If the name is too long, I have an error message "the name of the channel is too long".
-	- The discussion part: 
+	- **The discussion part** 
 		- I can see the private messages, I have the last messages sent or received in first in the list.
 		- If I click on a message, it opens the discussion in the center of the screen.
 		- If I click on "+" it opens the discussion research bar (montrer image) in the center of the screen, I can search a name. I see my friend first during the search, then the other name, if I have friend in common, I see how many.
@@ -314,7 +317,7 @@ I can see the following information about the user:
 
 ### <p align=center>**Chat private message**
 ![ChatPrivateMessage](./Images/ChatDirectMessages.png)
-- The discussion bar (when I open direct message):
+- **The discussion bar**(when I open direct message):
 	- I can see a bar on top with the following information:
 		- Profile picture of the user we discussed to.
 		- His nickname.
@@ -324,7 +327,7 @@ I can see the following information about the user:
 			- Last seen xx hours ago (between 60 min to 24 hours)
 			- Last seen xx days ago (between 24 hours and infinite).
 		- When I click on the profile picture or the nickname, it opens a dedicated user bar on the right (see what the user bar does below).
-- The messaging part:
+- **The messaging part**
 	- I can see the day of the message:
 		- Today if it is today.
 		- "December 6th 2022".
@@ -345,20 +348,21 @@ Here I can do actions about the user we selected.
 - I can click on the right top cross to close the bar.
 - I can see the nickname + the user profile picture.
 - I can see a lot of options available:	- The status of the user with the different mark (green, red, or grey).
-	- "View profile", when I click on it, I am redirected to the user stat profile
-	- "Invite to a game":
+	- **View profile**
+		-  when I click on it, I am redirected to the user stat profile
+	- **Invite to a game**
 		- If the user has a green mark, he will receive an invitation an will have 10 seconds to answer yes/no. If yes, I are redirected to the pong game, if no you can send an invite again.
 		- If he has a red mark I can have the following errors:
 			- "The user is in a game"
 			- "You already have sent an invite"
 		- If the user has a grey mark, you have the following errors:
 			- "This user is disconnected"
-	- "Invite to a channel":
+	- **Invite to a channel**
 		- I can invite the user to channel which the mode "invitation only" (To be sure about that"). Once invited, the user sees the channels on the left bar side
-	- "Add to friend list":
+	- **Add to friend list**
 		- If the user is not my friend, I can add him to my friend list.
 		- If the user is my friend, I don't see the button "Add to my friend list" to him to my friend list.
-	- "Block":
+	- **Block**
 		- If the user is unblocked, I can block him. block a user cause the following actions (TO CONFIRM):
 			- I and him can't discuss with each other (Confirm how to do this).
 			- I and him can't invite each other game (the button is hidden).
@@ -368,7 +372,7 @@ Here I can do actions about the user we selected.
 
 ### <p align=center>**Chat channel messages**
 ![ChatChannelMessages](./Images/ChatChannelMessages.png)
-- The channel top bar: 
+- **The channel top bar** 
 
 	Here I can see the name of the channel "#NameOfChannel" and I can perfom the following actions:
 	- Click on the arrow button (**need to be administrator to see this option**):
@@ -402,7 +406,7 @@ Here I can do actions about the user we selected.
 		- I need to be invited again if it is on invitation only (TO BE CONFIRMED)
 		- If the channel has a password, I have to put the password again to join the channel.
 
-- Channel messaging part
+- **Channel messaging part**
 	- I can see the day of the message:
 		- Today if it is today.
 		- "December 6th 2022".
@@ -423,53 +427,56 @@ Here I can do actions about the user we selected.
 	- I can click on the right top cross to close the bar.
 	- I can see the nickname + the user profile picture.
 	- I can see a lot of options available:
-		- The status of the user with the different mark (green, red, or grey).
-		- "View profile", when I click on it, I am redirected to the user stat profile
-		- "Invite to a game":
+		- **Status of the user**
+			- The status of the user with the different mark (green, red, or grey).
+		- **View profile**
+			- When I click on it, I am redirected to the user stat profile
+		- **Invite to a game**
 			- If the user has a green mark, he will receive an invitation an will have 10 seconds to answer yes/no. If yes, I are redirected to the pong game, if no you can send an invite again.
 			- If he has a red mark I can have the following errors:
 				- "The user is in a game"
 				- "You already have sent an invite"
 			- If the user has a grey mark, you have the following errors:
 				- "This user is disconnected"
-		- "Invite to a channel":
+		- **Invite to a channel**
 			- I can invite the user to channel which the mode "invitation only" (To be sure about that"). Once invited, the user sees the channels on the left bar side
-		- "Add to friend list":
+		- **Add to friend list**
 			- If the user is not my friend, I can add him to my friend list.
 			- If the user is my friend, I don't see the button "Add to my friend list" to him to my friend list.
-		- "Block":
+		- **Block**
 			- If the user is unblocked, I can block him. block a user cause the following actions (TO CONFIRM):
 				- I and him can't discuss with each other (Confirm how to do this).
 				- I and him can't invite each other game (the button is hidden).
 				- I and him can't spectate his game.
 				- I and him can't invite each other to a game.
-		- "Give administrator privileges"
-			**I need to be an administrator of the channel**
+		- **Give administrator privileges**  
+		**I need to be an administrator of the channel**
 			- If the other user is not an administrator of the channel I can see this button
 			- If I click on it the user will be administrator of this channel and will have the same right has I for the channel.
-		- "Ban from channel" 
-			**I need to be an administrator of the channel**
+		- "Ban from channel"  
+		**I need to be an administrator of the channel**
 			- If the other user is not an administrator of the channel I can see this button
 			- The other use is not banned already 
 			- If I click on it the user will be ban of this channel.
 				- He will be removed and will not see anymore the channel of the left bar side
 				- He will not see anymore the channel by doing the search on the left bar side
 				- It is impossible to invite him the channel anymore, unless he is unban
-		- "Unban from the channel"
-			**I need to be an administrator of the channel**
+		- **Unban from the channel**  
+		**I need to be an administrator of the channel**
 			- I see this button if the other user is already banned from the channel.
 			- If I click on this button, the user will be unbanned:
 				- He will be able to search the channel on the left bar side
 				- He will be able to join the channel and see it on the left bar side.
 				- He will be able to send messages and see historic of the channel again
-		- "Mute"
-			**I need to be an administrator of the channel**
+		- **Mute**  
+		**I need to be an administrator of the channel**
 			- If the other user is not an administrator of the channel I can see this button
 			- The other use is not muted already 
 			- I can mute the other user from the channel by clicking on this button :
 				- He can see messages and the previous messages
 				- He can't send messages anymore.
-		- "Unmute"
+		- **Unmute** 
+
 			**I need to be an administrator of the channel**
 			- If the other user is not an administrator of the channel I can see this button
 			- The other use is muted already 
@@ -479,7 +486,7 @@ Here I can do actions about the user we selected.
 
 ## <p align=center>**Social page**
 **As a user logged in** I can see my friends and the user blocked. 
-- The friend part:
+- **The friend part**
 	- I can see the user i've added.
 	- I can only see friend, if a friend is blocked, he is not in the friend list
 	- I can use the search bar to find a friend.
@@ -491,13 +498,13 @@ Here I can do actions about the user we selected.
 	- If he has a red mark, I can click to spectate the game.
 	- I can block him: If this user is blocked, he will be in the block list and not in the friend list anymore.
 	- I can invite him to a game if he has the green mark, that means he is available.
-- The block part:
-	If a user is blocked he can't send me direct message and not being in my friend list.
+- **The block part**  
+If a user is blocked he can't send me direct message and not being in my friend list.
 	- I can see the user I've blocked.
 	- If I click on the unblock button:
 		- The user will be unblocked and able to send me a message.
 		- If it was a friend, I will see him in my friend list.
-- Menu bar:
+- **Menu bar**
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
