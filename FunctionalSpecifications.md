@@ -118,33 +118,41 @@ Here is an image of our landing page.
 ## <p align=center>**The menu**
 ![menu](./Images/Menu.png)
 **As a user logged** you are able a new menu and click on your nickname with your image. The menu contains the following things:
-- Play button:
+- Play button:  
+
 	When I click on it, I am able to launch a wait for a game (link to the wait4game page).
 	If I already launched a game, it does not do anything. 
 
-- Spectate button:
+- Spectate button: 
+
 	When I click on it, I am going the spectate Game selection page (link to the spectate page). 
 
 - Social button: 
+
 	When I click on it, I am going the social page (link to the social page). 
 
 - Chat button: 
+
 	When I click on it, I am going the chat page (link to the chat page). 
 
 - leaderboard button: 
+
 	When I click on it, I am going the leaderboard page (link to the leaderboard page). 
 
 - Stats button: 
+
 	When I click on it, I am going the Stats page (link to the Stats page). 
 
 - Settings button: 
+
 	When I click on it, I am going the settings page (link to the settings page). 
 
-- Logout:
+- Logout: 
+
 	It opens a popup to confirm if you want to log out:
 	- If you click on the cross or "cancel", the pop up is closed.
 	- If you click on "confirm", you will be redirect to the landing page (link to the landing part). 
-
+ 
 - Click again on the nickname with your image.
 	When I click on it i close the menu.
 
@@ -153,10 +161,10 @@ Here is an image of our landing page.
 **As a user logged** I am able to play the pong game after matching with someone else.
 - Menu bar:
 	- The moon icon: 
-		When I click on it, I launch the dark mode. 
+		- When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
-		When I click on it, it opens the menu (link to the menu). 
-		When I click again on it, it closes the menu. 
+		- When I click on it, it opens the menu (link to the menu). 
+		- When I click again on it, it closes the menu. 
 - The game: 
 	- I can move my bar by using the arrows of my keyboards. 
 	- When I scored, the numbers are changing accordingly on the screen. 
@@ -166,7 +174,7 @@ Here is an image of our landing page.
 
 ## <p align=center>**Spectate game selection**
 ![SpectateGameSelection](./Images/SpectateGameSelection.png)
-**As a user loggedIn or not loggedIn** I can select among the 4 last games started to spectate on this page. 
+**As a user logged In or not logged In** I can select among the 4 last games started to spectate on this page. 
 
 - Menu bar:
 	- The moon icon: 
@@ -179,7 +187,7 @@ Here is an image of our landing page.
 	- The firt one, is the last game started.
 		If I click on it I am redirected to the spectate page of this game.
 	- Then it is in the order the second one is the second last game started etc..
-		If I click on it I am redirected to the spectate page of this game.
+		- If I click on it I am redirected to the spectate page of this game.
 	The first game started of the 4 disappears if a new game appears. (because we can only spectate 4 games at the same time)
 
 ## <p align=center>**Spectate game page**
@@ -202,7 +210,7 @@ Here is an image of our landing page.
 		- the messages from the other are grey and displayed on the left.
 		- When the screen is full of messages, the oldest one on the top disappears (to approve)
 	- About the message itself: 
-		- I have the name, picture and the message. If i am not logged in i have a random picture and a random name choose by our team.
+		- I have the name, picture and the message. If i am not logged in iI have a random picture and a random name choose by our team.
 
 ## <p align=center>**Learderboard**
 ![Leaderboard](./Images/Leaderboard.png)
@@ -278,8 +286,8 @@ I can see the following information about the user:
 	- The moon icon: 
 		When I click on it, I launch the dark mode. 
 	- 	The nickname + icon: 
-		When I click on it, it opens the menu (link to the menu). 
-		When I click again on it, it closes the menu.
+		- When I click on it, it opens the menu (link to the menu). 
+		- When I click again on it, it closes the menu.
 
 ### <p align=center>**Left discussion bar**
 ![LeftDiscussionBar](./Images/ChatDirectMessages.png)
@@ -304,7 +312,7 @@ I can see the following information about the user:
 		- If have a message waiting from another user, I see it with a number, indicating how many messages are waiting.
 		- I clicked on a discussion, the color of the discussion in the bar becomes grey. 
 
-### Chat private message
+### <p align=center>**Chat private message**
 ![ChatPrivateMessage](./Images/ChatDirectMessages.png)
 - The discussion bar (when I open direct message):
 	- I can see a bar on top with the following information:
@@ -331,37 +339,37 @@ I can see the following information about the user:
 	- The last message are at the bottom, the first message on the top.
 	- You can scroll to the top if there are too many messages.
 
-- Right User private message bar: 
+### <p align=center>**Right User private message bar**
 ![RightUserMessageBar](./Images/ChatChannelrightbar.png)
-	Here I can do actions about the user we selected.
-	- I can click on the right top cross to close the bar.
-	- I can see the nickname + the user profile picture.
-	- I can see a lot of options available:
-		- The status of the user with the different mark (green, red, or grey).
-		- "View profile", when I click on it, I am redirected to the user stat profile
-		- "Invite to a game":
-			- If the user has a green mark, he will receive an invitation an will have 10 seconds to answer yes/no. If yes, I are redirected to the pong game, if no you can send an invite again.
-			- If he has a red mark I can have the following errors:
-				- "The user is in a game"
-				- "You already have sent an invite"
-			- If the user has a grey mark, you have the following errors:
-				- "This user is disconnected"
-		- "Invite to a channel":
-			- I can invite the user to channel which the mode "invitation only" (To be sure about that"). Once invited, the user sees the channels on the left bar side
-		- "Add to friend list":
-			- If the user is not my friend, I can add him to my friend list.
-			- If the user is my friend, I don't see the button "Add to my friend list" to him to my friend list.
-		- "Block":
-			- If the user is unblocked, I can block him. block a user cause the following actions (TO CONFIRM):
-				- I and him can't discuss with each other (Confirm how to do this).
-				- I and him can't invite each other game (the button is hidden).
-				- I and him can't spectate his game.
-				- I and him can't invite each other to a game.
+Here I can do actions about the user we selected.
+- I can click on the right top cross to close the bar.
+- I can see the nickname + the user profile picture.
+- I can see a lot of options available:	- The status of the user with the different mark (green, red, or grey).
+	- "View profile", when I click on it, I am redirected to the user stat profile
+	- "Invite to a game":
+		- If the user has a green mark, he will receive an invitation an will have 10 seconds to answer yes/no. If yes, I are redirected to the pong game, if no you can send an invite again.
+		- If he has a red mark I can have the following errors:
+			- "The user is in a game"
+			- "You already have sent an invite"
+		- If the user has a grey mark, you have the following errors:
+			- "This user is disconnected"
+	- "Invite to a channel":
+		- I can invite the user to channel which the mode "invitation only" (To be sure about that"). Once invited, the user sees the channels on the left bar side
+	- "Add to friend list":
+		- If the user is not my friend, I can add him to my friend list.
+		- If the user is my friend, I don't see the button "Add to my friend list" to him to my friend list.
+	- "Block":
+		- If the user is unblocked, I can block him. block a user cause the following actions (TO CONFIRM):
+			- I and him can't discuss with each other (Confirm how to do this).
+			- I and him can't invite each other game (the button is hidden).
+			- I and him can't spectate his game.
+			- I and him can't invite each other to a game.
 
 
 ### <p align=center>**Chat channel messages**
 ![ChatChannelMessages](./Images/ChatChannelMessages.png)
 - The channel top bar: 
+
 	Here I can see the name of the channel "#NameOfChannel" and I can perfom the following actions:
 	- Click on the arrow button (**need to be administrator to see this option**):
 		If I click on it, it opens the channels settings pop up:
@@ -409,9 +417,9 @@ I can see the following information about the user:
 	- The last message are at the bottom, the first message on the top.
 	- You can scroll to the top if there are too many messages.
 
-- Right Channel user private bar:
+### <p align=center>**Right Channel user private bar** 
 ![RightChannelBar](./Images/ChatChannelrightbar.png)
-	Here I can do actions about the user we selected.
+- Here I can do actions about the user we selected.
 	- I can click on the right top cross to close the bar.
 	- I can see the nickname + the user profile picture.
 	- I can see a lot of options available:
