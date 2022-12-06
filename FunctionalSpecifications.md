@@ -41,7 +41,7 @@ We need to create a website with the following usages :
 	- [Channel messages page](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#chat-channel-messages)
 13. [SOCIAL PAGE](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#social-page)
 
-## Landing Page 
+## <p align=center>**Landing Page**
 
 ![landing Page](./Images/LandingPage.png)
 
@@ -57,7 +57,7 @@ Here is an image of our landing page.
 	When I click on it, I go the the spectate Game selection page (Link to the spectate part) 
  
  
-## Registration page 
+## <p align=center>**Registration page**
 
 ![Registration](./Images/Registration.png)
 **As a non logged** user after connecting to the 42 API, this page aims to finalize the registration to the website. 
@@ -79,7 +79,7 @@ Here is an image of our landing page.
 	- If you don't have a valid nickname or you don't enter one, you have an error message "please enter a valid nickname".
 	- If you entered a nickname already user, you have an error message "nickname already used" 
 
-## Double Factor Authentication page 
+## <p align=center>**Double Factor Authentication page**
 
 ![2FA](./Images/2FA.png)
 
@@ -100,7 +100,7 @@ Here is an image of our landing page.
 	- If the 6 digit numbers are valid, you can go the play page.
 	- If the 6 digit number are wrong, you have an error message "The code is not valid".
 
-## Play page
+## <p align=center>**Play page**
 
 ![PlayPage](./Images/Play.png)
 **As a user logged**, now I have access to the functionnality of the website
@@ -115,7 +115,7 @@ Here is an image of our landing page.
 - The moon icon: 
 		When I click on it, I launch the dark mode. 
 
-## The menu
+## <p align=center>**The menu**
 ![menu](./Images/Menu.png)
 **As a user logged** you are able a new menu and click on your nickname with your image. The menu contains the following things:
 - Play button:
@@ -148,7 +148,7 @@ Here is an image of our landing page.
 - Click again on the nickname with your image.
 	When I click on it i close the menu.
 
-## The Pong Game Page
+## <p align=center>**The Pong Game Page**
 ![PongGame](./Images/PongGame.png)
 **As a user logged** I am able to play the pong game after matching with someone else.
 - Menu bar:
@@ -164,7 +164,7 @@ Here is an image of our landing page.
 	- The first to disconnects to the game looses the game and has a defeat 
 	- Once the game is over (by seeing the screen loose or victory), you are redirected to the play game page. 
 
-## Spectate game selection page
+## <p align=center>**Spectate game selection**
 ![SpectateGameSelection](./Images/SpectateGameSelection.png)
 **As a user loggedIn or not loggedIn** I can select among the 4 last games started to spectate on this page. 
 
@@ -182,7 +182,7 @@ Here is an image of our landing page.
 		If I click on it I am redirected to the spectate page of this game.
 	The first game started of the 4 disappears if a new game appears. (because we can only spectate 4 games at the same time)
 
-## Spectate game page
+## <p align=center>**Spectate game page**
 ![SpectateGame](./Images/SpectateGame.png)
 **The difference here is you can be logged in or not**, if you are not logged in you have an image by default and a random username
 - Menu bar:
@@ -204,7 +204,7 @@ Here is an image of our landing page.
 	- About the message itself: 
 		- I have the name, picture and the message. If i am not logged in i have a random picture and a random name choose by our team.
 
-## Learderboard
+## <p align=center>**Learderboard**
 ![Leaderboard](./Images/Leaderboard.png)
 **As a user logged in** I have information about the global leaderboard of the game with information about the player.
 - Each player on this page has the following information:
@@ -225,7 +225,7 @@ Here is an image of our landing page.
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu.
 
-## My Stats pages
+## <p align=center>**My Stats**
 ![MyStats](./Images/MyStats.png)
 **As a user logged in** I have personnal game information about the user in this page.
 I can see the following information about the user:
@@ -255,7 +255,7 @@ I can see the following information about the user:
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu.
 
-## Settings page
+## <p align=center>**Settings page**
 ![Settings](./Images/Settings.png)
 **As a user logged in** I can do the following:
 - I can click on the profile picture and change my picture
@@ -272,7 +272,7 @@ I can see the following information about the user:
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu.
 
-## Chat page
+## <p align=center>**Chat page**
 **As a logged in user** I can search, create channels, discuss in channels, give rights to my channels, send direct messages, have more information about a user.
 - Menu bar:
 	- The moon icon: 
@@ -281,7 +281,7 @@ I can see the following information about the user:
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu.
 
-### The left discussion bar
+### <p align=center>**Left discussion bar**
 ![LeftDiscussionBar](./Images/ChatDirectMessages.png)
 - The search bar
 	- The channel part:
@@ -359,7 +359,7 @@ I can see the following information about the user:
 				- I and him can't invite each other to a game.
 
 
-### Chat channel messages
+### <p align=center>**Chat channel messages**
 ![ChatChannelMessages](./Images/ChatChannelMessages.png)
 - The channel top bar: 
 	Here I can see the name of the channel "#NameOfChannel" and I can perfom the following actions:
@@ -469,7 +469,7 @@ I can see the following information about the user:
 				- He can see messages and the previous messages
 				- He can send messages again.
 
-## Social page
+## <p align=center>**Social page**
 **As a user logged in** I can see my friends and the user blocked. 
 - The friend part:
 	- I can see the user i've added.
