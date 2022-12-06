@@ -1,4 +1,5 @@
-# Functional specifications or how works or ft_transcendance from 42 school
+# Functional specifications
+## How works or ft_transcendance from 42 school
 Here we are going to explain all the functionnalities of our project ft_transcendance from a user perspective.
 
 # Why are we doing that?
@@ -35,11 +36,14 @@ We need to create a website with the following usages :
 10. [MY STATS](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#my-stats-pages)
 11. [SETTINGS](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#settings-page)
 12. [CHAT](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#chat-page)
-	- [The left bar]()
-	- [Private message page]()
-	- [Channel messages page]()
+	- [The left bar](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#the-left-discussion-bar)
+	- [Chat private message](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#chat-private-message)
+	- [Channel messages page](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#chat-channel-messages)
+13. [SOCIAL PAGE](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#social-page)
 
 ## Landing Page 
+
+![landing Page](./Images/LandingPage.png)
 
 Here is an image of our landing page.
 **As user non logged** i am able to interact with the following buttons:
@@ -50,10 +54,12 @@ Here is an image of our landing page.
 - The moon icon:
 	When I click on it, I launch the dark mode.
 - The spectate button:
-	When I click on it, I go the the spectate Game selection page (Link to the spectate part)
-
-## Registration page 
+	When I click on it, I go the the spectate Game selection page (Link to the spectate part) 
  
+ 
+## Registration page 
+
+![Registration](./Images/Registration.png)
 **As a non logged** user after connecting to the 42 API, this page aims to finalize the registration to the website. 
 - The profil picture icon: 
 	By default, you have the one from 42 school.
@@ -73,7 +79,10 @@ Here is an image of our landing page.
 	- If you don't have a valid nickname or you don't enter one, you have an error message "please enter a valid nickname".
 	- If you entered a nickname already user, you have an error message "nickname already used" 
 
-## Double Factor Authentication page
+## Double Factor Authentication page 
+
+![2FA](./Images/2FA.png)
+
 **As a user who already has an account + enable double factor authentication** you see this page. It aims to add a protection for your account.
 - The back button:
 	If I click on it, I go to the landing page.  
@@ -92,6 +101,8 @@ Here is an image of our landing page.
 	- If the 6 digit number are wrong, you have an error message "The code is not valid".
 
 ## Play page
+
+![PlayPage](./Images/Play.png)
 **As a user logged**, now I have access to the functionnality of the website
 - The "play" button, when I click on it, I am now waiting for a game with a timer a cross in the menu bar:
 		- If I click on the cross, I am not waiting for a game anymore
@@ -105,6 +116,7 @@ Here is an image of our landing page.
 		When I click on it, I launch the dark mode. 
 
 ## The menu
+![menu](./Images/Menu.png)
 **As a user logged** you are able a new menu and click on your nickname with your image. The menu contains the following things:
 - Play button:
 	When I click on it, I am able to launch a wait for a game (link to the wait4game page).
@@ -137,6 +149,7 @@ Here is an image of our landing page.
 	When I click on it i close the menu.
 
 ## The Pong Game Page
+![PongGame](./Images/PongGame.png)
 **As a user logged** I am able to play the pong game after matching with someone else.
 - Menu bar:
 	- The moon icon: 
@@ -152,6 +165,7 @@ Here is an image of our landing page.
 	- Once the game is over (by seeing the screen loose or victory), you are redirected to the play game page. 
 
 ## Spectate game selection page
+![SpectateGameSelection](./Images/SpectateGameSelection.png)
 **As a user loggedIn or not loggedIn** I can select among the 4 last games started to spectate on this page. 
 
 - Menu bar:
@@ -169,6 +183,7 @@ Here is an image of our landing page.
 	The first game started of the 4 disappears if a new game appears. (because we can only spectate 4 games at the same time)
 
 ## Spectate game page
+![SpectateGame](./Images/SpectateGame.png)
 **The difference here is you can be logged in or not**, if you are not logged in you have an image by default and a random username
 - Menu bar:
 	- The moon icon: 
@@ -190,6 +205,7 @@ Here is an image of our landing page.
 		- I have the name, picture and the message. If i am not logged in i have a random picture and a random name choose by our team.
 
 ## Learderboard
+![Leaderboard](./Images/Leaderboard.png)
 **As a user logged in** I have information about the global leaderboard of the game with information about the player.
 - Each player on this page has the following information:
 	- Your Rank, this is decided by the number of victory you did.
@@ -210,6 +226,7 @@ Here is an image of our landing page.
 		When I click again on it, it closes the menu.
 
 ## My Stats pages
+![MyStats](./Images/MyStats.png)
 **As a user logged in** I have personnal game information about the user in this page.
 I can see the following information about the user:
 - Your nickname
@@ -239,6 +256,7 @@ I can see the following information about the user:
 		When I click again on it, it closes the menu.
 
 ## Settings page
+![Settings](./Images/Settings.png)
 **As a user logged in** I can do the following:
 - I can click on the profile picture and change my picture
 - I can enable the double authentication, it opens a popup to enable the 2FA. When the 2FA is enable the button becomes green.
@@ -264,6 +282,7 @@ I can see the following information about the user:
 		When I click again on it, it closes the menu.
 
 ### The left discussion bar
+![LeftDiscussionBar](./Images/ChatDirectMessages.png)
 - The search bar
 	- The channel part:
 		- I can see the channels i've joined or i was invited, the last one is the first in the list.
@@ -286,6 +305,7 @@ I can see the following information about the user:
 		- I clicked on a discussion, the color of the discussion in the bar becomes grey. 
 
 ### Chat private message
+![ChatPrivateMessage](./Images/ChatDirectMessages.png)
 - The discussion bar (when I open direct message):
 	- I can see a bar on top with the following information:
 		- Profile picture of the user we discussed to.
@@ -311,7 +331,8 @@ I can see the following information about the user:
 	- The last message are at the bottom, the first message on the top.
 	- You can scroll to the top if there are too many messages.
 
-- Right User private message bar:
+- Right User private message bar: 
+![RightUserMessageBar](./Images/ChatChannelrightbar.png)
 	Here I can do actions about the user we selected.
 	- I can click on the right top cross to close the bar.
 	- I can see the nickname + the user profile picture.
@@ -339,6 +360,7 @@ I can see the following information about the user:
 
 
 ### Chat channel messages
+![ChatChannelMessages](./Images/ChatChannelMessages.png)
 - The channel top bar: 
 	Here I can see the name of the channel "#NameOfChannel" and I can perfom the following actions:
 	- Click on the arrow button (**need to be administrator to see this option**):
@@ -387,7 +409,8 @@ I can see the following information about the user:
 	- The last message are at the bottom, the first message on the top.
 	- You can scroll to the top if there are too many messages.
 
-- Right User private message bar:
+- Right Channel user private bar:
+![RightChannelBar](./Images/ChatChannelrightbar.png)
 	Here I can do actions about the user we selected.
 	- I can click on the right top cross to close the bar.
 	- I can see the nickname + the user profile picture.
