@@ -1,5 +1,5 @@
 # Functional specifications
-## How works or ft_transcendance from 42 school
+## How works our ft_transcendance from 42 school
 Here we are going to explain all the functionnalities of our project ft_transcendance from a user perspective.
 
 # Why are we doing that?
