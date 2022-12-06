@@ -23,7 +23,21 @@ We need to create a website with the following usages :
 - Louis Raffin: Full stack developer
 
 # Summary
-1. [Landing page]()
+1. [LANDING PAGE](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#Landing-page)
+2. [REGISTRATION](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#Registration-page)
+3. [DOUBLE FACTOR AUTHENTICATION](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#Double-Factor-Authentication-page)
+4. [PLAY](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#Play-page)
+5. [MENU](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#The-menu)
+6. [PONG GAME](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#the-pong-game-page)
+7. [SPECTATE SELECTION](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#spectate-game-selection-page)
+8. [SPECTATE GAME](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#spectate-game-page)
+9. [LEADERBOARD](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#learderboard)
+10. [MY STATS](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#my-stats-pages)
+11. [SETTINGS](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#settings-page)
+12. [CHAT](https://github.com/vbachele/ft_transcendance_42/blob/main/FunctionalSpecifications.md#chat-page)
+	- [The left bar]()
+	- [Private message page]()
+	- [Channel messages page]()
 
 ## Landing Page 
 
@@ -249,8 +263,8 @@ I can see the following information about the user:
 		When I click on it, it opens the menu (link to the menu). 
 		When I click again on it, it closes the menu.
 
-- The left discussion bar
-	- The search bar
+### The left discussion bar
+- The search bar
 	- The channel part:
 		- I can see the channels i've joined or i was invited, the last one is the first in the list.
 		- I click on a channel name, it opens the channel in the center of the screen with the historic of the conversation.
