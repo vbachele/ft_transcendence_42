@@ -382,7 +382,10 @@ Here I can do actions about the user we selected.
 
 	Here I can see the name of the channel "#NameOfChannel" and I can perfom the following actions:
 	- Click on the arrow button 
-		**AS an administrator to see this option**):  
+		- **As a normal user (non administrator)**
+			- When I click on the arrow, it opens a popup and I can see the description of the channel.  
+			 
+		- **AS an administrator to see this option**):  
 		![ModifySettings](./Images/ChatModifySettings.png)
 		If I click on it, it opens the channels settings pop up:
 		- **Channel setting pop up**
