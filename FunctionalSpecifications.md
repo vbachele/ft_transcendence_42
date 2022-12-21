@@ -296,6 +296,7 @@ I can see the following information about the user:
 
 ### <p align=center>**Left discussion bar**
 ![LeftDiscussionBar](./Images/UserPannelNoChannel.png)
+When I arrive for the first time, only the channel "General" or "World" is visible by me.
 - **The search bar**
 	- I can click on the field to enter a name, it will put in the channel the name related to what I put, for example "A" in the image below.
 	![ChannelSearchBar](./Images/ChatSearchBar.png) 
@@ -384,7 +385,7 @@ Here I can do actions about the user we selected.
 	- Click on the arrow button 
 		- **As a normal user (non administrator)**
 			- When I click on the arrow, it opens a popup and I can see the description of the channel.  
-			 
+
 		- **AS an administrator to see this option**):  
 		![ModifySettings](./Images/ChatModifySettings.png)
 		If I click on it, it opens the channels settings pop up:
