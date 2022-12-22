@@ -8,75 +8,48 @@ const setDark = () => {
 	  document.documentElement.setAttribute("data-theme", "dark");
 	};
 	
-	const setLight = () => {
+const setLight = () => {
 	  localStorage.setItem("theme", "light");
 	  document.documentElement.setAttribute("data-theme", "light");
 	};
 	
-	const storedTheme = localStorage.getItem("theme");
+// Here we checked the preference of the user if he wants dark or not
+const storedTheme = localStorage.getItem("theme");
 	
-	const prefersDark =
-	  window.matchMedia &&
-	  window.matchMedia("(prefers-color-scheme: dark)").matches;
+const prefersDark =
+	window.matchMedia &&
+	window.matchMedia("(prefers-color-scheme: dark)").matches;
 	
-	const defaultDark =
-	  storedTheme === "dark" || (storedTheme === null && prefersDark);
+const defaultDark =
+	storedTheme === "dark" || (storedTheme === null && prefersDark);
 	
-	if (defaultDark) {
+if (defaultDark) {
 	  setDark();
-	}
-	
-
-	// const toggleTheme: ChangeEventHandler<HTMLInputElement> = (e) => 
-	// {
-	// 	if (e.target.checked) {
-	// 		setDark();
-			
-	// 	}
-	// 	else {
-	// 	setLight();
-	//   }
-	// };
+}
 	
 	// Here I set the dark mode :
 	// I change: the icon, I applied to light/dark theme, I store the current Mode
 	// Then I applied the preference of the user fro; is browser
 function DarkMode()
 {
-	// const toggleTheme: ChangeEventHandler<HTMLInputElement> = (e) => 
-	// {
-	// 	if (e.target.checked) {
-	// 		setDark();
-			
-	// 	}
-	// 	else {
-	// 	setLight();
-	//   }
-	// };
 	const [isChecked, setIsChecked] = useState(false);
-	console.dir(isChecked);
+	const [storedPref, setStoredPref] = useState(localStorage.getItem('isChecked'));
+	useEffect(() => {
+        if (storedPref)
+            setIsChecked(JSON.parse(storedPref));
+        if (isChecked) {
+            setDark();
+        } else {
+            setLight();
+        }
+    }, [isChecked])
 
-	// useEffect(() => {
-	// 	setIsChecked(JSON.parse(localStorage.getItem('isChecked')));
-	//   }, []);
-	
-	//   useEffect(() => {
-	// 	localStorage.setItem('isChecked', String(isChecked));
-	//   }, [isChecked]);
-
-	const HandleChange: ChangeEventHandler<HTMLInputElement> = (e) => 
+	function HandleChange(): void 
 	{
-		setIsChecked(e.target.checked);
-		localStorage.setItem("theme", "dark");
-		if (e.target.checked) {
-			setDark();
-			localStorage.setItem("image", UncheckedDarkMode);
-			
-		}
-		else {
-		setLight();
-	  }
-	}
+        setIsChecked(!isChecked);
+        localStorage.setItem('isChecked', JSON.stringify(!isChecked));
+        setStoredPref(JSON.stringify(!isChecked));
+    }
 	return (	
 	<label>
 		<input
@@ -84,8 +57,7 @@ function DarkMode()
 			style={{ display: 'none' }}
 			id="DarkMode"
 			onChange={(event) => {
-				// toggleTheme(event);
-				HandleChange(event);
+				HandleChange();
 			}}
 			checked={isChecked}
 			defaultChecked={defaultDark}
