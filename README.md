@@ -118,3 +118,16 @@ export const Subtitle = styled(text)`
 	font-size: 16px;
 	line-height: 20px;
 ``` 
+
+To import the component, you do the following in another component
+
+````
+import { H1Title, Subtitle } from 'Components/Text'
+
+const LandingPage = () => {
+  return (
+	<div>
+        <H1Title>FIRE PONG</H1Title>
+        <Subtitle>Votre anus va finir en feu</Subtitle>
+     </div>
+```c
