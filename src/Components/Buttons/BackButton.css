@@ -1,0 +1,49 @@
+.BackButton--Layout
+{
+	/* Auto layout */
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px;
+	gap: 8px;
+
+	height: 20px;
+	/* The padding top is 35px from navbar */
+	padding-top: 35px;
+
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 1;
+	align-self: stretch
+}
+
+.BackButton--Layout--Icon
+{
+	width: 20px;
+	height: 20px;
+
+	left: 73.36%;
+	right: -49.19%;
+	top: 13.13%;
+	bottom: 41.88%;
+	color: var(--font-color);
+	
+
+	/* Sidebar background */
+}
+
+.BackButton--Layout--Text
+{
+	display:none;
+}
+
+@media only screen and (max-width: 768px) {
+
+	.BackButton--Layout--Text
+	{
+		display :none;
+	}
+}

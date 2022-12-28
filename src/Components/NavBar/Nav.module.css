@@ -1,0 +1,148 @@
+
+/* Compared to the figma design I changed the padding to adjust the padding of the right */
+  
+.navbar
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+	align-items: center;
+	padding: 16px 32px;
+	padding-right: 64px;
+	gap: auto;
+    height: 76px;
+    background-color: var(--background-color);
+	align-self: stretch;
+    border-bottom: 1px solid var(--font-color);
+}
+
+.logo
+{
+	width: 114px;
+	height: 44px;
+	color: var(--font-color);
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 36px;
+	line-height: 44px;
+
+}
+
+.links-containers
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px;
+	justify-content: space-evenly;
+	gap: 16px;
+	width: 280px;
+	height: 24px;
+}
+
+.Spectate
+{ 
+	text-decoration: none;
+	color: var(--font-color);
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+}
+
+.DarkMode, .checkbox
+{
+	/* color: var(--font-color); */
+	width: 24px;
+	height: 24px;
+}
+
+.Divider1, .Divider2
+{
+	width: 20px;
+	height: 2px;
+	border-radius: 4px;
+	transform: rotate(-90deg);
+
+	left: 0%;
+	right: 0%;
+	background: var(--font-color);
+}
+
+.LoginLayout
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px;
+	gap: 8px;
+
+	width: 96px;
+	height: 24px;
+}
+
+.Login
+{
+	color: var(--font-color);
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 600;
+	width: 70px;
+	font-size: 20px;
+	line-height: 24px;
+
+}
+
+.LoginIcon
+{
+	color: var(--font-color);
+
+	width: 24px;
+	height: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+
+	.navbar
+	{
+		height: 61px;
+		padding: 16px 20px;
+		padding-right: 24px;
+	}
+
+	.logo
+	{
+		font-size: 24px;
+	}
+
+	.links-containers
+	{
+		width: 140px;
+		gap: 4px;
+		height: 24px;
+	}
+
+	.Spectate, .Divider2
+	{
+		display: none;
+	}
+
+	.LoginLayout
+	{
+		width: 100px;
+		gap: 8px;
+		height: 24px;
+	}
+
+	.Login
+	{
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: 600;
+		font-size: 16px;
+		line-height: 24px;
+		height: 20px;
+	}
+}

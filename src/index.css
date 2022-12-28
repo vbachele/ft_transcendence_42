@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+code {
+  font-family: Montserrat, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root
+{
+	--font-color: black;
+	--background-color: white;
+}
+  
+/* 2 */
+[data-theme="light"] 
+{
+  --font-color: black;
+--background-color: white;
+}
+
+[data-theme="dark"] 
+{
+	--font-color: white;
+	--background-color: #171717;
+}
+
+body {
+	background-color: var(--background-color);
+}
+

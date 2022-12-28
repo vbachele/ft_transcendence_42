@@ -1,0 +1,26 @@
+{
+	"links": [
+		
+		{
+			"label": "DarkMode"
+		},
+		
+		{
+			"label": "Divider1"
+		},
+
+		{
+			"label": "Spectate",
+			"name": "Spectate"
+		},
+
+		{
+			"label": "Divider2"
+		},
+		
+		{
+			"label": "Login"
+		}
+
+	]
+}

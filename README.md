@@ -71,12 +71,15 @@ A module is a class annotated with a @Module() decorator. The @Module() decorato
 	- ```c
 		npm i react-beautiful-dnd // To install the librairy```
 
+- Using 
+
 
 
 ##### Components
 
 - Navbar
 - DarkMode
+- Buttons && Text
 
 ###### navbar
 
@@ -87,4 +90,31 @@ In this component we set:
 - To keep the current state by refeshing the webpage
 - To take the user preference from his browser, if the user prefers to have dark mode by default, he will have the dark mode
 
-- 
+- ###### Buttons && Text
+For the Buttons we've decided to use [Styled-components](https://styled-components.com/) which allows us to do a lot of variant of one item and to write the CSS directly in the tsx.
+There are 2 variants of our component : the primary button use for clicking "Play" for example and the secondary Button.
+
+Syntax is pretty easy. here I declare text which is the basis of my text in my index.tsx from my component directory buttons and I add the variant with the size of the font of this component by using 'styled'
+
+```c 
+import styled from 'styled-components'
+
+export const text = styled.text` 
+	font-family: 'Montserrat';
+	font-style: normal;
+	display: flex;
+	align-items: center;
+	color: var(--font-color);
+`;
+
+export const H1Title = styled(text)`
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 48px;
+`
+
+export const Subtitle = styled(text)`
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+``` 
