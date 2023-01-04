@@ -1,7 +1,8 @@
 import { SecondaryButton } from 'Components/Buttons'
 import { NormalText } from 'Components/Text'
-import React, { ChangeEventHandler, useRef, useState, } from 'react'
+import React, { ChangeEventHandler, useEffect, useRef, useState, } from 'react'
 import styled from 'styled-components'
+import storeNicknameDataBase, { storeFirstNicknameDataBase } from './db_updatenickname'
 
 const NicknameForm = styled.form`
   display: flex;
@@ -70,7 +71,7 @@ const UpdateNicknameLayout__Input = styled.input`
 const UpdateNickname = () => {
 
   const [value, setValue] = useState('');
-
+  
   const handleChange:ChangeEventHandler<HTMLInputElement> = (event) =>
   {
     setValue(event.target.value);
@@ -78,7 +79,7 @@ const UpdateNickname = () => {
 
   const handleSubmit:React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    console.log(value);
+    // storeFirstNicknameDataBase();
   };
 
   return (

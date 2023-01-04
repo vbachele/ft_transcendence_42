@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {BsFillCameraFill} from 'react-icons/bs'
+import storeProfilePicture from '../db_uploadicon'
 
 const CameraLayout= styled.div `
 	display: flex;
@@ -52,28 +53,10 @@ export const Camera = () => {
 				reader.readAsDataURL(event.target.files[0]) 
 			}
 			reader.addEventListener("load", () => {
-				console.log(reader.result);
 				if (reader.result != null) {
-					localStorage.setItem("ProfilePicture", reader.result as string);
+					storeProfilePicture(reader.result as string);
 				}
 			})
-
-			// document.addEventListener("DOMContentLoaded", () => { 
-			// 	console.log("WORKAS")
-			// 	const recentimg = localStorage.getItem("recent-image");
-			// 	if (recentimg)
-			// 		console.log("WORKAS")
-			// 		document.querySelector("#imgPreview")?.setAttribute("src", recentimg as string);
-			// })
-			// const reader = new FileReader();
-			// if (images.files){
-			// 	const values = reader.readAsDataURL(images.files[0]);
-			// }
-			// 
-			// 		{
-			// 			localStorage.setItem("ProfilePicture", JSON.stringify(url));
-			// 		}
-			// })
 		});
 	}, [image]);
 	  
@@ -95,4 +78,4 @@ export const Camera = () => {
   )
 }
 
-export default CameraLayout
+export default Camera

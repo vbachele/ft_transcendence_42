@@ -1,9 +1,10 @@
-import { Camera} from 'Components/UploadAvatar/CameraIcon'
+import { Camera} from 'Components/UploadAvatar/UploadIcon'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import DefaultAvatar from 'Components/UploadAvatar/Images/DefaultAvatar.png'
 import { NormalText, Subtitle } from 'Components/Text'
 import UserAvatarIcon from './Avatar'
+import UseFetchProfilePicture from 'Components/CustomHooks/UseFetchProfilePicture'
 
 const UploadAvatarLayout = styled.div`
 	display: flex;
@@ -35,19 +36,7 @@ const UploadAvatarLayout__AddPictureLayout = styled.div`
 `
 
 export const UploadAvatar = () => {
-	// const [items, setItems] = React.useState([]);
-
-	// useEffect(() => {
-	// 	const  dataURL = localStorage.getItem("ProfilePicture");
-	// 	// console.log(value);
-	// 	if (dataURL !== null)
-	// 	{
-	// 		const items = JSON.parse(dataURL);
-	// 	}
-	// 	if (items) {
-	// 	 setItems(items);
-	// 	}
-	//   }, []);
+	// const [imageUrl] = UseFetchProfilePicture('http://localhost:3000/users/1');
   return (
 	<UploadAvatarLayout>
 		<UploadAvatarLayout__AddPictureLayout>
@@ -57,7 +46,6 @@ export const UploadAvatar = () => {
 		<div>
             <NormalText className='UploadAvatarLayout__Text'> vbachele </NormalText>
 		    <Subtitle color='#666666' fontWeight='400'> Federation </Subtitle>
-			{/* <img id="imgPreview" src="dataURL" alt="previewImage"></img> */}
         </div>
 	</UploadAvatarLayout>
   )

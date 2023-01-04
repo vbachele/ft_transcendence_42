@@ -1,10 +1,16 @@
 import { PrimaryButton } from 'Components/Buttons'
 import Nav from 'Components/NavBar'
 import { H1Title, Subtitle } from 'Components/Text'
-import React from 'react'
+import { storeFirstNicknameDataBase } from 'Components/UpdateNickname/db_updatenickname'
+import React, { ChangeEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
+
+  const handleChange= () =>
+  {
+    storeFirstNicknameDataBase();
+  }
   return (
 	<div className = "LandingPage">
       <Nav></Nav>
@@ -14,7 +20,7 @@ const LandingPage = () => {
           <Subtitle>Votre anus va finir en feu</Subtitle>
         </div>
         <Link to="/registration-page">
-			<PrimaryButton className='InfosContainer--PlayButton'>Play</PrimaryButton>
+			<PrimaryButton className='InfosContainer--PlayButton' onClick={handleChange}>Play</PrimaryButton>
 		</Link> 
 	</div>
     </div>
