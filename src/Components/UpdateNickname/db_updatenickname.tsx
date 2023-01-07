@@ -2,43 +2,22 @@ import React from 'react'
 import DefaultAvatar from 'Components/UploadAvatar/Images/DefaultAvatar.png'
 import * as fs from 'fs';
 import { backend } from 'Lib/backend';
+import { api } from 'Lib/api';
 
 export const storeFirstNicknameDataBase = async () => {
-	
-		const userObject = {
-		name: "Vincent",
-		image: ""
-	}
-
-	const user = await backend.createUser(userObject);
-	//   fetch('http://localhost:3000/users', {
-	// 	method: 'POST',
-	// 	body: JSON.stringify({
-	// 			name: "Vincent",
-	// 			image: ""
-	// 		  }),
-	// 	headers: {
-	// 	  'Content-Type': 'application/json'
-	// 	}
-	//   })
-		// .then(response => response.json())
-	}
-
-const storeNicknameDataBase = (value:string) => {
+	const user = await backend.createUser(
 	{
-	//   const data = {
-	// 	name: value
-	//   };
-	  
-	//   fetch('http://localhost:3000/users/1', {
-	// 	method: 'PUT',
-	// 	body: JSON.stringify(data),
-	// 	headers: {
-	// 	  'Content-Type': 'application/json'
-	// 	}
-	//   })
-	// 	.then(response => response.json())
-	  }
+		name: "Vincent",
+		image: "",
+		id: ""
 	}
+	);
+	localStorage.setItem("id", user.id)
+}
 
-export default storeNicknameDataBase
+export const UpdateNicknameDataBase = async (name:string) => {
+	const id = localStorage.getItem("id");
+	const user = await backend.updateUser({name}, id as string);
+}
+
+export default storeFirstNicknameDataBase

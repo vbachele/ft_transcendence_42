@@ -35,6 +35,8 @@ const UploadAvatarLayout__AddPictureLayout = styled.div`
 	top: 20px;
 `
 
+
+
 export const UploadAvatar = () => {
 	// const [imageUrl] = UseFetchProfilePicture('http://localhost:3000/users/1');
   return (
