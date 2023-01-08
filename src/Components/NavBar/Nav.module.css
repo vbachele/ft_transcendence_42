@@ -8,25 +8,10 @@
     justify-content: space-between;
 	align-items: center;
 	padding: 16px 32px;
-	padding-right: 64px;
-	gap: auto;
     height: 76px;
     background-color: var(--background-color);
 	align-self: stretch;
     border-bottom: 1px solid var(--font-color);
-}
-
-.logo
-{
-	width: 114px;
-	height: 44px;
-	color: var(--font-color);
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 36px;
-	line-height: 44px;
-
 }
 
 .links-containers
@@ -34,29 +19,24 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 0px;
 	justify-content: space-evenly;
 	gap: 16px;
 	width: 280px;
 	height: 24px;
 }
 
-.Spectate
-{ 
-	text-decoration: none;
-	color: var(--font-color);
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 20px;
-	line-height: 24px;
-}
-
-.DarkMode, .checkbox
+.links-containers-logged
 {
-	/* color: var(--font-color); */
-	width: 24px;
-	height: 24px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px;
+	gap: 16px;
+	justify-content: space-evenly;
+	width: 217px;
+	height: 40px;
+
+	
 }
 
 .Divider1, .Divider2
@@ -79,11 +59,11 @@
 	padding: 0px;
 	gap: 8px;
 
-	width: 96px;
+	width: 120px;
 	height: 24px;
 }
 
-.Login
+.NotLogged
 {
 	color: var(--font-color);
 	font-family: 'Montserrat';
@@ -103,18 +83,24 @@
 	height: 24px;
 }
 
+.Nav-link-container-nickmenu
+{
+	display: flex;
+	flex-direction: row;
+	padding: 0px;
+	gap: 8px;
+
+	width: 159px;
+	height: 40px;
+}
+
+
 @media only screen and (max-width: 768px) {
 
 	.navbar
 	{
 		height: 61px;
 		padding: 16px 20px;
-		padding-right: 24px;
-	}
-
-	.logo
-	{
-		font-size: 24px;
 	}
 
 	.links-containers
@@ -124,7 +110,12 @@
 		height: 24px;
 	}
 
-	.Spectate, .Divider2
+	.links-containers-logged
+	{
+		width: 123px;
+	}
+
+	.Spectate, .Divider2, .Divider1
 	{
 		display: none;
 	}
@@ -134,15 +125,5 @@
 		width: 100px;
 		gap: 8px;
 		height: 24px;
-	}
-
-	.Login
-	{
-		font-family: 'Montserrat';
-		font-style: normal;
-		font-weight: 600;
-		font-size: 16px;
-		line-height: 24px;
-		height: 20px;
 	}
 }

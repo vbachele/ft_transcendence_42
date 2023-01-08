@@ -1,9 +1,11 @@
 import { SecondaryButton } from 'Components/Buttons'
 import { NormalText } from 'Components/Text'
-import React, { ChangeEventHandler, useEffect, useRef, useState, } from 'react'
+import React, { ChangeEventHandler, useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
-import storeNicknameDataBase, { UpdateNicknameDataBase} from './db_updatenickname'
+import storeNicknameDataBase from './db_updatenickname'
 import { backend } from 'Lib/backend'
+import { useNavigate } from 'react-router-dom';
+
 
 const NicknameForm = styled.form`
   display: flex;
@@ -72,6 +74,7 @@ const UpdateNicknameLayout__Input = styled.input`
 const UpdateNickname = () => {
 
   const [value, setValue] = useState('');
+  let navigate = useNavigate(); // Use navigate allow to take the Route and to navigate to other page
   
   const handleChange:ChangeEventHandler<HTMLInputElement> = (event) =>
   {
@@ -80,27 +83,29 @@ const UpdateNickname = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const stringData = formData.get('UpdateName');
-    UpdateNicknameDataBase(value as string);
+    // const formData = new FormData(event.target as HTMLFormElement);
+    // const stringData = formData.get('UpdateName');
+    backend.updateUser({name: value as string});
+    backend.updateLogStatus({logged:true});
+    navigate('/login-page');
   };
 
   return (
-    <NicknameForm className='NicknameForm' onSubmit={handleSubmit}>
-    <UpdateNicknameLayout>
-      <NormalText fontWeight={"600"} fontSize={"14px"}>Choose a Nickname *</NormalText>
-      <UpdateNicknameLayout__Input 
-        type="text" value={value}
-        name='UpdateName'
-        onChange={handleChange} 
-        placeholder="ex: VincentCollègueShadow" 
-        maxLength={8} 
-        minLength={2}
-      />
-    </UpdateNicknameLayout>
-    <SecondaryButton type='submit'>Continue</SecondaryButton>
-    </NicknameForm>
-
+      <NicknameForm className='NicknameForm' onSubmit={handleSubmit}>
+      <UpdateNicknameLayout>
+        <NormalText fontWeight={"600"} fontSize={"14px"}>Choose a Nickname *</NormalText>
+        <UpdateNicknameLayout__Input 
+          type="text" value={value}
+          name='UpdateName'
+          onChange={handleChange} 
+          placeholder="ex: VincentCollègueShadow" 
+          maxLength={8} 
+          minLength={2}
+        />
+      </UpdateNicknameLayout>
+      <SecondaryButton type='submit'>Continue</SecondaryButton>
+  
+      </NicknameForm>
   )
 }
 

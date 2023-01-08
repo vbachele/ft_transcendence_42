@@ -14,6 +14,9 @@ export const H1Title = styled(Text)`
 	font-weight: ${props => props.fontWeight || "700"};
 	font-size: ${props => props.fontSize || "40px"};
 	line-height: 48px;
+	@media only screen and (max-width: 768px) {
+		font-size:${props => props.string};
+	}
 `
 
 export const H2Title = styled(Text)`
@@ -41,8 +44,9 @@ export const Subtitle = styled(Text)`
 export const NormalText = styled(Text)`
 	font-weight: ${props => props.fontWeight || "700"};
 	font-size: ${props => props.fontSize || "16px"};
-	line-height: 20px;
+	line-height: 24px;
 	@media only screen and (max-width: 768px) {
 		display :${props => props.string};
+		font-size: 16px;
 	}
 `

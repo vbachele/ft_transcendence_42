@@ -9,15 +9,12 @@ export const storeFirstNicknameDataBase = async () => {
 	{
 		name: "Vincent",
 		image: "",
+		logged: false,
 		id: ""
 	}
 	);
 	localStorage.setItem("id", user.id)
 }
 
-export const UpdateNicknameDataBase = async (name:string) => {
-	const id = localStorage.getItem("id");
-	const user = await backend.updateUser({name}, id as string);
-}
 
 export default storeFirstNicknameDataBase

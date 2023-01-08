@@ -1,4 +1,5 @@
 import UncheckedDarkMode from './Images/Moon.svg';
+import "./index.css"
 import React, { ChangeEventHandler, createContext, useEffect, useState } from 'react'
 import CheckedDarkMode from "./Images/Sun.svg";
 
@@ -60,7 +61,7 @@ function DarkMode()
 			checked={isChecked}
 			defaultChecked={defaultDark}
 		/>
-			 <img src= {isChecked ? CheckedDarkMode : UncheckedDarkMode} alt="DarkMode" />
+			 <img src= {isChecked ? CheckedDarkMode : UncheckedDarkMode} alt="DarkMode" className='DarkMode' />
 	</label>
 	);
 }

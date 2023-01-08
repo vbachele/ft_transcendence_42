@@ -1,5 +1,5 @@
 import './App.css'
-import Nav from './Components/NavBar'
+import Nav from './Components/NavBar/Notlogged'
 import {PrimaryButton, SecondaryButton } from 'Components/Buttons'
 import styles from '.././App.css'
 import { Subtitle, H1Title } from 'Components/Text'
@@ -11,6 +11,7 @@ import {
 
 import LandingPage from './Pages/LandingPage'
 import RegistrationPage from 'Pages/Registration'
+import LoginPage from 'Pages/LoginPage'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/registration-page" element={<RegistrationPage />} />
+        <Route path="/login-page" element={<LoginPage />} />
       </Routes>
     </Router>
    )

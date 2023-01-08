@@ -1,5 +1,5 @@
 import BackButton from 'Components/Buttons/BackButton'
-import Nav from 'Components/NavBar'
+import Nav from 'Components/NavBar/Notlogged'
 import { H2Title, NormalText, Subtitle } from 'Components/Text'
 import React, { useRef, useState } from 'react'
 import './index.css'

@@ -18,6 +18,9 @@ export const api={
 	async put(url:string, data:unknown){
 		return await fetch(import.meta.env.VITE_BACKEND_HOST + url, {...requestConfig, method:'PUT', body:JSON.stringify(data) || "{}" }) // si la JSON.stringify(data) est vide on met un objet vide
 	},
+	async patch(url:string, data:unknown){
+		return await fetch(import.meta.env.VITE_BACKEND_HOST + url, {...requestConfig, method:'PATCH', body:JSON.stringify(data) || "{}" }) // si la JSON.stringify(data) est vide on met un objet vide
+	},
 	async delete(url:string){
 		return await fetch(import.meta.env.VITE_BACKEND_HOST + url, {...requestConfig, method:'DELETE'}) // veut dire qu'on spread tous les elements de request config
 	},

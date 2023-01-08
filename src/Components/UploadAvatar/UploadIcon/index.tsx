@@ -32,8 +32,6 @@ export const CameraLayout__CameraIcon= styled(BsFillCameraFill)`
 `
 
 export const Camera = () => {
-	// const [image, setImage] = React.useState<string | undefined>(); 
-
 	const handleChange:React.ChangeEventHandler<HTMLInputElement>  = (event) => {
 		const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
 		const formData = new FormData();
