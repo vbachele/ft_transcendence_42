@@ -1,0 +1,15 @@
+.error {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.error__title {
+	color: #E04F5F;
+	margin: 0 0 30px 0;
+}
+
+.error__detail {
+	font-size: 20px;
+}

@@ -1,26 +1,29 @@
-import './App.css'
-import Nav from './Components/NavBar'
-import {PrimaryButton, SecondaryButton } from 'Components/Buttons'
-import styles from '.././App.css'
-import { Subtitle, H1Title } from 'Components/Text'
-import { 
-  BrowserRouter as Router,
-  Route, 
-  Routes, 
-  } from 'react-router-dom';
-
-import LandingPage from './Pages/LandingPage'
-import RegistrationPage from 'Pages/Registration'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from 'components/Navbar';
+import Home from 'pages/Home';
+import Leaderboard from 'pages/Leaderboard';
+import Dashboard from 'pages/Dashboard';
+import NotFound from 'pages/NotFound';
+import useFetchPlayer from 'hooks/useFetchPlayer';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/registration-page" element={<RegistrationPage />} />
-      </Routes>
-    </Router>
-   )
+	const player = useFetchPlayer();
+
+	return (
+		<Router>
+			<div className="App">
+				<Navbar player={player} />
+				<div className="content">
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/leaderboard" element={<Leaderboard />} />
+						<Route path='/dashboard/:id' element={<Dashboard />} />
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+				</div>
+			</div>
+		</Router>
+	)
 }
 
-export default App
+export default App;

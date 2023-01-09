@@ -1,0 +1,36 @@
+.dashboard {
+	font-size: 20px;
+	height: 800px;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
+	gap: 1em;
+}
+
+.subcontainer {
+	border-radius: 4px;
+	background-color: rgba(250, 0, 0, 0.1);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5%;
+}
+
+.db__player__coa {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	height: 50%;
+}
+
+.db__player__coa img {
+	width: 68px;
+	height: 104px;
+	border-radius: 8px;
+}
+
+.db__player__coa__ranks {
+	display: flex;
+	gap: 10%;
+}
