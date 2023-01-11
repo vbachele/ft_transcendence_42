@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import styles from 'Components/NavBar/Nav.module.css'
+import styles from 'components/NavBar/Nav.module.css'
 import {BsFillPersonFill} from "react-icons/bs";
-import DarkMode from 'Components/DarkMode';
+import DarkMode from 'components/DarkMode';
 import { Link } from 'react-router-dom';
-import { H1Title, NormalText } from 'Components/Text';
+import { H1Title, NormalText } from 'components/Text';
 
 function IconLayout(){
 	return (
@@ -42,7 +42,6 @@ export const MenuNonLogged = () =>
 const NavNonLogged:React.FC<{}> = () => {
     return (
 		<nav className={styles.navbar}> 
-			{/* <div className={styles.logo}> PONG </div> */}
 			<H1Title fontSize={'36px'} fontWeight={'600'}> PONG </H1Title>
 			<MenuNonLogged/>
 		</nav>

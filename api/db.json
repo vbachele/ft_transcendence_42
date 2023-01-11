@@ -13,13 +13,13 @@
       "id": 2
     },
     {
-      "name": "aergaerg",
+      "name": "vincent",
       "image": "",
       "logged": true,
       "id": 3
     },
     {
-      "name": "ergsrth",
+      "name": "",
       "image": "",
       "logged": true,
       "id": 4
@@ -31,13 +31,13 @@
       "id": 5
     },
     {
-      "name": "ergsrths",
+      "name": "vincent",
       "image": "",
       "logged": true,
       "id": 6
     },
     {
-      "name": "",
+      "name": "vincent",
       "image": "",
       "logged": true,
       "id": 7
@@ -47,30 +47,6 @@
       "image": "",
       "logged": true,
       "id": 8
-    },
-    {
-      "name": "",
-      "image": "",
-      "logged": true,
-      "id": 9
-    },
-    {
-      "name": "",
-      "image": "",
-      "logged": true,
-      "id": 10
-    },
-    {
-      "name": "",
-      "image": "",
-      "logged": true,
-      "id": 11
-    },
-    {
-      "name": "",
-      "image": "",
-      "logged": true,
-      "id": 12
     }
   ]
 }

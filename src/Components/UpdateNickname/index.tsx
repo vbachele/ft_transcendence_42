@@ -1,10 +1,10 @@
-import { SecondaryButton } from 'Components/Buttons'
-import { NormalText } from 'Components/Text'
-import React, { ChangeEventHandler, useEffect, useRef, useState} from 'react'
+import { SecondaryButton } from 'components/Buttons'
+import { NormalText } from 'components/Text'
+import React, { ChangeEventHandler, useContext, useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
-import storeNicknameDataBase from './db_updatenickname'
 import { backend } from 'Lib/backend'
 import { useNavigate } from 'react-router-dom';
+import UserContext from 'components/Context/userContent'
 
 
 const NicknameForm = styled.form`
@@ -75,16 +75,16 @@ const UpdateNickname = () => {
 
   const [value, setValue] = useState('');
   let navigate = useNavigate(); // Use navigate allow to take the Route and to navigate to other page
+  const userContext = useContext(UserContext);
   
   const handleChange:ChangeEventHandler<HTMLInputElement> = (event) =>
   {
+    userContext.setUser({nickname: event.target.value})
     setValue(event.target.value);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    // const formData = new FormData(event.target as HTMLFormElement);
-    // const stringData = formData.get('UpdateName');
     backend.updateUser({name: value as string});
     backend.updateLogStatus({logged:true});
     navigate('/login-page');

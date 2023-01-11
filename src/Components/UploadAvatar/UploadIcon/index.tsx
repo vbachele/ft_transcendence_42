@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {BsFillCameraFill} from 'react-icons/bs'
-import storeProfilePicture from '../db_uploadicon'
+import axios from 'axios';
+import { api } from 'Lib/api';
+import UserContext from 'components/Context/userContent';
+import PictureContext from 'components/Context/pictureContent';
 
 const CameraLayout= styled.div `
 	display: flex;
@@ -32,45 +35,34 @@ export const CameraLayout__CameraIcon= styled(BsFillCameraFill)`
 `
 
 export const Camera = () => {
-	const handleChange:React.ChangeEventHandler<HTMLInputElement>  = (event) => {
-		const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-		const formData = new FormData();
-		if (fileInput.files)
-			formData.append('image', fileInput.files[0]);
-		formData.append('test', 'works');
-		const request = new XMLHttpRequest();
-		request.open('POST', 'http://localhost:3000/users');
-		request.setRequestHeader('Content-Type', 'multipart/form-data');
-		request.send(formData);
+	// const handleChange:React.ChangeEventHandler<HTMLInputElement>  = (event) => {
+	const userContext = useContext(UserContext);
 
-		// this function is to test
-		request.onreadystatechange = function() {
-			if (request.readyState === 4) {
-			  console.log(request.responseText);
-			}
-		  };
-		// if (!event.target.files) // to secure if the file of the event is null
-		// 	return;
-		// const file = event.target.files[0];
-		// const imgUrl = URL.createObjectURL(file);
-		// setImage(imgUrl);
+	const getBase64 = (file:File) => {
+		return new Promise((resolve, reject) => {
+		  const reader = new FileReader();
+		  reader.readAsDataURL(file);
+		  reader.onload = () => resolve(reader.result);
+		  reader.onerror = (error) => reject(error);
+		});
+	  }
+	
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files ? e.target.files[0] : null;
+		
+		if (file) {
+		const uploadfile = getBase64(file)
+		  .then(base64 => {
+			const upload = {image: base64}
+			api.patch('/users/1', upload);
+			// Save the base64 data to a JSON file or to your state
+			})
+
+			const pictureContext = useContext(PictureContext);
+			pictureContext.setPicture(uploadfile);
+			console.log(pictureContext.picture);
+		}
 	}
-	/// Here I store the data by adding a key/value in the local storage of the browser to be sure to have access to it
-	// useEffect(() => {
-	// 	document.querySelector('#file-input')?.addEventListener('change', (event) => {
-	// 		const reader = new FileReader(); // FileReader va convertir the file into a dataURL zhich contains information about actual file
-
-	// 		if (event.target instanceof HTMLInputElement && event.target.files && event.target.files.length > 0)
-	// 		{
-	// 			reader.readAsDataURL(event.target.files[0]) 
-	// 		}
-	// 		reader.addEventListener("load", () => {
-	// 			if (reader.result != null) {
-	// 				storeProfilePicture(reader.result as string);
-	// 			}
-	// 		})
-	// 	});
-	// }, [image]);
 	  
 // Here I create a label for my cameraIcon and create an input, by giving an id with the name of my labe
 // I can put the input in my image

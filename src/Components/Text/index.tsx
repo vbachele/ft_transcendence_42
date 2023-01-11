@@ -38,6 +38,7 @@ export const Subtitle = styled(Text)`
 	color:${props => props.color};
 	@media only screen and (max-width: 768px) {
 		display :${props => props.display};
+		color:var(--font-color);
 	}
 `
 
@@ -48,5 +49,24 @@ export const NormalText = styled(Text)`
 	@media only screen and (max-width: 768px) {
 		display :${props => props.string};
 		font-size: 16px;
+	}
+`
+
+export const MenuText = styled(Text)`
+	font-weight: ${props => props.fontWeight || "500"};
+	font-size: ${props => props.fontSize || "22px"};
+	line-height: 27px;
+	color: #FFFFFF;
+	@media only screen and (max-width: 768px) {
+		display :${props => props.display};
+	}
+`
+
+export const navbarsubMenutext = styled(Text)`
+	font-weight: ${props => props.fontWeight || "500"};
+	font-size: ${props => props.fontSize || "16px"};
+	line-height: 20px;
+	@media only screen and (max-width: 768px) {
+		display :${props => props.display};
 	}
 `

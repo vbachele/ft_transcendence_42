@@ -7,7 +7,7 @@
     flex-direction: row;
     justify-content: space-between;
 	align-items: center;
-	padding: 16px 32px;
+	padding: 0px 16px;
     height: 76px;
     background-color: var(--background-color);
 	align-self: stretch;
@@ -94,13 +94,29 @@
 	height: 40px;
 }
 
+.menuButton
+{
+	display: flex;
+	flex-direction: row;
+	background-color: transparent;
+	border: transparent;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	padding: 0px;
+	gap: 8px;
+
+	width: 159px;
+	height: 40px;
+	cursor: pointer;
+}
 
 @media only screen and (max-width: 768px) {
 
 	.navbar
 	{
 		height: 61px;
-		padding: 16px 20px;
+		padding: 0px 20px;
 	}
 
 	.links-containers

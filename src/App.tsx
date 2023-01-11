@@ -1,27 +1,41 @@
 import './App.css'
-import Nav from './Components/NavBar/Notlogged'
-import {PrimaryButton, SecondaryButton } from 'Components/Buttons'
-import styles from '.././App.css'
-import { Subtitle, H1Title } from 'Components/Text'
 import { 
   BrowserRouter as Router,
   Route, 
   Routes, 
   } from 'react-router-dom';
+import {UserContextProvider} from "components/Context/userContent"
+import LandingPage from 'pages/LandingPage'
+import RegistrationPage from 'pages/Registration'
+import LoginPage from 'pages/LoginPage'
+import { PictureContextProvider } from 'components/Context/pictureContent'
+import Leaderboard from 'pages/Leaderboard';
+import Dashboard from 'pages/Dashboard';
+import NotFound from 'pages/NotFound';
+import useFetchPlayer from 'hooks/useFetchPlayer';
 
-import LandingPage from './Pages/LandingPage'
-import RegistrationPage from 'Pages/Registration'
-import LoginPage from 'Pages/LoginPage'
+
 
 function App() {
+
+  const player = useFetchPlayer();
+
   return (
+    <UserContextProvider>
+    <PictureContextProvider>
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/registration-page" element={<RegistrationPage />} />
         <Route path="/login-page" element={<LoginPage />} />
+        <Route path="/testImage"/>
+        <Route path="/leaderboard" element={<Leaderboard />} />
+				<Route path='/dashboard/:id' element={<Dashboard />} />
+				<Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
+    </PictureContextProvider>
+    </UserContextProvider>
    )
 }
 

@@ -1,0 +1,133 @@
+.subtitle {
+	color: #949494;
+	font-size: 75%;
+	font-weight: 400;
+}
+
+.Federation {
+	color: #4180DB;
+}
+
+.Assembly {
+	color: #A061D1;
+}
+
+.Order {
+	color: #FF6950;
+}
+
+.Alliance {
+	color: #33C47F;
+}
+
+.leaderboard__slot {
+	text-decoration: none;
+	color: black;
+	margin: 1em 5%;
+	background-color: #F6F6F7;
+	box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2px;
+	border-radius: 8px;
+	border-color: white;
+	align-items: center;
+	padding: 10px 5%;
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	font-weight: 600;
+	font-size: 20px;
+	cursor: pointer;
+	transition: transform 0.2s;
+}
+
+.leaderboard__slot:hover {
+	transform: scale(1.01);
+}
+
+.leaderboard__slot__player {
+	display: flex;
+	align-items: center;
+}
+
+.leaderboard__slot__player-avatar {
+	width: 50px;
+	border-radius: 50%;
+	box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 2px;
+	margin: auto 10px;
+}
+
+.leaderboard__slot__player__coalition-value {
+	font-weight: 500;
+}
+
+.rankList__search {
+	display: flex;
+	justify-content: center;
+	gap: 5%;
+	margin-bottom: 1em;
+}
+
+.rankList__search__name,
+.rankList__search__coalition {
+	border-radius: 8px;
+	padding: 8px;
+	border: 1px solid #949494;
+}
+
+.rankList__search__count {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.empty {
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 30px;
+}
+
+.empty__title {
+	text-align: center;
+}
+
+.empty__redirect {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+@media (max-width: 850px) {
+	.leaderboard__slot__games,
+	.leaderboard__slot__wins,
+	.leaderboard__slot__ratio,
+	.leaderboard__slot__achievements {
+		display: none;
+	}
+}
+
+@media (max-width: 500px) {
+	.leaderboard__slot__player-avatar,
+	.leaderboard__slot__score,
+	.subtitle {
+		display: none;
+	}
+	.leaderboard__slot {
+		justify-content: space-around;
+		font-size: 100%;
+	}
+	.empty {
+		font-size: 15px;
+	}
+	.empty__redirect {
+		flex-direction: column;
+	}
+	.rankList__search {
+		flex-direction: column;
+		height: 80px;
+		justify-content: space-between;
+		margin-bottom: 3em;
+	}
+}

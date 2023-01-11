@@ -1,7 +1,7 @@
 import { PrimaryButton } from 'Components/Buttons'
 import Nav from 'Components/NavBar/Notlogged'
 import { H1Title, Subtitle } from 'Components/Text'
-import { storeFirstNicknameDataBase } from 'Components/UpdateNickname/db_updatenickname'
+import { storeFirstNicknameDataBase } from 'components/UpdateNickname/db_updatenickname'
 import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
