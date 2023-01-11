@@ -160,7 +160,7 @@
 	}
 	.navbar__subMenu hr {
 		background:var(--font-color);
-		width: 70%;
+		width: 90%;
 	}
 
 	.navbar__subMenu-link-logo{
