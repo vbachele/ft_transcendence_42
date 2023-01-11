@@ -22,7 +22,7 @@ function displayMenu(){
 		 {toggleMenu && (<Menu></Menu>)}
 			<button className="menuButton" onClick={toggletnavclicked}>
 			<UserAvatarIcon width={'40px'} height={'40px'} src={DefaultAvatar}/>
-			<NormalText fontSize={'20px'} fontWeight={'600'}> {userContext?.user?.nickname} </NormalText>				
+			<NormalText fontSize={'20px'} fontWeight={'800'}> {userContext?.user?.nickname} </NormalText>				
 			</button>
 		</div>
 		)

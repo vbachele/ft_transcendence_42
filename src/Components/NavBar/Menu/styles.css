@@ -63,10 +63,11 @@
 	flex-direction: column;
 	background-color: #E04F5F;
 	position: relative;
+	align-items: left;
 	right: 200px;
 	bottom: -60px;
 	width: 300px;
-	height: 500px;
+	height: 450px;
 	border-radius: 6px;
 	padding: 20px;
 	margin: 10px;
@@ -80,17 +81,8 @@
 
 .navbar__subMenu__user {
 	display: flex;
-	align-items: center;
-}
-
-.navbar__subMenu__user__name-coa {
-	color: white;
-}
-
-.navbar__subMenu__user img {
-	width: 64px;
-	border-radius: 50%;
-	margin-right: 15px;
+	flex-direction: row;
+	align-items: left;
 }
 
 .navbar__subMenu hr {
@@ -101,12 +93,17 @@
 	margin: 15px 0 10px;
 }
 
+.navbar__subMenu__user__name-coa
+{
+	margin-left: 20px;
+}
+
 .navbar__subMenu-link {
 	display: flex;
 	align-items: center;
 	text-decoration: none;
 	color: white;
-	margin: 12px 15px;
+	margin: 4px 0px;
 }
 
 .navbar__subMenu-link p {
@@ -146,11 +143,11 @@
 		flex-direction: column;
 		background-color: var(--background-color);
 		position: absolute;
-		align-items: center;
-		right: 0px;
+		align-items: left;
+		left: 0px;
 		bottom: 0px;
 		height:80%; 
-		width:100%;
+		width:80%;
 		border-radius: 6px;
 		padding: 20px;
 		margin: 10px;
@@ -163,11 +160,10 @@
 	.navbar__subMenu hr {
 		background:var(--font-color);
 		width: 70%;
-		margin: 32px;
 	}
 
 	.navbar__subMenu-link-logo{
-		fill: red;
+		fill: var(--font-color);
 	}
 }
 

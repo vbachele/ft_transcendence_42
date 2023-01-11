@@ -61,12 +61,3 @@ export const MenuText = styled(Text)`
 		display :${props => props.display};
 	}
 `
-
-export const navbarsubMenutext = styled(Text)`
-	font-weight: ${props => props.fontWeight || "500"};
-	font-size: ${props => props.fontSize || "16px"};
-	line-height: 20px;
-	@media only screen and (max-width: 768px) {
-		display :${props => props.display};
-	}
-`

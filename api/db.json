@@ -49,10 +49,16 @@
       "id": 8
     },
     {
-      "name": "",
+      "name": "vincent",
       "image": "",
       "logged": true,
       "id": 9
+    },
+    {
+      "name": "vbachele",
+      "image": "",
+      "logged": true,
+      "id": 10
     }
   ]
 }

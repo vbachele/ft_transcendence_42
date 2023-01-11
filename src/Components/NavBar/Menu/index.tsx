@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import './styles.css'
 // import { CSSTransition } from 'react-transition-group';
@@ -7,14 +7,16 @@ import PlayIcon from "./Images/play.svg"
 import { MenuText, Subtitle } from 'components/Text'
 import { Link } from 'react-router-dom'
 import arrow from 'assets/arrow.svg';
-import play from 'assets/play.png';
-import watch from 'assets/watch.png';
-import chat from 'assets/chat.png';
-import leaderboard from 'assets/leaderboard.png';
-import stats	 from 'assets/stats.png';
-import settings from 'assets/settings.png';
-import logout from 'assets/logout.png';
-import DarkMode from 'components/DarkMode'
+import {GiPingPongBat} from 'react-icons/gi';
+import {BsFillPlayBtnFill} from 'react-icons/bs';
+import {IoMdChatboxes, IoMdSettings} from 'react-icons/io';
+import {MdLeaderboard, MdQueryStats} from 'react-icons/md';
+import {RiLogoutBoxRFill} from 'react-icons/ri';
+import UserAvatarIcon from 'components/UploadAvatar/Avatar'
+import UserContext from 'components/Context/userContent'
+
+
+
 
 export const Menu_layout = styled.div`
 	box-sizing: border-box;
@@ -52,6 +54,8 @@ const SubMenu:React.FC<{}> = () =>
 		setSubMenuOpen(!subMenuOpen);
 	}
 
+	const userContext = useContext(UserContext);
+	
 	useEffect(() => {
 		const handleClick = (event: MouseEvent) => {
 				if (subMenuRef.current &&
@@ -74,47 +78,56 @@ const SubMenu:React.FC<{}> = () =>
 				classNames="fade"
 				unmountOnExit
 			> */}
-			{/* <div className="navbar__subMenu__user"> */}
+				<div className="navbar__subMenu__user">
+					<Link to="/dashboard" className="navbar__subMenu__user-link">
+						<UserAvatarIcon width={'40px'} height={'40px'} src={DefaultAvatar}/>
+					</Link>
+					<div className="navbar__subMenu__user__name-coa">
+						<Subtitle color='white' fontSize={'20px'} fontWeight={'600'}>{userContext?.user?.nickname}</Subtitle>
+						<Subtitle color='white'>Federation</Subtitle>
+					</div>
+				</div>
+			<hr />
 			<Link to="/login-page" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={play}/>
-					<Subtitle color='white' fontSize={'22px'} fontWeight={0}>Play</Subtitle>
+					<GiPingPongBat style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></GiPingPongBat>
+					<Subtitle color='white' fontSize={'16px'} fontWeight={0}>Play</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* SPECTATE */}
 				<Link to="/watch" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={watch}/>
-					<Subtitle color='white' fontSize={'22px'}>Spectate</Subtitle>
+					<BsFillPlayBtnFill style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></BsFillPlayBtnFill>
+					<Subtitle color='white' fontSize={'16px'}>Spectate</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* CHAT */}
 				<Link to="/chat" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={chat}/>
-					<Subtitle color='white' fontSize={'22px'}>Chat</Subtitle>
+					<IoMdChatboxes style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></IoMdChatboxes>
+					<Subtitle color='white' fontSize={'16px'}>Chat</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* LEADERBOARD */}
 				<Link to="/leaderboard" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={leaderboard}/>
-					<Subtitle color='white' fontSize={'22px'}>Leaderboard</Subtitle>
+					<MdLeaderboard style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></MdLeaderboard>
+					<Subtitle color='white' fontSize={'16px'}>Leaderboard</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* DASHBOARD */}
 				<Link to={`/dashboard/${1}`} className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={stats}/>
-					<Subtitle color='white' fontSize={'22px'}>My Stats</Subtitle>
+					<MdQueryStats style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></MdQueryStats>
+					<Subtitle color='white' fontSize={'16px'}>My Stats</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				<hr />
 				{/* SETTINGS */}
 				<Link to="/dashboard/5" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={settings}/>
-					<Subtitle color='white' fontSize={'22px'}>Settings</Subtitle>
+					<IoMdSettings style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></IoMdSettings>
+					<Subtitle color='white' fontSize={'16px'}>Settings</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* LOGOUT */}
 				<Link to="/logout" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
-					<img className="navbar__subMenu-link-logo" src={logout}/>
-					<Subtitle color='white' fontSize={'22px'}>Log Out</Subtitle>
+					<RiLogoutBoxRFill style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></RiLogoutBoxRFill>
+					<Subtitle color='white' fontSize={'16px'}>Log Out</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* </CSSTransition> */}

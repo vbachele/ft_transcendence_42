@@ -95,7 +95,7 @@ const UpdateNickname = () => {
       <UpdateNicknameLayout>
         <NormalText fontWeight={"600"} fontSize={"14px"}>Choose a Nickname *</NormalText>
         <UpdateNicknameLayout__Input 
-          type="text" value={value}
+          type="text" required value={value}
           name='UpdateName'
           onChange={handleChange} 
           placeholder="ex: VincentCollègueShadow" 
