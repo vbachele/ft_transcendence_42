@@ -150,12 +150,13 @@
 		width:80%;
 		border-radius: 6px;
 		padding: 20px;
-		margin: 10px;
+		margin: 16px;
 		box-shadow: none;
 	
 	}
 	.navbar__subMenu-link{
 		width: 60%;
+		padding: 4px;
 	}
 	.navbar__subMenu hr {
 		background:var(--font-color);

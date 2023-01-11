@@ -13,9 +13,9 @@ const LoginPage = () => {
           <H1Title>FIRE PONG</H1Title>
           <Subtitle>Push play to be sent to hell</Subtitle>
         </div>
-        <Link to="/registration-page">
+        {/* <Link to="/LandingPage"> */}
 			<PrimaryButton className='InfosContainer--PlayButton'>Play</PrimaryButton>
-		</Link> 
+		{/* </Link>  */}
 	</div>
     </div>
   )
