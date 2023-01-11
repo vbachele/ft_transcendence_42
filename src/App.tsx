@@ -5,9 +5,9 @@ import {
   Routes, 
   } from 'react-router-dom';
 import {UserContextProvider} from "components/Context/userContent"
-import LandingPage from 'pages/LandingPage'
+import LandingPage from 'pages/Landing'
 import RegistrationPage from 'pages/Registration'
-import LoginPage from 'pages/LoginPage'
+import LoginPage from 'pages/Login'
 import { PictureContextProvider } from 'components/Context/pictureContent'
 import Leaderboard from 'pages/Leaderboard';
 import Dashboard from 'pages/Dashboard';

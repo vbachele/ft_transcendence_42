@@ -1,6 +1,6 @@
-import { PrimaryButton } from 'Components/Buttons'
-import Nav from 'Components/NavBar/Notlogged'
-import { H1Title, Subtitle } from 'Components/Text'
+import { PrimaryButton } from 'components/Buttons'
+import Nav from 'components/NavBar/Notlogged'
+import { H1Title, Subtitle } from 'components/Text'
 import { storeFirstNicknameDataBase } from 'components/UpdateNickname/db_updatenickname'
 import { Link } from 'react-router-dom'
 

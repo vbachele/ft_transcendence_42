@@ -158,11 +158,11 @@
 	
 	}
 	.navbar__subMenu-link{
-		width: 350px;
+		width: 70%;
 	}
 	.navbar__subMenu hr {
 		background:var(--font-color);
-		width: 305px;
+		width: 70%;
 		margin: 32px;
 	}
 

@@ -2,7 +2,7 @@ import DarkMode from "components/DarkMode";
 import styles from 'components/NavBar/Nav.module.css'
 import { H1Title, NormalText } from 'components/Text';
 import DefaultAvatar from 'Components/UploadAvatar/Images/DefaultAvatar.png'
-import "./index.css"
+import "./styles.css"
 import { useContext, useState } from "react";
 import UserContext from "components/Context/userContent";
 import Menu from "../Menu";
