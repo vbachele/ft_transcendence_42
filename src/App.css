@@ -1,0 +1,36 @@
+.InfosContainer
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0px;
+	gap: 80px;
+	margin : auto;
+	height: 75vh;
+
+}
+
+.InfosContainer--PlayButton
+{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0px;
+
+	width: 132px;
+	height: 56px;
+
+}
+
+.InfosContainer--TextLayout
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0px;
+	gap: 8px;
+
+	width: 233px;
+	height: 77px;
+}
