@@ -1,5 +1,5 @@
 import { PrimaryButton } from 'components/Buttons'
-import NavLogged from 'components/NavBar/Logged'
+import NavLogged from 'components/Navbar/Logged'
 import { H1Title, Subtitle } from 'components/Text'
 import React from 'react'
 import { Link } from 'react-router-dom'

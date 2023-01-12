@@ -1,14 +1,12 @@
 import DarkMode from "components/DarkMode";
-import styles from 'components/NavBar/Nav.module.css'
 import { H1Title, NormalText } from 'components/Text';
 import DefaultAvatar from 'components/UploadAvatar/Images/DefaultAvatar.png'
-import "./styles.css"
 import { useContext, useState } from "react";
 import UserContext from "components/Context/userContent";
 import Menu from "../Menu";
 import UserAvatarIcon from "components/UploadAvatar/Avatar";
-
-
+import styles from 'components/Navbar/Navbar.module.css'
+import "./styles.css"
 
 function displayMenu(){
 	const [toggleMenu, setToggleMenu] = useState(false);

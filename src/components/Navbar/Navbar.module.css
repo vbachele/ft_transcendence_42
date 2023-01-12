@@ -1,21 +1,19 @@
 
 /* Compared to the figma design I changed the padding to adjust the padding of the right */
-  
-.navbar
-{
+
+.navbar {
 	display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+	flex-direction: row;
+	justify-content: space-between;
 	align-items: center;
 	padding: 0px 16px;
-    height: 76px;
-    background-color: var(--background-color);
+	height: 76px;
+	background-color: var(--background-color);
 	align-self: stretch;
-    border-bottom: 1px solid var(--font-color);
+	border-bottom: 1px solid var(--font-color);
 }
 
-.links-containers
-{
+.links-containers {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -25,8 +23,7 @@
 	height: 24px;
 }
 
-.links-containers-logged
-{
+.links-containers-logged {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -35,12 +32,9 @@
 	justify-content: space-evenly;
 	width: 217px;
 	height: 40px;
-
-	
 }
 
-.Divider1, .Divider2
-{
+.Divider1, .Divider2 {
 	width: 20px;
 	height: 2px;
 	border-radius: 4px;
@@ -51,8 +45,7 @@
 	background: var(--font-color);
 }
 
-.LoginLayout
-{
+.LoginLayout {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -63,8 +56,7 @@
 	height: 24px;
 }
 
-.NotLogged
-{
+.NotLogged {
 	color: var(--font-color);
 	font-family: 'Montserrat';
 	font-style: normal;
@@ -75,16 +67,14 @@
 
 }
 
-.LoginIcon
-{
+.LoginIcon {
 	color: var(--font-color);
 
 	width: 24px;
 	height: 24px;
 }
 
-.Nav-link-container-nickmenu
-{
+.Nav-link-container-nickmenu {
 	display: flex;
 	flex-direction: row;
 	padding: 0px;
@@ -94,8 +84,7 @@
 	height: 40px;
 }
 
-.menuButton
-{
+.menuButton {
 	display: flex;
 	flex-direction: row;
 	background-color: transparent;
@@ -114,30 +103,30 @@
 @media only screen and (max-width: 768px) {
 
 	.navbar
-	{
+ {
 		height: 61px;
 		padding: 0px 20px;
 	}
 
 	.links-containers
-	{
+ {
 		width: 140px;
 		gap: 4px;
 		height: 24px;
 	}
 
 	.links-containers-logged
-	{
+ {
 		width: 123px;
 	}
 
 	.Spectate, .Divider2, .Divider1
-	{
+ {
 		display: none;
 	}
 
 	.LoginLayout
-	{
+ {
 		width: 100px;
 		gap: 8px;
 		height: 24px;
