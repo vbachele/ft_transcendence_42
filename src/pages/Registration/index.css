@@ -1,28 +1,25 @@
-.CreateYourProfile
-{
+.CreateYourProfile {
 	/* Auto layout */
 
-display: flex;
-flex-direction: column;
-align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-margin: auto;
+	margin: auto;
 
-width: 394px;
+	width: 394px;
 
+	/* Inside auto layout */
 
-/* Inside auto layout */
-
-flex: none;
-order: 2;
-flex-grow: 0;
+	flex: none;
+	order: 2;
+	flex-grow: 0;
 }
 
 @media only screen and (max-width: 768px) {
-	.CreateYourProfile
-	{
-		width:335px;
-		
+	.CreateYourProfile {
+		width: 335px;
+
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -30,7 +27,6 @@ flex-grow: 0;
 		gap: 32px;
 
 		height: 591px;
-
 
 		/* Inside auto layout */
 
