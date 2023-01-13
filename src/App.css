@@ -1,18 +1,18 @@
-.InfosContainer
-{
+/* To be moved */
+
+.InfosContainer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 0px;
 	gap: 80px;
-	margin : auto;
+	margin : 0;
 	height: 75vh;
 
 }
 
-.InfosContainer--PlayButton
-{
+.InfosContainer--PlayButton {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -23,8 +23,7 @@
 
 }
 
-.InfosContainer--TextLayout
-{
+.InfosContainer--TextLayout {
 	display: flex;
 	flex-direction: column;
 	align-items: center;

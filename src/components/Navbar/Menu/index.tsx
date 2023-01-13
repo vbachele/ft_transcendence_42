@@ -138,7 +138,7 @@ const SubMenu:React.FC<{}> = () =>
 
 const Menu = () => {
   return (
-		<SubMenu ></SubMenu>
+		<SubMenu />
   )
 }
 

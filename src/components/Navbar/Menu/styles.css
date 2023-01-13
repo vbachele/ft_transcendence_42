@@ -146,13 +146,13 @@
 		align-items: left;
 		left: 0px;
 		bottom: 0px;
-		height:80%; 
+		height:80%;
 		width:80%;
 		border-radius: 6px;
 		padding: 20px;
 		margin: 16px;
 		box-shadow: none;
-	
+
 	}
 	.navbar__subMenu-link{
 		width: 60%;
@@ -172,4 +172,3 @@
 	}
 
 }
-

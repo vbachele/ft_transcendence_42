@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-// Here we can define all the property for a text by 
+// Here we can define all the property for a text by
 
 export const Text = styled.text`
 	font-family: 'Montserrat';
@@ -24,7 +24,7 @@ export const H2Title = styled(Text)`
 	font-size: ${props => props.fontSize || "40px"};
 	line-height: 48px;
 	@media only screen and (max-width: 768px) {
-		font-weight: 700; 
+		font-weight: 700;
 		font-size: 20px;
 		line-height: 24px;
 		align-items: left;

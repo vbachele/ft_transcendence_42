@@ -3,17 +3,39 @@
 
 .navbar {
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0px 16px;
 	height: 76px;
-	background-color: var(--background-color);
 	align-self: stretch;
-	border-bottom: 1px solid var(--font-color);
+	background-color: var(--background-color);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+	/* border-bottom: 1px solid var(--font-color); */
+}
+
+.divider {
+	width: 20px;
+	height: 2px;
+	border-radius: 4px;
+	transform: rotate(-90deg);
+	left: 0%;
+	right: 0%;
+	background: var(--font-color);
+}
+
+
+.menuButton {
+	display: flex;
+	/* background-color: transparent; */
+	/* border: transparent; */
+	align-items: center;
+	gap: 8px;
+
+	cursor: pointer;
 }
 
 .links-containers {
+	text-decoration: none;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -30,19 +52,6 @@
 	padding: 0px;
 	gap: 16px;
 	justify-content: space-evenly;
-	width: 217px;
-	height: 40px;
-}
-
-.Divider1, .Divider2 {
-	width: 20px;
-	height: 2px;
-	border-radius: 4px;
-	transform: rotate(-90deg);
-
-	left: 0%;
-	right: 0%;
-	background: var(--font-color);
 }
 
 .LoginLayout {
@@ -52,8 +61,6 @@
 	padding: 0px;
 	gap: 8px;
 
-	width: 120px;
-	height: 24px;
 }
 
 .NotLogged {
@@ -64,7 +71,6 @@
 	width: 70px;
 	font-size: 20px;
 	line-height: 24px;
-
 }
 
 .LoginIcon {
@@ -84,49 +90,28 @@
 	height: 40px;
 }
 
-.menuButton {
-	display: flex;
-	flex-direction: row;
-	background-color: transparent;
-	border: transparent;
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	padding: 0px;
-	gap: 8px;
 
-	width: 159px;
-	height: 40px;
-	cursor: pointer;
-}
-
-@media only screen and (max-width: 768px) {
-
-	.navbar
- {
+@media (max-width: 768px) {
+	.navbar {
 		height: 61px;
 		padding: 0px 20px;
 	}
 
-	.links-containers
- {
+	.links-containers {
 		width: 140px;
 		gap: 4px;
 		height: 24px;
 	}
 
-	.links-containers-logged
- {
+	.links-containers-logged {
 		width: 123px;
 	}
 
-	.Spectate, .Divider2, .Divider1
- {
+	.Spectate, .Divider2, .Divider1 {
 		display: none;
 	}
 
-	.LoginLayout
- {
+	.LoginLayout {
 		width: 100px;
 		gap: 8px;
 		height: 24px;
