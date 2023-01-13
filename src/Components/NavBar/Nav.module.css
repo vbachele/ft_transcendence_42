@@ -12,6 +12,8 @@
     background-color: var(--background-color);
 	align-self: stretch;
     border-bottom: 1px solid var(--font-color);
+	position:sticky;
+	position: -webkit-sticky;
 }
 
 .links-containers
@@ -109,6 +111,11 @@
 	width: 159px;
 	height: 40px;
 	cursor: pointer;
+}
+
+.menu__logintext_link
+{
+	text-decoration: none;
 }
 
 @media only screen and (max-width: 768px) {

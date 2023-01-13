@@ -1,0 +1,17 @@
+.firstBoxText
+{
+    resize: none;
+    width: 95%;
+    height: 96px;
+    background: #F9F9F9;
+    border: 1px solid #E6E6E6;
+    border-radius: 5px;
+    padding: 8px 24px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #000000;
+}

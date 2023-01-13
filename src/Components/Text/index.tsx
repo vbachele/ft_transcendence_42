@@ -6,13 +6,13 @@ export const Text = styled.text`
 	font-family: 'Montserrat';
 	font-style: normal;
 	display: flex;
-	align-items: center;
-	color: var(--font-color);
+	color:  ${props => props.color || 'var(--font-color)'};
 `;
 
 export const H1Title = styled(Text)`
 	font-weight: ${props => props.fontWeight || "700"};
 	font-size: ${props => props.fontSize || "40px"};
+	text-align: ${props => props.fontSize || "center"};
 	line-height: 48px;
 	@media only screen and (max-width: 768px) {
 		font-size:${props => props.string};
@@ -61,3 +61,4 @@ export const MenuText = styled(Text)`
 		display :${props => props.display};
 	}
 `
+

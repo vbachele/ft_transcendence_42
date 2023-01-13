@@ -121,7 +121,7 @@ export const Subtitle = styled(text)`
 
 To import the component, you do the following in another component
 
-````
+```
 import { H1Title, Subtitle } from 'Components/Text'
 
 const LandingPage = () => {
@@ -131,3 +131,8 @@ const LandingPage = () => {
         <Subtitle>Votre anus va finir en feu</Subtitle>
      </div>
 ```c
+
+- ###### TEST
+How to test on multiple devices
+- Go to your package.json and change dev by ""
+- 

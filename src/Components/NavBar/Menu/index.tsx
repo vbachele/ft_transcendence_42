@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import './styles.css'
-// import { CSSTransition } from 'react-transition-group';
 import DefaultAvatar from 'Components/UploadAvatar/Images/DefaultAvatar.png'
-import PlayIcon from "./Images/play.svg" 
 import { MenuText, Subtitle } from 'components/Text'
 import { Link } from 'react-router-dom'
 import arrow from 'assets/arrow.svg';
@@ -14,6 +12,7 @@ import {MdLeaderboard, MdQueryStats} from 'react-icons/md';
 import {RiLogoutBoxRFill} from 'react-icons/ri';
 import UserAvatarIcon from 'components/UploadAvatar/Avatar'
 import UserContext from 'components/Context/userContent'
+import Popup from 'components/popup/popupLogout'
 
 
 
@@ -49,9 +48,16 @@ const SubMenu:React.FC<{}> = () =>
 	const [subMenuOpen, setSubMenuOpen] = useState<boolean>(false);
 	const subMenuRef = useRef<HTMLDivElement>(null);
 	const avatarRef = useRef<HTMLImageElement>(null);
+	const [logout, setLogout] = useState(false);
 
 	const ToggleSubMenu = () => {
 		setSubMenuOpen(!subMenuOpen);
+	}
+
+	const toggleLogout = () =>
+	{
+		setLogout(!logout);
+		(<Popup></Popup>)
 	}
 
 	const userContext = useContext(UserContext);
@@ -119,17 +125,23 @@ const SubMenu:React.FC<{}> = () =>
 				</Link>
 				<hr />
 				{/* SETTINGS */}
-				<Link to="/dashboard/5" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
+				<Link to="/settings" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
 					<IoMdSettings style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></IoMdSettings>
 					<Subtitle color='white' fontSize={'16px'}>Settings</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
 				</Link>
 				{/* LOGOUT */}
-				<Link to="/logout" className="navbar__subMenu-link" onClick={ToggleSubMenu}>
+				<button  className="navbar__subMenu-linkButton" onClick={toggleLogout}>
+					{logout && (<Popup 
+					click={logout}
+					title="LOG OUT"
+					stringPrimaryButton="Log out"
+					cancelString="cancel"
+					></Popup>)}
 					<RiLogoutBoxRFill style={{width: '25px', height: '25px' }} className="navbar__subMenu-link-logo"></RiLogoutBoxRFill>
 					<Subtitle color='white' fontSize={'16px'}>Log Out</Subtitle>
 					<img className="navbar__subMenu-link-arrow filter-white" src={arrow} />
-				</Link>
+				</button>
 				{/* </CSSTransition> */}
 		</div>
 	);

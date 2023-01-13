@@ -7,11 +7,10 @@ import { H1Title, NormalText } from 'components/Text';
 
 function IconLayout(){
 	return (
-		<Link to="/registration-page">
+		<Link to="/registration-page" style={{textDecoration: 'none'}} className='menu__logintext_link'>
 			<div className={styles.LoginLayout}>
 				<BsFillPersonFill className={styles.LoginIcon} />
 				<NormalText fontSize={'20px'} fontWeight={'600'}> Log in </NormalText>
-
 			</div>
 		</Link>
 	);

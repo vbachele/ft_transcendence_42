@@ -1,11 +1,11 @@
-import BackButton from 'Components/Buttons/BackButton'
-import Nav from 'Components/NavBar/Notlogged'
-import { H2Title, NormalText, Subtitle } from 'Components/Text'
+import BackButton from 'components/Buttons/BackButton'
+import Nav from 'components/NavBar/Notlogged'
+import { H2Title, NormalText, Subtitle } from 'components/Text'
 import React, { useRef, useState } from 'react'
-import './index.css'
-import { SecondaryButton } from 'Components/Buttons'
-import { UploadAvatar } from 'Components/UploadAvatar'
-import UpdateNickname from 'Components/UpdateNickname'
+import './styles.css'
+import { SecondaryButton } from 'components/Buttons'
+import { UploadAvatar } from 'components/UploadAvatar'
+import UpdateNickname from 'components/UpdateNickname'
 
 
 
@@ -16,9 +16,9 @@ const RegistrationPage = () => {
       <BackButton></BackButton>
       <div className="CreateYourProfile">
         <H2Title >Create Your Profile</H2Title>
-        <Subtitle display="none">Ajout subtitle pour préciser l’action souhiatée</Subtitle>
+        <Subtitle display="none">Here you are going to HELL</Subtitle>
         <UploadAvatar></UploadAvatar>
-        <UpdateNickname ></UpdateNickname>
+        <UpdateNickname></UpdateNickname>
       </div>
     </div>
   )

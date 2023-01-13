@@ -1,0 +1,18 @@
+.settings
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin: auto;
+
+	width: 394px;
+	padding-top: 104px;
+
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 2;
+	flex-grow: 0;
+}

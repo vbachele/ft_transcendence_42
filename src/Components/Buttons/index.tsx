@@ -7,7 +7,6 @@ const Button = styled.button`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 14px 40px;
 	border-radius: 37px;
 	font-family: 'Montserrat';
 	font-style: normal;
@@ -20,22 +19,22 @@ const Button = styled.button`
 
 export const PrimaryButton = styled(Button)`
 	background-color: #E04F5F;
-	width: 132px;
-	height: 56px;
-	color: #FFFFFF;
+	width: ${props => props.width || '132px'};
+	height: ${props => props.height || '56px'};
+	color:  ${props => props.color || '#FFFFFF'};
+	max-width: 100%;
 	letter-spacing: 0.2px;
 `
 
 export const SecondaryButton = styled(Button)`
 	width: 159px;
 	height: 56px;
-	background-color: #FFFFFF;
+	color:  ${props => props.color || '#FFFFFF'};
 	gap: 10px;
 	color: #E04F5F;
 	align-items: left;
 	submit = 
 `
-
 
 
 export default Button

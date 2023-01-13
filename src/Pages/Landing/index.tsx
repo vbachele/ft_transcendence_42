@@ -18,7 +18,7 @@ const LandingPage = () => {
           <H1Title>FIRE PONG</H1Title>
           <Subtitle>Votre anus va finir en feu</Subtitle>
         </div>
-        <Link to="/registration-page">
+        <Link to="/registration-page" style={{textDecoration: 'none'}}>
 			<PrimaryButton className='InfosContainer--PlayButton' onClick={handleChange}>Play</PrimaryButton>
 		</Link> 
 	</div>

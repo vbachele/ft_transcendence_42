@@ -106,6 +106,20 @@
 	margin: 4px 0px;
 }
 
+.navbar__subMenu-linkButton {
+	color: white;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	margin: 4px 0px;
+	background-color: #E04F5F;
+	border: none;
+	text-decoration: none;
+	background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
 .navbar__subMenu-link p {
 	width: 100%;
 }
@@ -116,11 +130,6 @@
 	margin-right: 15px;
 }
 
-.navbar_subMenu-DarkMode
-{
-	padding:8px;
-	margin-right: 15px;
-}
 
 .navbar__subMenu-link-arrow {
 	display:none;
@@ -142,15 +151,18 @@
 		display: flex;
 		flex-direction: column;
 		background-color: var(--background-color);
-		position: absolute;
+		position: fixed;
 		align-items: left;
 		left: 0px;
 		bottom: 0px;
-		height:80%; 
-		width:80%;
+		top: 72px;
+		z-index: 10; /* allow this component to be above all the other */
+		
+		width:100%;
+		height: 100%;
 		border-radius: 6px;
 		padding: 20px;
-		margin: 16px;
+		margin: 0px;
 		box-shadow: none;
 	
 	}
@@ -160,7 +172,7 @@
 	}
 	.navbar__subMenu hr {
 		background:var(--font-color);
-		width: 90%;
+		width: 100%;
 	}
 
 	.navbar__subMenu-link-logo{
@@ -169,6 +181,16 @@
 
 	.navbar__subMenu__user {
 		padding-top: 20px;
+	}
+
+	.navbar__subMenu-linkButton {
+		color: white;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		margin: 4px 2px;
+		background-color: var(--background-color);
+		border: none;
 	}
 
 }

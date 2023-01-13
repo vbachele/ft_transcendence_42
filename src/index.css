@@ -15,7 +15,7 @@ code {
 [data-theme="light"] 
 {
   --font-color: black;
---background-color: white;
+	--background-color: white;
 }
 
 [data-theme="dark"] 

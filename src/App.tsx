@@ -13,6 +13,7 @@ import Leaderboard from 'pages/Leaderboard';
 import Dashboard from 'pages/Dashboard';
 import NotFound from 'pages/NotFound';
 import useFetchPlayer from 'hooks/useFetchPlayer';
+import Settings from 'pages/Settings';
 
 
 
@@ -28,9 +29,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/registration-page" element={<RegistrationPage />} />
         <Route path="/login-page" element={<LoginPage />} />
-        <Route path="/testImage"/>
         <Route path="/leaderboard" element={<Leaderboard />} />
 				<Route path='/dashboard/:id' element={<Dashboard />} />
+        <Route path='/settings' element={<Settings />} />
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
