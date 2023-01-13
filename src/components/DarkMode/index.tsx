@@ -1,12 +1,12 @@
 import UncheckedDarkMode from './Images/Moon.svg';
-import './index.css';
+import CheckedDarkMode from './Images/Sun.svg';
 import React, {
 	ChangeEventHandler,
 	createContext,
 	useEffect,
 	useState,
 } from 'react';
-import CheckedDarkMode from './Images/Sun.svg';
+import './index.css';
 
 const setDark = () => {
 	localStorage.setItem('theme', 'dark');
