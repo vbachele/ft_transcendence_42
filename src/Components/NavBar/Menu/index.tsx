@@ -12,7 +12,7 @@ import {MdLeaderboard, MdQueryStats} from 'react-icons/md';
 import {RiLogoutBoxRFill} from 'react-icons/ri';
 import UserAvatarIcon from 'components/UploadAvatar/Avatar'
 import UserContext from 'components/Context/userContent'
-import Popup from 'components/popup/popupLogout'
+import Popup from 'components/Popup/popupLogout'
 
 
 
