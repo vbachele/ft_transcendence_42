@@ -6,16 +6,16 @@ code {
 
 :root {
 	--font-color: black;
-	--background-color: #F5F5F5;
+	--background-color: #f5f5f5;
 }
 
 /* 2 */
-[data-theme="light"] {
+[data-theme='light'] {
 	--font-color: black;
-	--background-color: #F5F5F5;
+	--background-color: white;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
 	--font-color: white;
 	--background-color: #171717;
 }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {BsFillCameraFill} from 'react-icons/bs'
 import axios from 'axios';
-import { api } from 'lib/api';
+import { api } from 'Lib/api';
 import UserContext from 'components/Context/userContent';
 import PictureContext from 'components/Context/pictureContent';
 
@@ -25,7 +25,7 @@ const CameraLayout= styled.div `
 	background: var(--font-color);
 	border-radius: 56px;
 	position: relative;
-
+	
 `
 
 export const CameraLayout__CameraIcon= styled(BsFillCameraFill)`
@@ -46,10 +46,10 @@ export const Camera = () => {
 		  reader.onerror = (error) => reject(error);
 		});
 	  }
-
+	
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
-
+		
 		if (file) {
 		const uploadfile = getBase64(file)
 		  .then(base64 => {
@@ -63,7 +63,7 @@ export const Camera = () => {
 			console.log(pictureContext.picture);
 		}
 	}
-
+	  
 // Here I create a label for my cameraIcon and create an input, by giving an id with the name of my labe
 // I can put the input in my image
 
@@ -72,14 +72,14 @@ export const Camera = () => {
 		<label htmlFor="file-input">
        		<CameraLayout__CameraIcon />
      	 </label>
-		<input
-			type="file"
-			id="file-input"
+		<input 
+			type="file" 
+			id="file-input" 
 			onChange={handleChange}
-			accept="image/*"
+			accept="image/*"			
 		/>
 	</CameraLayout>
-
+	
   )
 }
 

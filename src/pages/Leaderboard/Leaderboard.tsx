@@ -7,7 +7,7 @@ import Loading from 'components/Loading';
 import Error from 'components/Error';
 
 const Leaderboard = () => {
-	const {data, isLoading, error} = useFetch<IUser[]>('http://localhost:3000/players');
+	const {data, isLoading, error} = useFetch<IUser[]>('http://localhost:8000/players');
 
 	return (
 		<div className='leaderboard'>

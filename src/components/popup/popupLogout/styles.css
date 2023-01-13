@@ -1,0 +1,39 @@
+.popup__logout_button
+{
+	margin-top: 40px;
+	flex-direction: row;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 44px;
+
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 2;
+	flex-grow: 0;
+}
+
+.no-style-button {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.goodbye__gif
+{	
+	margin: 15px auto;
+	width: 50%;
+	display: flex;
+	align-content: 'center'
+}
+
+@media only screen and (max-width: 768px) {
+.popup__logout_button
+{
+	flex-direction: column;
+	gap: 20px;
+}
+}
+

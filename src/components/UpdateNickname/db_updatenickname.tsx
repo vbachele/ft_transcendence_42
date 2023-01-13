@@ -1,4 +1,4 @@
-import { backend } from 'lib/backend';
+import { backend } from 'Lib/backend';
 
 export const storeFirstNicknameDataBase = async () => {
 	const user = await backend.createUser(

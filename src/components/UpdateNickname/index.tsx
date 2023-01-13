@@ -1,37 +1,33 @@
-import { SecondaryButton } from 'components/Buttons'
-import { NormalText } from 'components/Text'
-import React, { ChangeEventHandler, useContext, useEffect, useRef, useState} from 'react'
-import styled from 'styled-components'
-import { backend } from 'lib/backend'
-import { useNavigate } from 'react-router-dom';
-import UserContext from 'components/Context/userContent'
-
+import { SecondaryButton } from 'Components/Buttons';
+import { NormalText } from 'Components/Text';
+import React, { ChangeEventHandler, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 const NicknameForm = styled.form`
-  display: flex;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
-`
+`;
 
 const UpdateNicknameLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  padding: 0px;
-  gap: 10px;
-  padding-top: 40px;
-  padding-bottom: 56px;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	padding: 0px;
+	gap: 10px;
+	padding-top: 40px;
+	padding-bottom: 56px;
 
-  height: 70px;
+	height: 70px;
 
-  /* Inside auto layout */
+	/* Inside auto layout */
 
-  align-self: stretch;
-  @media only screen and (max-width: 768px) {
-    padding-top: 10px;
-    padding-bottom: 80px;
-  }
-`
+	align-self: stretch;
+	@media only screen and (max-width: 768px) {
+		padding-top: 10px;
+		padding-bottom: 80px;
+	}
+`;
 
 const UpdateNicknameLayout__Input = styled.input`
   width: 394px;
@@ -69,44 +65,38 @@ const UpdateNicknameLayout__Input = styled.input`
     width: 320px;
     height: 50px;
 
-`
+`;
 
 const UpdateNickname = () => {
+	const [value, setValue] = useState('');
 
-  const [value, setValue] = useState('');
-  let navigate = useNavigate(); // Use navigate allow to take the Route and to navigate to other page
-  const userContext = useContext(UserContext);
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+		setValue(event.target.value);
+	};
 
-  const handleChange:ChangeEventHandler<HTMLInputElement> = (event) =>
-  {
-    userContext.setUser({nickname: event.target.value})
-    setValue(event.target.value);
-  };
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+		event.preventDefault();
+		console.log(value);
+	};
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    backend.updateUser({name: value as string});
-    backend.updateLogStatus({logged:true});
-    navigate('/login-page');
-  };
+	return (
+		<NicknameForm className="NicknameForm" onSubmit={handleSubmit}>
+			<UpdateNicknameLayout>
+				<NormalText fontWeight={'600'} fontSize={'14px'}>
+					Choose a Nickname *
+				</NormalText>
+				<UpdateNicknameLayout__Input
+					type="text"
+					value={value}
+					onChange={handleChange}
+					placeholder="ex: VincentCollègueShadow"
+					maxLength={8}
+					minLength={2}
+				/>
+			</UpdateNicknameLayout>
+			<SecondaryButton type="submit">Continue</SecondaryButton>
+		</NicknameForm>
+	);
+};
 
-  return (
-      <NicknameForm className='NicknameForm' onSubmit={handleSubmit}>
-      <UpdateNicknameLayout>
-        <NormalText fontWeight={"600"} fontSize={"14px"}>Choose a Nickname *</NormalText>
-        <UpdateNicknameLayout__Input
-          type="text" required value={value}
-          name='UpdateName'
-          onChange={handleChange}
-          placeholder="ex: VincentCollègueShadow"
-          maxLength={8}
-          minLength={2}
-        />
-      </UpdateNicknameLayout>
-      <SecondaryButton type='submit'>Continue</SecondaryButton>
-
-      </NicknameForm>
-  )
-}
-
-export default UpdateNickname
+export default UpdateNickname;

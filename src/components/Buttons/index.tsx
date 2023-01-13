@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const Button = styled.button`
 	display: flex;
@@ -13,17 +13,17 @@ const Button = styled.button`
 	font-size: 16px;
 	font-weight: 700;
 	line-height: 28px;
-	border: 1px solid #E04F5F;
+	border: 1px solid #e04f5f;
 	text-decoration: none;
-`
+`;
 
 export const PrimaryButton = styled(Button)`
-	background-color: #E04F5F;
+	background-color: #e04f5f;
 	width: 132px;
 	height: 56px;
-	color: #FFFFFF;
+	color: #ffffff;
 	letter-spacing: 0.2px;
-`
+`;
 
 export const SecondaryButton = styled(Button)`
 	width: 159px;
@@ -33,6 +33,6 @@ export const SecondaryButton = styled(Button)`
 	color: #E04F5F;
 	align-items: left;
 	submit =
-`
+`;
 
 export default Button;

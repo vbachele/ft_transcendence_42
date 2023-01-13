@@ -7,7 +7,7 @@ import {BsChevronLeft} from "react-icons/bs";
 
 const BackButton = () => {
   return (
-	<Link to="/">
+	<Link to="/" style={{textDecoration: 'none'}}>
 		<div className="BackButton--Layout">
 			<BsChevronLeft className="BackButton--Layout--Icon"/>
 			<NormalText string='none'>Back</NormalText>

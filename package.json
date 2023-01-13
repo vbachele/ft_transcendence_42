@@ -1,37 +1,30 @@
 {
-  "name": "transcendence",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "vitest"
-  },
-  "dependencies": {
-    "axios": "^1.2.2",
-    "filepond": "^4.30.4",
-    "filepond-plugin-image-preview": "^4.6.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-filepond": "^7.1.2",
-    "react-icons": "^4.7.1",
-    "react-router-dom": "^6.6.1",
-    "react-transition-group": "^4.4.5",
-    "styled-components": "^5.3.6"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.18",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "@types/react-transition-group": "^4.4.5",
-    "@types/styled-components": "^5.1.26",
-    "@vitejs/plugin-react": "^3.0.0",
-    "fs": "^0.0.1-security",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.0",
-    "vite-tsconfig-paths": "^4.0.3",
-    "vitest": "^0.26.2"
-  }
+	"name": "transcendance",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --host",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@types/react-router-dom": "^5.3.3",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-icons": "^4.7.1",
+		"react-router-dom": "^6.6.1",
+		"styled-components": "^5.3.6"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.26",
+		"@types/react-dom": "^18.0.9",
+		"@types/styled-components": "^5.1.26",
+		"@vitejs/plugin-react": "^3.0.0",
+		"typescript": "^4.9.3",
+		"vite": "^4.0.0",
+		"vite-tsconfig-paths": "^4.0.3",
+		"vitest": "^0.26.2"
+	}
 }

@@ -1,0 +1,11 @@
+.button-url {
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 16px;
+	letter-spacing: 0.2px;
+	margin: 8px 16px;
+	padding: 14px 40px;
+	border-radius: 37px;
+	background: #E04F5F;
+	color: white;
+}

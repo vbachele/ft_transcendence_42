@@ -7,19 +7,22 @@ function isEqual(player1: IUser, player2: IUser): boolean {
 }
 
 function getRanks(player: IUser) {
-	const { data, isLoading, error } = useFetch<IUser[]>('http://localhost:3000/players');
+	const { data, isLoading, error } = useFetch<IUser[]>(
+		'http://localhost:3000/players'
+	);
 	let rankedPlayers: IUser[];
 	let globalRank: number = NaN;
 	let coalitionRank: number = NaN;
 
 	if (data) {
 		rankedPlayers = data.sort(compareScore);
-		globalRank = rankedPlayers.findIndex(p => isEqual(p, player)) + 1;
-		coalitionRank = rankedPlayers
-										.filter(p => player.coalition === p.coalition)
-										.findIndex(p => isEqual(p, player)) + 1;
+		globalRank = rankedPlayers.findIndex((p) => isEqual(p, player)) + 1;
+		coalitionRank =
+			rankedPlayers
+				.filter((p) => player.coalition === p.coalition)
+				.findIndex((p) => isEqual(p, player)) + 1;
 	}
-	return {globalRank, coalitionRank}
+	return { globalRank, coalitionRank };
 }
 
 export default getRanks;
