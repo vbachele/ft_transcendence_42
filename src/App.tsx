@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserContextProvider } from 'components/Context/userContent';
-import { PictureContextProvider } from 'components/Context/pictureContent';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {UserContextProvider} from 'components/Context/userContent';
+import {PictureContextProvider} from 'components/Context/pictureContent';
 import LandingPage from 'pages/Landing';
 import RegistrationPage from 'pages/Registration';
 import LoginPage from 'pages/Login';
@@ -11,16 +11,16 @@ import Settings from 'pages/Settings';
 import Navbar from 'components/Navbar';
 import GlobalStyle from 'styles/global';
 import './App.css';
-import { Fragment } from 'react';
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from 'styles/theme';
+import {Fragment} from 'react';
+import {ThemeProvider} from 'styled-components';
+import {darkTheme, lightTheme} from 'styles/theme';
 
 function App() {
 	return (
 		// <UserContextProvider>
 		// 	<PictureContextProvider>
 		<Fragment>
-			<ThemeProvider theme={lightTheme}>
+			<ThemeProvider theme={darkTheme}>
 				<GlobalStyle />
 				<Router>
 					<Navbar />

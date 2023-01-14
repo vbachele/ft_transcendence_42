@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import {DefaultTheme} from 'styled-components';
 
 export const lightTheme: DefaultTheme = {
 	borderRadius: '5px',
@@ -13,7 +13,7 @@ export const darkTheme: DefaultTheme = {
 	borderRadius: '0px',
 
 	colors: {
-		main: '#363537',
-		secondary: '#fafafa',
+		main: '#171717',
+		secondary: '#ffffff',
 	},
 };

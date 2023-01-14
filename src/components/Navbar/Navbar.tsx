@@ -1,12 +1,12 @@
-import { H1Title, NormalText } from 'components/Text';
+import {H1Title, NormalText} from 'components/Text';
 import DefaultAvatar from 'components/UploadAvatar/Images/DefaultAvatar.png';
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 import UserContext from 'components/Context/userContent';
 import DarkMode from 'components/DarkMode';
 // import Menu from "../Menu";
 
-import avatar from './assets/default-avatar.svg';
-import { StyledNav, Menu, Divider } from './Navbar.styles';
+import {ReactComponent as Avatar} from './assets/default-avatar.svg';
+import {StyledNav, Menu, Divider} from './Navbar.styles';
 
 // function displayMenu() {
 // 	const [toggleMenu, setToggleMenu] = useState(false);
@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
 			<Menu>
 				<button>Toggle Theme</button>
 				<Divider />
-				<img src={avatar} alt="avatar" />
+				<Avatar />
 			</Menu>
 		</StyledNav>
 		// <nav className={styles.navbar}>

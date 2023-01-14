@@ -15,8 +15,10 @@ export const Menu = styled.div`
 	align-items: center;
 	gap: 1em;
 
-	img {
+	svg {
 		width: 48px;
+		fill: ${(props) => props.theme.colors.secondary};
+		transition: fill 0.25s linear;
 	}
 `;
 
