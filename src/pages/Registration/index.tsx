@@ -1,11 +1,11 @@
 import BackButton from 'components/Buttons/BackButton';
-import Nav from 'components/Navbar/Notlogged';
+import Nav from 'components/NavBar/Notlogged';
 import { H2Title, NormalText, Subtitle } from 'components/Text';
 import React, { useRef, useState } from 'react';
+import './styles.css';
 import { SecondaryButton } from 'components/Buttons';
 import { UploadAvatar } from 'components/UploadAvatar';
 import UpdateNickname from 'components/UpdateNickname';
-import './index.css';
 
 const RegistrationPage = () => {
 	return (
@@ -13,13 +13,13 @@ const RegistrationPage = () => {
 			<Nav></Nav>
 			<BackButton></BackButton>
 			<div className="CreateYourProfile">
-				<H2Title >Create Your Profile</H2Title>
-				<Subtitle display="none">Insert subtitle</Subtitle>
+				<H2Title>Create Your Profile</H2Title>
+				<Subtitle display="none">Here you are going to HELL</Subtitle>
 				<UploadAvatar></UploadAvatar>
-				<UpdateNickname ></UpdateNickname>
+				<UpdateNickname></UpdateNickname>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default RegistrationPage
+export default RegistrationPage;

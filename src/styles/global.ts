@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-
 	* {
 		box-sizing: border-box;
 		margin: 0;
@@ -12,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		align-items: center;
 		text-align: center;
-		background: ${({ theme }) => theme.body};
-		color: ${({ theme }) => theme.text};
+		background-color: ${(props) => props.theme.colors.main};
+		color: ${(props) => props.theme.colors.secondary};
 		transition: background-color 0.25s linear, color 0.25s linear;
 	}
 `;

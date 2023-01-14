@@ -2,7 +2,7 @@ import { PrimaryButton } from 'components/Buttons';
 import { H1Title, Subtitle } from 'components/Text';
 import { storeFirstNicknameDataBase } from 'components/UpdateNickname/db_updatenickname';
 import { Link } from 'react-router-dom';
-import Navbar from 'components/Navbar/Notlogged';
+import Navbar from 'components/Navbar/-Notlogged';
 import Toggle from 'components/Navbar/components/Toggle';
 
 const LandingPage = () => {

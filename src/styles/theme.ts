@@ -1,17 +1,19 @@
 import { DefaultTheme } from 'styled-components';
 
-// colors to be changed
-
 export const lightTheme: DefaultTheme = {
-	body: '#E2E2E2',
-	text: '#363537',
-	toggleBorder: '#FFF',
-	gradient: 'linear-gradient(#39598A, #79D7ED)',
+	borderRadius: '5px',
+
+	colors: {
+		main: '#e2e2e2',
+		secondary: '#363537',
+	},
 };
 
 export const darkTheme: DefaultTheme = {
-	body: '#363537',
-	text: '#FAFAFA',
-	toggleBorder: '#6B8096',
-	gradient: 'linear-gradient(#091236, #1E215D)',
+	borderRadius: '0px',
+
+	colors: {
+		main: '#363537',
+		secondary: '#fafafa',
+	},
 };
