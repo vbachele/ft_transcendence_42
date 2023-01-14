@@ -6,39 +6,39 @@ import DarkMode from 'components/DarkMode';
 // import Menu from "../Menu";
 
 import avatar from './assets/default-avatar.svg';
-import { StyledNav } from './Navbar.styled';
+import { StyledNav, Menu, Divider } from './Navbar.styles';
 
-function displayMenu() {
-	const [toggleMenu, setToggleMenu] = useState(false);
-	const userContext = useContext(UserContext);
+// function displayMenu() {
+// 	const [toggleMenu, setToggleMenu] = useState(false);
+// 	const userContext = useContext(UserContext);
 
-	const toggletnavclicked = () => {
-		setToggleMenu(!toggleMenu);
-	};
+// 	const toggletnavclicked = () => {
+// 		setToggleMenu(!toggleMenu);
+// 	};
 
-	return (
-		<div className={styles['Nav-link-container-nickmenu']}>
-			{toggleMenu && <Menu />}
-			<button className="menuButton" onClick={toggletnavclicked}>
-				<img style={{ width: '50px' }} src={avatar} />
-			</button>
-		</div>
-	);
-}
+// 	return (
+// 		<div className={styles['Nav-link-container-nickmenu']}>
+// 			{toggleMenu && <Menu />}
+// 			<button className="menuButton" onClick={toggletnavclicked}>
+// 				<img style={{ width: '50px' }} src={avatar} />
+// 			</button>
+// 		</div>
+// 	);
+// }
 
-function Divider() {
-	return <div className={styles.divider} />;
-}
+// function Divider() {
+// 	return <div className={styles.divider} />;
+// }
 
-export const Menu = () => {
-	return (
-		<div className={styles['links-containers-logged']}>
-			<div className="DarkMode">{DarkMode()}</div>
-			<div>{'Divider' && Divider()}</div>
-			<div>{displayMenu()}</div>
-		</div>
-	);
-};
+// export const Menu = () => {
+// 	return (
+// 		<div className={styles['links-containers-logged']}>
+// 			<div className="DarkMode">{DarkMode()}</div>
+// 			<div>{'Divider' && Divider()}</div>
+// 			<div>{displayMenu()}</div>
+// 		</div>
+// 	);
+// };
 
 const Navbar: React.FC = () => {
 	// get user context
@@ -48,7 +48,12 @@ const Navbar: React.FC = () => {
 			<img src="logo.svg" />
 			{/* <DarkMode /> */}
 			{/* {isLogged ? <Avatar /> : <Register />} */}
-			<button>Toggle Theme</button>
+
+			<Menu>
+				<button>Toggle Theme</button>
+				<Divider />
+				<img src={avatar} alt="avatar" />
+			</Menu>
 		</StyledNav>
 		// <nav className={styles.navbar}>
 		// 	<H1Title fontSize={'36px'} fontWeight={'700'} string={'24px'}>

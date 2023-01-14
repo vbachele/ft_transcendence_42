@@ -13,7 +13,7 @@ import GlobalStyle from 'styles/global';
 import './App.css';
 import { Fragment } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from 'styles/theme';
+import { darkTheme, lightTheme } from 'styles/theme';
 
 function App() {
 	return (
