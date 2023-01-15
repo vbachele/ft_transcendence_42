@@ -1,11 +1,6 @@
-import UncheckedDarkMode from './Images/Moon.svg';
-import CheckedDarkMode from './Images/Sun.svg';
-import React, {
-	ChangeEventHandler,
-	createContext,
-	useEffect,
-	useState,
-} from 'react';
+import {ReactComponent as Moon} from './assets/moon.svg';
+import {ReactComponent as Sun} from './assets/sun.svg';
+import {useEffect, useState} from 'react';
 import './index.css';
 
 const setDark = () => {
@@ -20,11 +15,9 @@ const setLight = () => {
 
 // Here we checked the preference of the user if he wants dark or not
 const storedTheme = localStorage.getItem('theme');
-
 const prefersDark =
 	window.matchMedia &&
 	window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 const defaultDark =
 	storedTheme === 'dark' || (storedTheme === null && prefersDark);
 
@@ -32,14 +25,12 @@ if (defaultDark) {
 	setDark();
 }
 
-// Here I set the dark mode :
-// I change: the icon, I applied to light/dark theme, I store the current Mode
-// Then I applied the preference of the user fro; is browser
 function DarkMode() {
 	const [isChecked, setIsChecked] = useState(false);
 	const [storedPref, setStoredPref] = useState(() =>
 		localStorage.getItem('isChecked')
 	);
+
 	useEffect(() => {
 		if (storedPref) setIsChecked(JSON.parse(storedPref));
 		if (isChecked) {
@@ -54,21 +45,19 @@ function DarkMode() {
 		localStorage.setItem('isChecked', JSON.stringify(!isChecked));
 		setStoredPref(JSON.stringify(!isChecked));
 	}
+
 	return (
 		<label>
 			<input
 				type="checkbox"
-				style={{ display: 'none' }}
+				style={{display: 'none'}}
 				id="DarkMode"
 				onChange={HandleChange}
 				checked={isChecked}
 				defaultChecked={defaultDark}
 			/>
-			<img
-				src={isChecked ? CheckedDarkMode : UncheckedDarkMode}
-				alt="DarkMode"
-				className="DarkMode"
-			/>
+
+			{isChecked ? <Sun /> : <Moon />}
 		</label>
 	);
 }

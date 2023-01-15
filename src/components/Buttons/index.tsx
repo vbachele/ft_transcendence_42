@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
+	cursor: pointer;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -14,7 +15,9 @@ const Button = styled.button`
 	font-weight: 700;
 	line-height: 28px;
 	border: 1px solid #e04f5f;
-	text-decoration: none;
+	a {
+		text-decoration: none;
+	}
 `;
 
 export const PrimaryButton = styled(Button)`

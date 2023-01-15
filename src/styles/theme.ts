@@ -1,19 +1,19 @@
 import {DefaultTheme} from 'styled-components';
 
-export const lightTheme: DefaultTheme = {
+export const light: DefaultTheme = {
 	borderRadius: '5px',
 
 	colors: {
-		main: '#e2e2e2',
-		secondary: '#363537',
+		main: '#f0f0f0',
+		secondary: '#000',
 	},
 };
 
-export const darkTheme: DefaultTheme = {
-	borderRadius: '0px',
+export const dark: DefaultTheme = {
+	borderRadius: '5px',
 
 	colors: {
 		main: '#171717',
-		secondary: '#ffffff',
+		secondary: '#f0f0f0',
 	},
 };

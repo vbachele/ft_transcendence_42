@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 export const StyledNav = styled.nav`
 	display: flex;
@@ -10,7 +10,7 @@ export const StyledNav = styled.nav`
 	/* border-bottom: 1px solid var(--font-color); */
 
 	svg {
-		width: auto;
+		width: 144px;
 		height: 48px;
 	}
 `;
@@ -21,10 +21,9 @@ export const Menu = styled.div`
 	gap: 1em;
 
 	svg {
-		width: 48px;
-		height: 48px;
+		width: 40px;
+		height: 40px;
 		fill: ${(props) => props.theme.colors.secondary};
-		transition: fill 0.25s linear;
 	}
 `;
 
@@ -33,8 +32,15 @@ export const Divider = styled.div`
 	height: 2px;
 	border-radius: 4px;
 	background-color: #000;
-
 	transform: rotate(-90deg);
 
 	background-color: ${(props) => props.theme.colors.secondary};
+`;
+
+export const StyledToggle = styled.label`
+	cursor: pointer;
+	svg {
+		width: 24px;
+		height: 24px;
+	}
 `;

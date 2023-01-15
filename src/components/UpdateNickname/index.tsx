@@ -1,6 +1,6 @@
-import { SecondaryButton } from 'Components/Buttons';
-import { NormalText } from 'Components/Text';
-import React, { ChangeEventHandler, useRef, useState } from 'react';
+import {SecondaryButton} from 'components/Buttons';
+import {NormalText} from 'components/Text';
+import React, {ChangeEventHandler, useRef, useState} from 'react';
 import styled from 'styled-components';
 
 const NicknameForm = styled.form`

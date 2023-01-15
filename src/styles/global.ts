@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 	* {
@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
 		text-align: center;
 		background-color: ${(props) => props.theme.colors.main};
 		color: ${(props) => props.theme.colors.secondary};
-		transition: background-color 0.25s linear, color 0.25s linear;
 	}
 `;
 

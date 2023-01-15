@@ -1,13 +1,9 @@
-import {H1Title, NormalText} from 'components/Text';
-import DefaultAvatar from 'components/UploadAvatar/Images/DefaultAvatar.png';
-import {useContext, useState} from 'react';
-import UserContext from 'components/Context/userContent';
 import DarkMode from 'components/DarkMode';
-// import Menu from "../Menu";
 
-import {ReactComponent as Logo} from '/public/logo_text.svg';
+import {ReactComponent as Logo} from './assets/logo_text.svg';
 import {ReactComponent as Avatar} from './assets/default-avatar.svg';
 import {StyledNav, Menu, Divider} from './Navbar.styles';
+import Toggle from './components/Toggle';
 
 // function displayMenu() {
 // 	const [toggleMenu, setToggleMenu] = useState(false);
@@ -41,26 +37,24 @@ import {StyledNav, Menu, Divider} from './Navbar.styles';
 // 	);
 // };
 
-const Navbar: React.FC = () => {
+interface IProps {
+	setTheme: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Navbar = ({setTheme}: IProps) => {
 	// get user context
 
 	return (
 		<StyledNav>
 			<Logo />
-			{/* <DarkMode /> */}
 			{/* {isLogged ? <Avatar /> : <Register />} */}
 
 			<Menu>
-				<button>Theme</button>
+				<Toggle setTheme={setTheme} />
 				<Divider />
 				<Avatar />
 			</Menu>
 		</StyledNav>
-		// <nav className={styles.navbar}>
-		// 	<H1Title fontSize={'36px'} fontWeight={'700'} string={'24px'}>
-		// 		PONG
-		// 	</H1Title>
-		// </nav>
 	);
 };
 
