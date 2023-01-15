@@ -5,9 +5,14 @@ export const StyledNav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 3em;
-	padding: 1em 3em;
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+	padding: 1em 2em;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 	/* border-bottom: 1px solid var(--font-color); */
+
+	svg {
+		width: auto;
+		height: 48px;
+	}
 `;
 
 export const Menu = styled.div`
@@ -17,6 +22,7 @@ export const Menu = styled.div`
 
 	svg {
 		width: 48px;
+		height: 48px;
 		fill: ${(props) => props.theme.colors.secondary};
 		transition: fill 0.25s linear;
 	}

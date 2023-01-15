@@ -1,34 +1,34 @@
-import { backend } from 'Lib/backend'
-import UserContext from 'components/Context/userContent'
-import { NormalText } from 'components/Text'
-import React, { ChangeEventHandler, useContext, useState } from 'react'
-import styled from 'styled-components'
+import {backend} from 'lib/backend';
+import UserContext from 'components/Context/userContent';
+import {NormalText} from 'components/Text';
+import React, {ChangeEventHandler, useContext, useState} from 'react';
+import styled from 'styled-components';
 
 export const NicknameForm = styled.form`
-  display: flex;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
-`
+`;
 
 export const UpdateNicknameLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  padding: 0px;
-  gap: 10px;
-  padding-top: 40px;
-  padding-bottom: 56px;
-  
-  height: 70px;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	padding: 0px;
+	gap: 10px;
+	padding-top: 40px;
+	padding-bottom: 56px;
 
-  /* Inside auto layout */
+	height: 70px;
 
-  align-self: stretch;
-  @media only screen and (max-width: 768px) {
-    padding-top: 10px;
-    padding-bottom: 80px;
-  }
-`
+	/* Inside auto layout */
+
+	align-self: stretch;
+	@media only screen and (max-width: 768px) {
+		padding-top: 10px;
+		padding-bottom: 80px;
+	}
+`;
 
 export const UpdateNicknameLayout__Input = styled.input`
   width: 394px;
@@ -40,9 +40,9 @@ export const UpdateNicknameLayout__Input = styled.input`
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  line-height: 28px;  
+  line-height: 28px;
   /* Inside auto layout */
-  
+
   flex: none;
   order: 1;
   align-self: stretch;
@@ -53,7 +53,7 @@ export const UpdateNicknameLayout__Input = styled.input`
   padding-left: 24px;
 
   /* Here I define the css of my placeholder */
-  ::placeholder 
+  ::placeholder
   {
     font-family: 'Montserrat';
     font-style: normal;
@@ -65,42 +65,42 @@ export const UpdateNicknameLayout__Input = styled.input`
   @media only screen and (max-width: 768px) {
     width: 320px;
     height: 50px;
-    
-`
+
+`;
 
 const FieldNickname = () => {
 	const [value, setValue] = useState('');
 	const userContext = useContext(UserContext);
 
-	const handleChange:ChangeEventHandler<HTMLInputElement> = (event) =>
-	{
-	  setValue(event.target.value);
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+		setValue(event.target.value);
 	};
-	
+
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-		
-    event.preventDefault();
-    console.log(value);
-    userContext.setUser({nickname: value})
+		event.preventDefault();
+		console.log(value);
+		userContext.setUser({nickname: value});
 		backend.updateUser({name: value as string});
 	};
 
+	return (
+		<NicknameForm className="NicknameForm" onSubmit={handleSubmit}>
+			<UpdateNicknameLayout>
+				<NormalText fontWeight={'600'} fontSize={'14px'}>
+					{'Modify your nickname'}{' '}
+				</NormalText>
+				<UpdateNicknameLayout__Input
+					required
+					value={value}
+					name="UpdateName"
+					onChange={handleChange}
+					placeholder="ex: VincentCollègueShadow"
+					maxLength={8}
+					minLength={2}
+				/>
+			</UpdateNicknameLayout>
+		</NicknameForm>
+	);
+};
 
-  return (
-    <NicknameForm className='NicknameForm' onSubmit={handleSubmit}>
-        <UpdateNicknameLayout>
-          <NormalText fontWeight={"600"} fontSize={"14px"}>{'Modify your nickname'} </NormalText>
-          <UpdateNicknameLayout__Input
-          required value={value}
-          name='UpdateName'
-          onChange={handleChange}
-          placeholder="ex: VincentCollègueShadow" 
-          maxLength={8} 
-          minLength={2}
-          />
-        </UpdateNicknameLayout>
-    </NicknameForm>
-  )
-}
-
-export default FieldNickname
+export default FieldNickname;

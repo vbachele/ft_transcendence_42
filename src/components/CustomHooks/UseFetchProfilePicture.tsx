@@ -1,6 +1,6 @@
-import { api } from 'Lib/api';
-import React from 'react'
-import { useState, useEffect } from "react";
+import {api} from 'lib/api';
+import React from 'react';
+import {useState, useEffect} from 'react';
 
 // async function fetchIDJson(url:string) {
 
@@ -19,39 +19,37 @@ import { useState, useEffect } from "react";
 // }
 
 // Here I create a customHook to fetch the information about the profilepictureoftheuser a response that I transform to a json
-const UseFetchProfilePicture = (url:string) => {
-		// const [imageUrl, setImageUrl] = useState<string>('');
-		
-		// fetch('http://localhost:3000/users/1')
-		// .then(response => response.json())
-		// .then(data => console.log(data));
+const UseFetchProfilePicture = (url: string) => {
+	// const [imageUrl, setImageUrl] = useState<string>('');
 
+	// fetch('http://localhost:3000/users/1')
+	// .then(response => response.json())
+	// .then(data => console.log(data));
 
-		// api.get('http://localhost:3000/users/1')
+	// api.get('http://localhost:3000/users/1')
 
-
-		// useEffect(() => {
-		// })
-		// .then(data => console.log(data));
-			// fetch(url)
-			// .then(response => response.json())
-			// // .then(data => {
-			// // 	const imageID = data[data.length - 1].id
-			// // 	fetchPictureJSON(imageID)
-			// 	.then(data => {
-			// 		const imageData = data.image;
-			// 		try 
-			// 		{
-			// 			const imageObject = JSON.parse(imageData);
-			// 			setImageUrl(URL.createObjectURL(imageObject));
-			// 		} catch (error) 
-			// 		{
-			// 			setImageUrl(imageData);
-			// 		}
-			// 	// })
-			// });
+	// useEffect(() => {
+	// })
+	// .then(data => console.log(data));
+	// fetch(url)
+	// .then(response => response.json())
+	// // .then(data => {
+	// // 	const imageID = data[data.length - 1].id
+	// // 	fetchPictureJSON(imageID)
+	// 	.then(data => {
+	// 		const imageData = data.image;
+	// 		try
+	// 		{
+	// 			const imageObject = JSON.parse(imageData);
+	// 			setImageUrl(URL.createObjectURL(imageObject));
+	// 		} catch (error)
+	// 		{
+	// 			setImageUrl(imageData);
+	// 		}
+	// 	// })
+	// });
 	// }, []);
-  return [];
-}
+	return [];
+};
 
-export default UseFetchProfilePicture
+export default UseFetchProfilePicture;

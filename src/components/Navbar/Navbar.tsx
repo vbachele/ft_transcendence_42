@@ -5,6 +5,7 @@ import UserContext from 'components/Context/userContent';
 import DarkMode from 'components/DarkMode';
 // import Menu from "../Menu";
 
+import {ReactComponent as Logo} from '/public/logo_text.svg';
 import {ReactComponent as Avatar} from './assets/default-avatar.svg';
 import {StyledNav, Menu, Divider} from './Navbar.styles';
 
@@ -45,12 +46,12 @@ const Navbar: React.FC = () => {
 
 	return (
 		<StyledNav>
-			<img src="logo.svg" />
+			<Logo />
 			{/* <DarkMode /> */}
 			{/* {isLogged ? <Avatar /> : <Register />} */}
 
 			<Menu>
-				<button>Toggle Theme</button>
+				<button>Theme</button>
 				<Divider />
 				<Avatar />
 			</Menu>

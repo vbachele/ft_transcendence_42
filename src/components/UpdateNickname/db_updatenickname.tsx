@@ -1,16 +1,13 @@
-import { backend } from 'Lib/backend';
+import {backend} from 'lib/backend';
 
 export const storeFirstNicknameDataBase = async () => {
-	const user = await backend.createUser(
-	{
-		name: "Vincent",
-		image: "",
+	const user = await backend.createUser({
+		name: 'Vincent',
+		image: '',
 		logged: false,
-		id: ""
-	}
-	);
-	localStorage.setItem("id", user.id)
-}
+		id: '',
+	});
+	localStorage.setItem('id', user.id);
+};
 
-
-export default storeFirstNicknameDataBase
+export default storeFirstNicknameDataBase;

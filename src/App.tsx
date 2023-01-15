@@ -11,7 +11,7 @@ import Settings from 'pages/Settings';
 import Navbar from 'components/Navbar';
 import GlobalStyle from 'styles/global';
 import './App.css';
-import {Fragment} from 'react';
+import React from 'react';
 import {ThemeProvider} from 'styled-components';
 import {darkTheme, lightTheme} from 'styles/theme';
 
@@ -19,8 +19,8 @@ function App() {
 	return (
 		// <UserContextProvider>
 		// 	<PictureContextProvider>
-		<Fragment>
-			<ThemeProvider theme={darkTheme}>
+		<React.Fragment>
+			<ThemeProvider theme={lightTheme}>
 				<GlobalStyle />
 				<Router>
 					<Navbar />
@@ -35,7 +35,7 @@ function App() {
 					</Routes>
 				</Router>
 			</ThemeProvider>
-		</Fragment>
+		</React.Fragment>
 		// 	</PictureContextProvider>
 		// </UserContextProvider>
 	);
