@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {H1Title, NormalText} from 'styles/font.styles';
+import {H1, Text} from 'styles/font.styles';
 import {BsFillPersonFill} from 'react-icons/bs';
 import {Link} from 'react-router-dom';
 import DarkMode from 'components/-DarkMode';
@@ -10,9 +10,9 @@ function IconLayout() {
 		<Link to="/registration-page">
 			<div className={styles.LoginLayout}>
 				<BsFillPersonFill className={styles.LoginIcon} />
-				<NormalText fontSize={'20px'} fontWeight={'600'}>
+				<Text fontSize={'20px'} fontWeight={'600'}>
 					Log in
-				</NormalText>
+				</Text>
 			</div>
 		</Link>
 	);
@@ -29,9 +29,9 @@ export const MenuNonLogged = () => {
 		<div className={styles['links-containers']}>
 			<div>{DarkMode()}</div>
 			<div>{Divider('Divider1')}</div>
-			<NormalText fontSize={'20px'} fontWeight={'600'} string={'none'}>
+			<Text fontSize={'20px'} fontWeight={'600'} string={'none'}>
 				Spectate
-			</NormalText>
+			</Text>
 			<div>{Divider('Divider2')}</div>
 			<div>{IconLayout()}</div>
 		</div>
@@ -41,9 +41,9 @@ export const MenuNonLogged = () => {
 const NavNonLogged: React.FC<{}> = () => {
 	return (
 		<nav className={styles.navbar}>
-			<H1Title fontSize={'36px'} fontWeight={'600'}>
+			<H1 fontSize={'36px'} fontWeight={'600'}>
 				PONG
-			</H1Title>
+			</H1>
 			<MenuNonLogged />
 		</nav>
 	);

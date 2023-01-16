@@ -1,10 +1,7 @@
-import React from 'react'
-
-const storeProfilePicture = (value:string) => {
+const storeProfilePicture = (value: string) => {
 	//   const data = {
 	// 	image: value,
 	//   };
-	  
 	//   fetch('http://localhost:3000/users/1', {
 	// 	method: 'PUT',
 	// 	body: JSON.stringify(data),
@@ -13,7 +10,6 @@ const storeProfilePicture = (value:string) => {
 	// 	}
 	//   })
 	// 	.then(response => response.json())
-}
+};
 
-export default storeProfilePicture
-
+export default storeProfilePicture;

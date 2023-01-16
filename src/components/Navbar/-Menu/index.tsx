@@ -92,7 +92,7 @@ const SubMenu: React.FC<{}> = () => {
 			</div>
 			<hr />
 			<Link
-				to="/login-page"
+				to="/login"
 				className="navbar__subMenu-link"
 				onClick={ToggleSubMenu}
 			>

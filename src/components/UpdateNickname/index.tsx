@@ -1,6 +1,6 @@
-import {SecondaryButton} from 'components/Buttons/Buttons.styles';
-import {NormalText} from 'styles/font.styles';
-import React, {ChangeEventHandler, useRef, useState} from 'react';
+import {SecondaryButton} from 'styles/buttons.styles';
+import {Text} from 'styles/font.styles';
+import React, {ChangeEventHandler, useState} from 'react';
 import styled from 'styled-components';
 
 const NicknameForm = styled.form`
@@ -79,9 +79,7 @@ const UpdateNickname = () => {
 	return (
 		<NicknameForm className="NicknameForm" onSubmit={handleSubmit}>
 			<UpdateNicknameLayout>
-				<NormalText fontWeight={'600'} fontSize={'14px'}>
-					Choose a Nickname *
-				</NormalText>
+				<Text weight="600">Choose a Nickname *</Text>
 				<UpdateNicknameLayout__Input
 					type="text"
 					value={value}

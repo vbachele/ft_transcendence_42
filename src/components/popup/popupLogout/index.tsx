@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import {Button, Modal} from 'antd';
-import {PrimaryButton} from 'components/buttons';
-import {H1Title, NormalText, Subtitle} from 'styles/font.styles';
+import {PrimaryButton} from 'styles/buttons.styles';
+import {H1, Text, Subtitle} from 'styles/font.styles';
 import {Link} from 'react-router-dom';
 import './styles.css';
 import ByeLogout from 'assets/homer.gif';
@@ -28,7 +28,7 @@ const Popup: React.FC<Props> = (props) => {
 				width={'393px'}
 				title={
 					<div style={{display: 'flex', justifyContent: 'center'}}>
-						<H1Title color={'black'}>{props.title}</H1Title>
+						<H1 color={'black'}>{props.title}</H1>
 					</div>
 				}
 				centered
@@ -43,7 +43,7 @@ const Popup: React.FC<Props> = (props) => {
 						>
 							{
 								<div style={{display: 'flex', justifyContent: 'center'}}>
-									<NormalText color={'black'}> {'cancel'}</NormalText>
+									<Text color={'black'}> {'cancel'}</Text>
 								</div>
 							}
 						</Button>

@@ -4,7 +4,7 @@ export const light: DefaultTheme = {
 	borderRadius: '5px',
 
 	colors: {
-		main: '#f0f0f0',
+		main: '#fff',
 		secondary: '#000',
 	},
 };
@@ -14,6 +14,6 @@ export const dark: DefaultTheme = {
 
 	colors: {
 		main: '#171717',
-		secondary: '#f0f0f0',
+		secondary: '#fff',
 	},
 };

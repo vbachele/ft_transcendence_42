@@ -1,60 +1,61 @@
 import styled from 'styled-components';
 
-export const Text = styled.text`
-	// warning
-	font-family: 'Montserrat';
-	font-style: normal;
-	color: ${(props) => props.theme.colors.secondary || '#000'};
-`;
+interface IProps {
+	weight?: string;
+}
 
-export const H1Title = styled(Text)`
-	font-weight: ${(props) => props.fontWeight || '700'};
-	font-size: ${(props) => props.fontSize || '40px'};
-	text-align: ${(props) => props.fontSize || 'center'};
-	line-height: 48px;
+export const Text = styled.p<IProps>`
+	font-weight: ${(p) => p.weight || 500};
+	font-size: 20px;
 	@media only screen and (max-width: 768px) {
-		font-size: ${(props) => props.string};
-	}
-`;
-
-export const H2Title = styled(Text)`
-	font-weight: ${(props) => props.fontWeight || '700'};
-	font-size: ${(props) => props.fontSize || '30px'};
-	line-height: 48px;
-	@media only screen and (max-width: 768px) {
-		font-weight: 700;
-		font-size: 20px;
-		line-height: 24px;
-	}
-`;
-
-export const Subtitle = styled(Text)`
-	font-weight: ${(props) => props.fontWeight || '500'};
-	font-size: ${(props) => props.fontSize || '16px'};
-	line-height: 20px;
-	color: ${(props) => props.color};
-	@media only screen and (max-width: 768px) {
-		display: ${(props) => props.display};
-		color: var(--font-color);
-	}
-`;
-
-export const NormalText = styled(Text)`
-	font-weight: ${(props) => props.fontWeight || '700'};
-	font-size: ${(props) => props.fontSize || '16px'};
-	line-height: 24px;
-	@media only screen and (max-width: 768px) {
-		display: ${(props) => props.string};
-		font-size: 16px;
 	}
 `;
 
 export const MenuText = styled(Text)`
-	font-weight: ${(props) => props.fontWeight || '500'};
-	font-size: ${(props) => props.fontSize || '22px'};
-	line-height: 27px;
-	color: #fff;
+	color: white;
 	@media only screen and (max-width: 768px) {
-		display: ${(props) => props.display};
+	}
+`;
+
+export const Subtitle = styled.p`
+	font-size: 16px;
+	color: #949494;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H1 = styled.h1`
+	font-size: 40px;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H2 = styled.h2`
+	font-size: 32px;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H3 = styled.h3`
+	font-size: 26px;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H4 = styled.h4`
+	font-size: 24px;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H5 = styled.h5`
+	font-size: 20px;
+	@media only screen and (max-width: 768px) {
+	}
+`;
+
+export const H6 = styled.h6`
+	font-size: 18px;
+	@media only screen and (max-width: 768px) {
 	}
 `;

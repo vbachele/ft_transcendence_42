@@ -1,6 +1,6 @@
 import {backend} from 'lib/backend';
 import UserContext from 'components/Context/userContent';
-import {NormalText} from 'styles/font.styles';
+import {Text} from 'styles/font.styles';
 import React, {ChangeEventHandler, useContext, useState} from 'react';
 import styled from 'styled-components';
 
@@ -86,9 +86,9 @@ const FieldNickname = () => {
 	return (
 		<NicknameForm className="NicknameForm" onSubmit={handleSubmit}>
 			<UpdateNicknameLayout>
-				<NormalText fontWeight={'600'} fontSize={'14px'}>
+				<Text fontWeight={'600'} fontSize={'14px'}>
 					{'Modify your nickname'}{' '}
-				</NormalText>
+				</Text>
 				<UpdateNicknameLayout__Input
 					required
 					value={value}

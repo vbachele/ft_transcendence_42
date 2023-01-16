@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import LandingPage from 'pages/Landing';
-import RegistrationPage from 'pages/Registration';
-import LoginPage from 'pages/Login';
+import Landing from 'pages/Landing';
+import Registration from 'pages/Registration';
+import Login from 'pages/Login';
 import Leaderboard from 'pages/Leaderboard';
 import Dashboard from 'pages/Dashboard';
 import NotFound from 'pages/NotFound';
 import Settings from 'pages/Settings';
 import Navbar from 'components/Navbar';
+import Headings from 'pages/Headings';
 import {UserContextProvider} from 'components/Context/userContent';
 import {PictureContextProvider} from 'components/Context/pictureContent';
 import {ThemeProvider} from 'styled-components';
-import GlobalStyle from 'styles/global';
+import {GlobalStyle, Content} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import './App.css';
 
@@ -22,24 +23,22 @@ function App() {
 		<UserContextProvider>
 			<PictureContextProvider>
 				<ThemeProvider theme={theme === 'light' ? light : dark}>
-					<React.Fragment>
-						<GlobalStyle />
-						<Router>
-							<Navbar setTheme={setTheme} />
+					<GlobalStyle />
+					<Router>
+						<Navbar setTheme={setTheme} />
+						<Content>
 							<Routes>
-								<Route path="/" element={<LandingPage />} />
-								<Route
-									path="/registration-page"
-									element={<RegistrationPage />}
-								/>
-								<Route path="/login-page" element={<LoginPage />} />
+								<Route path="/" element={<Landing />} />
+								<Route path="/registration" element={<Registration />} />
+								<Route path="/login" element={<Login />} />
 								<Route path="/leaderboard" element={<Leaderboard />} />
 								<Route path="/dashboard/:id" element={<Dashboard />} />
 								<Route path="/settings" element={<Settings />} />
+								<Route path="/headings" element={<Headings />} />
 								<Route path="*" element={<NotFound />} />
 							</Routes>
-						</Router>
-					</React.Fragment>
+						</Content>
+					</Router>
 				</ThemeProvider>
 			</PictureContextProvider>
 		</UserContextProvider>

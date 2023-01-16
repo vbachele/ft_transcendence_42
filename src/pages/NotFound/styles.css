@@ -7,12 +7,12 @@
 .notFound__title {
 	font-size: 9em;
 	font-weight: 800;
-	color: #E04F5F;
+	color: #e04f5f;
 }
 
 .notFound__gif {
 	margin: 15px auto;
-	width: 50%;
+	width: 40%;
 }
 
 @media (max-width: 350px) {

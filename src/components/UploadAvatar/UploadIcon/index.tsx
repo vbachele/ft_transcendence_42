@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {BsFillCameraFill} from 'react-icons/bs';
-import axios from 'axios';
 import {api} from 'lib/api';
 import UserContext from 'components/Context/userContent';
 import PictureContext from 'components/Context/pictureContent';

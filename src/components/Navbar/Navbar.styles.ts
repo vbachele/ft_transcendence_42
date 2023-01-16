@@ -31,16 +31,20 @@ export const Divider = styled.div`
 	width: 20px;
 	height: 2px;
 	border-radius: 4px;
-	background-color: #000;
 	transform: rotate(-90deg);
-
 	background-color: ${(props) => props.theme.colors.secondary};
 `;
 
 export const StyledToggle = styled.label`
 	cursor: pointer;
+
 	svg {
 		width: 24px;
 		height: 24px;
+		transition: fill 0.1s linear;
+	}
+
+	svg:hover {
+		fill: #e04f5f;
 	}
 `;

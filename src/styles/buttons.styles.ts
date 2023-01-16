@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Button = styled.button`
 	display: flex;
 	justify-content: center;
-	padding: 14px 40px;
+	padding: 1em 2em;
 	border-radius: 37px;
 	font-size: 16px;
 	font-weight: 700;
@@ -53,7 +53,7 @@ export const SecondaryButton = styled(Button)`
 export const SecondaryButtonSmall = styled(Button)`
 	background-color: #fff;
 	font-size: small;
-	padding: 10px 20px;
+	padding: 0.5em 1em;
 	border: 2px solid #e04f5f;
 
 	&, a {

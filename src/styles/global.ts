@@ -1,6 +1,6 @@
-import {createGlobalStyle} from 'styled-components';
+import styled, {createGlobalStyle} from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
 	* {
 		box-sizing: border-box;
 		margin: 0;
@@ -9,11 +9,11 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	body {
-		align-items: center;
-		text-align: center;
 		background-color: ${(props) => props.theme.colors.main};
 		color: ${(props) => props.theme.colors.secondary};
 	}
 `;
 
-export default GlobalStyle;
+export const Content = styled.div`
+	margin: 0 5%;
+`;

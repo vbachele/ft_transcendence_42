@@ -1,10 +1,10 @@
-import DarkMode from 'components/-DarkMode';
-
 import {ReactComponent as Logo} from './assets/logo_text.svg';
 import {ReactComponent as Avatar} from './assets/default-avatar.svg';
 import {StyledNav, Menu, Divider} from './Navbar.styles';
 import Toggle from './components/Toggle';
 import {Link} from 'react-router-dom';
+import {H2} from 'styles/font.styles';
+import {SecondaryButton, SecondaryButtonSmall} from 'styles/buttons.styles';
 
 // function displayMenu() {
 // 	const [toggleMenu, setToggleMenu] = useState(false);
@@ -55,7 +55,10 @@ const Navbar = ({setTheme}: IProps) => {
 			<Menu>
 				<Toggle setTheme={setTheme} />
 				<Divider />
-				<Avatar />
+				<SecondaryButtonSmall>
+					<Link to="/login">Log in</Link>
+				</SecondaryButtonSmall>
+				{/* <Avatar /> */}
 			</Menu>
 		</StyledNav>
 	);
