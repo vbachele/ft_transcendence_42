@@ -1,5 +1,5 @@
-import {PrimaryButton} from 'components/Buttons';
-import {H1Title, Subtitle} from 'components/Text';
+import {PrimaryButton} from 'components/Buttons/Buttons.styles';
+import {H1Title, Subtitle} from 'styles/font.styles';
 import React from 'react';
 import {Link} from 'react-router-dom';
 

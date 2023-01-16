@@ -1,6 +1,6 @@
 import {backend} from 'lib/backend';
 import UserContext from 'components/Context/userContent';
-import {NormalText} from 'components/Text';
+import {NormalText} from 'styles/font.styles';
 import React, {ChangeEventHandler, useContext, useState} from 'react';
 import styled from 'styled-components';
 

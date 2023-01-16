@@ -1,5 +1,5 @@
 import './styles.css';
-import {H2Title, NormalText, Subtitle} from 'components/Text';
+import {H2Title, NormalText, Subtitle} from 'styles/font.styles';
 import React, {ChangeEventHandler, useContext, useState} from 'react';
 import UploadAvatar from 'components/UploadAvatar';
 import FieldNickname from 'components/UpdateNickname/input/index';

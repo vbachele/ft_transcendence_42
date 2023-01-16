@@ -1,5 +1,5 @@
-import {SecondaryButton} from 'components/Buttons';
-import {NormalText} from 'components/Text';
+import {SecondaryButton} from 'components/Buttons/Buttons.styles';
+import {NormalText} from 'styles/font.styles';
 import React, {ChangeEventHandler, useRef, useState} from 'react';
 import styled from 'styled-components';
 
@@ -30,41 +30,38 @@ const UpdateNicknameLayout = styled.div`
 `;
 
 const UpdateNicknameLayout__Input = styled.input`
-  width: 394px;
-  height: 50px;
+	width: 394px;
+	height: 50px;
 
+	/* Text box */
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 28px;
+	/* Inside auto layout */
 
-  /* Text box */
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 28px;
-  /* Inside auto layout */
+	flex: none;
+	order: 1;
+	align-self: stretch;
+	flex-grow: 1;
+	background: #f9f9f9;
+	border: 1px solid #e6e6e6;
+	border-radius: 5px;
+	padding-left: 24px;
 
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 1;
-  background: #F9F9F9;
-  border: 1px solid #E6E6E6;
-  border-radius: 5px;
-  padding-left: 24px;
-
-  /* Here I define the css of my placeholder */
-  ::placeholder
-  {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 28px;
-
-  }
-  @media only screen and (max-width: 768px) {
-    width: 320px;
-    height: 50px;
-
+	/* Here I define the css of my placeholder */
+	::placeholder {
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 28px;
+	}
+	@media only screen and (max-width: 768px) {
+		width: 320px;
+		height: 50px;
+	}
 `;
 
 const UpdateNickname = () => {

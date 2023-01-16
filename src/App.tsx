@@ -1,6 +1,5 @@
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {UserContextProvider} from 'components/Context/userContent';
-import {PictureContextProvider} from 'components/Context/pictureContent';
 import LandingPage from 'pages/Landing';
 import RegistrationPage from 'pages/Registration';
 import LoginPage from 'pages/Login';
@@ -9,11 +8,12 @@ import Dashboard from 'pages/Dashboard';
 import NotFound from 'pages/NotFound';
 import Settings from 'pages/Settings';
 import Navbar from 'components/Navbar';
-import GlobalStyle from 'styles/global';
-import './App.css';
-import React, {useEffect, useState} from 'react';
+import {UserContextProvider} from 'components/Context/userContent';
+import {PictureContextProvider} from 'components/Context/pictureContent';
 import {ThemeProvider} from 'styled-components';
+import GlobalStyle from 'styles/global';
 import {dark, light} from 'styles/theme';
+import './App.css';
 
 function App() {
 	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
