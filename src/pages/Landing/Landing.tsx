@@ -5,6 +5,7 @@ import {
 	SecondaryButtonSmall,
 } from 'components/Buttons/Buttons.styles';
 import {H1Title, H2Title} from 'styles/font.styles';
+import {ReactComponent as Logo} from 'assets/versus_flat_BW.svg';
 import {ButtonsContainer, Container} from './Landing.styles';
 
 const LandingPage = () => {
@@ -14,7 +15,8 @@ const LandingPage = () => {
 
 	return (
 		<Container>
-			<H1Title>Versus</H1Title>
+			{/* <H1Title>Versus</H1Title> */}
+			<Logo />
 			<H2Title>Two sides, one victory</H2Title>
 			<ButtonsContainer>
 				<PrimaryButton onClick={handleChange}>

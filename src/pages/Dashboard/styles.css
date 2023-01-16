@@ -2,41 +2,30 @@
 	font-size: 20px;
 	height: 800px;
 	display: grid;
-	grid-auto-flow: column;
-	grid-template-rows: 1fr 1fr;
-	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 50% 50%;
+	grid-template-columns: 50% 50%;
 	gap: 1em;
 }
 
-.db__devtools {
-	padding: 0;
-	display: absolute;
-}
-
 .subcontainer {
+	background-color: var(--red10);
+	border: 1px solid var(--red50);
+	/* box-shadow: var(--shadow-soft); */
 	border-radius: 4px;
-	background-color: rgba(250, 0, 0, 0.1);
-	display: flex;
-	flex-wrap: wrap;
-	gap: 5%;
+	padding: 0.5em;
+	display: grid;
+	grid-template-columns: 1.5fr 3fr;
+	grid-template-rows: 1.5fr 1fr;
+	gap: 0.5em;
 }
 
-.db__player__coa {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	gap: 10px;
-	height: 50%;
+.subcontainer > div {
+	/* background-color: var(--red10); */
+	/* border: 2px solid crimson; */
+	padding: 0.5em;
 }
 
-.db__player__coa img {
-	width: 68px;
-	height: 104px;
-	border-radius: 8px;
-}
-
-.db__player__coa__ranks {
-	display: flex;
-	gap: 10%;
+.subcontainer p {
+	font-size: 16px;
+	font-weight: 600;
 }

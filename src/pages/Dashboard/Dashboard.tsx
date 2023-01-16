@@ -1,6 +1,6 @@
 import useFetchPlayer from 'hooks/useFetchPlayer';
-import { useParams } from 'react-router-dom';
-import Player from './components/DB_Player';
+import { Link, useParams } from 'react-router-dom';
+import Player from './components/Player';
 import './styles.css';
 
 const Dashboard = () => {
@@ -8,6 +8,7 @@ const Dashboard = () => {
 	const player = useFetchPlayer(id);
 
 	return (
+		<div>
 		<div className='dashboard'>
 			<Player player={player} />
 			<div className='dashboard__top subcontainer'>
@@ -19,6 +20,8 @@ const Dashboard = () => {
 			<div className='dashboard__achievements subcontainer'>
 				Achievements
 			</div>
+		</div>
+		<Link to={`/dashboard/${id + 1}`}>next</Link>
 		</div>
 	);
 }

@@ -5,27 +5,27 @@
 }
 
 .Federation {
-	color: #4180DB;
+	color: #4180db;
 }
 
 .Assembly {
-	color: #A061D1;
+	color: #a061d1;
 }
 
 .Order {
-	color: #FF6950;
+	color: #ff6950;
 }
 
 .Alliance {
-	color: #33C47F;
+	color: #33c47f;
 }
 
 .leaderboard__slot {
 	text-decoration: none;
 	color: black;
 	margin: 1em 5%;
-	background-color: #F6F6F7;
-	box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2px;
+	background-color: #f6f6f7;
+	box-shadow: var(--shadow-hard);
 	border-radius: 8px;
 	border-color: white;
 	align-items: center;
@@ -37,6 +37,7 @@
 	font-size: 20px;
 	cursor: pointer;
 	transition: transform 0.2s;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .leaderboard__slot:hover {
@@ -45,13 +46,16 @@
 
 .leaderboard__slot__player {
 	display: flex;
+	justify-content: left;
+	transform: translateX(-50px);
 	align-items: center;
+	width: 100px;
 }
 
 .leaderboard__slot__player-avatar {
 	width: 50px;
 	border-radius: 50%;
-	box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 2px;
+	box-shadow: var(--shadow-hard);
 	margin: auto 10px;
 }
 
@@ -63,17 +67,20 @@
 	display: flex;
 	justify-content: center;
 	gap: 5%;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
 }
 
 .rankList__search__name,
 .rankList__search__coalition {
-	border-radius: 8px;
-	padding: 8px;
-	border: 1px solid #949494;
+	border-radius: 20px;
+	padding: 12px 18px;
+	border: 1px solid var(--red90);
+	box-shadow: var(--shadow-hard);
 }
 
 .rankList__search__count {
+	color: var(--red100);
+	font-weight: 600;
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -99,7 +106,7 @@
 	justify-content: space-evenly;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1000px) {
 	.leaderboard__slot__games,
 	.leaderboard__slot__wins,
 	.leaderboard__slot__ratio,
@@ -113,6 +120,9 @@
 	.leaderboard__slot__score,
 	.subtitle {
 		display: none;
+	}
+	.leaderboard__slot__player {
+		transform: translateX(0);
 	}
 	.leaderboard__slot {
 		justify-content: space-around;

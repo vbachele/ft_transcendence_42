@@ -2,13 +2,15 @@ import { useState } from "react";
 import Rank from "./Rank";
 import { IUser } from "types/models";
 import compareScore from "helpers/compareScore";
+import React from "react";
 
 interface IProps {
 	players: IUser[];
+	opt: string;
 }
 
-const RankList = ({players}: IProps) => {
-	const [selectedCoalition, setSelectedCoalition] = useState('All');
+const RankList = ({players, opt}: IProps) => {
+	const [selectedCoalition, setSelectedCoalition] = useState(opt);
 	const [search, setSearch] = useState("");
 
 	const handleCoalitionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -37,7 +39,7 @@ const RankList = ({players}: IProps) => {
 					name="coalitions"
 					id="coalition"
 					onChange={handleCoalitionChange}
-					defaultValue="All"
+					defaultValue={opt}
 					className="rankList__search__coalition"
 				>
 					<option value="All">All Coalitions</option>
