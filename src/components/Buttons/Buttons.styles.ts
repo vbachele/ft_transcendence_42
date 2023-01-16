@@ -10,29 +10,60 @@ const Button = styled.button`
 	line-height: 28px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+	transition: all 0.25s;
+
 	a {
 		text-decoration: none;
 		color: black;
 	}
-`;
 
-export const PrimaryButton = styled(Button)`
-	background-color: #e04f5f;
-	border: none;
-	color: #fff;
-	a {
-		color: white;
+	&:active {
+		transform: scale(0.95);
 	}
 `;
 
+// prettier-ignore
+export const PrimaryButton = styled(Button)`
+	background-color: #e04f5f;
+	border: none;
+
+	&, a {
+		color: #fff;
+	}
+
+	&:hover {
+		background-color: #ce2437;
+	}
+	`;
+
+// prettier-ignore
 export const SecondaryButton = styled(Button)`
 	background-color: #fff;
-	color: #e04f5f;
-`;
+	&, a {
+		color: #e04f5f;
+	}
 
+	&:hover {
+		background-color: #931a27;
+	}
+	`;
+
+// prettier-ignore
 export const SecondaryButtonSmall = styled(Button)`
 	background-color: #fff;
-	color: #e04f5f;
 	font-size: small;
 	padding: 10px 20px;
+	border: 2px solid #e04f5f;
+
+	&, a {
+		color: #e04f5f;
+	}
+
+	&:hover {
+		background-color: #e04f5f;
+		&, a {
+			color: #fff;
+		}
+	}
 `;

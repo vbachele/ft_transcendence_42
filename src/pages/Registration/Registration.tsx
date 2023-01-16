@@ -9,7 +9,7 @@ import './styles.css';
 const RegistrationPage = () => {
 	return (
 		<div className="RegistrationPage">
-			<BackButton></BackButton>
+			<BackButton />
 			<div className="CreateYourProfile">
 				<H2Title>Create Your Profile</H2Title>
 				<Subtitle display="none">insert subtitle</Subtitle>
