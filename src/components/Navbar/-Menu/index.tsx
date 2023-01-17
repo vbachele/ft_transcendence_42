@@ -107,7 +107,7 @@ const SubMenu: React.FC<{}> = () => {
 			</Link>
 			{/* SPECTATE */}
 			<Link
-				to="/watch"
+				to="/spectate"
 				className="navbar__subMenu-link"
 				onClick={ToggleSubMenu}
 			>

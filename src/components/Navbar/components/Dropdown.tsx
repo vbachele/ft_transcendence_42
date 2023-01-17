@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 import arrow from 'assets/arrow.svg';
 import play from 'assets/play.png';
-import watch from 'assets/watch.png';
+import spectate from 'assets/spectate.png';
 import chat from 'assets/chat.png';
 import leaderboard from 'assets/leaderboard.png';
 import stats from 'assets/stats.png';
@@ -46,11 +46,11 @@ const Dropdown = () => {
 					</Link>
 					{/* SPECTATE */}
 					<Link
-						to="/watch"
+						to="/spectate"
 						className="navbar__subMenu-link"
 						onClick={toggleSubMenu}
 					>
-						<img className="navbar__subMenu-link-logo" src={watch} />
+						<img className="navbar__subMenu-link-logo" src={spectate} />
 						<p>Spectate</p>
 						<img
 							className="navbar__subMenu-link-arrow filter-white"
