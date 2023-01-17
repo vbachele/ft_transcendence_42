@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {ReactComponent as Logo} from './assets/logo_text.svg';
+import {ReactComponent as Logo} from 'assets/logo-text.svg';
 import Avatar from 'assets/default-avatar.png';
 import Toggle from './components/Toggle';
 import * as S from './Navbar.styles';

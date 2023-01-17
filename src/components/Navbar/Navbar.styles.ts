@@ -10,7 +10,7 @@ export const StyledNav = styled.nav`
 	/* border-bottom: 1px solid var(--font-color); */
 
 	svg {
-		width: 144px;
+		width: 200px;
 		height: 48px;
 	}
 `;
