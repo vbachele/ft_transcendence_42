@@ -2,12 +2,12 @@ import {Link} from 'react-router-dom';
 import * as UI from 'styles/buttons.styles';
 import * as F from 'styles/font.styles';
 import * as S from './Landing.styles';
-import {storeFirstNicknameDataBase} from 'components/UpdateNickname/db_updatenickname';
+import {storeName} from 'components/EditName/db_updatenickname';
 import {ReactComponent as Logo} from 'assets/versus.svg';
 
 const Landing = () => {
 	const handleChange = () => {
-		storeFirstNicknameDataBase();
+		storeName();
 	};
 
 	return (

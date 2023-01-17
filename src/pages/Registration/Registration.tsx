@@ -1,5 +1,5 @@
-import UploadAvatar from 'components/UploadAvatar';
-import UpdateNickname from 'components/UpdateNickname';
+import EditAvatar from 'components/EditAvatar';
+import EditName from 'components/EditName';
 import * as F from 'styles/font.styles';
 import * as S from './Registration.styles';
 import './styles.css';
@@ -7,11 +7,10 @@ import './styles.css';
 const Registration = () => {
 	return (
 		<S.Container>
+			<F.H2>Create Your Profile</F.H2>
 			<S.Form>
-				<F.H2>Create Your Profile</F.H2>
-				<F.H6>insert subtitle</F.H6>
-				<UploadAvatar />
-				<UpdateNickname />
+				<EditAvatar />
+				<EditName />
 			</S.Form>
 		</S.Container>
 	);

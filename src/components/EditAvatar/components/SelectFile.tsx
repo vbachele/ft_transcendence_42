@@ -1,38 +1,11 @@
 import React, {useContext} from 'react';
-import styled from 'styled-components';
-import {BsFillCameraFill} from 'react-icons/bs';
 import {api} from 'lib/api';
 import UserContext from 'components/Context/userContent';
 import PictureContext from 'components/Context/pictureContent';
+import {BsFillCameraFill as Icon} from 'react-icons/bs';
+import * as S from '../EditAvatar.styles';
 
-const CameraLayout = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	padding: 12px;
-	gap: 10px;
-
-	left: 55%;
-	right: 00%;
-	top: -40%;
-	bottom: 0%;
-	width: 20px;
-	height: 20px;
-
-	/* Sidebar background */
-
-	background: var(--font-color);
-	border-radius: 56px;
-	position: relative;
-`;
-
-export const CameraLayout__CameraIcon = styled(BsFillCameraFill)`
-	width: 20px;
-	height: 20px;
-	color: var(--background-color);
-`;
-
-export const Camera = () => {
+export const SelectFile = () => {
 	// const handleChange:React.ChangeEventHandler<HTMLInputElement>  = (event) => {
 	const userContext = useContext(UserContext);
 
@@ -65,18 +38,19 @@ export const Camera = () => {
 	// I can put the input in my image
 
 	return (
-		<CameraLayout>
-			<label htmlFor="file-input">
-				<CameraLayout__CameraIcon />
-			</label>
+		<label htmlFor="file-input">
+			<S.SelectFileIcon>
+				<Icon />
+			</S.SelectFileIcon>
 			<input
 				type="file"
 				id="file-input"
 				onChange={handleChange}
 				accept="image/*"
+				style={{display: 'none'}}
 			/>
-		</CameraLayout>
+		</label>
 	);
 };
 
-export default Camera;
+export default SelectFile;

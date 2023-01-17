@@ -6,7 +6,7 @@ interface IProps {
 
 export const Text = styled.p<IProps>`
 	font-weight: ${(p) => p.weight || 500};
-	font-size: 20px;
+	font-size: 18px;
 	@media only screen and (max-width: 768px) {
 	}
 `;

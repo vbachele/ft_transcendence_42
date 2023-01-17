@@ -1,17 +1,16 @@
+import EditAvatar from 'components/EditAvatar';
+import EditName from 'components/EditName';
+import * as F from 'styles/font.styles';
 import './styles.css';
-import {H2, Text, Subtitle} from 'styles/font.styles';
-import React, {ChangeEventHandler, useContext, useState} from 'react';
-import UploadAvatar from 'components/UploadAvatar';
-import FieldNickname from 'components/UpdateNickname/input/index';
 
 const Settings = () => {
 	return (
 		<>
 			<div className="settings">
-				<H2>Settings</H2>
-				<Subtitle display="none">Manage your information and security</Subtitle>
-				<UploadAvatar></UploadAvatar>
-				<FieldNickname></FieldNickname>
+				<F.H2>Settings</F.H2>
+				<F.Subtitle>Manage your information and security</F.Subtitle>
+				<EditAvatar />
+				<EditName />
 			</div>
 		</>
 	);

@@ -40,14 +40,20 @@ export const PrimaryButton = styled(Button)`
 // prettier-ignore
 export const SecondaryButton = styled(Button)`
 	background-color: #fff;
+	border: 2px solid #e04f5f;
+
+
 	&, a {
 		color: #e04f5f;
 	}
 
 	&:hover {
-		background-color: #931a27;
+		background-color: #e04f5f;
+		&, a {
+			color: #fff;
+		}
 	}
-	`;
+`;
 
 // prettier-ignore
 export const SecondaryButtonSmall = styled(Button)`
