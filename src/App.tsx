@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {useState} from 'react';
+
 import Landing from 'pages/Landing';
 import Registration from 'pages/Registration';
 import Login from 'pages/Login';
@@ -9,6 +10,7 @@ import NotFound from 'pages/NotFound';
 import Settings from 'pages/Settings';
 import Navbar from 'components/Navbar';
 import Headings from 'pages/Headings';
+
 import {UserContextProvider} from 'context/userContent';
 import {PictureContextProvider} from 'context/pictureContent';
 import {ThemeProvider} from 'styled-components';
