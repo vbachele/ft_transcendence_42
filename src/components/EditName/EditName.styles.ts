@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const FormContainer = styled.form`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 5em;
 `;
 
@@ -14,13 +15,13 @@ export const InputContainer = styled.div`
 	height: 70px;
 
 	@media only screen and (max-width: 768px) {
-		padding-top: 10px;
-		padding-bottom: 80px;
+		/* padding-top: 10px;
+		padding-bottom: 80px; */
 	}
 `;
 
 export const Input = styled.input`
-	width: 250px;
+	width: 300px;
 	height: 48px;
 
 	/* Text box */
@@ -45,8 +46,8 @@ export const Input = styled.input`
 		font-size: 14px;
 	}
 
-	@media only screen and (max-width: 768px) {
+	/* @media only screen and (max-width: 768px) {
 		width: 320px;
 		height: 50px;
-	}
+	} */
 `;

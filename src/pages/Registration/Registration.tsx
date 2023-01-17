@@ -2,7 +2,6 @@ import EditAvatar from 'components/EditAvatar';
 import EditName from 'components/EditName';
 import * as F from 'styles/font.styles';
 import * as S from './Registration.styles';
-import './styles.css';
 
 const Registration = () => {
 	return (
