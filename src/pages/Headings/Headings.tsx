@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import * as F from 'styles/font.styles';
 

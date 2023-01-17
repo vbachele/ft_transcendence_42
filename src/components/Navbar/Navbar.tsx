@@ -45,7 +45,7 @@ interface IProps {
 }
 
 const Navbar = ({setTheme}: IProps) => {
-	const [log, setLog] = useState<boolean>(true);
+	const [log, setLog] = useState<boolean>(false);
 
 	return (
 		<S.StyledNav>
