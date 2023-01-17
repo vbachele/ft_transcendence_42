@@ -1,10 +1,12 @@
-import {ReactComponent as Logo} from './assets/logo_text.svg';
-import {ReactComponent as Avatar} from './assets/default-avatar.svg';
-import {StyledNav, Menu, Divider} from './Navbar.styles';
-import Toggle from './components/Toggle';
 import {Link} from 'react-router-dom';
-import {H2} from 'styles/font.styles';
-import {SecondaryButton, SecondaryButtonSmall} from 'styles/buttons.styles';
+import {ReactComponent as Logo} from './assets/logo_text.svg';
+import Avatar from 'assets/default-avatar.png';
+import Toggle from './components/Toggle';
+import * as S from './Navbar.styles';
+import * as F from 'styles/font.styles';
+import * as UI from 'styles/buttons.styles';
+import {useState} from 'react';
+import Dropdown from './components/Dropdown';
 
 // function displayMenu() {
 // 	const [toggleMenu, setToggleMenu] = useState(false);
@@ -43,24 +45,26 @@ interface IProps {
 }
 
 const Navbar = ({setTheme}: IProps) => {
-	// get user context
+	const [log, setLog] = useState<boolean>(true);
 
 	return (
-		<StyledNav>
+		<S.StyledNav>
 			<Link to="/">
 				<Logo />
 			</Link>
-			{/* {isLogged ? <Avatar /> : <Register />} */}
-
-			<Menu>
+			<S.Menu>
 				<Toggle setTheme={setTheme} />
-				<Divider />
-				<SecondaryButtonSmall>
-					<Link to="/login">Log in</Link>
-				</SecondaryButtonSmall>
-				{/* <Avatar /> */}
-			</Menu>
-		</StyledNav>
+				<S.Divider />
+				{!log && (
+					<UI.SecondaryButtonSmall>
+						<Link to="/login" onClick={() => setLog(true)}>
+							Log in
+						</Link>
+					</UI.SecondaryButtonSmall>
+				)}
+				{log && <Dropdown />}
+			</S.Menu>
+		</S.StyledNav>
 	);
 };
 

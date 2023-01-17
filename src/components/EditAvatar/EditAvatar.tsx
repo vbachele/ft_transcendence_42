@@ -1,5 +1,5 @@
 import {SelectFile} from './components/SelectFile';
-import Default from './assets/default-avatar.png';
+import Default from 'assets/default-avatar.png';
 import * as F from 'styles/font.styles';
 import * as S from './EditAvatar.styles';
 

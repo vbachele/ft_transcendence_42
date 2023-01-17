@@ -20,7 +20,9 @@ export const Menu = styled.div`
 	align-items: center;
 	gap: 1em;
 
-	svg {
+	svg,
+	img {
+		border-radius: 50%;
 		width: 40px;
 		height: 40px;
 		fill: ${(props) => props.theme.colors.secondary};
