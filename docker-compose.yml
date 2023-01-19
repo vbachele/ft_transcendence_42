@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      target: development 
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks:
+      - ft_transcendence 
+    depends_on:
+      - postgres
+
+  frontend:
+      container_name: frontend
+      build:
+        context: ./frontend
+        target: development
+      volumes:
+        - ./frontend:/usr/src/app
+        - /usr/src/app/node_modules
+      ports:
+        - ${FRONTEND_PORT}:${FRONTEND_PORT}
+      command: npm run dev
+      env_file:
+        - .env
+      networks:
+        - ft_transcendence
+      depends_on:
+        - backend
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    networks:
+      - ft_transcendence 
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+      
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - ft_transcendence 
+
+networks:
+  ft_transcendence:
+    driver: bridge
+
+volumes:
+  postgres_vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/data/postgres_vol

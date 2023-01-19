@@ -48,18 +48,18 @@ const Popup: React.FC<Props> = (props) => {
 							}
 						</Button>
 						<Link to="/">
-							<PrimaryButton width={'192px'}>
+							{/* <PrimaryButton width={'192px'}>
 								{props.stringPrimaryButton}
-							</PrimaryButton>
+							</PrimaryButton> */}
 						</Link>
 					</div>,
 				]}
 				onCancel={() => setModal2Open(false)}
 			>
 				<div style={{display: 'flex', justifyContent: 'center'}}>
-					<Subtitle display={'true'} color="black">
+					{/* <Subtitle display={'true'} color="black">
 						Already tired of playing?
-					</Subtitle>
+					</Subtitle> */}
 				</div>
 				<img src={ByeLogout} className="goodbye__gif" />
 			</Modal>
