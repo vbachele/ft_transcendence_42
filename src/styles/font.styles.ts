@@ -6,11 +6,10 @@ interface IProps {
 
 export const Text = styled.p<IProps>`
 	font-weight: ${(p) => p.weight || 500};
-	font-size: 18px;
+	font-size: 1.1rem;
 	@media only screen and (max-width: 768px) {
 	}
 `;
-
 export const MenuText = styled(Text)`
 	color: white;
 	@media only screen and (max-width: 768px) {
@@ -18,44 +17,45 @@ export const MenuText = styled(Text)`
 `;
 
 export const Subtitle = styled.p`
-	font-size: 16px;
+	font-size: 1rem;
 	color: #949494;
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H1 = styled.h1`
-	font-size: 40px;
+	font-size: clamp(2rem, 2.5vw, 2.5rem);
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H2 = styled.h2`
-	font-size: 32px;
+	font-size: clamp(1.6rem, 2vw, 2rem);
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H3 = styled.h3`
-	font-size: 26px;
+	font-size: clamp(1.3rem, 1.5vw, 1.6rem);
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H4 = styled.h4`
-	font-size: 24px;
+	font-size: clamp(1.1rem, 1.2vw, 1.5rem);
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H5 = styled.h5`
-	font-size: 20px;
+	font-size: clamp(1rem, 1vw, 1.2rem);
 	@media only screen and (max-width: 768px) {
 	}
 `;
 
 export const H6 = styled.h6`
-	font-size: 18px;
-	@media only screen and (max-width: 768px) {
+	font-size: clamp(1rem, 1.5vw, 1.1rem) @media only screen and
+		(max-width: 768px) {
+
 	}
 `;

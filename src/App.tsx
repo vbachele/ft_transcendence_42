@@ -7,7 +7,7 @@ import Login from 'pages/Login';
 import Leaderboard from 'pages/Leaderboard';
 import Dashboard from 'pages/Dashboard';
 import NotFound from 'pages/NotFound';
-import Settings from 'pages/Settings';
+import Settings from 'pages/Settings/Settings';
 import Navbar from 'components/Navbar';
 import Headings from 'pages/Headings';
 
@@ -17,6 +17,7 @@ import {ThemeProvider} from 'styled-components';
 import {GlobalStyle, Content} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import './App.css';
+import DoubleAuthentication from 'pages/2FA/Login2FA';
 
 function App() {
 	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -37,6 +38,7 @@ function App() {
 								<Route path="/dashboard/:id" element={<Dashboard />} />
 								<Route path="/settings" element={<Settings />} />
 								<Route path="/headings" element={<Headings />} />
+								<Route path="/2FA" element={<DoubleAuthentication />} />
 								<Route path="*" element={<NotFound />} />
 							</Routes>
 						</Content>

@@ -1,18 +1,23 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import React, {ChangeEventHandler, useContext, useState} from 'react';
 import * as S from './EditName.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
+import {useNavigate} from 'react-router-dom';
 
 const EditName = () => {
+	const navigate = useNavigate();
 	const [value, setValue] = useState('');
+	// const userContext = useContext(UserContext);
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		// userContext.setUser({nickname: e.target.value});
 		setValue(e.target.value);
 	};
 
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+		// backend.updateUser({name: userContext?.user?.nickname});
 		e.preventDefault();
-		console.log(value);
+		navigate('/2FA'); // put a condition here if the user is 2FA enabled or not
 	};
 
 	return (

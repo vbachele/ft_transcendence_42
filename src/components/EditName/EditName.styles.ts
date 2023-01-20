@@ -45,9 +45,4 @@ export const Input = styled.input`
 		font-weight: 400;
 		font-size: 14px;
 	}
-
-	/* @media only screen and (max-width: 768px) {
-		width: 320px;
-		height: 50px;
-	} */
 `;

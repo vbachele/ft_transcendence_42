@@ -4,6 +4,8 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	width: 100vw;
+	background: grey;
 `;
 
 export const Form = styled.div`
