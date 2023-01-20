@@ -27,6 +27,7 @@ const Button = styled.button`
 export const PrimaryButton = styled(Button)`
 	background-color: #e04f5f;
 	border: none;
+	align-items: center;
 
 	&, a {
 		color: #fff;

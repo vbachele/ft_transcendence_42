@@ -1,4 +1,5 @@
 .vscode
-.env
 .prettierrc
 .eslintrc.js
+.DS_Store
+.env

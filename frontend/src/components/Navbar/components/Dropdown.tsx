@@ -36,7 +36,7 @@ const Dropdown = () => {
 					</div>
 					<hr />
 					{/* PLAY */}
-					<Link to="/" className="navbar__subMenu-link" onClick={toggleSubMenu}>
+					<Link to="/game" className="navbar__subMenu-link" onClick={toggleSubMenu}>
 						<img className="navbar__subMenu-link-logo" src={play} />
 						<p>Play</p>
 						<img

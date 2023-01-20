@@ -5,18 +5,20 @@ import {Link} from 'react-router-dom';
 
 const Login = () => {
 	return (
-		<div className="LoginPage">
-			<div className="InfosContainer">
-				<div className="InfosContainer--TextLayout">
-					<H1>FIRE PONG</H1>
-					<Subtitle>Push play to be sent to hell</Subtitle>
-				</div>
-				{/* <Link to="/LandingPage"> */}
-				<PrimaryButton className="InfosContainer--PlayButton">
-					Play
-				</PrimaryButton>
-				{/* </Link>  */}
-			</div>
+		<div
+			className="LoginPage"
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				flex: '1 1 auto',
+				height: '100%',
+			}}
+		>
+			<H1>FIRE PONG</H1>
+			<Subtitle>Push play to be sent to hell</Subtitle>
+			<PrimaryButton className="InfosContainer--PlayButton">Play</PrimaryButton>
 		</div>
 	);
 };

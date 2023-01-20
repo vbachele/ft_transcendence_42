@@ -2,16 +2,13 @@ FROM node:19.0.1-alpine3.15 as development
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 
 RUN npm run build
-
-RUN mkdir /usr/src/app/node_modules/.vite \
-    && chown -R node:node /usr/src/app/node_modules
 
 USER node
 
@@ -22,13 +19,13 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
 RUN npm install --omit=dev
 
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
+COPY --chown=node:node --from=development /usr/src/app/dist ./dist
 
 EXPOSE 5173
 

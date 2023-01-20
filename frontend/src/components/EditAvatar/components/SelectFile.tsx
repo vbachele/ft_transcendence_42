@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {api} from 'lib/api';
-import UserContext from 'context/userContent';
-import PictureContext from 'context/pictureContent';
+import UserContext from 'contexts/User/userContent';
+import PictureContext from 'contexts/User/pictureContent';
 import {BsFillCameraFill as Icon} from 'react-icons/bs';
 import * as S from '../EditAvatar.styles';
 
