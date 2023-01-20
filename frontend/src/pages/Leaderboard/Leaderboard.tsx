@@ -9,7 +9,7 @@ import './styles.css';
 
 const Leaderboard = () => {
 	const {data, isLoading, error} = useFetch<IUser[]>(
-		'http://localhost:3000/players'
+		'http://backend:3000/players'
 	);
 	let location = useLocation();
 	let option = new URLSearchParams(location.state).get('selectedOption');

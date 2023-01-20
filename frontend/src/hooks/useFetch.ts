@@ -6,7 +6,13 @@ function useFetch<Data>(url: string) {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		fetch(url)
+		fetch(url, {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
 			.then(res => res.json())
 			.then((data: Data) => {
 				setData(data);

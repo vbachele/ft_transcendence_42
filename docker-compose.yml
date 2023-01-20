@@ -43,6 +43,8 @@ services:
     restart: always
     env_file:
       - .env
+    expose:
+      - 5432
     ports:
       - "5432:5432"
     networks:
@@ -68,4 +70,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/vincent/postgres_vol
+      device: ${POSTGRES_DIR}
