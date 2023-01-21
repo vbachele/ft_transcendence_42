@@ -21,6 +21,7 @@ import Game from 'pages/Game/Game';
 import SocketContextComponent from 'contexts/Socket/Component';
 import {StyledGame} from 'pages/Game/Game.styles';
 import {api} from 'lib/api';
+import { GenerateUsers } from 'mocks/GenerateUsers';
 
 function App() {
 	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -41,6 +42,7 @@ function App() {
 							<Route path="/dashboard/:id" element={<Dashboard />} />
 							<Route path="/settings" element={<Settings />} />
 							<Route path="/headings" element={<Headings />} />
+							<Route path="generate_users" element={<GenerateUsers />} />
 							{/* <Route path="/game" element={<Game/>} /> */}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
