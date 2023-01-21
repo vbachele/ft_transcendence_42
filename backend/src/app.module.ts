@@ -6,7 +6,7 @@ import { DatabaseService } from './database/database.service';
 import { WebsocketModule } from './websocket/websocket.module';
 
 @Module({
-  imports: [WebsocketModule],
+  // imports: [WebsocketModule],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],
 })
