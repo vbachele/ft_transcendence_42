@@ -12,7 +12,7 @@ datasource db {
 }
 
 model User {
-  id Int @id
+  id Int @default(autoincrement()) @id
   name String
   image String
   coalition String
@@ -20,5 +20,5 @@ model User {
   wins Int
   ratio Int
   achievements String[]
-  score BigInt
+  score Int 
 }
