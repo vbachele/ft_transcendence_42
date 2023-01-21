@@ -18,7 +18,7 @@ services:
     networks:
       - ft_transcendence
     depends_on:
-      - postgres
+      - database 
 
   frontend:
     container_name: frontend
@@ -38,7 +38,7 @@ services:
     depends_on:
       - backend
 
-  postgres:
+  database:
     image: postgres:15-alpine
     restart: always
     env_file:
