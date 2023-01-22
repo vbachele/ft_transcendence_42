@@ -12,13 +12,13 @@ datasource db {
 }
 
 model User {
-  id Int @default(autoincrement()) @id
+  id Int @id
   name String
   image String
   coalition String
   games Int
   wins Int
-  ratio Int
+  ratio Float 
   achievements String[]
   score Int 
 }

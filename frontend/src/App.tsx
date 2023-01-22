@@ -20,8 +20,7 @@ import './App.css';
 import Game from 'pages/Game/Game';
 import SocketContextComponent from 'contexts/Socket/Component';
 import {StyledGame} from 'pages/Game/Game.styles';
-import {api} from 'lib/api';
-import { GenerateUsers } from 'mocks/GenerateUsers';
+import { UserMocks } from './mocks/Users/UserMocks';
 
 function App() {
 	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -33,7 +32,6 @@ function App() {
 					<GlobalStyle />
 					<Router>
 						<Navbar setTheme={setTheme} />
-						{/* <Content> */}
 						<Routes>
 							<Route path="/" element={<Landing />} />
 							<Route path="/registration" element={<Registration />} />
@@ -42,11 +40,10 @@ function App() {
 							<Route path="/dashboard/:id" element={<Dashboard />} />
 							<Route path="/settings" element={<Settings />} />
 							<Route path="/headings" element={<Headings />} />
-							<Route path="generate_users" element={<GenerateUsers />} />
+							<Route path="/users" element={<UserMocks/>} />
 							{/* <Route path="/game" element={<Game/>} /> */}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
-						{/* </Content> */}
 					</Router>
 				</ThemeProvider>
 				{/* </SocketContextComponent> */}
