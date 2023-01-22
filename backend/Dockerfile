@@ -10,7 +10,11 @@ COPY --chown=node:node . .
 
 RUN npm run build
 
-# RUN chown node:node /usr/src/app/node_modules
+COPY --chown=node:node prisma ./prisma
+
+COPY --chown=node:node .env ./.env
+
+RUN npx prisma generate
 
 USER node
 
