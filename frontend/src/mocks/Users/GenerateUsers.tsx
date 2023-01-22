@@ -1,19 +1,28 @@
+import { api } from 'lib/api';
 import React, {useEffect} from 'react';
 import {useAsyncValue} from 'react-router-dom';
 import {IUser} from 'types/models';
 import UserList from './players.json';
 
 const CSS = `
+
     table, td, th {
         border: 1px solid;
         border-collapse: collapse;
         text-align: center;
     }
 
+	table {
+		width: 100%;
+	}
+
     td, th {
-        min-width: 122px; 
-        height: 48px;
+        height: 32px;
     }
+
+	tr:nth-child(odd) {
+		background-color: lightgrey;
+	}
 `;
 
 export const GenerateUsers = () => {
@@ -34,20 +43,22 @@ export const GenerateUsers = () => {
 		</tr>
 	));
 
+    api.post('/users/generate', users);
+
 	return (
-		<div style={{justifyContent: 'center', margin: '48px auto'}}>
+		// <div className='table_container'>
+		<table>
 			<style>{CSS}</style>
-			<table>
-				<tr>
-					<th>ID</th>
-					<th>NAME</th>
-                    <th>COALITION</th>
-                    <th>GAMES</th>
-                    <th>WINS</th>
-                    <th>RATIO</th>
-				</tr>
-				{userList}
-			</table>
-		</div>
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>COALITION</th>
+				<th>GAMES</th>
+				<th>WINS</th>
+				<th>RATIO</th>
+			</tr>
+			{userList}
+		</table>
+		// </div>
 	);
 };
