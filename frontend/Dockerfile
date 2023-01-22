@@ -8,6 +8,8 @@ RUN npm install
 
 COPY --chown=node:node . .
 
+COPY --chown=node:node .env ./.env
+
 RUN npm run build
 
 USER node

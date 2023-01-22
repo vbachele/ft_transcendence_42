@@ -3,6 +3,7 @@ version: "3.8"
 services:
   backend:
     container_name: backend
+    stdin_open: true
     build:
       context: ./backend
       target: development
@@ -11,14 +12,13 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
     command: npm run start:dev
     env_file:
       - .env
     networks:
       - ft_transcendence
     depends_on:
-      - database 
+      - postgres 
 
   frontend:
     container_name: frontend
@@ -38,13 +38,12 @@ services:
     depends_on:
       - backend
 
-  database:
+  postgres:
+    container_name: database
     image: postgres:15-alpine
     restart: always
     env_file:
       - .env
-    expose:
-      - 5432
     ports:
       - "5432:5432"
     networks:
@@ -53,6 +52,7 @@ services:
       - postgres_vol:/var/lib/postgresql/data
 
   adminer:
+    container_name: adminer
     image: adminer
     restart: always
     ports:

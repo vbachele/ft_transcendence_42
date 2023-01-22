@@ -1,13 +1,19 @@
-# ENV_CONTENT := $(shell cat .env)
-
 DIR_CHECK := $(shell grep POSTGRES_DIR .env > /dev/null; echo $$?)
-# DIR_ENV_LINE := $(shell cut -f1 -d: $(grep -n POSTGRES_DIR .env))
+include .env
 
 all: 
 ifeq ($(DIR_CHECK), 1)
 	@read -p "Enter Postgres folder path: " POSTGRES_DIR; \
 	sudo mkdir -p $$POSTGRES_DIR/postgres_vol; \
 	echo "POSTGRES_DIR=$$POSTGRES_DIR/postgres_vol" >> .env
+endif
+ifneq ($(shell cat ./frontend/.env > /dev/null; echo $$?), 0)
+	echo VITE_PORT=${FRONTEND_PORT} >> ./frontend/.env
+	echo VITE_SERVER_PORT=${SERVER_PORT} >> ./frontend/.env
+endif
+ifneq ($(shell cat ./backend/.env > /dev/null; echo $$?), 0)
+	echo DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}?schema=public" >> ./backend/.env
+	echo PORT=${SERVER_PORT} >> ./backend/.env
 endif
 	docker compose up --build -V
 
@@ -18,5 +24,9 @@ ifeq ($(DIR_CHECK), 0)
 endif
 	docker system prune -a 
 	sudo rm -rf $${POSTGRES_DIR}
+	sudo rm -rf ./backend/.env
+	sudo rm -rf ./frontend/.env
 
-.PHONY: all clean
+re: clean all
+
+.PHONY: all clean re
