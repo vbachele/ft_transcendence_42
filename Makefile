@@ -7,11 +7,11 @@ ifeq ($(DIR_CHECK), 1)
 	sudo mkdir -p $$POSTGRES_DIR/postgres_vol; \
 	echo "POSTGRES_DIR=$$POSTGRES_DIR/postgres_vol" >> .env
 endif
-ifneq ($(shell cat ./frontend/.env > /dev/null; echo $$?), 0)
+ifneq ($(shell cat ./frontend/.env > /dev/null 2>&1; echo $$?), 0)
 	echo VITE_PORT=${FRONTEND_PORT} >> ./frontend/.env
 	echo VITE_SERVER_PORT=${SERVER_PORT} >> ./frontend/.env
 endif
-ifneq ($(shell cat ./backend/.env > /dev/null; echo $$?), 0)
+ifneq ($(shell cat ./backend/.env > /dev/null 2>&1; echo $$?), 0)
 	echo DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}?schema=public" >> ./backend/.env
 	echo PORT=${SERVER_PORT} >> ./backend/.env
 endif
