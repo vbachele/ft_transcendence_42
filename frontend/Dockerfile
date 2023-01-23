@@ -2,13 +2,13 @@ FROM node:19.0.1-alpine3.15 as development
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./package*.json ./
 
 RUN npm install
 
 COPY --chown=node:node . .
 
-COPY --chown=node:node .env ./.env
+COPY --chown=node:node ./.env ./.env
 
 RUN npm run build
 
@@ -21,7 +21,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./package*.json ./
 
 RUN npm install --omit=dev
 
