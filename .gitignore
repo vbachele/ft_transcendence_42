@@ -4,5 +4,6 @@ dist
 *.code-workspace
 .vscode
 .prettierrc
+.prettierignore
 .eslintrc.js
 .env

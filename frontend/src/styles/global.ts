@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, {createGlobalStyle} from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 	/* #root {
@@ -9,12 +9,10 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 0px;
 	} */
 
-	html, body {
+	body {
 		background-color: ${(props) => props.theme.colors.main};
 		color: ${(props) => props.theme.colors.secondary};
+		overflow-x: hidden;
+		transition: background-color 0.2s linear, color 0.2s linear;
 	}
-`;
-
-export const Content = styled.div`
-	margin: 0 5%;
 `;

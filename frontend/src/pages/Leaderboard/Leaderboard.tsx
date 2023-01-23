@@ -5,11 +5,12 @@ import RankList from './components/RankList';
 import Empty from './components/Empty';
 import {IUser} from 'types/models';
 import {useLocation} from 'react-router-dom';
-import './styles.css';
+import * as S from './Leaderboard.styles';
+import * as F from 'styles/font.styles';
 
 const Leaderboard = () => {
 	const {data, isLoading, error} = useFetch<IUser[]>(
-		'http://backend:3000/players'
+		'http://localhost:3000/players'
 	);
 	let location = useLocation();
 	let option = new URLSearchParams(location.state).get('selectedOption');
@@ -17,8 +18,8 @@ const Leaderboard = () => {
 	if (!option) option = 'All';
 
 	return (
-		<div className="leaderboard">
-			<h1>Leaderboard</h1>
+		<S.Container>
+			<F.H1>Leaderboard</F.H1>
 			{error && <Error text={'error'} />}
 			{isLoading && <Loading />}
 			{data && data!.filter((player) => player.score > 0).length > 0 && (
@@ -27,7 +28,7 @@ const Leaderboard = () => {
 			{!error &&
 				!isLoading &&
 				data!.filter((player) => player.score > 0).length === 0 && <Empty />}
-		</div>
+		</S.Container>
 	);
 };
 

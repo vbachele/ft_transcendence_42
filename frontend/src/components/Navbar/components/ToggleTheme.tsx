@@ -1,18 +1,23 @@
 import {ReactComponent as Moon} from '../assets/moon.svg';
 import {ReactComponent as Sun} from '../assets/sun.svg';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {StyledToggle} from '../Navbar.styles';
+import {StyledToggleTheme} from '../Navbar.styles';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Toggle = ({setTheme}: IProps) => {
-	const [isChecked, setIsChecked] = useState<boolean>(false);
+const ToggleTheme = ({setTheme}: IProps) => {
+	const userPref =
+		window.matchMedia &&
+		window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const [isChecked, setIsChecked] = useState<boolean>(userPref);
 
 	useEffect(() => {
-		const checked = localStorage.getItem('isChecked') === 'true';
-		setIsChecked(checked);
+		if (localStorage.getItem('isChecked')) {
+			const checked = localStorage.getItem('isChecked') === 'true';
+			setIsChecked(checked);
+		}
 	}, [isChecked]);
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +33,7 @@ const Toggle = ({setTheme}: IProps) => {
 	};
 
 	return (
-		<StyledToggle>
+		<StyledToggleTheme>
 			<input
 				type="checkbox"
 				style={{display: 'none'}}
@@ -36,8 +41,8 @@ const Toggle = ({setTheme}: IProps) => {
 				onChange={handleChange}
 			/>
 			{isChecked ? <Sun /> : <Moon />}
-		</StyledToggle>
+		</StyledToggleTheme>
 	);
 };
 
-export default Toggle;
+export default ToggleTheme;
