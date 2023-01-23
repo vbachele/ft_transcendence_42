@@ -17,6 +17,7 @@ import {ThemeProvider} from 'styled-components';
 import {GlobalStyle, Content} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import './App.css';
+import Chat from 'pages/Chat/Chat';
 
 function App() {
 	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -33,6 +34,7 @@ function App() {
 								<Route path="/" element={<Landing />} />
 								<Route path="/registration" element={<Registration />} />
 								<Route path="/login" element={<Login />} />
+								<Route path="/chat" element={<Chat />} />
 								<Route path="/leaderboard" element={<Leaderboard />} />
 								<Route path="/dashboard/:id" element={<Dashboard />} />
 								<Route path="/settings" element={<Settings />} />
