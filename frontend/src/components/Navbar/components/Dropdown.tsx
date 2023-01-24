@@ -84,7 +84,7 @@ const Dropdown = () => {
 				<hr className="first-hr" />
 				<S.LinksContainer>
 					{/* PLAY */}
-					<Link to="/" onClick={toggleDrop}>
+					<Link to="/game" onClick={toggleDrop}>
 						<Play />
 						<F.Text weight="400">Play</F.Text>
 					</Link>
@@ -112,7 +112,7 @@ const Dropdown = () => {
 				<hr className="second-hr" />
 				<S.LinksContainer>
 					{/* SETTINGS */}
-					<Link to="/dashboard/5" onClick={toggleDrop}>
+					<Link to="/settings" onClick={toggleDrop}>
 						<Settings />
 						<F.Text weight="400">Settings</F.Text>
 					</Link>
