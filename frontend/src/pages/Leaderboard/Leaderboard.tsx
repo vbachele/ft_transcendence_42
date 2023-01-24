@@ -7,11 +7,12 @@ import {IUser} from 'types/models';
 import {useLocation} from 'react-router-dom';
 import * as S from './Leaderboard.styles';
 import * as F from 'styles/font.styles';
+import {api} from 'lib/api';
 
 const Leaderboard = () => {
-	const {data, isLoading, error} = useFetch<IUser[]>(
-		'http://localhost:3000/players'
-	);
+	const {data, isLoading, error} = useFetch<IUser[]>('/players/api');
+	api.get;
+
 	let location = useLocation();
 	let option = new URLSearchParams(location.state).get('selectedOption');
 

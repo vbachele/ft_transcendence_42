@@ -16,6 +16,9 @@ code {
 	font-family: 'Montserrat', sans-serif;
 }
 
+body::-webkit-scrollbar {
+	display: none;
+}
 
 #root {
 	display: flex;
@@ -28,6 +31,7 @@ code {
 body {
 	margin: 0px;
 	padding: 0px;
+	overflow-x: hidden;
 }
 
 /* 2 */
