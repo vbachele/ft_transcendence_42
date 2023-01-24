@@ -46,3 +46,41 @@ export const ContainerChannel = styled.div`
     justify-content: space-between;
     align-items: center;
 `;
+
+export const ContainerMessage = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const ContainerMessages = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 200px;
+    overflow-y: auto;
+`;
+
+export const ContainerPicture = styled.div`
+	position: relative;
+    padding: 0px;
+`;
+
+export const Pastille = styled.div`
+    width: 12px;
+    height:12px;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
+`;
+
+export const ProfilePic = styled.img`
+    width: 48px;
+    border-radius: 50%;
+`;

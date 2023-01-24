@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IChannels } from '../channelsData';
+import { IChannels } from '../data';
 import * as F from 'styles/font.styles';
 import * as S from '../Chat.styles';
 import Channels from './Channels';
@@ -24,11 +24,9 @@ const ChannelsList = () => {
 	);
 
 	return (
-		<>
-			{data && data!.filter((channels) => channels.name).length > 0 && (
-				<Channels channels={data} />
-			)}
-		</>
+		<div style={{width: '100%'}}>
+			{data && (<Channels channels={data} />)}
+		</div>
 	);
 };
 
