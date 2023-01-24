@@ -4,28 +4,53 @@ export const StyledNav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	/* margin-bottom: 3em; */
 	padding: 1em 2em;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
-	/* border-bottom: 1px solid var(--font-color); */
+	width: 100%;
+`;
 
-	svg {
-		width: 200px;
+export const Brand = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1em;
+	.logo {
+		width: 48px;
 		height: 48px;
+	}
+	.versus {
+		width: fit-content;
+		height: 32px;
+	}
+
+	@media only screen and (max-width: 768px) {
+		.versus {
+			display: none;
+		}
 	}
 `;
 
 export const Menu = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 1em;
+	gap: 8px;
 
-	svg,
+	svg {
+		border-radius: 50%;
+		/* width: 40px;
+		height: 40px; */
+		fill: ${(props) => props.theme.colors.secondary};
+	}
 	img {
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
-		fill: ${(props) => props.theme.colors.secondary};
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	@media screen and (max-width: 768px) {
 	}
 `;
 
@@ -34,19 +59,25 @@ export const Divider = styled.div`
 	height: 2px;
 	border-radius: 4px;
 	transform: rotate(-90deg);
-	background-color: ${(props) => props.theme.colors.secondary};
+	background-color: ${(p) => p.theme.colors.secondary};
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
 `;
 
-export const StyledToggle = styled.label`
+export const StyledToggleTheme = styled.label`
 	cursor: pointer;
 
 	svg {
 		width: 24px;
 		height: 24px;
-		transition: fill 0.1s linear;
+		transition: fill 0.2s linear;
 	}
 
 	svg:hover {
 		fill: #e04f5f;
+	}
+	@media screen and (max-width: 768px) {
+		display: none;
 	}
 `;

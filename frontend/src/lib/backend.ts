@@ -15,7 +15,7 @@ export const backend = {
 		const response = await api.patch('/users/' + id, user);
 		return (await response.json()) as {id: string};
 	},
-	// A improve because it givs an answer
+	// A improve because it gives an answer
 	async getUserNickName() {
 		const id = localStorage.getItem('id');
 		const response = await api.get('/users/' + id);
