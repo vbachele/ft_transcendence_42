@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface IProps {
 	weight?: string;
 }
 
 export const Text = styled.p<IProps>`
-	font-weight: ${(p) => p.weight || 500};
+	font-weight: ${(p) => p.weight || 600};
 	font-size: 1.1rem;
 	@media only screen and (max-width: 768px) {
 	}
@@ -16,7 +16,8 @@ export const MenuText = styled(Text)`
 	}
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.p<IProps>`
+font-weight: ${(p) => p.weight || 500};
 	font-size: 1rem;
 	color: #949494;
 	@media only screen and (max-width: 768px) {
@@ -54,8 +55,5 @@ export const H5 = styled.h5`
 `;
 
 export const H6 = styled.h6`
-	font-size: clamp(1rem, 1.5vw, 1.1rem) @media only screen and
-		(max-width: 768px) {
-
-	}
+	font-size: clamp(1rem, 1.5vw, 1.1rem);
 `;

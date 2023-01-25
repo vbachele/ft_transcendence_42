@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Landing from "pages/Landing";
 import Registration from "pages/Registration";
@@ -27,7 +27,14 @@ import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const userPref =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const defaultTheme = userPref ? "dark" : "light";
+
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || defaultTheme
+  );
   return (
     <UserContextProvider>
       <PictureContextProvider>

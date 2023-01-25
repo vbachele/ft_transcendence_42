@@ -1,9 +1,10 @@
-import {Link} from 'react-router-dom';
-import * as UI from 'styles/buttons.styles';
-import * as F from 'styles/font.styles';
-import * as S from './Landing.styles';
-import {storeName} from 'components/EditName/db_updatenickname';
-import {ReactComponent as Logo} from 'assets/versus.svg';
+import { Link } from "react-router-dom";
+import * as UI from "styles/buttons.styles";
+import * as F from "styles/font.styles";
+import * as S from "./Landing.styles";
+import { storeName } from "components/EditName/db_updatenickname";
+import { ReactComponent as Versus } from "assets/versus.svg";
+import { motion } from "framer-motion";
 
 const Landing = () => {
 	const handleChange = () => {
@@ -12,15 +13,17 @@ const Landing = () => {
 
 	return (
 		<S.Container>
-			<Logo />
+			<Versus className="logo" />
 			<F.H2>Two sides, one victory</F.H2>
 			<S.ButtonsContainer>
-				<UI.PrimaryButton onClick={handleChange}>
-					<Link to="/registration">Join the battle</Link>
-				</UI.PrimaryButton>
-				<UI.SecondaryButtonSmall>
-					<Link to="/spectate">Watch games</Link>
-				</UI.SecondaryButtonSmall>
+				<Link to="/registration">
+					<UI.PrimaryButton onClick={handleChange}>
+						Join the battle
+					</UI.PrimaryButton>
+				</Link>
+				<Link to="/spectate">
+					<UI.SecondaryButtonSmall>Watch games</UI.SecondaryButtonSmall>
+				</Link>
 			</S.ButtonsContainer>
 		</S.Container>
 	);

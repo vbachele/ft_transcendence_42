@@ -1,11 +1,14 @@
 Beforehand, you need an env file for the docker to work.
-Create a .env file at the same level as the docker-compose file, containing the following information :
+Create a .env file at the same level as the docker-compose file, containing the following information (postgres password length must be at least 8 characters) :
 
-SERVER_PORT=YOUR_BACKEND_PORT</br>
+SERVER_PORT=YOUR_BACKEND_PORT
+
 FRONTEND_PORT=YOUR_FRONTEND_PORT
 
-POSTGRES_USER=DATABASE_USER</br>
-POSTGRES_PASSWORD=DATABASE_PASSWORD</br>
+POSTGRES_USER=DATABASE_USER
+
+POSTGRES_PASSWORD=DATABASE_PASSWORD
+
 POSTGRES_DB=DATABASE_NAME
 
 To launch the website, use `make`.
