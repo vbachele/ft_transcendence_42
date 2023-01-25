@@ -19,11 +19,11 @@ endif
 
 clean: 
 ifeq ($(DIR_CHECK), 0)
-	@sed -i "$$(grep -n POSTGRES_DIR .env | cut -f1 -d:)d" .env
+	@sed "$(grep -n POSTGRES_DIR .env | cut -f1 -d:)d" .env
 	@echo POSTGRES_DIR var removed from .env
 endif
 	docker system prune -a 
-	sudo rm -rf $${POSTGRES_DIR}
+	sudo rm -rf ${POSTGRES_DIR}
 	sudo rm -rf ./backend/.env
 	sudo rm -rf ./frontend/.env
 

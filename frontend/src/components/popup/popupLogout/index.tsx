@@ -1,10 +1,11 @@
 import React, { Component, useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Input, Modal } from "antd";
 import { PrimaryButton } from "styles/buttons.styles";
 import { H1, Text, Subtitle } from "styles/font.styles";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import ByeLogout from "assets/homer.gif";
+import { Form } from "antd";
 
 interface Props {
   click: boolean;
@@ -15,14 +16,11 @@ interface Props {
   sizeTitle?: string;
   cancelString: string;
   stringPrimaryButton: string;
-  width?: string;
-  height?: string;
-  component?: Component;
+  form?: boolean;
 }
 
 const Popup: React.FC<Props> = (props) => {
   const [modal2Open, setModal2Open] = useState(props.click);
-  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -50,24 +48,29 @@ const Popup: React.FC<Props> = (props) => {
                 </div>
               }
             </Button>
-            <Link to="/">
-              {/* <PrimaryButton width={'192px'}>
-								{props.stringPrimaryButton}
-							</PrimaryButton> */}
+            <Link to={props.linkTo}>
+              <PrimaryButton>{props.stringPrimaryButton}</PrimaryButton>
             </Link>
           </div>,
         ]}
         onCancel={() => setModal2Open(false)}
       >
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {/* <Subtitle display={'true'} color="black">
-						Already tired of playing?
-					</Subtitle> */}
-        </div>
-        <img src={ByeLogout} className="goodbye__gif" />
+        {props.form === true && (
+          <div className="InputNumber" style={{ marginTop: "30px" }}>
+            <Input
+              placeholder="Enter your phone number"
+              style={{ height: "40px", width: "80%", alignItems: "center" }}
+            />
+          </div>
+        )}
       </Modal>
     </>
   );
+};
+
+Popup.defaultProps = {
+  form: false,
+  linkTo: "/settings",
 };
 
 export default Popup;

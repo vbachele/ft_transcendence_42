@@ -1,7 +1,4 @@
-import { Button, Modal } from "antd";
-import Popup from "components/popup/popupLogout";
-import React from "react";
-import Qrcode from "assets/qrcode.png";
+import Popup from "components/Popup/popupLogout";
 
 const AuthenticationPopup = () => {
   return (
@@ -11,8 +8,9 @@ const AuthenticationPopup = () => {
         title="Enable 2FA"
         stringPrimaryButton="Enable"
         cancelString="cancel"
-        linkTo="/login-page"
+        linkTo="/login"
         subtitle="Scan the QRCode to enable 2FA"
+        form={true}
       />
     </>
   );

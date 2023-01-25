@@ -82,8 +82,6 @@ const Submit2FA = () => {
         <I.Input
           name="input1"
           type="number"
-          min={0}
-          max={0}
           placeholder={"5"}
           required
           onChange={handleChange}

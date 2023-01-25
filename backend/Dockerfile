@@ -1,4 +1,4 @@
-FROM node:19.0.1-alpine3.15 as development
+FROM node:19.4-buster as development
 
 WORKDIR /usr/src/app
 
@@ -8,13 +8,14 @@ RUN npm install
 
 COPY --chown=node:node . .
 
-RUN npm run build
-
 COPY --chown=node:node prisma ./prisma
 
-COPY --chown=node:node .env ./.env
+COPY --chown=node:node ./.env ./.env
 
 RUN npx prisma generate
+
+RUN npm run build
+
 
 USER node
 
