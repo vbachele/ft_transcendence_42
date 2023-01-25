@@ -25,6 +25,7 @@ import DoubleAuthentication from "pages/2FA";
 import Victory from "components/Victory";
 import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
+import LandingPage from "pages/Testlanding/Landingpage";
 
 function App() {
   const userPref =
@@ -42,13 +43,14 @@ function App() {
         <ThemeProvider theme={theme === "light" ? light : dark}>
           <GlobalStyle />
           <Router>
-            {location.pathname !== "/Testpage" && (
+            {location.pathname !== "/login" && location.pathname !== "/" && (
               <Navbar setTheme={setTheme} />
             )}
             <Routes>
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/oldlanding" element={<Landing />} />
               <Route path="/registration" element={<Registration />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/oldlogin" element={<Login />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/dashboard/:id" element={<Dashboard />} />
               <Route path="/settings" element={<Settings />} />
@@ -57,7 +59,7 @@ function App() {
               <Route path="/2FA" element={<DoubleAuthentication />} />
               <Route path="/Victory" element={<Victory />} />
               <Route path="/Defeat" element={<Defeat />} />
-              <Route path="/Testpage" element={<Testpage />} />
+              <Route path="/login" element={<Testpage />} />
               {/* <Route path="/game" element={<Game/>} /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>{" "}

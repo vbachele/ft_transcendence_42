@@ -12,7 +12,6 @@ const Settings = () => {
           <F.H2>Settings</F.H2>
           <F.Subtitle>Manage your information and security</F.Subtitle>
         </S.Container__Text>
-        `
         <S.Container__Infos>
           <EditAvatar />
           <Toggle name="Enable 2FA" />

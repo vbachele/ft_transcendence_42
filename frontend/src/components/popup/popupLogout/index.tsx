@@ -11,7 +11,7 @@ interface Props {
   click: boolean;
   title: string;
   linkTo: string;
-  subtitle: string;
+  subtitle?: string;
   srcImage?: string;
   sizeTitle?: string;
   cancelString: string;

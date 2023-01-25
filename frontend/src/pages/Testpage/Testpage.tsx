@@ -1,66 +1,78 @@
-import "./index.css";
-import React from "react";
+import React, { useState } from "react";
 import logo from "assets/logo-text.svg";
-import Navbar from "components/Navbar/Navbar";
+import * as S from "./Testpage.style";
+import { Link } from "react-router-dom";
+import Popup from "components/Popup/popupLogout";
 
 const Testpage = () => {
+  const [logout, setLogout] = useState(false);
+
+  const toggleLogout = () => {
+    setLogout(!logout);
+  };
+
   return (
-    <div>
-      <video id="bgvid" autoPlay loop muted playsInline>
+    <S.Container>
+      <S.bgvid id="bgvid" autoPlay loop muted playsInline>
         <source
           src="https://cdn.discordapp.com/attachments/1067488107827576916/1067743308367020092/background.mp4"
           type="video/mp4"
         />
-      </video>
-      <div id="main">
-        <div id="left">
-          <div id="logo">
-            <img src={logo} alt="" />
-          </div>
-          <div id="menus">
-            <canvas id="menu-highlight" width="800" height="600"></canvas>
-            <div
-              className="italic highlight"
-              // onMouseOver={(event) => highlight(event)}
+      </S.bgvid>
+      <S.main id="main">
+        <S.left id="left">
+          <S.logo id="logo">
+            <S.img src={logo} alt="" />
+          </S.logo>
+          <S.menus id="menus">
+            <S.menuHighlight id="menu-highlight" />
+            <S.link to="/play">
+              <S.italicHighlight className="italic highlight">
+                PLAY
+              </S.italicHighlight>
+            </S.link>
+            <S.link to="/spectate">
+              <S.italic className="italic">SPECTATE</S.italic>
+            </S.link>
+            <S.link to="/leaderboard">
+              <S.italic className="italic">LEADERBOARD</S.italic>
+            </S.link>
+            <S.link to="/career">
+              <S.italic className="italic">CAREER</S.italic>
+            </S.link>
+            <S.link to="/social">
+              <S.italic className="italic">SOCIAL</S.italic>
+            </S.link>
+            <S.link to="/settings">
+              <S.normal className="normal">SETTINGS</S.normal>
+            </S.link>
+            <S.logoutButton
+              className="navbar__subMenu-linkButton"
+              onClick={toggleLogout}
             >
-              PLAY
-            </div>
-            <div
-              className="italic"
-              // onMouseOver={(event) => highlight(event)}
-            >
-              SPECTATE
-            </div>
-            <div
-              className="italic"
-              // onMouseOver={(event) => highlight(event)}
-            >
-              LEADERBOARD
-            </div>
-            <div
-              className="italic"
-              // onMouseOver={(event) => highlight(event)}
-            >
-              CAREER
-            </div>
-            <div
-              className="italic"
-              // onMouseOver={(event) => highlight(event)}
-            >
-              SOCIAL
-            </div>
-            <div className="normal">SETTINGS</div>
-            <div className="normal">EXIT</div>
-          </div>
-        </div>
-        <div id="hero">
-          <div id="hero-name">VBACHELE</div>
-          <div id="hero-unlocks">
+              {logout && (
+                <Popup
+                  click={logout}
+                  title="LOG OUT"
+                  subtitle="Already leaving the paradise?"
+                  stringPrimaryButton="Log out"
+                  cancelString="cancel"
+                  linkTo="/"
+                  // srcImage={ByeLogout}
+                ></Popup>
+              )}
+              <S.normal className="normal">LOGOUT</S.normal>
+            </S.logoutButton>
+          </S.menus>
+        </S.left>
+        <S.hero id="hero">
+          <S.heroName id="hero-name">VBACHELE</S.heroName>
+          <S.heroUnlocks id="hero-unlocks">
             <span>1</span>/26 ACHIEVEMENTS
-          </div>
-        </div>
-      </div>
-    </div>
+          </S.heroUnlocks>
+        </S.hero>
+      </S.main>
+    </S.Container>
   );
 };
 
