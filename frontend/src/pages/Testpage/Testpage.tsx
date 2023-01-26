@@ -40,8 +40,11 @@ const Testpage = () => {
             <S.link to="/career">
               <S.italic className="italic">CAREER</S.italic>
             </S.link>
+            <S.link to="/chat">
+              <S.italic className="italic">CHAT</S.italic>
+            </S.link>
             <S.link to="/social">
-              <S.italic className="italic">SOCIAL</S.italic>
+              <S.normal className="normal">SOCIAL</S.normal>
             </S.link>
             <S.link to="/settings">
               <S.normal className="normal">SETTINGS</S.normal>

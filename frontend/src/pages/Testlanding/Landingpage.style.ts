@@ -53,10 +53,17 @@ export const left = styled.div`
 export const logo = styled.div`
   position: relative;
   padding: 7px 0 0 30px;
-  opacity: 0.9;
   &img {
     width: 390px;
   } */
+`;
+
+export const slogan = styled(logo)`
+  position: relative;
+  bottom: 6px;
+  font-size: 30px;
+  font-weight: 550;
+  color: rgba(255, 255, 255, 0.7);
 `;
 
 export const img = styled.img`

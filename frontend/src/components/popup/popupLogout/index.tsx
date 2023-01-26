@@ -55,6 +55,9 @@ const Popup: React.FC<Props> = (props) => {
         ]}
         onCancel={() => setModal2Open(false)}
       >
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {props.subtitle}
+        </div>
         {props.form === true && (
           <div className="InputNumber" style={{ marginTop: "30px" }}>
             <Input
@@ -71,6 +74,7 @@ const Popup: React.FC<Props> = (props) => {
 Popup.defaultProps = {
   form: false,
   linkTo: "/settings",
+  subtitle: "",
 };
 
 export default Popup;

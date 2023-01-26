@@ -17,6 +17,7 @@ const LandingPage = () => {
         <S.left id="left">
           <S.logo id="logo">
             <S.img src={logo} alt="" />
+            <S.slogan id="version">Two sides one victory</S.slogan>
           </S.logo>
           <S.menus id="menus">
             <S.menuHighlight id="menu-highlight" />
