@@ -2,8 +2,6 @@ import {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Avatar from 'assets/default-avatar.png';
 
-import {ReactComponent as Burger} from '../assets/burger.svg';
-import {ReactComponent as Close} from '../assets/close.svg';
 import {ReactComponent as Play} from '../assets/play.svg';
 import {ReactComponent as Watch} from '../assets/watch.svg';
 import {ReactComponent as Chat} from '../assets/chat.svg';

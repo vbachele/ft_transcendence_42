@@ -77,7 +77,4 @@ export const StyledToggleTheme = styled.label`
 	svg:hover {
 		fill: #e04f5f;
 	}
-	@media screen and (max-width: 768px) {
-		display: none;
-	}
 `;
