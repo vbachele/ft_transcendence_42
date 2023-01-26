@@ -10,7 +10,6 @@ import { IMessages } from './data';
 import DirectMessages from './components/DirectMessages';
 
 function Chat() {
-    //const messages: IMessages[] = [];
     return (
         <S.default>
             <S.LateralBar>

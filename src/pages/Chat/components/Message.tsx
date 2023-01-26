@@ -3,7 +3,6 @@ import { IMessages } from '../data';
 import * as F from 'styles/font.styles';
 import * as S from '../Chat.styles';
 import './styles.css';
-import { ContainerPicture } from '../Chat.styles';
 
 interface IProps {
 	data: IMessages;
@@ -40,7 +39,7 @@ const Messages = ({data}: IProps) => {
                 );
             else
                 return (
-                    <div style={{display: 'flex', flexDirection: 'column', gap: '2px', alignItems: 'flex-end'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', gap: '2px', alignItems: 'flex-end', paddingTop: '6px'}}>
                         <F.Text style={{fontSize: '12px', fontWeight: 400, color: '#707991'}}> {data.time} </F.Text>
                     </div>
                 );
@@ -58,7 +57,7 @@ const Messages = ({data}: IProps) => {
                     <F.Text 
                     style={{fontSize: '14px', fontWeight: 400, color: '#707991', whiteSpace: 'nowrap', 
                     overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '13vw'}}>
-                    {data.message} 
+                        {data.message} 
                     </F.Text>
                 </div>
             </div>

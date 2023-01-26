@@ -29,7 +29,7 @@ function App() {
 					<GlobalStyle />
 					<Router>
 						<Navbar setTheme={setTheme} />
-						<Content>
+						{/* <Content> */}
 							<Routes>
 								<Route path="/" element={<Landing />} />
 								<Route path="/registration" element={<Registration />} />
@@ -41,7 +41,7 @@ function App() {
 								<Route path="/headings" element={<Headings />} />
 								<Route path="*" element={<NotFound />} />
 							</Routes>
-						</Content>
+						{/* </Content> */}
 					</Router>
 				</ThemeProvider>
 			</PictureContextProvider>

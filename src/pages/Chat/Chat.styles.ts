@@ -17,9 +17,9 @@ export default styled.div`
 
 export const LateralBar = styled.div`
     grid-column-start: 1/2;
-    background-color : #9999;
+    /* background-color : #9999; */
     border-right: 0.2px solid #000000;
-    height: 88vh;
+    height: 92vh;
 `;
 
 export const MiddleDiv = styled.div`
@@ -28,7 +28,7 @@ export const MiddleDiv = styled.div`
     }
    // height: 100%;
     grid-column-start: 2/3;
-    background-color : #3333;
+    /* background-color : #3333; */
 `;
 
 export const ContainerLateralBar = styled.div`
@@ -60,7 +60,7 @@ export const ContainerMessages = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 31vh;
+    max-height: 32vh;
     overflow-y: auto;
     gap: 8px;
 `;
