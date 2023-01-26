@@ -60,8 +60,9 @@ export const ContainerMessages = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 200px;
+    max-height: 31vh;
     overflow-y: auto;
+    gap: 8px;
 `;
 
 export const ContainerPicture = styled.div`
@@ -73,7 +74,6 @@ export const Pastille = styled.div`
     width: 12px;
     height:12px;
     position: absolute;
-    z-index: 1;
     bottom: 0;
     right: 0;
     border-radius: 50%;

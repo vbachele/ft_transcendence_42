@@ -1,4 +1,4 @@
 .channelsContainer {
-	max-height: 140px;
+	max-height: 20vh;
 	overflow-y: auto;
 }

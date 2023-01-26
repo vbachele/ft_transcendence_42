@@ -50,7 +50,7 @@ const SearchBox: React.FC = () => {
   return (
     <AutoComplete
     dropdownMatchSelectWidth={252}
-    style={{ width: 236, height: 58 }}
+    style={{ width: '80%', height: 58 }}
     options={options}
     //onSelect={onSelect}
     //onSearch={handleSearch}
