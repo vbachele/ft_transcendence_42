@@ -3,7 +3,3 @@ dist
 .DS_Store
 *.code-workspace
 .vscode
-.prettierrc
-.prettierignore
-.eslintrc.js
-.env
