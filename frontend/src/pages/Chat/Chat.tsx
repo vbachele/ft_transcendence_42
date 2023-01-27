@@ -16,7 +16,6 @@ function Chat() {
     function handleChange(event: FormEvent<HTMLInputElement>) {
         setSearch(event.currentTarget.value);
     }
-    console.log(search);
 
     return (
         <S.default>
@@ -26,12 +25,12 @@ function Chat() {
                     <SearchBox value={search} setValue={handleChange}/>
                     <S.ContainerTitles>
                         <F.H3> Channels</F.H3>
-                        <GrFormAdd style={{ width: '24px', height: '24px' }} />
+                        <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />
                     </S.ContainerTitles>
                     <ChannelsList value={search}/>
                     <S.ContainerTitles>
                         <F.H3> Direct messages</F.H3>
-                        <GrFormAdd style={{ width: '24px', height: '24px' }} />
+                        <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />
                     </S.ContainerTitles>
                     <DirectMessages value={search}/>
                 </S.ContainerLateralBar>

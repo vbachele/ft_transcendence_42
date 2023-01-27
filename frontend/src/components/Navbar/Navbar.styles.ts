@@ -5,8 +5,7 @@ export const StyledNav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1em 2em;
-	box-shadow: ${(p) =>
-            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
+	box-shadow: rgb(0 0 0 / 20%) 0px 4px 12px;
 	width: 100%;
 `;
 
