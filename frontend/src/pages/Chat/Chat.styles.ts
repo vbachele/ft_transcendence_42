@@ -18,7 +18,9 @@ export default styled.div`
 export const LateralBar = styled.div`
     grid-column-start: 1/2;
     /* background-color : #9999; */
-    box-shadow: rgb(0 0 0 / 20%) 0px 4px 12px;
+    box-shadow: ${(p) =>
+            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
+    //box-shadow: rgb(0 0 0 / 20%) 0px 4px 12px;
     height: 91vh;
 `;
 

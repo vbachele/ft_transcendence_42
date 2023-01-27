@@ -32,8 +32,9 @@ const DirectMessages = (props: IProps) => {
 	for (let value in json.directMessages) {
 		data.push(json.directMessages[value]);
 	}
-	let filter = new RegExp(`^${props.value}.*`);
+	let filter = new RegExp(`^.*${props.value}.*`, 'i');
 	///\/^.*\// ??? regex de merde 
+
     return (
 		<S.ContainerMessages>
 			{data && data

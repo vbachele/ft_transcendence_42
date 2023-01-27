@@ -32,7 +32,7 @@ const ChannelsList = (props: IProps) => {
 		data.push(json.channels[value]);
 	}
 
-	let filter = new RegExp(`^${props.value}.*`);
+	let filter = new RegExp(`^.*${props.value}.*`, 'i');
 
 	return (
 		<S.ContainerChannels>

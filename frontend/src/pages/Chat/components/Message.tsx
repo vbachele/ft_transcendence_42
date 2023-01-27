@@ -93,7 +93,6 @@ const Messages = ({data}: IProps) => {
                 );
     }
 
-
 	return (
 		<S.ContainerMessage>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
