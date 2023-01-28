@@ -27,7 +27,7 @@ function Chat() {
                         <F.H3> Channels</F.H3>
                         <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />
                     </S.ContainerTitles>
-                    <ChannelsList value={search}/>
+                    <ChannelsList value={search} />
                     <S.ContainerTitles>
                         <F.H3> Direct messages</F.H3>
                         <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />

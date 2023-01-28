@@ -3,6 +3,7 @@ import { IMessages } from '../data';
 import * as F from 'styles/font.styles';
 import * as S from '../Chat.styles';
 import { ThemeContext } from 'styled-components';
+import './style.css';
 
 interface IProps {
 	data: IMessages;
@@ -69,27 +70,26 @@ const Messages = ({data}: IProps) => {
 
         if (theme.name === 'dark')
             return (
-                <div>
+                <S.ContainerSubMessages>
                     <F.Text style={{fontWeight: 600}}> {data.name} </F.Text>
                     <F.Text 
-                    className='subText'
                     style={{fontSize: '14px', fontWeight: 400, color: '#a6a8ae', whiteSpace: 'nowrap', 
-                    overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '13vw'}}>
+                    overflow: 'hidden', textOverflow: 'ellipsis'}}>
                         {data.message} 
                     </F.Text>
-                </div>
+                </S.ContainerSubMessages>
             );
             else
                 return (
-                    <div>
+                    <S.ContainerSubMessages>
                         <F.Text style={{fontWeight: 600}}> {data.name} </F.Text>
                         <F.Text 
                         className='subText'
                         style={{fontSize: '14px', fontWeight: 400, color: '#707991', whiteSpace: 'nowrap', 
-                        overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '13vw'}}>
+                        overflow: 'hidden', textOverflow: 'ellipsis'}}>
                             {data.message} 
                         </F.Text>
-                    </div>
+                    </S.ContainerSubMessages>
                 );
     }
 

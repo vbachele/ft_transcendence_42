@@ -35,6 +35,7 @@ export const ContainerLateralBar = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
     padding: 16px;
     gap: 16px;
 `;
@@ -58,15 +59,19 @@ export const ContainerTitles = styled.div`
 `;
 
 export const ContainerChannels = styled.div`
-    width: 100%; 
+    width: 100%;
     max-height: 20vh;
     overflow-y: auto;
-`;
+    max-width: 25vw;
+    @media only screen and (max-width: 768px) {
+        max-width: 90vw;
+    }
+    `;
 
 export const ContainerChannel = styled.div`
     transition: all 0.2s linear;
 
-    :hover {
+    .hover:hover {
         transform: scale(1.01);
         background-color: ${(p) =>
             p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
@@ -97,6 +102,13 @@ export const ContainerMessages = styled.div`
     max-height: 32vh;
     overflow-y: auto;
     gap: 8px;
+`;
+
+export const ContainerSubMessages = styled.div`
+    max-width: 15vw;
+    @media only screen and (max-width: 768px) {
+        max-width: 70vw;
+    }
 `;
 
 export const ContainerPicture = styled.div`
