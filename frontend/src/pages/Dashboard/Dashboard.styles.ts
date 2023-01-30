@@ -9,7 +9,7 @@ export const DashboardGrid = styled.div`
 	padding: 1em;
 
 	.subcontainer {
-		background-color: rgba(224, 79, 95, 0.2);
+		background-color: rgba(224, 79, 95, 0.1);
 		border-radius: 4px;
 		padding: 0.5em;
 		display: grid;

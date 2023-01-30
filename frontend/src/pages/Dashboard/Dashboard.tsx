@@ -13,6 +13,7 @@ const Dashboard = () => {
 		name: 'Louis',
 		image: avatar,
 		coalition: 'Alliance',
+		status: 'ingame',
 		score: 987987,
 		games: 564,
 		wins: 321,

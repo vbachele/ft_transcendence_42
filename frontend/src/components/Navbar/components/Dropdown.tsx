@@ -7,6 +7,7 @@ import {ReactComponent as Watch} from '../assets/watch.svg';
 import {ReactComponent as Chat} from '../assets/chat.svg';
 import {ReactComponent as Leaderboard} from '../assets/leaderboard.svg';
 import {ReactComponent as Dashboard} from '../assets/dashboard.svg';
+import {ReactComponent as Friends} from '../assets/social.svg';
 import {ReactComponent as Settings} from '../assets/settings.svg';
 import {ReactComponent as Logout} from '../assets/logout.svg';
 import useComponentVisible from 'hooks/useComponentVisible';
@@ -27,7 +28,7 @@ const menuVariants = {
 
 const menuTransition = {
 	type: 'spring',
-	duration: 1,
+	duration: 0.5,
 	bounce: 0,
 };
 
@@ -62,11 +63,11 @@ const Dropdown = () => {
 				{/* PROFILE */}
 				<S.User>
 					<>
-						<Link to="/dashboard" onClick={toggleDrop}>
+						<Link to="/dashboard/:id" onClick={toggleDrop}>
 							<img src={Avatar} />
 						</Link>
 						<S.User__Infos>
-							<Link to="/dashboard" onClick={toggleDrop}>
+							<Link to="/dashboard/:id" onClick={toggleDrop}>
 								<F.H5>Louisnfr</F.H5>
 							</Link>
 							<Link
@@ -102,9 +103,13 @@ const Dropdown = () => {
 						<F.Text weight="400">Leaderboard</F.Text>
 					</Link>
 					{/* DASHBOARD */}
-					<Link to={`/dashboard/66`} onClick={toggleDrop}>
+					<Link to={`/dashboard/:id`} onClick={toggleDrop}>
 						<Dashboard />
 						<F.Text weight="400">My Statistics</F.Text>
+					</Link>
+					<Link to={`/social`} onClick={toggleDrop}>
+						<Friends />
+						<F.Text weight="400">Social</F.Text>
 					</Link>
 				</S.LinksContainer>
 				<hr className="second-hr" />

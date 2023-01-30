@@ -49,23 +49,6 @@ export const Avatar = styled.img`
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
-export const Status = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 5px;
-
-	span {
-		background-color: #4bae4f;
-		height: 10px;
-		width: 10px;
-		border-radius: 50%;
-	}
-
-	h4 {
-		color: #4bae4f;
-	}
-`;
-
 export const Options = styled.div`
 	display: flex;
 	justify-content: center;

@@ -37,7 +37,7 @@ const Testpage = () => {
 						<S.link to="/leaderboard">
 							<S.italic className="italic">LEADERBOARD</S.italic>
 						</S.link>
-						<S.link to="/career">
+						<S.link to="/dashboard/:id">
 							<S.italic className="italic">CAREER</S.italic>
 						</S.link>
 						<S.link to="/chat">

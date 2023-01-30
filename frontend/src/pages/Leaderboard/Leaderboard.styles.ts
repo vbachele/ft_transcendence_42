@@ -72,7 +72,7 @@ export const Slot = styled(Link)`
 	border-radius: 8px;
 	padding: 10px 5%;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
-	transition: all 0.2s linear;
+	transition: all 0.1s linear;
 
 	:hover {
 		transform: scale(1.01);
