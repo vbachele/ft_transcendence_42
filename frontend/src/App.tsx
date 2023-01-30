@@ -51,9 +51,10 @@ function App() {
 					>
 						<GlobalStyle />
 						<Router>
-							{location.pathname !== '/login' && location.pathname !== '/' && (
+							{/* {location.pathname !== '/login' && location.pathname !== '/' && (
 								<Navbar setTheme={setTheme} />
-							)}
+								)} */}
+							<Navbar setTheme={setTheme} />
 							<Routes>
 								<Route path="/" element={<LandingPage />} />
 								<Route path="/oldlanding" element={<Landing />} />
@@ -71,7 +72,7 @@ function App() {
 								<Route path="/login" element={<Testpage />} />
 								{/* <Route path="/game" element={<Game/>} /> */}
 								<Route path="*" element={<NotFound />} />
-							</Routes>{' '}
+							</Routes>
 						</Router>
 					</ConfigProvider>
 				</ThemeProvider>

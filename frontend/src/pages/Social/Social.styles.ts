@@ -1,4 +1,3 @@
-import {Drawer, Input} from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -15,10 +14,18 @@ export const UserContainer = styled.div`
 	justify-content: center;
 	gap: 2em;
 	padding: 16px;
-	width: 50%;
-	max-height: 500px;
+	width: 60%;
+	max-height: 512px;
 	overflow-y: auto;
 	overflow-x: hidden;
+
+	@media screen and (max-width: 1300px) {
+		grid-template-columns: 1fr 1fr;
+		width: 75%;
+	}
+	@media screen and (max-width: 768px) {
+		grid-template-columns: 1fr;
+	}
 `;
 
 export const Friend = styled.button`
@@ -40,23 +47,14 @@ export const Friend = styled.button`
 
 	.avatar {
 		border-radius: 50%;
+		width: 64px;
+		height: 64px;
 	}
 
 	:hover {
 		transform: scale(1.01);
 		background-color: ${(p) =>
 			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
-	}
-`;
-
-export const StyledDrawer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	.drawer__avatar {
-		width: 192px;
-		border-radius: 50%;
 	}
 `;
 
@@ -81,13 +79,29 @@ export const FriendDetails = styled.div`
 	flex-direction: column;
 	align-items: center;
 	gap: 32px;
+
+	.drawer__avatar {
+		width: 192px;
+		border-radius: 50%;
+	}
 `;
 
-export const DrawerOptions = styled.div`
-	width: 100%;
+export const FriendOptions = styled.div`
+	width: 128px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: left;
+	text-align: center;
+	gap: 2em;
+
+	svg {
+		width: 24px;
+		height: 24px;
+	}
+
+	button {
+		cursor: pointer;
+	}
 `;
 
 export const Blocked = styled.div`
@@ -108,6 +122,8 @@ export const Blocked = styled.div`
 
 	.avatar {
 		border-radius: 50%;
+		width: 64px;
+		height: 64px;
 		filter: grayscale(1);
 	}
 
