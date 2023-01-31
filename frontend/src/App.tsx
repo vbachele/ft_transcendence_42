@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Landing from "pages/Landing";
 import Registration from "pages/Registration";
@@ -26,6 +26,11 @@ import Victory from "components/Victory";
 import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
+import PopupContext, {
+  PopupContextProvider,
+  usePopup,
+} from "contexts/Popup/popup";
+import SearchPlayer from "components/Popup/SearchPlayer";
 
 function App() {
   const userPref =
@@ -36,37 +41,53 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || defaultTheme
   );
+
+  // function homePage(location: string): React.ReactNode {
+  //   console.log(location);
+  //   // useEffect(() => {
+  //   if (location === "/login") {
+  //     return;
+  //   }
+  //   if (location! === "/") {
+  //     return;
+  //   }
+  //   // }, [location]);
+  //   return <Navbar setTheme={setTheme}></Navbar>;
+  // }
+
+  // <SearchPlayer click={true}></SearchPlayer>
+
   return (
     <UserContextProvider>
-      <PictureContextProvider>
-        {/* <SocketContextComponent> */}
-        <ThemeProvider theme={theme === "light" ? light : dark}>
-          <GlobalStyle />
-          <Router>
-            {location.pathname !== "/login" && location.pathname !== "/" && (
-              <Navbar setTheme={setTheme} />
-            )}
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/oldlanding" element={<Landing />} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="/oldlogin" element={<Login />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/dashboard/:id" element={<Dashboard />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/headings" element={<Headings />} />
-              <Route path="/users" element={<UserMocks />} />
-              <Route path="/2FA" element={<DoubleAuthentication />} />
-              <Route path="/Victory" element={<Victory />} />
-              <Route path="/Defeat" element={<Defeat />} />
-              <Route path="/login" element={<Testpage />} />
-              {/* <Route path="/game" element={<Game/>} /> */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>{" "}
-          </Router>
-        </ThemeProvider>
-        {/* </SocketContextComponent> */}
-      </PictureContextProvider>
+      <PopupContextProvider>
+        <PictureContextProvider>
+          {/* <SocketContextComponent> */}
+          <ThemeProvider theme={theme === "light" ? light : dark}>
+            <GlobalStyle />
+            <SearchPlayer />
+            <Router>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/oldlanding" element={<Landing />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/oldlogin" element={<Login />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/dashboard/:id" element={<Dashboard />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/headings" element={<Headings />} />
+                <Route path="/users" element={<UserMocks />} />
+                <Route path="/2FA" element={<DoubleAuthentication />} />
+                <Route path="/Victory" element={<Victory />} />
+                <Route path="/Defeat" element={<Defeat />} />
+                <Route path="/login" element={<Testpage />} />
+                {/* <Route path="/game" element={<Game/>} /> */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>{" "}
+            </Router>
+          </ThemeProvider>
+          {/* </SocketContextComponent> */}
+        </PictureContextProvider>
+      </PopupContextProvider>
     </UserContextProvider>
   );
 }

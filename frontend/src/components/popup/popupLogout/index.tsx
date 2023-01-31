@@ -4,8 +4,6 @@ import { PrimaryButton } from "styles/buttons.styles";
 import { H1, Text, Subtitle } from "styles/font.styles";
 import { Link } from "react-router-dom";
 import "./styles.css";
-import ByeLogout from "assets/homer.gif";
-import { Form } from "antd";
 
 interface Props {
   click: boolean;
@@ -25,8 +23,9 @@ const Popup: React.FC<Props> = (props) => {
   return (
     <>
       <Modal
-        className="modale-container"
-        width={"393px"}
+        wrapClassName="wrapClassName"
+        style={{ background: "red" }}
+        width={"375px"}
         title={
           <div style={{ display: "flex", justifyContent: "center" }}>
             <H1 color={"black"}>{props.title}</H1>

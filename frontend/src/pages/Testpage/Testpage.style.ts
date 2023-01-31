@@ -54,6 +54,7 @@ export const logo = styled.div`
   position: relative;
   padding: 7px 0 0 30px;
   opacity: 0.9;
+  z-index: -1;
   &img {
     width: 390px;
   } */

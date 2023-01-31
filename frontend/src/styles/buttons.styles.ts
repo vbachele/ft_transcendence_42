@@ -73,3 +73,31 @@ export const SecondaryButtonSmall = styled(Button)`
 		}
 	}
 `;
+
+interface Iprops {
+  backgroundColor?: string;
+  border?: string;
+  width?: string;
+}
+
+export const PopupButton = styled(Button)<Iprops>`
+  background-color: ${(p) => p.backgroundColor || "transparent"};
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: center;
+  border: ${(p) => p.border || "none"};
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  border-radius: 48px;
+  width: ${(p) => p.width || "100%"};
+  &,
+  a {
+    color: white;
+  }
+  :hover {
+    transform: scaleY(1.08);
+    border: 1.5px solid #e5e7eb;
+  }
+`;
