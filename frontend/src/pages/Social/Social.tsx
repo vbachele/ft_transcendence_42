@@ -6,6 +6,7 @@ import * as S from './Social.styles';
 import * as F from 'styles/font.styles';
 import compareStatus from 'helpers/compareStatus';
 import Blocked from './components/Blocked';
+import filterByName from 'helpers/filterByName';
 
 // prettier-ignore
 const friends: IUser[] = [
@@ -149,13 +150,6 @@ const blocked: IUser[] = [
 	{"id":282,"name":"Atton","image":"https://robohash.org/voluptaseosplaceat.png?size=200x200&set=set1","coalition":"Assembly","status":"ingame","games":33,"wins":32,"ratio":0.97,"achievements":["Achievement 1","Achievement 2"],"score":3171},
 ];
 
-function filterByName(friend: IUser, search: string): boolean {
-	return friend.name
-		.normalize('NFD')
-		.toLowerCase()
-		.includes(search.normalize('NFD').toLowerCase());
-}
-
 const {Search} = Input;
 
 function Social() {
@@ -171,7 +165,7 @@ function Social() {
 				size="large"
 				onChange={onSearch}
 				style={{
-					width: '50%',
+					width: '30%',
 				}}
 				enterButton
 			/>

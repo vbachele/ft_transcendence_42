@@ -19,6 +19,22 @@ export const UserContainer = styled.div`
 	overflow-y: auto;
 	overflow-x: hidden;
 
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+		border-radius: 8px;
+		background-color: ${(p) =>
+			p.theme.name === 'light' ? '#f5f5f5' : '#8f8f8f'};
+	}
+	::-webkit-scrollbar-thumb {
+		border-radius: 8px;
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		background-color: ${(p) =>
+			p.theme.name === 'light' ? '#8f8f8f' : '#393939'};
+	}
+
 	@media screen and (max-width: 1300px) {
 		grid-template-columns: 1fr 1fr;
 		width: 75%;

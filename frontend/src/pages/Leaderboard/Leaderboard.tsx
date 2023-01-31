@@ -7,7 +7,6 @@ import {IUser} from 'types/models';
 import {useLocation} from 'react-router-dom';
 import * as S from './Leaderboard.styles';
 import * as F from 'styles/font.styles';
-import {api} from 'lib/api';
 import UserList from 'mocks/Users/players.json';
 
 const Leaderboard = () => {

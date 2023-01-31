@@ -1,12 +1,11 @@
-import React from 'react';
-import {useState} from 'react';
-import Rank from './Rank';
+import React, {useState} from 'react';
 import {IUser} from 'types/models';
+import {Input} from 'antd';
+import Rank from './Rank';
 import compareScore from 'helpers/compareScore';
-
+import filterByName from 'helpers/filterByName';
 import * as S from '../Leaderboard.styles';
 import * as F from 'styles/font.styles';
-import {Input} from 'antd';
 
 interface IProps {
 	players: IUser[];
@@ -63,12 +62,7 @@ const RankList = ({players, opt}: IProps) => {
 			{players
 				.sort(compareScore)
 				.filter(filterCoalition)
-				.filter((player) =>
-					player.name
-						.normalize('NFD')
-						.toLowerCase()
-						.includes(search.normalize('NFD').toLowerCase())
-				)
+				.filter((player) => filterByName(player, search))
 				.map((player: IUser) => (
 					<Rank
 						player={player}
