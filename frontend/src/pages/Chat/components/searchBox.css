@@ -1,7 +1,3 @@
-.ant-btn-primary {
-  background-color: #E04F5F;
-}
-
-.ant-input {
-    background-color: #F9F9F9;
-}
+.ant-btn-primary { background-color: #E04F5F; }
+.ant-input { background-color: #F9F9F9; }
+.ant-btn:focus, .ant-btn:hover { background-color: red !important; }

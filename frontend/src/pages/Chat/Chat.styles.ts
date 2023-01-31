@@ -26,9 +26,37 @@ export const MiddleDiv = styled.div`
     @media only screen and (max-width: 768px) {
         display: none;
     }
-   // height: 100%;
+    //height: 100%;
     grid-column-start: 2/3;
-    /* background-color : #3333; */
+`;
+
+export const ContainerMainField = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    //align-items: center;
+    height: 91vh;
+    width: 100%;
+`;
+
+export const ContainerMiddleField = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background-color: grey;
+`;
+
+export const ContainerRightField = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 22.5vw;
+    padding: 16px;
+    gap: 16px;
+    box-shadow: ${(p) =>
+            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};  
+    background-color: lightgrey;
 `;
 
 export const ContainerLateralBar = styled.div`

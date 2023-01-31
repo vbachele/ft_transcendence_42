@@ -1,5 +1,9 @@
 {
 	"channels": [
+		{
+			"name": "hey",
+			"id": 0
+		},
         {
 			"name": "nan",
 			"id": 1

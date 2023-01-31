@@ -36,13 +36,17 @@ const ChannelsList = (props: IProps) => {
 
 	return (
 		<S.ContainerChannels>
-			{data && data
+			<ul>
+				{data && data
 				.filter((message) => {
 					return filter.test(message.name)
 				})
 				.map((channel: IChannels) => (
+				<li key={channel.id}>
 					<Channels data={channel} />
+				</li>
 				))}
+			</ul>
 		</S.ContainerChannels>
 	);
 };
