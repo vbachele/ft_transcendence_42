@@ -6,11 +6,14 @@ import compareScore from 'helpers/compareScore';
 
 import * as S from '../Leaderboard.styles';
 import * as F from 'styles/font.styles';
+import {Input} from 'antd';
 
 interface IProps {
 	players: IUser[];
 	opt: string;
 }
+
+const {Search} = Input;
 
 const RankList = ({players, opt}: IProps) => {
 	const [selectedCoalition, setSelectedCoalition] = useState(opt);
@@ -35,9 +38,15 @@ const RankList = ({players, opt}: IProps) => {
 	return (
 		<>
 			<S.FiltersContainer>
-				<S.SearchPlayer
+				<Search
 					placeholder="Search a player"
-					onInput={handleSearchChange}
+					size="large"
+					onChange={handleSearchChange}
+					style={{
+						width: '250px',
+						alignSelf: 'center',
+					}}
+					enterButton
 				/>
 				<S.SearchCoalition onChange={handleCoalitionChange} defaultValue={opt}>
 					<option value="All">All Coalitions</option>

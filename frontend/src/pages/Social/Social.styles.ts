@@ -39,11 +39,7 @@ export const Friend = styled.button`
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
-	transition: all 0.1s linear;
-
-	.ant-drawer {
-		background-color: blue;
-	}
+	transition: transform 0.1s linear;
 
 	.avatar {
 		border-radius: 50%;
