@@ -8,7 +8,7 @@ function MainFieldChannel() {
         <S.MiddleDiv>
             <S.ContainerMainField>
                 <S.ContainerMiddleField>
-                    salut
+                    
                 </S.ContainerMiddleField>
             </S.ContainerMainField>
         </S.MiddleDiv> 

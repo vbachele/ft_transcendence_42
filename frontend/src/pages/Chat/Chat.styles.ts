@@ -44,19 +44,16 @@ export const ContainerMiddleField = styled.div`
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    background-color: grey;
 `;
 
 export const ContainerRightField = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    //align-items: center;
     width: 22.5vw;
     padding: 16px;
-    gap: 16px;
     box-shadow: ${(p) =>
             p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};  
-    background-color: lightgrey;
 `;
 
 export const ContainerLateralBar = styled.div`
@@ -75,7 +72,7 @@ export const ContainerTitles = styled.div`
     justify-content: space-between;
     align-items: center;
     .button {
-        background-color: white;
+        //background-color: white;
         transition: all 0.3s linear;
 
         :hover {
@@ -144,12 +141,19 @@ export const ContainerPicture = styled.div`
     padding: 0px;
 `;
 
-export const Pastille = styled.div`
+export const PastillePic = styled.div`
     width: 12px;
     height:12px;
     position: absolute;
     bottom: 0;
     right: 0;
+    border-radius: 50%;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
+`;
+
+export const Pastille = styled.div`
+    width: 12px;
+    height:12px;
     border-radius: 50%;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
 `;

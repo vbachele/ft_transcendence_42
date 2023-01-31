@@ -4,7 +4,7 @@ import * as F from 'styles/font.styles';
 import * as S from '../Chat.styles';
 import { ThemeContext } from 'styled-components';
 import './style.css';
-import RightBar from './RightBar';
+import RightBar from './RightBarDirectMessages';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 
 interface IProps {
@@ -41,15 +41,15 @@ const Messages: React.FC<IProps> = (props) => {
 	const displayPastille = (params: IMessages) => {
         if (params.pastille == 1)
             return (
-                <S.Pastille style={{background: '#2FE837'}} />
+                <S.PastillePic style={{background: '#2FE837'}} />
             );
         else if (params.pastille == 2)
             return (
-                <S.Pastille style={{background: '#9CA3AF'}} />
+                <S.PastillePic style={{background: '#9CA3AF'}} />
             );
         else
             return (
-                <S.Pastille style={{background: '#EB5757'}} />
+                <S.PastillePic style={{background: '#EB5757'}} />
             );
 	};
 

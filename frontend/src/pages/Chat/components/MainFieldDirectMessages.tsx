@@ -1,9 +1,9 @@
 import React, {FormEvent, FormEventHandler, useContext, useEffect, useState} from 'react';
 import * as F from 'styles/font.styles';
 import * as S from '../Chat.styles';
-import RightBar from './RightBar';
 import { IMessages } from '../data';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
+import RightBarDirectMessages from './RightBarDirectMessages';
 
 function MainFieldDirectMessages() {
 	const { myData, isClicked } = useContext(MessagesContext);
@@ -14,9 +14,9 @@ function MainFieldDirectMessages() {
         <S.MiddleDiv>
             <S.ContainerMainField>
                 <S.ContainerMiddleField>
-                    salut
+                    
                 </S.ContainerMiddleField>
-                {isClicked && <RightBar data={myData} isClicked={isClicked} />}
+                {isClicked && <RightBarDirectMessages data={myData} />}
             </S.ContainerMainField>
         </S.MiddleDiv> 
     );

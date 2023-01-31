@@ -22,12 +22,12 @@ function LateralBar() {
                 <SearchBox value={search} setValue={handleChange}/>
                 <S.ContainerTitles>
                     <F.H3> Channels</F.H3>
-                    <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />
+                    <button ><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <ChannelsList value={search} />
                 <S.ContainerTitles>
                     <F.H3> Direct messages</F.H3>
-                    <GrFormAdd className='button' style={{ width: '24px', height: '24px' }} />
+                    <button ><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <DirectMessages value={search}/>
             </S.ContainerLateralBar>
