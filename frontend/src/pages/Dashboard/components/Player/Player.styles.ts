@@ -35,6 +35,10 @@ export const Profile = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+
+	.text-color.ant-progress .ant-progress-text {
+		color: ${(p) => (p.theme.name === 'light' ? '#000' : '#fff')};
+	}
 `;
 
 export const User = styled.div`

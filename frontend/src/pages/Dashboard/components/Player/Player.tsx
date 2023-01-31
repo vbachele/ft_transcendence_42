@@ -12,8 +12,6 @@ interface IProps {
 }
 
 const DashboardPlayer = ({player}: IProps) => {
-	// const {globalRank, coalitionRank} = getRanks(player);
-
 	return (
 		<div className="subcontainer">
 			<S.Coalition>
@@ -42,6 +40,7 @@ const DashboardPlayer = ({player}: IProps) => {
 				</S.User>
 				<div style={{fontWeight: 700}}>
 					<Progress
+						className="text-color"
 						type="circle"
 						width={120}
 						strokeColor={'#e04f5f'}
