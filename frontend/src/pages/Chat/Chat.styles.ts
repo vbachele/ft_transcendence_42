@@ -53,7 +53,12 @@ export const ContainerRightField = styled.div`
     width: 22.5vw;
     padding: 16px;
     box-shadow: ${(p) =>
-            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};  
+            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
+    .hover:hover {
+        transform: scale(1.01);
+        background-color: ${(p) =>
+            p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
+    }
 `;
 
 export const ContainerLateralBar = styled.div`

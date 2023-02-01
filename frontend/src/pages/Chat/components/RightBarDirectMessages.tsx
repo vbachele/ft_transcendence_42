@@ -48,7 +48,7 @@ function RightBarDirectMessages({data} : IProps) {
     return (  
         <S.ContainerRightField>
             <div style={{width: "100%", display: 'text', flexDirection: 'column', justifyContent: "space-between", 
-            alignItems: 'center', padding: '0px 0px 26px', gap: '32px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
+            alignItems: 'center', padding: '0px 0px 16px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
                 <div style={{ display: 'flex', flexDirection:'row', justifyContent: "space-between", 
                 alignItems:"center", paddingBottom: '32px'}}>
                     <F.Text style={{maxWidth: "14vw", overflowY: "hidden"}}> {data.name} </F.Text>
@@ -60,19 +60,19 @@ function RightBarDirectMessages({data} : IProps) {
                 </div>
             </div>
             <div style={{padding: '16px 0px 32px 0px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '16px 8px 0px 8px', gap: '8px'}}>
+                <div className='hover' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '8px 8px 0px 8px', gap: '8px'}}>
                     <FaUserAlt />
                     <F.Text weight='500'> View profile</F.Text>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '16px 8px 0px 8px', gap: '8px'}}>
+                <div className='hover' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '8px 8px 0px 8px', gap: '8px', marginTop: '8px'}}>
                     <IoLogoGameControllerB />
                     <F.Text weight='500'> Invite to a game</F.Text>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '16px 8px 0px 8px', gap: '8px'}}>
+                <div className='hover' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '8px 8px 0px 8px', gap: '8px', marginTop: '8px'}}>
                     <HiUserAdd />
                     <F.Text weight='500'> Add to friend list </F.Text>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '16px 8px 0px 8px', gap: '8px'}}>
+                <div className='hover' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '8px 8px 0px 8px', gap: '8px', marginTop: '8px'}}>
                     <ImBlocked />
                     <F.Text weight='500'> Block</F.Text>
                 </div>
