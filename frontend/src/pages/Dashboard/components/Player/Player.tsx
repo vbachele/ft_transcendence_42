@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import getRanks from 'helpers/getRanks';
+import ActivityStatus from 'components/ActivityStatus';
 import {IUser} from 'types/models';
 import {Progress} from 'antd';
 import * as S from './Player.styles';
@@ -11,8 +12,6 @@ interface IProps {
 }
 
 const DashboardPlayer = ({player}: IProps) => {
-	// const {globalRank, coalitionRank} = getRanks(player);
-
 	return (
 		<div className="subcontainer">
 			<S.Coalition>
@@ -36,14 +35,12 @@ const DashboardPlayer = ({player}: IProps) => {
 					<S.Avatar src={player.image} />
 					<div>
 						<F.H3>{player.name}</F.H3>
-						<S.Status>
-							<span />
-							<h4>{`Online`}</h4>
-						</S.Status>
+						<ActivityStatus state={'ingame'} />
 					</div>
 				</S.User>
 				<div style={{fontWeight: 700}}>
 					<Progress
+						className="text-color"
 						type="circle"
 						width={120}
 						strokeColor={'#e04f5f'}

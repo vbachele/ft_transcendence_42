@@ -5,21 +5,22 @@ import avatar from 'assets/default-avatar.png';
 import * as S from './Dashboard.styles';
 import * as F from 'styles/font.styles';
 
-const Dashboard = () => {
-	// gets id from link to display the right player
-	const id = parseInt(useParams().id!);
+const player: IUser = {
+	name: 'Louis',
+	image: avatar,
+	coalition: 'Alliance',
+	status: 'ingame',
+	score: 987987,
+	games: 564,
+	wins: 321,
+	ratio: 0.54,
+	achievements: ['achievement 1', 'achievement 2', 'achievement 3'],
+	id: 5,
+};
 
-	const player: IUser = {
-		name: 'Louis',
-		image: avatar,
-		coalition: 'Alliance',
-		score: 987987,
-		games: 564,
-		wins: 321,
-		ratio: 0.54,
-		achievements: ['achievement 1', 'achievement 2', 'achievement 3'],
-		id: 5,
-	};
+const Dashboard = () => {
+	const id = parseInt(useParams().id!);
+	console.log(id);
 
 	return (
 		<>

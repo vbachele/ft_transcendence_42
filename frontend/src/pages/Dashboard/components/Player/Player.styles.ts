@@ -35,6 +35,10 @@ export const Profile = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+
+	.text-color.ant-progress .ant-progress-text {
+		color: ${(p) => (p.theme.name === 'light' ? '#000' : '#fff')};
+	}
 `;
 
 export const User = styled.div`
@@ -47,23 +51,6 @@ export const Avatar = styled.img`
 	width: 100px;
 	border-radius: 50%;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-`;
-
-export const Status = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 5px;
-
-	span {
-		background-color: #4bae4f;
-		height: 10px;
-		width: 10px;
-		border-radius: 50%;
-	}
-
-	h4 {
-		color: #4bae4f;
-	}
 `;
 
 export const Options = styled.div`

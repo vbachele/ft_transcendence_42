@@ -4,7 +4,6 @@ import * as F from "styles/font.styles";
 import * as S from "./Landing.styles";
 import { storeName } from "components/EditName/db_updatenickname";
 import { ReactComponent as Versus } from "assets/versus.svg";
-import { motion } from "framer-motion";
 
 const Landing = () => {
 	const handleChange = () => {
