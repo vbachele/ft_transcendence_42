@@ -8,20 +8,43 @@ export type Toggle = {
   toggle: boolean;
 };
 
+export type Invite = {
+  invited: boolean;
+};
+
+export type HasInvited = {
+  hasInvited: boolean;
+};
+
 type PopupContextType = {
   popup: Toggle;
   setPopup: React.Dispatch<React.SetStateAction<Toggle>>;
+  invitation: Invite;
+  setInvitation: React.Dispatch<React.SetStateAction<Invite>>;
+  hasInvited: HasInvited;
+  setHasInvited: React.Dispatch<React.SetStateAction<HasInvited>>;
 };
-
 export const PopupContext = createContext({} as PopupContextType);
 
 export const PopupContextProvider = ({
   children,
 }: PopupContextProviderProps) => {
   const [popup, setPopup] = useState<Toggle>({ toggle: false });
-  console.log(`In my context the value ${popup?.toggle}`);
+  const [invitation, setInvitation] = useState<Invite>({ invited: false });
+  const [hasInvited, setHasInvited] = useState<HasInvited>({
+    hasInvited: false,
+  });
   return (
-    <PopupContext.Provider value={{ popup, setPopup }}>
+    <PopupContext.Provider
+      value={{
+        popup,
+        setPopup,
+        invitation,
+        setInvitation,
+        hasInvited,
+        setHasInvited,
+      }}
+    >
       {children}
     </PopupContext.Provider>
   );

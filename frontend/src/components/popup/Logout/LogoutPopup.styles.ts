@@ -43,7 +43,7 @@ export const Text = styled.div`
 export const Button = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px;
   gap: 10px;
   flex: none;

@@ -26,7 +26,7 @@ export const Container = styled.div`
   border-radius: 8px;
   backdrop-filter: blur(15px);
   position: relative;
-  width: clamp(300px, 80%, 375px);
+  width: clamp(80px, 80%, 375px);
   height: 240px;
   padding: 24px;
   gap: 24px;

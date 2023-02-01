@@ -6,10 +6,23 @@ import Popup from "components/Popup/PopupLogout";
 import LogoutPopup from "components/Popup/Logout/LogoutPopup";
 import SearchPlayer from "components/Popup/SearchPlayer";
 import PopupContext, { usePopup } from "contexts/Popup/popup";
+import GameFound from "components/Popup/components/GameFound/GameFound";
+import GameInvite from "components/Popup/GameInvite/GameInvite";
+import UserInvitedToGame from "components/Popup/UserInvitedToGame";
 
 const Testpage = () => {
   const [logout, setLogout] = useState(false);
   const { popup, setPopup } = usePopup();
+  const { invitation, setInvitation } = usePopup();
+  const { hasInvited, setHasInvited } = usePopup();
+
+  const handleInvite = () => {
+    setInvitation({ invited: !invitation.invited });
+  };
+
+  const handleInvited = () => {
+    setHasInvited({ hasInvited: !hasInvited.hasInvited });
+  };
 
   const handlePlay = () => {
     setPopup({ toggle: !popup.toggle });
@@ -34,17 +47,11 @@ const Testpage = () => {
           </S.logo>
           <S.menus id="menus">
             <S.menuHighlight id="menu-highlight" />
-            <S.logoutButton
-              // className="navbar__subMenu-linkButton"
-              onClick={handlePlay}
-            >
+            <S.logoutButton onClick={handlePlay}>
               <S.italicHighlight className="italic highlight">
                 PLAY
               </S.italicHighlight>
             </S.logoutButton>
-            <S.link to="/spectate">
-              <S.italic className="italic">SPECTATE</S.italic>
-            </S.link>
             <S.link to="/leaderboard">
               <S.italic className="italic">LEADERBOARD</S.italic>
             </S.link>
@@ -55,9 +62,14 @@ const Testpage = () => {
               <S.italic className="italic">CHAT</S.italic>
             </S.link>
             {/* TO REMOVE AFTER TEST */}
-            <S.link to="/oldlanding">
-              <S.italic className="italic">TEST</S.italic>
-            </S.link>
+            <S.logoutButton onClick={handleInvite}>
+              {invitation.invited && <GameInvite />}
+              <S.italic className="italic">INVITE</S.italic>
+            </S.logoutButton>
+            <S.logoutButton onClick={handleInvited}>
+              {hasInvited.hasInvited && <UserInvitedToGame />}
+              <S.italic className="italic">INVITED</S.italic>
+            </S.logoutButton>
             <S.link to="/social">
               <S.normal className="normal">SOCIAL</S.normal>
             </S.link>

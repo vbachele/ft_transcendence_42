@@ -60,33 +60,31 @@ function App() {
   return (
     <UserContextProvider>
       <PopupContextProvider>
-        <PictureContextProvider>
-          {/* <SocketContextComponent> */}
-          <ThemeProvider theme={theme === "light" ? light : dark}>
-            <GlobalStyle />
-            <SearchPlayer />
-            <Router>
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/oldlanding" element={<Landing />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="/oldlogin" element={<Login />} />
-                <Route path="/leaderboard" element={<Leaderboard />} />
-                <Route path="/dashboard/:id" element={<Dashboard />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/headings" element={<Headings />} />
-                <Route path="/users" element={<UserMocks />} />
-                <Route path="/2FA" element={<DoubleAuthentication />} />
-                <Route path="/Victory" element={<Victory />} />
-                <Route path="/Defeat" element={<Defeat />} />
-                <Route path="/login" element={<Testpage />} />
-                {/* <Route path="/game" element={<Game/>} /> */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>{" "}
-            </Router>
-          </ThemeProvider>
-          {/* </SocketContextComponent> */}
-        </PictureContextProvider>
+        {/* <SocketContextComponent> */}
+        <ThemeProvider theme={theme === "light" ? light : dark}>
+          <GlobalStyle />
+          <SearchPlayer />
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/oldlanding" element={<Landing />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/oldlogin" element={<Login />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/dashboard/:id" element={<Dashboard />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/headings" element={<Headings />} />
+              <Route path="/users" element={<UserMocks />} />
+              <Route path="/2FA" element={<DoubleAuthentication />} />
+              <Route path="/Victory" element={<Victory />} />
+              <Route path="/Defeat" element={<Defeat />} />
+              <Route path="/login" element={<Testpage />} />
+              {/* <Route path="/game" element={<Game/>} /> */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>{" "}
+          </Router>
+        </ThemeProvider>
+        {/* </SocketContextComponent> */}
       </PopupContextProvider>
     </UserContextProvider>
   );

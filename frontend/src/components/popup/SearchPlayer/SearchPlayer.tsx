@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { PopupButton } from "styles/buttons.styles";
 import { Text, H2 } from "styles/font.styles";
 import * as S from "./SearchPlayer.styles";
-import Timer from "../components/Timer/Timer";
 import PopupContext from "contexts/Popup/popup";
 import GameFound from "../components/GameFound/GameFound";
+import Timer from "../components/SearchTimer/InviteTimer";
 
 function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.stopPropagation();

@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import * as S from "./GameInvite.styles";
+import * as S from "./UserInvitedToGame.styles";
 import { Text, H2, Subtitle } from "styles/font.styles";
 import { PopupButton } from "styles/buttons.styles";
 import PopupContext, { usePopup } from "contexts/Popup/popup";
-import { Link } from "react-router-dom";
-import InviteTimer from "../components/LoadingBar/LoadingBar";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
 import GameFound from "../components/GameFound/GameFound";
 
@@ -12,18 +10,20 @@ function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.stopPropagation();
 }
 
-//BACKEND Chercher le nom du user qui m'a invite ici
-//BACKEND if invited = 1
-//BACKEND gerer quand le user recoit une invit === passe le user en RED
+//BACKEND Chercher le nom du user que l'on invite ici
+//BACKEND if hasinvited = 1
+//BACKEND gerer quand le user envoie l'invitation une invit === passe le user en RED
 
-const GameInvite = () => {
+const UserInvitedToGame = () => {
   const [showComponent, setShowComponent] = useState(false);
-  const { invitation, setInvitation } = usePopup();
+  const { hasInvited, setHasInvited } = usePopup();
   const { popup } = usePopup();
 
-  function gameFound() {
-    setShowComponent(true);
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setShowComponent(true);
+    }, 10000);
+  }, []);
 
   //BACKEND Changer par la variable busy du userd
   function guards() {
@@ -35,28 +35,19 @@ const GameInvite = () => {
     <S.Overlay onClick={(e) => stopPropagation(e)}>
       <S.Container>
         <S.Text>
-          <H2>Join game?</H2>
+          <H2>Waiting for...</H2>
           <Text weight="350" fontSize="1rem">
-            Bartholomeow has just invited you
+            Vbachele to send him to hell
           </Text>
         </S.Text>
         <LoadingBar />
         <S.Button>
           <PopupButton
-            onClick={() => setInvitation({ invited: false })}
+            onClick={() => setHasInvited({ hasInvited: false })}
             border="1px solid #e5e7eb"
             className="Cancel"
           >
-            <Text weight="500">Cancel</Text>
-          </PopupButton>
-          <PopupButton
-            className="joinInvitation"
-            backgroundColor={"#DC4F19"}
-            onClick={() => gameFound()}
-          >
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              <Text weight="500"> JOIN </Text>
-            </Link>
+            <Text weight="500">Cancel invitation</Text>
           </PopupButton>
         </S.Button>
         {showComponent ? <GameFound /> : ""}
@@ -65,4 +56,4 @@ const GameInvite = () => {
   ) : null;
 };
 
-export default GameInvite;
+export default UserInvitedToGame;
