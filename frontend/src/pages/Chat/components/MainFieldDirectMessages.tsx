@@ -6,17 +6,15 @@ import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import RightBarDirectMessages from './RightBarDirectMessages';
 
 function MainFieldDirectMessages() {
-	const { myData, isClicked } = useContext(MessagesContext);
+	const { myData, isClickedDM } = useContext(MessagesContext);
 
-    // console.log(myData)
-    //  console.log(isClicked)
     return (  
         <S.MiddleDiv>
             <S.ContainerMainField>
                 <S.ContainerMiddleField>
                     
                 </S.ContainerMiddleField>
-                {isClicked && <RightBarDirectMessages data={myData} />}
+                {isClickedDM && <RightBarDirectMessages data={myData} />}
             </S.ContainerMainField>
         </S.MiddleDiv> 
     );

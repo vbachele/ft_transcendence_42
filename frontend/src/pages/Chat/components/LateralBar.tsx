@@ -6,9 +6,11 @@ import {GrFormAdd} from 'react-icons/gr';
 import ChannelsList from './ChannelsList';
 import DirectMessages from './DirectMessages';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
+import { ThemeContext } from 'styled-components';
 
 
 function LateralBar() {
+    const theme = useContext(ThemeContext);
     const [search, setSearch] = useState<string>('');
 
     function handleChange(event: FormEvent<HTMLInputElement>) {
@@ -22,12 +24,12 @@ function LateralBar() {
                 <SearchBox value={search} setValue={handleChange}/>
                 <S.ContainerTitles>
                     <F.H3> Channels</F.H3>
-                    <button ><F.H3> + </F.H3></button>
+                    <button className='buttonTitles' style={{border : 'none', color: theme.name === 'light' ? 'black' : 'white', backgroundColor : theme.name === 'light' ? 'white' : 'black'}}><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <ChannelsList value={search} />
                 <S.ContainerTitles>
                     <F.H3> Direct messages</F.H3>
-                    <button ><F.H3> + </F.H3></button>
+                    <button className='buttonTitles' style={{border : 'none', color: theme.name === 'light' ? 'black' : 'white', backgroundColor : theme.name === 'light' ? 'white' : 'black'}}><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <DirectMessages value={search}/>
             </S.ContainerLateralBar>

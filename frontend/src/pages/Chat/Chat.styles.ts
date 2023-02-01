@@ -6,6 +6,11 @@ export default styled.div`
     }
 	display: grid;
     grid-template-columns: 1fr 3fr;
+    .buttonTitles:hover {
+        transform: scale(1.3);
+        background-color: ${(p) =>
+            p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
+    }
     //grid-template-rows: repeat(2, 1fr);
     //grid-auto-rows: minmax(100px, auto);
     //width: 100vw;
@@ -76,7 +81,7 @@ export const ContainerTitles = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    .button {
+    .buttons {
         //background-color: white;
         transition: all 0.3s linear;
 

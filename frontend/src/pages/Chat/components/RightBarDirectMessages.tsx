@@ -39,10 +39,10 @@ export const displayPastille = (params: IMessages) => {
 
 function RightBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { setIsClicked } = useContext(MessagesContext);
+    const { setIsClickedDM } = useContext(MessagesContext);
 
 	const handleClick = () => {
-		setIsClicked(false);
+		setIsClickedDM(false);
 	};
 
     return (  
@@ -59,7 +59,7 @@ function RightBarDirectMessages({data} : IProps) {
                     {displayPastille(data)}
                 </div>
             </div>
-            <div style={{padding: '16px 0px 32px 0px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
+            <div style={{padding: '16px 0px 24px 0px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
                 <div className='hover' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '8px 8px 0px 8px', gap: '8px'}}>
                     <FaUserAlt />
                     <F.Text weight='500'> View profile</F.Text>

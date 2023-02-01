@@ -69,4 +69,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ${POSTGRES_DIR}
+      device: /Users
