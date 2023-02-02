@@ -18,7 +18,7 @@ model User {
   coalition String
   games Int
   wins Int
-  ratio Float 
+  ratio Float
   achievements String[]
-  score Int 
+  score Int
 }

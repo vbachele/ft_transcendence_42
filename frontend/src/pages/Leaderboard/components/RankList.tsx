@@ -1,9 +1,9 @@
-import React from 'react';
-import {useState} from 'react';
-import Rank from './Rank';
+import React, {useState} from 'react';
 import {IUser} from 'types/models';
+import {Input} from 'antd';
+import Rank from './Rank';
 import compareScore from 'helpers/compareScore';
-
+import filterByName from 'helpers/filterByName';
 import * as S from '../Leaderboard.styles';
 import * as F from 'styles/font.styles';
 
@@ -11,6 +11,8 @@ interface IProps {
 	players: IUser[];
 	opt: string;
 }
+
+const {Search} = Input;
 
 const RankList = ({players, opt}: IProps) => {
 	const [selectedCoalition, setSelectedCoalition] = useState(opt);
@@ -35,9 +37,15 @@ const RankList = ({players, opt}: IProps) => {
 	return (
 		<>
 			<S.FiltersContainer>
-				<S.SearchPlayer
+				<Search
 					placeholder="Search a player"
-					onInput={handleSearchChange}
+					size="large"
+					onChange={handleSearchChange}
+					style={{
+						width: '250px',
+						alignSelf: 'center',
+					}}
+					enterButton
 				/>
 				<S.SearchCoalition onChange={handleCoalitionChange} defaultValue={opt}>
 					<option value="All">All Coalitions</option>
@@ -54,12 +62,7 @@ const RankList = ({players, opt}: IProps) => {
 			{players
 				.sort(compareScore)
 				.filter(filterCoalition)
-				.filter((player) =>
-					player.name
-						.normalize('NFD')
-						.toLowerCase()
-						.includes(search.normalize('NFD').toLowerCase())
-				)
+				.filter((player) => filterByName(player, search))
 				.map((player: IUser) => (
 					<Rank
 						player={player}

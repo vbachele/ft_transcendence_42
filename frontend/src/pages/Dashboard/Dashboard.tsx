@@ -1,29 +1,44 @@
-import useFetchPlayer from 'hooks/useFetchPlayer';
-import { Link, useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import {IUser} from 'types/models';
 import Player from './components/Player';
-import './styles.css';
+import avatar from 'assets/default-avatar.png';
+import * as S from './Dashboard.styles';
+import * as F from 'styles/font.styles';
+
+const player: IUser = {
+	name: 'Louis',
+	image: avatar,
+	coalition: 'Alliance',
+	status: 'ingame',
+	score: 987987,
+	games: 564,
+	wins: 321,
+	ratio: 0.54,
+	achievements: ['achievement 1', 'achievement 2', 'achievement 3'],
+	id: 5,
+};
 
 const Dashboard = () => {
 	const id = parseInt(useParams().id!);
-	const player = useFetchPlayer(id);
+	console.log(id);
 
 	return (
-		<div>
-		<div className='dashboard'>
-			<Player player={player} />
-			<div className='dashboard__top subcontainer'>
-				Top 3
-			</div>
-			<div className='dashboard__history subcontainer'>
-				History
-			</div>
-			<div className='dashboard__achievements subcontainer'>
-				Achievements
-			</div>
-		</div>
-		<Link to={`/dashboard/${id + 1}`}>next</Link>
-		</div>
+		<>
+			<S.DashboardGrid>
+				<Player player={player} />
+				<div className="subcontainer">
+					<F.H3>Top players (coa and global)</F.H3>
+				</div>
+				<div className="subcontainer">
+					<F.H3>History</F.H3>
+				</div>
+				<div className="subcontainer">
+					<F.H3>Achievements</F.H3>
+				</div>
+			</S.DashboardGrid>
+			<Link to={`/dashboard/${id + 1}`}>next player</Link>
+		</>
 	);
-}
+};
 
 export default Dashboard;

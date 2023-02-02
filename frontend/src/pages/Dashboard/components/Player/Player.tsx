@@ -1,96 +1,75 @@
 import {Link} from 'react-router-dom';
 import getRanks from 'helpers/getRanks';
+import ActivityStatus from 'components/ActivityStatus';
 import {IUser} from 'types/models';
 import {Progress} from 'antd';
-import './styles.css';
+import * as S from './Player.styles';
+import * as F from 'styles/font.styles';
+import * as UI from 'styles/buttons.styles';
 
 interface IProps {
 	player: IUser;
 }
 
 const DashboardPlayer = ({player}: IProps) => {
-	const {globalRank, coalitionRank} = getRanks(player);
-
 	return (
-		<div className="db__player subcontainer">
-			<div className="db__player__coa">
-				<Link
-					to="/leaderboard"
-					state={{selectedOption: player.coalition, rank: coalitionRank}}
-				>
-					<h4 className="db__player__coa-name">The {player.coalition}</h4>
-					<img
-						className="db__player__coa-flag"
-						src={`/src/assets/${player.coalition.toLowerCase()}.svg`}
-					/>
+		<div className="subcontainer">
+			<S.Coalition>
+				<Link to="/leaderboard" state={{selectedOption: player.coalition}}>
+					<F.H4>The {player.coalition}</F.H4>
+					<S.Flag src={`/src/assets/${player.coalition.toLowerCase()}.svg`} />
 				</Link>
-				<div className="db__player__coa__ranks">
-					<Link
-						to="/leaderboard"
-						state={{selectedOption: 'All', rank: coalitionRank}}
-					>
-						<div className="db__player__coa__ranks-global">
-							<h4>{`#${globalRank}`}</h4>
-							<p className="subtitle">Global</p>
-						</div>
+				<S.Ranks>
+					<Link to="/leaderboard" state={{selectedOption: 'All'}}>
+						<F.H4>{`#54`}</F.H4>
+						<F.Subtitle>Global</F.Subtitle>
 					</Link>
-					<Link
-						to="/leaderboard"
-						state={{selectedOption: player.coalition, rank: coalitionRank}}
-					>
-						<div className="db__player__coa__ranks-coa">
-							<h4>{`#${coalitionRank}`}</h4>
-							<p className="subtitle">Coalition</p>
-						</div>
+					<Link to="/leaderboard" state={{selectedOption: player.coalition}}>
+						<F.H4>{`#12`}</F.H4>
+						<F.Subtitle>Coalition</F.Subtitle>
 					</Link>
-				</div>
-			</div>
-			<div className="db__player__profile">
-				<div className="db__player__profile__user">
-					<img
-						className="db__player__profile__user-avatar"
-						src={player.image}
-					/>
-					<div className="db__player__profile__user__name">
-						<h3>{player.name}</h3>
-						<div className="db__player__profile__user__name-status">
-							<span></span>
-							<h5>Online</h5>
-						</div>
+				</S.Ranks>
+			</S.Coalition>
+			<S.Profile>
+				<S.User>
+					<S.Avatar src={player.image} />
+					<div>
+						<F.H3>{player.name}</F.H3>
+						<ActivityStatus state={'ingame'} />
 					</div>
-				</div>
-				<div
-					className="db__player__profile__user-ratio"
-					style={{fontWeight: 700}}
-				>
+				</S.User>
+				<div style={{fontWeight: 700}}>
 					<Progress
+						className="text-color"
 						type="circle"
 						width={120}
-						strokeColor={'#e04f60'}
-						strokeWidth={7}
+						strokeColor={'#e04f5f'}
+						trailColor={'#bbbbbb'}
+						strokeLinecap="butt"
+						strokeWidth={8}
 						percent={Math.floor(player.ratio * 100)}
 						format={(percent) => `${percent}%`}
 						success={{percent: 0, strokeColor: '#000'}}
 					/>
 				</div>
-			</div>
-			<div className="db__player__options">
-				<button>View Profile</button>
-			</div>
-			<div className="db__player__stats">
-				<div className="Games Played">
-					<h5>Games Played</h5>
-					<h3>{player.games}</h3>
+			</S.Profile>
+			<S.Options>
+				<UI.SecondaryButtonSmall>View profile</UI.SecondaryButtonSmall>
+			</S.Options>
+			<S.Stats>
+				<div>
+					<F.H4>{player.games}</F.H4>
+					<F.Subtitle>Games Played</F.Subtitle>
 				</div>
-				<div className="Wins">
-					<h5>Wins</h5>
-					<h3>{player.wins}</h3>
+				<div>
+					<F.H4>{player.wins}</F.H4>
+					<F.Subtitle>Wins</F.Subtitle>
 				</div>
-				<div className="Achievements">
-					<h5>Achievements</h5>
-					<h3>{player.achievements.length}</h3>
+				<div>
+					<F.H4>{player.achievements.length}</F.H4>
+					<F.Subtitle>Achievements</F.Subtitle>
 				</div>
-			</div>
+			</S.Stats>
 		</div>
 	);
 };

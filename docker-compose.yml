@@ -69,4 +69,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/vincent/postgres_vol
+      device: ${POSTGRES_DIR}

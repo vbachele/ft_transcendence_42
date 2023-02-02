@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useRef, useState } from "react";
-import * as I from "../Input/Single.style";
+import * as I from "../Input/Single.styles";
 import * as UI from "styles/buttons.styles";
-import * as S from "./Submit2FA.style";
+import * as S from "./Submit2FA.styles";
 import { useNavigate } from "react-router-dom";
 
 const Submit2FA = () => {

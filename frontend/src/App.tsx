@@ -25,8 +25,10 @@ import Victory from "components/Victory";
 import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
+import Social from "pages/Social";
 import { PopupContextProvider } from "contexts/Popup/popup";
 import SearchPlayer from "components/Popup/SearchPlayer";
+import { ConfigProvider } from "antd";
 
 function App() {
   const userPref =
@@ -50,6 +52,7 @@ function App() {
           <Route path="/dashboard/:id" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/headings" element={<Headings />} />
+          <Route path="/social" element={<Social />} />
           <Route path="/users" element={<UserMocks />} />
           <Route path="/2FA" element={<DoubleAuthentication />} />
           <Route path="/Victory" element={<Victory />} />
@@ -66,15 +69,24 @@ function App() {
       <PopupContextProvider>
         {/* <SocketContextComponent> */}
         <ThemeProvider theme={theme === "light" ? light : dark}>
-          <GlobalStyle />
-          <SearchPlayer />
-          <Router>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Testpage />} />
-              <Route path="/*" element={<WithNavbar />} />
-            </Routes>
-          </Router>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#e04f5f",
+                colorSuccess: "#4bae4f",
+              },
+            }}
+          >
+            <GlobalStyle />
+            <SearchPlayer />
+            <Router>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Testpage />} />
+                <Route path="/*" element={<WithNavbar />} />
+              </Routes>
+            </Router>
+          </ConfigProvider>
         </ThemeProvider>
         {/* </SocketContextComponent> */}
       </PopupContextProvider>
