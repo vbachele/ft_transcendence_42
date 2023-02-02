@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "assets/logo-text.svg";
-import * as S from "./Landingpage.style";
+import * as S from "./Landingpage.styles";
 import { Link } from "react-router-dom";
 import Popup from "components/Popup/PopupLogout";
 
