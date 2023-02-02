@@ -12,6 +12,7 @@ function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.stopPropagation();
 }
 
+// BACKEND retrieve information from the backend
 const DoubleAutentication: React.FC<Props> = (props) => {
   // set up variables
   const DoubleAuthEnabled: boolean = false;

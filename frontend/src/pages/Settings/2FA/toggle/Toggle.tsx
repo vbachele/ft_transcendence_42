@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as F from "styles/font.styles";
 import useToggle from "./useToggle";
 import * as S from "./Toggle.styles";
-import Popup from "components/Popup/PopupLogout";
 import DoubleAutentication from "./2FA/doubleAutentication";
 
 interface Props {
@@ -14,8 +13,8 @@ interface Props {
 // BACKEND: on met a jour la page pour updater le user sur le 2FA par default c'est false
 
 const Toggle: React.FC<Props> = (props) => {
-  const { value, toggleValue } = useToggle(true); // I call the Customized hook
-  const [enabled, setEnabled] = useState(false); // to modify
+  const { value, toggleValue } = useToggle(false); // I call the Customized hook
+  const [enabled, setEnabled] = useState(false); // to modify by the backend
 
   const handleToggle = () => {
     setEnabled(!enabled);
@@ -32,10 +31,15 @@ const Toggle: React.FC<Props> = (props) => {
           onClick={handleToggle}
         />
         <S.ToggleSwitch>
-          {value && <DoubleAutentication click={false} onClose={() => false} />}
+          {value && (
+            <DoubleAutentication
+              click={enabled}
+              onClose={() => setEnabled(false)}
+            />
+          )}
           {!value && (
             <DoubleAutentication
-              click={true}
+              click={enabled}
               onClose={() => setEnabled(false)}
             ></DoubleAutentication>
           )}
