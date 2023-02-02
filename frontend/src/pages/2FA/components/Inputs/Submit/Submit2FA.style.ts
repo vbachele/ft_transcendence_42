@@ -11,6 +11,7 @@ export const Container__Input = styled.div`
   display: flex;
   flex-direction: row;
   align-items: space-between;
+
   gap: 1.2em;
   @media screen and (max-width: 768px) {
     gap: 0.8em;

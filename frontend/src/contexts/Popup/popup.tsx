@@ -16,6 +16,10 @@ export type HasInvited = {
   hasInvited: boolean;
 };
 
+export type Navbar = {
+  displayNavbar: boolean;
+};
+
 type PopupContextType = {
   popup: Toggle;
   setPopup: React.Dispatch<React.SetStateAction<Toggle>>;
@@ -34,6 +38,7 @@ export const PopupContextProvider = ({
   const [hasInvited, setHasInvited] = useState<HasInvited>({
     hasInvited: false,
   });
+
   return (
     <PopupContext.Provider
       value={{

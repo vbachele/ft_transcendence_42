@@ -46,7 +46,7 @@ export const ToggleCheckbox = styled.input`
   visibility: hidden;
 
   &:checked + ${ToggleSwitch} {
-    background: #e04f5f;
+    background: #dc4f19;
   }
 
   &:checked + ${ToggleSwitch}:before {

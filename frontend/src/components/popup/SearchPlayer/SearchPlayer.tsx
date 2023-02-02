@@ -42,7 +42,7 @@ const SearchPlayer: React.FC<{}> = () => {
             <Text weight="500">Cancel</Text>
           </PopupButton>
         </S.Button>
-        {showComponent ? <GameFound /> : ""}
+        {/* {showComponent ? <GameFound /> : ""} */}
       </S.Container>
     </S.Overlay>
   ) : null;

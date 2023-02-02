@@ -40,6 +40,7 @@ export const Text = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
   gap: 8px;
   padding: 0px;
 `;

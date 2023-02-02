@@ -12,9 +12,11 @@ const Submit2FA = () => {
     input3: "",
     input4: "",
     input5: "",
+    input6: "",
   });
 
   const inputRefs: React.MutableRefObject<any>[] = [
+    useRef(null),
     useRef(null),
     useRef(null),
     useRef(null),
@@ -44,26 +46,26 @@ const Submit2FA = () => {
       setTimeout(() => {
         inputRefs[index - 1].current.value = "";
         inputRefs[index - 2].current.focus();
-      }, 0);
-    } else if ((e.key === "Backspace" || e.key === "Delete") && index === 5) {
-      inputRefs[4].current.value = "";
+      }, 100);
+    } else if ((e.key === "Backspace" || e.key === "Delete") && index === 6) {
+      inputRefs[5].current.value = "";
     }
     if (e.key === "ArrowLeft" && index > 1) {
       setTimeout(() => {
         inputRefs[index - 2].current.focus();
-      }, 0);
+      }, 100);
     }
-    if (e.key === "ArrowRight" && index < 5) {
+    if (e.key === "ArrowRight" && index < 6) {
       setTimeout(() => {
         inputRefs[index].current.focus();
-      }, 0);
+      }, 100);
     }
   };
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if ((e.target as HTMLInputElement).value.length >= 1) e.preventDefault();
     const index = parseInt(e.currentTarget.name.substring(5));
-    if (index < 5) {
+    if (index < 6) {
       inputRefs[index].current.blur();
       setTimeout(() => {
         inputRefs[index].current.focus();
@@ -128,6 +130,16 @@ const Submit2FA = () => {
           onKeyPress={handleKeyPress}
           onKeyDown={handleSpecialKey}
           ref={inputRefs[4]}
+        ></I.Input>
+        <I.Input
+          name="input6"
+          type="number"
+          placeholder={"5"}
+          required
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
+          onKeyDown={handleSpecialKey}
+          ref={inputRefs[5]}
         ></I.Input>
       </S.Container__Input>
       <UI.SecondaryButton>Continue</UI.SecondaryButton>

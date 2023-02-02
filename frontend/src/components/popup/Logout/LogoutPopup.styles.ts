@@ -26,7 +26,7 @@ export const Overlay__Container = styled.div`
   backdrop-filter: blur(15px);
   margin: auto;
   position: relative;
-  width: 375px;
+  width: clamp(80px, 80%, 375px);
   height: 189px;
   padding: 24px;
   gap: 24px;

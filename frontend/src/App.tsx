@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 
 import Landing from "pages/Landing";
 import Registration from "pages/Registration";
@@ -12,7 +12,6 @@ import Navbar from "components/Navbar";
 import Headings from "pages/Headings";
 
 import { UserContextProvider } from "contexts/User/userContent";
-import { PictureContextProvider } from "contexts/User/pictureContent";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "styles/global";
 import { dark, light } from "styles/theme";
@@ -26,10 +25,7 @@ import Victory from "components/Victory";
 import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
-import PopupContext, {
-  PopupContextProvider,
-  usePopup,
-} from "contexts/Popup/popup";
+import { PopupContextProvider } from "contexts/Popup/popup";
 import SearchPlayer from "components/Popup/SearchPlayer";
 
 function App() {
@@ -42,20 +38,28 @@ function App() {
     localStorage.getItem("theme") || defaultTheme
   );
 
-  // function homePage(location: string): React.ReactNode {
-  //   console.log(location);
-  //   // useEffect(() => {
-  //   if (location === "/login") {
-  //     return;
-  //   }
-  //   if (location! === "/") {
-  //     return;
-  //   }
-  //   // }, [location]);
-  //   return <Navbar setTheme={setTheme}></Navbar>;
-  // }
-
-  // <SearchPlayer click={true}></SearchPlayer>
+  function WithNavbar() {
+    return (
+      <>
+        <Navbar setTheme={setTheme} />
+        <Routes>
+          <Route path="/oldlanding" element={<Landing />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/oldlogin" element={<Login />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/dashboard/:id" element={<Dashboard />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/headings" element={<Headings />} />
+          <Route path="/users" element={<UserMocks />} />
+          <Route path="/2FA" element={<DoubleAuthentication />} />
+          <Route path="/Victory" element={<Victory />} />
+          <Route path="/Defeat" element={<Defeat />} />
+          {/* <Route path="/game" element={<Game/>} /> */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </>
+    );
+  }
 
   return (
     <UserContextProvider>
@@ -67,21 +71,9 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/oldlanding" element={<Landing />} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="/oldlogin" element={<Login />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/dashboard/:id" element={<Dashboard />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/headings" element={<Headings />} />
-              <Route path="/users" element={<UserMocks />} />
-              <Route path="/2FA" element={<DoubleAuthentication />} />
-              <Route path="/Victory" element={<Victory />} />
-              <Route path="/Defeat" element={<Defeat />} />
               <Route path="/login" element={<Testpage />} />
-              {/* <Route path="/game" element={<Game/>} /> */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>{" "}
+              <Route path="/*" element={<WithNavbar />} />
+            </Routes>
           </Router>
         </ThemeProvider>
         {/* </SocketContextComponent> */}

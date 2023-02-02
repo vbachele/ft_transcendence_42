@@ -7,7 +7,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 15vh;
-
   width: 100vw;
   gap: 5em;
   text-align: center;
@@ -20,7 +19,6 @@ export const Container = styled.div`
   @media only screen and (max-width: 768px) {
     width: 100%;
     padding: 24px 0px;
-
     flex: none;
     order: 1;
     flex-grow: 0;

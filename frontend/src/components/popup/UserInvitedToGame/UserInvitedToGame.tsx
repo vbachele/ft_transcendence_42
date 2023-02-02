@@ -3,6 +3,8 @@ import * as S from "./UserInvitedToGame.styles";
 import { Text, H2, Subtitle } from "styles/font.styles";
 import { PopupButton } from "styles/buttons.styles";
 import PopupContext, { usePopup } from "contexts/Popup/popup";
+import { Link } from "react-router-dom";
+import InviteTimer from "../components/LoadingBar/LoadingBar";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
 import GameFound from "../components/GameFound/GameFound";
 
