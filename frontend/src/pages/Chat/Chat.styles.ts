@@ -1,35 +1,40 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface IProps {
+    open: boolean;
+  }
+
+export default styled.div<IProps>`
     @media only screen and (max-width: 768px) {
         grid-template-columns: 1fr;
     }
+    @media only screen and (min-width: 769px) {
+        grid-template-columns: ${({open}) => open ? '' : '320px 1fr'};
+    }
 	display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 320px 1fr 320px;
     .buttonTitles:hover {
         transform: scale(1.3);
         background-color: ${(p) =>
             p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
     }
-    //grid-template-rows: repeat(2, 1fr);
-    //grid-auto-rows: minmax(100px, auto);
-    //width: 100vw;
-    //min-height: 100px;
-    //height: 100%;;
-    //height: 88vh;
 `;
 
-export const LateralBar = styled.div`
+export const LateralBar = styled.div<IProps>`
+    @media only screen and (max-width: 768px) {
+        display: ${({open}) => open ? 'none': ''};
+        width: 100%;
+    }
     grid-column-start: 1/2;
-    /* background-color : #9999; */
     box-shadow: ${(p) =>
             p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
     height: 91vh;
+    width: 320px;
 `;
 
-export const MiddleDiv = styled.div`
+export const MiddleDiv = styled.div<IProps>`
     @media only screen and (max-width: 768px) {
-        display: none;
+        display: ${({open}) => open ? '': 'none'};
     }
     //height: 100%;
     grid-column-start: 2/3;
@@ -49,13 +54,17 @@ export const ContainerMiddleField = styled.div`
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    /* flex: 1; */
 `;
 
-export const ContainerRightField = styled.div`
+export const ContainerRightField = styled.div<IProps>`
+    @media only screen and (max-width: 768px) {
+        display: ${({open}) => open ? 'none': ''};
+    }
     display: flex;
     flex-direction: column;
     //align-items: center;
-    width: 22.5vw;
+    width: 320px;
     padding: 16px;
     box-shadow: ${(p) =>
             p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
@@ -97,10 +106,10 @@ export const ContainerChannels = styled.div`
     width: 100%;
     max-height: 20vh;
     overflow-y: auto;
-    max-width: 25vw;
-    @media only screen and (max-width: 768px) {
+    //max-width: 25vw;
+    /* @media only screen and (max-width: 768px) {
         max-width: 90vw;
-    }
+    } */
     `;
 
 export const ContainerChannel = styled.div`
@@ -134,15 +143,15 @@ export const ContainerMessages = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 32vh;
+    max-height: 33vh;
     overflow-y: auto;
     gap: 8px;
 `;
 
 export const ContainerSubMessages = styled.div`
-    max-width: 15vw;
+    width: 190px;
     @media only screen and (max-width: 768px) {
-        max-width: 70vw;
+        width: 65vw;
     }
 `;
 
@@ -171,4 +180,28 @@ export const Pastille = styled.div`
 export const ProfilePic = styled.img`
     width: 48px;
     border-radius: 50%;
+`;
+
+export const ChatBarContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-Items: center;
+    height: 80vh;
+    justify-content: flex-end;
+`;
+
+export const ChatBarInput = styled.input<IProps>`
+    @media only screen and (max-width: 768px) {
+        width: 95%;
+    }
+    width: ${({open}) => open ? '95%' : '67%'};
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing:border-box;
+    border: 1px solid #E6E6E6; 
+    border-radius: 12px;
+    padding: 8px 16px; 
+    margin-top: auto;
 `;

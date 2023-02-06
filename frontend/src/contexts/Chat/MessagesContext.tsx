@@ -10,8 +10,12 @@ type MessagesContextType = {
   setMyData: React.Dispatch<React.SetStateAction<IMessages>>;
   isClickedDM: boolean;
   setIsClickedDM: React.Dispatch<React.SetStateAction<boolean>>;
+  isClickedTopBar: boolean;
+  setIsClickedTopBar: React.Dispatch<React.SetStateAction<boolean>>;
   isClickedChannel: boolean;
   setIsClickedChannel: React.Dispatch<React.SetStateAction<boolean>>;
+  isRightBarOpen: boolean;
+  setIsRightBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MessagesContext = createContext({} as MessagesContextType);
@@ -20,11 +24,12 @@ export const MessagesContextProvider = ({
   children,
 }: MessagesContextProviderProps) => {
   const [isClickedDM, setIsClickedDM] = useState<boolean>(false);
+  const [isClickedTopBar, setIsClickedTopBar] = useState<boolean>(false);
   const [isClickedChannel, setIsClickedChannel] = useState<boolean>(false);
+  const [isRightBarOpen, setIsRightBarOpen] = useState<boolean>(false);
   const [myData, setMyData] = useState<IMessages>({id: -1, name: '', avatar: '', time: '', message: '', missedMessages: -1, pastille: -1});
-  //console.log(`In my context the value is ${myData} ${isClicked}`);
   return (
-    <MessagesContext.Provider value={{ myData, setMyData, isClickedDM, setIsClickedDM, isClickedChannel, setIsClickedChannel }}>
+    <MessagesContext.Provider value={{ myData, setMyData, isClickedDM, setIsClickedDM, isClickedChannel, setIsClickedChannel, isClickedTopBar, setIsClickedTopBar, isRightBarOpen, setIsRightBarOpen }}>
       {children}
     </MessagesContext.Provider>
   );

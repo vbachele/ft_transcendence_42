@@ -12,13 +12,14 @@ import { ThemeContext } from 'styled-components';
 function LateralBar() {
     const theme = useContext(ThemeContext);
     const [search, setSearch] = useState<string>('');
+    const { isRightBarOpen } = useContext(MessagesContext);
 
     function handleChange(event: FormEvent<HTMLInputElement>) {
         setSearch(event.currentTarget.value);
     };
 
     return (
-        <S.LateralBar>
+        <S.LateralBar open={isRightBarOpen}>
             <S.ContainerLateralBar>
                 <F.H2>Discussion</F.H2>
                 <SearchBox value={search} setValue={handleChange}/>

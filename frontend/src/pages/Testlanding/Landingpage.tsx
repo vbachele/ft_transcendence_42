@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Landingpage.style";
 import { Link } from "react-router-dom";
-import Popup from "components/Popup/popupLogout";
+import Popup from "components/Popup/PopupLogout";
 
 const LandingPage = () => {
   return (

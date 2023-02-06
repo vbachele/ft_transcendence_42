@@ -4,19 +4,17 @@ import * as S from '../Chat.styles';
 import { IMessages } from '../data';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import RightBarDirectMessages from './RightBarDirectMessages';
+import TopBarDirectMessages from './TopBarDirectMessages';
+import ChatInputBar from './ChatInputBar';
 
 function MainFieldDirectMessages() {
-	const { myData, isClickedDM } = useContext(MessagesContext);
+	const { myData, isRightBarOpen, isClickedDM } = useContext(MessagesContext);
 
-    return (  
-        <S.MiddleDiv>
-            <S.ContainerMainField>
-                <S.ContainerMiddleField>
-                    
-                </S.ContainerMiddleField>
-                {isClickedDM && <RightBarDirectMessages data={myData} />}
-            </S.ContainerMainField>
-        </S.MiddleDiv> 
+    return (
+        <S.MiddleDiv open={isRightBarOpen}>
+            {isRightBarOpen && <TopBarDirectMessages data={myData} />}
+            {isRightBarOpen && <ChatInputBar/>}
+        </S.MiddleDiv>
     );
 
 }

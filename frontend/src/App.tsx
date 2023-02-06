@@ -27,6 +27,7 @@ import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
 import Chat from "pages/Chat/Chat";
+import { MessagesContextProvider } from './contexts/Chat/MessagesContext';
 
 function App() {
   const userPref =
@@ -52,7 +53,11 @@ function App() {
               <Route path="/oldlanding" element={<Landing />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/oldlogin" element={<Login />} />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat" element={
+                <MessagesContextProvider>
+                  <Chat />
+                </MessagesContextProvider>
+              } />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/dashboard/:id" element={<Dashboard />} />
               <Route path="/settings" element={<Settings />} />

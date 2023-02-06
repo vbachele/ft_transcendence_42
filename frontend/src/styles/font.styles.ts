@@ -6,7 +6,7 @@ interface IProps {
 
 export const Text = styled.p<IProps>`
 	font-weight: ${(p) => p.weight || 600};
-	font-size: clamp(1rem, 1.5vw, 1.1rem);
+	font-size: 1.1rem;
 	@media only screen and (max-width: 768px) {
 	}
 `;
@@ -18,7 +18,7 @@ export const MenuText = styled(Text)`
 
 export const Subtitle = styled.p<IProps>`
 font-weight: ${(p) => p.weight || 500};
-font-size: clamp(0.9rem, 1.5vw, 1rem);
+font-size: 1rem;
 	color: #949494;
 	@media only screen and (max-width: 768px) {
 	}

@@ -1,4 +1,4 @@
-import Popup from "components/Popup/popupLogout";
+import Popup from "components/Popup/PopupLogout";
 
 const AuthenticationPopup = () => {
   return (

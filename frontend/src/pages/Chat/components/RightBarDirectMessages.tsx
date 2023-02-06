@@ -39,19 +39,20 @@ export const displayPastille = (params: IMessages) => {
 
 function RightBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { setIsClickedDM } = useContext(MessagesContext);
+    const { isClickedDM, setIsClickedDM, setIsRightBarOpen } = useContext(MessagesContext);
 
 	const handleClick = () => {
 		setIsClickedDM(false);
+        setIsRightBarOpen(true);
 	};
 
     return (  
-        <S.ContainerRightField>
+        <S.ContainerRightField open={isClickedDM}>
             <div style={{width: "100%", display: 'text', flexDirection: 'column', justifyContent: "space-between", 
             alignItems: 'center', padding: '0px 0px 16px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
                 <div style={{ display: 'flex', flexDirection:'row', justifyContent: "space-between", 
                 alignItems:"center", paddingBottom: '32px'}}>
-                    <F.Text style={{maxWidth: "14vw", overflowY: "hidden"}}> {data.name} </F.Text>
+                    <F.Text> {data.name} </F.Text>
                     <button onClick={handleClick}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -79,7 +80,6 @@ function RightBarDirectMessages({data} : IProps) {
             </div>
         </S.ContainerRightField>
     );
-
 }
 
 export default RightBarDirectMessages;

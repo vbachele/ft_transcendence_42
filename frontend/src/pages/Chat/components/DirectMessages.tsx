@@ -30,11 +30,12 @@ const DirectMessages: React.FC<IProps> = (props) => {
 // 	const {data} = useFetch<IMessages[]>(
 // 		'http://localhost:3001/directMessages'
 // 	);
-	const { setMyData, setIsClickedDM, setIsClickedChannel } = useContext(MessagesContext);
+	const { setMyData, setIsClickedDM, setIsRightBarOpen, setIsClickedChannel } = useContext(MessagesContext);
 
 	const handleClick = (data: IMessages) => {
 		setIsClickedDM(true);
 		setIsClickedChannel(false);
+		setIsRightBarOpen(true);
 		setMyData(data)
 	};
 

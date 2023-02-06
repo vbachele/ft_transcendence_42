@@ -3,7 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import {defineConfig, loadEnv} from 'vite';
 
-export default ({mode}) => {
+export default (mode: any) => {
 	const env = loadEnv(mode, process.cwd());
 
 	return defineConfig({
