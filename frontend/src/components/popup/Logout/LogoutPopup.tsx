@@ -19,8 +19,17 @@ const LogoutPopup: React.FC<Props> = (props) => {
     event.stopPropagation();
   }
 
+  function allowPropagation(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) {
+    props.onClose(
+      event as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>
+    );
+    // Do nothing, allowing event to propagate
+  }
+
   return (
-    <S.Overlay>
+    <S.Overlay onClick={(e) => allowPropagation(e)}>
       <S.Overlay__Container onClick={(e) => stopPropagation(e)}>
         <S.Text>
           <H2>Log out</H2>
