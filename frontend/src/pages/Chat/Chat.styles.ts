@@ -184,6 +184,7 @@ export const ProfilePic = styled.img`
 
 export const ChatBarContainer = styled.div`
     display: flex;
+    position: relative;
     flex-direction: column;
     align-Items: center;
     height: 80vh;
