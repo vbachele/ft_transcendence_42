@@ -41,11 +41,15 @@ const LogoutPopup: React.FC<Props> = (props) => {
             border="1px solid #e5e7eb"
             className="Cancel"
           >
-            <Text weight="500">Cancel</Text>
+            <Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)">
+              Cancel
+            </Text>
           </PopupButton>
           <PopupButton className="logout" backgroundColor={"#DC4F19"}>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Text weight="500"> Log out </Text>
+              <Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)">
+                Log out
+              </Text>
             </Link>
           </PopupButton>
         </S.Button>
