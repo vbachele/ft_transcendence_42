@@ -188,12 +188,7 @@ function Social() {
 			</F.H3>
 			<S.UserContainer>
 				{blocked
-					.filter((user) =>
-						user.name
-							.normalize('NFD')
-							.toLowerCase()
-							.includes(search.normalize('NFD').toLowerCase())
-					)
+					.filter((user) => filterByName(user, search))
 					.map((user: IUser) => (
 						<Blocked user={user} key={user.id} />
 					))}

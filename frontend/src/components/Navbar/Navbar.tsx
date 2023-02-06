@@ -25,12 +25,13 @@ const Navbar = ({setTheme}: IProps) => {
 			<S.Menu>
 				<ToggleTheme setTheme={setTheme} />
 				<S.Divider />
-				{!log && (
+				{/* {!log && (
 					<Link to="/login" onClick={() => setLog(true)}>
 						<UI.SecondaryButtonSmall>Log in</UI.SecondaryButtonSmall>
 					</Link>
-				)}
-				{log && <Dropdown />}
+				)} */}
+				{/* {log && <Dropdown />} */}
+				<Dropdown />
 			</S.Menu>
 		</S.StyledNav>
 	);

@@ -1,3 +1,4 @@
+import AddFriend from 'components/Buttons/Social/AddFriend';
 import styled from 'styled-components';
 import * as F from 'styles/font.styles';
 
