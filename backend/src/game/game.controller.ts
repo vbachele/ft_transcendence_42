@@ -1,5 +1,5 @@
 import { Controller, Body, Post } from "@nestjs/common";
-import { LobbyCreateDto } from "./dtos/lobby.dto";
+import { LobbyCreateDto } from "./lobby/dtos/lobby.dto";
 
 @Controller("game")
 export class GameController {

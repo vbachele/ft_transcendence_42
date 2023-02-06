@@ -1,4 +1,4 @@
-import { ClientEvents, ServerEvents } from "./game.events";
+import { ClientEvents, ServerEvents } from "./events/game.events";
 
 export type TServerPayloads = {
   [ServerEvents.BallPosition]: {

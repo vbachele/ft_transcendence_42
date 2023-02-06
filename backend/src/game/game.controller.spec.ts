@@ -1,6 +1,6 @@
 import { ArgumentMetadata, UnsupportedMediaTypeException, ValidationPipe } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { LobbyCreateDto } from "./dtos/lobby.dto";
+import { LobbyCreateDto } from "./lobby/dtos/lobby.dto";
 import { GameController } from "./game.controller";
 
 describe("GameController Unit Tests", () => {
