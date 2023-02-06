@@ -1,6 +1,6 @@
 # ft_transcendence_42
 
-[PROJECT STILL IN PROGRESS - Estimation time of end - mid-March ] 
+[PROJECT STILL IN PROGRESS - Estimation time of end - mid-March ]   
 ft_transcendence from 42 school is the last project of the common core
 
 ## Documentation
