@@ -53,7 +53,7 @@ function RightBarDirectMessages({data} : IProps) {
                 <div style={{ display: 'flex', flexDirection:'row', justifyContent: "space-between", 
                 alignItems:"center", paddingBottom: '32px'}}>
                     <F.Text> {data.name} </F.Text>
-                    <button onClick={handleClick}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
+                    <button className='buttonTitles' onClick={handleClick} style={{backgroundColor: 'transparent', border: 'none', color: theme.name === 'light' ? 'black' : 'white'}}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <S.ProfilePic src={data.avatar} style={{width: "70%", borderRadius: "50%", paddingBottom: "32px"}} />

@@ -42,7 +42,7 @@ const ChannelsList = (props: IProps) => {
 					return filter.test(message.name)
 				})
 				.map((channel: IChannels) => (
-				<li key={channel.id}>
+				<li style={{listStyle: 'none'}} key={channel.id}>
 					<Channels data={channel} />
 				</li>
 				))}

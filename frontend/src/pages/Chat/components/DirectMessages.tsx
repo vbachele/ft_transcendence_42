@@ -54,7 +54,7 @@ const DirectMessages: React.FC<IProps> = (props) => {
 					return filter.test(message.name)
 				})
 				.map((message: IMessages) => (
-					<li key={message.id}>
+					<li style={{listStyle: 'none'}} key={message.id}>
 							<Messages onClick={() => handleClick(message)} data={message} />
 					</li>
 				))}

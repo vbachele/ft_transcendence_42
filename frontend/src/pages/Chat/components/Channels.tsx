@@ -10,7 +10,7 @@ interface IProps {
 const Channels = ({data}: IProps) => {
 	return (
 		<S.ContainerChannel>
-			<F.Text className='hover' style={{fontWeight: 500, padding: '0px 0px 16px 0px'}}> #{data.name} </F.Text>
+			<F.Text className='hover' style={{fontWeight: 500}}> #{data.name} </F.Text>
 		</S.ContainerChannel>
 	);
 };

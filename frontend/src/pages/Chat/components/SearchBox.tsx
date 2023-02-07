@@ -10,7 +10,7 @@ interface ISearch {
 
 const SearchBox: React.FC<ISearch> = (search: ISearch) => {
   return (
-    <Input.Search onInput={search.setValue} style={{width: '100%', paddingBottom: '16px'}} size="large" placeholder="Search" enterButton />
+    <Input.Search onInput={search.setValue} style={{width: '100%'}} size="large" placeholder="Search" enterButton />
   );
 };
 

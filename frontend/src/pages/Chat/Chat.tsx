@@ -10,7 +10,7 @@ import React from 'react';
 function Chat() {
 
     const {isClickedDM, myData} = React.useContext(MessagesContext);
-
+    console.log(isClickedDM);
     return (
             <S.default open={isClickedDM}>
                 <LateralBar />
