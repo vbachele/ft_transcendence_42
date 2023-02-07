@@ -26,7 +26,7 @@ import Defeat from "components/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
 import Social from "pages/Social";
-import { PopupContextProvider } from "contexts/Popup/popup";
+import { PopupContextProvider } from "contexts/Popup/Popup";
 import SearchPlayer from "components/Popup/SearchPlayer";
 import { ConfigProvider } from "antd";
 

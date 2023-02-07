@@ -17,7 +17,7 @@ import UserContext from "contexts/User/userContent";
 import { ToggleDrop } from "./ToggleDrop";
 import { useState } from "react";
 import LogoutPopup from "components/Popup/Logout/LogoutPopup";
-import { usePopup } from "contexts/Popup/popup";
+import { usePopup } from "contexts/Popup/Popup";
 
 const menuVariants = {
   open: {
