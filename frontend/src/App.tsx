@@ -1,15 +1,7 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {useState} from 'react';
 
-import Landing from "pages/Landing";
-import Registration from "pages/Registration";
-import Login from "pages/Login";
-import Leaderboard from "pages/Leaderboard";
-import Dashboard from "pages/Dashboard";
-import NotFound from "pages/NotFound";
-import Settings from "pages/Settings";
-import Navbar from "components/Navbar";
-import Headings from "pages/Headings";
+import Pages from 'pages';
 
 import { UserContextProvider } from "contexts/User/userContent";
 import { ThemeProvider } from "styled-components";
@@ -43,22 +35,22 @@ function App() {
   function WithNavbar() {
     return (
       <>
-        <Navbar setTheme={setTheme} />
+        <Pages.Navbar setTheme={setTheme} />
         <Routes>
-          <Route path="/oldlanding" element={<Landing />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/oldlogin" element={<Login />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/dashboard/:id" element={<Dashboard />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/headings" element={<Headings />} />
+          <Route path="/oldlanding" element={<Pages.Landing />} />
+          <Route path="/registration" element={<Pages.Registration />} />
+          <Route path="/oldlogin" element={<Pages.Login />} />
+          <Route path="/leaderboard" element={<Pages.Leaderboard />} />
+          <Route path="/dashboard/:id" element={<Pages.Dashboard />} />
+          <Route path="/settings" element={<Pages.Settings />} />
+          <Route path="/headings" element={<Pages.Headings />} />
           <Route path="/social" element={<Social />} />
           <Route path="/users" element={<UserMocks />} />
           <Route path="/2FA" element={<DoubleAuthentication />} />
           <Route path="/Victory" element={<Victory />} />
           <Route path="/Defeat" element={<Defeat />} />
           {/* <Route path="/game" element={<Game/>} /> */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Pages.NotFound />} />
         </Routes>
       </>
     );
