@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import * as S from "./GameInvite.styles";
 import { Text, H2, Subtitle } from "styles/font.styles";
 import { PopupButton } from "styles/buttons.styles";
-import PopupContext, { usePopup } from "contexts/Popup/popup";
+import PopupContext, { usePopup } from "contexts/Popup/Popup";
 import { Link } from "react-router-dom";
 import InviteTimer from "../components/LoadingBar/LoadingBar";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
