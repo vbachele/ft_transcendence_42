@@ -8,6 +8,15 @@ import {ReactComponent as Block} from '../assets/block.svg';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
+import ViewProfile from 'components/Buttons/Social/ViewProfile';
+import Invite from 'components/Buttons/Social/Invite';
+import Message from 'components/Buttons/Social/Message';
+import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
+import AddFriend from 'components/Buttons/Social/AddFriend';
+import BlockUser from 'components/Buttons/Social/BlockUser';
+import AdminRights from 'components/Buttons/Channel/AdminRights';
+import Mute from 'components/Buttons/Channel/Mute';
+import Ban from 'components/Buttons/Channel/Ban';
 
 interface IProps {
 	friend: IUser;
@@ -53,11 +62,14 @@ function Friend({friend}: IProps) {
 				</S.FriendDetails>
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
-					<Link to="/dashboard/:id">View Profile</Link>
-					<button>Invite to play</button>
-					<button>Chat</button>
-					<button>Remove friend</button>
-					<button>Block</button>
+					<ViewProfile id={1} />
+					<Invite id={1} />
+					<Message id={1} />
+					<AddFriend id={1} />
+					<RemoveFriend id={1} />
+					<BlockUser id={1} />
+					<Mute id={1} />
+					<Ban id={1} />
 				</S.FriendOptions>
 			</Drawer>
 		</>

@@ -2,7 +2,6 @@ import {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Avatar from 'assets/default-avatar.png';
 
-import {ReactComponent as Play} from '../assets/play.svg';
 import {ReactComponent as Watch} from '../assets/watch.svg';
 import {ReactComponent as Chat} from '../assets/chat.svg';
 import {ReactComponent as Leaderboard} from '../assets/leaderboard.svg';
@@ -16,6 +15,7 @@ import * as F from 'styles/font.styles';
 
 import UserContext from 'contexts/User/userContent';
 import {ToggleDrop} from './ToggleDrop';
+import Play from 'components/Buttons/Menu/Play';
 
 const menuVariants = {
 	open: {
@@ -83,10 +83,7 @@ const Dropdown = () => {
 				<hr className="first-hr" />
 				<S.LinksContainer>
 					{/* PLAY */}
-					<Link to="/game" onClick={toggleDrop}>
-						<Play />
-						<F.Text weight="400">Play</F.Text>
-					</Link>
+					<Play toggle={toggleDrop} />
 					{/* SPECTATE */}
 					<Link to="/spectate" onClick={toggleDrop}>
 						<Watch />
