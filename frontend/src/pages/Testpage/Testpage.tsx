@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Testpage.style";
 import { Link } from "react-router-dom";
-import Popup from "components/Popup/PopupLogout";
+import Popup from "components/popup/PopupLogout";
 
 const Testpage = () => {
   const [logout, setLogout] = useState(false);

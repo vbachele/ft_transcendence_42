@@ -3,7 +3,7 @@ import * as F from "styles/font.styles";
 import useToggle from "./useToggle";
 import * as S from "./Toggle.styles";
 import AuthenticationPopup from "../2FAPopup/2FAPopup";
-import Popup from "components/Popup/PopupLogout";
+import Popup from "components/popup/PopupLogout";
 
 interface Props {
   name?: string;
