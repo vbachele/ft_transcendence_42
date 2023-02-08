@@ -4,15 +4,15 @@ import * as S from '../Chat.styles';
 
 function MainFieldChannel() {
 
-    return (  
-        <S.MiddleDiv>
-            <S.ContainerMainField>
-                <S.ContainerMiddleField>
+    // return (  
+    //     <S.MiddleDiv>
+    //         <S.ContainerMainField>
+    //             <S.ContainerMiddleField>
                     
-                </S.ContainerMiddleField>
-            </S.ContainerMainField>
-        </S.MiddleDiv> 
-    );
+    //             </S.ContainerMiddleField>
+    //         </S.ContainerMainField>
+    //     </S.MiddleDiv> 
+    // );
 
 }
 

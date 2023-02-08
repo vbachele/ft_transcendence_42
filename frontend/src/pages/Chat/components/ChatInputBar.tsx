@@ -17,85 +17,13 @@ function ChatInputBar() {
     const { isClickedDM } = useContext(MessagesContext);
 
     return ( 
-        // <S.ChatBarContainer open={isClickedDM}>
         <div style={{position: 'relative', margin: '8px 16px'}}>
             <S.ChatBarInput open={isClickedDM} placeholder="Message" />
-            <div style={{position: 'absolute', right: 8, top: '25%', height: '20px'}}>
+            <div style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
                 <Arrow />
             </div>
         </div>
-        // </S.ChatBarContainer>
     );
-    /*
-<html>
-    <style>
-
-        .users::-webkit-scrollbar {
-            width: 50px;
-            background-color: black;
-        }
-
-        #nav_bar {
-            background-color: lightgray;
-            padding: 16px;
-            text-align: center;
-        }
-
-        #main {
-            display: flex;
-            flex-direction: row;
-            flex: 1 1 0;
-            min-height: 0;
-        }
-
-        #left_bar {
-            display: flex;
-            flex-direction: column;
-            width: 256px;
-            overflow: auto;
-        }
-
-        #channels {
-            padding: 16px;
-            background-color: grey;
-        }
-
-        #users {
-            padding: 16px;
-            background-color: yellow;
-        }
-
-        #chat_zone {
-            padding: 16px;
-            background-color: purple;
-            text-align: center;
-            flex: 1;
-        }
-
-    </style>
-    <div id="nav_bar">
-        Navigation Bar
-    </div>
-    <div id="main">
-        <div id="left_bar">
-            <div id="channels">
-                Channels
-                <p>#Chan1</p>
-                <p>#Chan2</p>
-                <p>#Chan3</p>
-                <p>#Chan4</p>
-            </div>
-            <div id="users">
-
-            </div>
-        </div>
-        <div id="chat_zone">
-            Chat Zone
-        </div>
-    </div>
-
-</html>
-*/
 }
 
 export default ChatInputBar;

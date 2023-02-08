@@ -19,8 +19,7 @@ function LateralBar() {
     };
 
     return (
-        <S.LateralBar open={isRightBarOpen}>
-            {/* <S.ContainerLateralBar> */}
+        <S.LateralBarContainer open={isRightBarOpen}>
             <div style={{display: 'flex', flexDirection: 'column', margin: '8px 16px', gap: '8px'}}>
                 <F.H2>Discussion</F.H2>
                 <SearchBox value={search} setValue={handleChange}/>
@@ -35,8 +34,7 @@ function LateralBar() {
                     <button className='buttonTitles' style={{border : 'none', color: theme.name === 'light' ? 'black' : 'white', backgroundColor : 'transparent'}}><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <DirectMessages value={search}/>
-            {/* </S.ContainerLateralBar> */}
-        </S.LateralBar>
+        </S.LateralBarContainer>
     );
 
 }

@@ -5,34 +5,31 @@ interface IProps {
   }
 
 export default styled.div<IProps>`
-    /* @media only screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-    }
-    @media only screen and (min-width: 769px) {
-        grid-template-columns: ${({open}) => open ? '' : '320px 1fr'};
-    }
-	display: grid;
-    grid-template-columns: 320px 1fr 320px;
-    grid-template-rows: 1fr;
-    height: 100%;
     .buttonTitles:hover {
+        cursor: pointer;
         transform: scale(1.4);
         background-color: ${(p) =>
             p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
-    } */
+    }
+    .hidden {
+        @media only screen and (min-width: 769px) {
+            display: none;
+        }
+    }
     display: flex;
     flex: 1 1 0;
     min-height: 0;
-    /* min-height: 0; */
 `;
 
-export const LateralBar = styled.div<IProps>`
+export const LateralBarContainer = styled.div<IProps>`
     @media only screen and (max-width: 768px) {
         display: ${({open}) => open ? 'none': ''};
         max-width: 100%;
     }
-    box-shadow: ${(p) =>
-            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
+    border: ${(p) =>
+            p.theme.name === 'light' ? '1px solid #DDDDCC' : "0.2px solid rgb(100, 100, 100)"};
+    border-top: ${(p) =>
+            p.theme.name === 'light' ? '0' : "0.2px solid rgb(100, 100, 100)"};
     width: 320px;
     max-width: 320px;
     display: flex;
@@ -53,11 +50,6 @@ export const MiddleDiv = styled.div<IProps>`
     text-align: center;
     flex: 1;
     justify-content: space-between;
-    /* flex: 1 1 0; */
-    /* min-height: 0; */
-    //height: 100%;
-    /* justify-content: space-between; */
-    /* grid-column-start: 2/3; */
 `;
 
 export const ContainerMainField = styled.div`
@@ -86,9 +78,12 @@ export const ContainerRightField = styled.div<IProps>`
     //align-items: center;
     width: 320px;
     padding: 16px;
-    box-shadow: ${(p) =>
-            p.theme.name === 'light' ? 'rgb(0 0 0 / 20%) 0px 4px 12px' : 'rgb(200 200 200 / 10%) 0px 4px 12px'};
+    border: ${(p) =>
+            p.theme.name === 'light' ? '1px solid #DDDDCC' : "0.2px solid rgb(100, 100, 100)"};
+    border-top: ${(p) =>
+            p.theme.name === 'light' ? '0' : "0.2px solid rgb(100, 100, 100)"};
     .hover:hover {
+        cursor: pointer;
         transform: scale(1.01);
         background-color: ${(p) =>
             p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
@@ -111,7 +106,7 @@ export const ContainerTitles = styled.div`
     .buttons {
         //background-color: white;
         transition: all 0.3s linear;
-
+        
         :hover {
         transform: scale(1.1);
         background-color: ${(p) =>
@@ -133,8 +128,9 @@ export const ContainerChannels = styled.div`
         padding : 8px 16px;
     }
     li:hover {
-       transform: scale(1.01);
-       background-color: ${(p) =>
+        cursor: pointer;
+        transform: scale(1.01);
+        background-color: ${(p) =>
            p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
     }
     `;
@@ -153,6 +149,7 @@ export const ContainerMessage = styled.div`
     transition: all 0.2s linear;
 
     :hover {
+        cursor: pointer;
         transform: scale(1.035);
         /* padding: 4px; */
         background-color: ${(p) =>
@@ -230,14 +227,9 @@ export const ChatBarInput = styled.input<IProps>`
     } */
     /* width: ${({open}) => open ? '95%' : '67%'}; */
     width: 100%;
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
     background: #F9F9F9;
     box-sizing:border-box;
     border: 1px solid #E6E6E6; 
     border-radius: 12px;
     padding: 8px 16px; 
-    /* margin-top: auto; */
 `;
