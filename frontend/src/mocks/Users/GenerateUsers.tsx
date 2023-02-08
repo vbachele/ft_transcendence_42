@@ -1,8 +1,7 @@
-import { api } from 'lib/api';
-import React, {useEffect} from 'react';
-import {useAsyncValue} from 'react-router-dom';
-import {IUser} from 'types/models';
-import UserList from './players.json';
+import { api } from "lib/api";
+import React, { useEffect } from "react";
+import { IUser } from "types/models";
+import UserList from "./players.json";
 
 const CSS = `
 
@@ -26,39 +25,39 @@ const CSS = `
 `;
 
 export const GenerateUsers = () => {
-	let users: IUser[] = [];
+  let users: IUser[] = [];
 
-	for (let value in UserList.players) {
-		users.push(UserList.players[value]);
-	}
+  for (let value in UserList.players) {
+    users.push(UserList.players[value]);
+  }
 
-	const userList = users.map((value) => (
-		<tr>
-			<td>{value.id}</td>
-			<td>{value.name}</td>
-            <td>{value.coalition}</td>
-            <td>{value.games}</td>
-            <td>{value.wins}</td>
-            <td>{value.ratio}</td>
-		</tr>
-	));
+  const userList = users.map((value) => (
+    <tr>
+      <td>{value.id}</td>
+      <td>{value.name}</td>
+      <td>{value.coalition}</td>
+      <td>{value.games}</td>
+      <td>{value.wins}</td>
+      <td>{value.ratio}</td>
+    </tr>
+  ));
 
-    api.post('/users/generate', users);
+  api.post("/users/generate", users);
 
-	return (
-		// <div className='table_container'>
-		<table>
-			<style>{CSS}</style>
-			<tr>
-				<th>ID</th>
-				<th>NAME</th>
-				<th>COALITION</th>
-				<th>GAMES</th>
-				<th>WINS</th>
-				<th>RATIO</th>
-			</tr>
-			{userList}
-		</table>
-		// </div>
-	);
+  return (
+    // <div className='table_container'>
+    <table>
+      <style>{CSS}</style>
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>COALITION</th>
+        <th>GAMES</th>
+        <th>WINS</th>
+        <th>RATIO</th>
+      </tr>
+      {userList}
+    </table>
+    // </div>
+  );
 };

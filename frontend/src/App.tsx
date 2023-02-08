@@ -1,7 +1,7 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {useState} from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
-import Pages from 'pages';
+import Pages from "pages";
 
 import { UserContextProvider } from "contexts/User/userContent";
 import { ThemeProvider } from "styled-components";
@@ -10,7 +10,6 @@ import { dark, light } from "styles/theme";
 import "./App.css";
 import Game from "pages/Game/Game";
 import SocketContextComponent from "contexts/Socket/Component";
-import { StyledGame } from "pages/Game/Game.styles";
 import { UserMocks } from "./mocks/Users/UserMocks";
 import DoubleAuthentication from "pages/2FA";
 import Victory from "components/Victory";
