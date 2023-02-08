@@ -13,7 +13,7 @@ import SocketContextComponent from "contexts/Socket/Component";
 import { UserMocks } from "./mocks/Users/UserMocks";
 import DoubleAuthentication from "pages/2FA";
 import Victory from "components/Victory";
-import Defeat from "components/Defeat";
+import Defeat from "components/EditName/Defeat";
 import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
 import Social from "pages/Social";
