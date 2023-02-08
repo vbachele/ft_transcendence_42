@@ -38,6 +38,7 @@ export const Text = styled.div`
   align-items: center;
   gap: 8px;
   padding: 0px;
+  color: white;
 `;
 
 export const Button = styled.div`

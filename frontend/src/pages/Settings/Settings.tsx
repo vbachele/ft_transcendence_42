@@ -6,7 +6,7 @@ import Toggle from "./2FA/toggle/Toggle";
 
 const Settings = () => {
   return (
-    <>
+    <div>
       <S.Container>
         <S.Container__Text>
           <F.H2>Settings</F.H2>
@@ -18,7 +18,7 @@ const Settings = () => {
           <EditName linkTo={""} visible={false} />
         </S.Container__Infos>
       </S.Container>
-    </>
+    </div>
   );
 };
 

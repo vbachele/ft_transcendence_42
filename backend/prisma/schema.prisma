@@ -16,6 +16,7 @@ model User {
   name String
   image String
   coalition String
+  status String
   games Int
   wins Int
   ratio Float

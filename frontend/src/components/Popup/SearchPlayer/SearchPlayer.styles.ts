@@ -4,11 +4,12 @@ export const Overlay = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 `;
@@ -16,20 +17,22 @@ export const Overlay = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px
   z-index: 50;
   align-items: center;
   background: rgba(0, 0, 0, 0.56);
   border-radius: 8px;
   backdrop-filter: blur(15px);
-  position: relative;
+  position: fixed;
+  top: 0px;
+  left: 50%;
+  transform: translate(-50%, 0%);
   width: clamp(80px, 80%, 375px);
   height: 240px;
   padding: 24px;
   gap: 24px;
+  @media only screen and (max-width: 768px) {
+    height: 180px;
+  }
 `;
 
 export const Text = styled.div`
@@ -60,4 +63,7 @@ export const ButtonText = styled.div`
 export const GiFFire = styled.img`
   width: 40px;
   height: 50px;
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
