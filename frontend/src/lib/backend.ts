@@ -1,31 +1,25 @@
-import {api} from './api';
+import { IUser } from "types/models";
+import { api } from "./api";
 
 export const backend = {
-	async createUser(user: {
-		name: string;
-		image: string;
-		logged: boolean;
-		id: string;
-	}) {
-		const response = await api.post('/users', user);
-		return (await response.json()) as {id: string};
-	},
-	async updateUser(user: {name: string}) {
-		const id = localStorage.getItem('id');
-		const response = await api.patch('/users/' + id, user);
-		return (await response.json()) as {id: string};
-	},
-	// A improve because it gives an answer
-	async getUserNickName() {
-		const id = localStorage.getItem('id');
-		const response = await api.get('/users/' + id);
-		const user = await response.json();
-		const username: string = user.name;
-		return username;
-	},
-	async updateLogStatus(user: {logged: boolean}) {
-		const id = localStorage.getItem('id');
-		const response = await api.patch('/users/' + id, user);
-		return (await response.json()) as {id: string};
-	},
+  async createUser(user: IUser[]) {
+    const response = await api.post("/auth/signup", user);
+    return (await response.json()) as { id: string };
+  },
+  async getAllUsers() {
+    const response = await api.get("/users/getusers");
+    return (await response.json()) as { id: string };
+  },
+  async getOneUser(id: string) {
+    const response = await api.get("/users/" + id);
+    return (await response.json()) as { id: string };
+  },
+  async patchUser(id: string, updateUser: unknown) {
+    const response = await api.patch("/users/" + id, updateUser);
+    return (await response.json()) as { id: string };
+  },
+  async deleteAllUsers() {
+    const response = await api.delete("/users/deleteall");
+    return (await response.json()) as { id: string };
+  },
 };
