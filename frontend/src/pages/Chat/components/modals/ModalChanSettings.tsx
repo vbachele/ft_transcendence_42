@@ -19,7 +19,7 @@ const ModalChanSettings: React.FC = () => {
       <Modal 
 			  title= {
             <div style={{display: 'flex'}}>
-            <h1 color={'black'}>#Boomers</h1>
+            <h1 color={'black'}>#Boomersd</h1>
             </div>}        
         centered
         width={'393px'}

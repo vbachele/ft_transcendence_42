@@ -35,6 +35,7 @@ export const QuitChannel = ({fill}: {fill: string}) =>{
     )
 }
 
+
 function TopBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
     const { dataChannels, isMobileClicked, setIsClickedChannel, setIsRightBarOpenChannel, setIsRightBarClosedChannel, setIsClickedDM, setIsMobileClicked } = useContext(MessagesContext);
