@@ -1,10 +1,15 @@
 export enum ClientEvents {
   PaddlePosition = "client.paddlePosition",
   CreateLobby = 'client.createLobby',
+  JoinLobby = 'client.joinLobby',
+  InviteToLobby = 'client.inviteToLobby',
 }
 
 export enum ServerEvents {
   BallPosition = "server.ballPosition",
   LobbyCreated = 'server.lobbyCreated',
-  GameMessage = 'server.gameCreated'
+  GameMessage = 'server.gameMessage',
+  LobbyState = 'server.lobbyState',
+  InvitedToLobby = 'server.invitedToLobby',
+  InvitationDeclined = 'server.invitationDeclined',
 }
