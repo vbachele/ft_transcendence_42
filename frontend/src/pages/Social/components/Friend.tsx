@@ -8,6 +8,9 @@ import {ReactComponent as Block} from '../assets/block.svg';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
+import UserInvitedToGame from 'components/Popup/UserInvitedToGame';
+import Invite from './Invite';
+import { usePopup } from 'contexts/Popup/popup';
 
 interface IProps {
 	friend: IUser;
@@ -16,6 +19,8 @@ interface IProps {
 function Friend({friend}: IProps) {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
+	// const [invited, setInvited] = useState(false);
+	const {hasInvited} = usePopup();
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -54,11 +59,12 @@ function Friend({friend}: IProps) {
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
 					<Link to="/dashboard/:id">View Profile</Link>
-					<button>Invite to play</button>
+					<Invite friendId={friend.id}/>
 					<button>Chat</button>
 					<button>Remove friend</button>
 					<button>Block</button>
 				</S.FriendOptions>
+				{hasInvited && <UserInvitedToGame />}
 			</Drawer>
 		</>
 	);

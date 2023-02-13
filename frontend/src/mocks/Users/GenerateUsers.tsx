@@ -1,4 +1,4 @@
-import { api } from 'lib/api';
+import {api} from 'lib/api';
 import React, {useEffect} from 'react';
 import {useAsyncValue} from 'react-router-dom';
 import {IUser} from 'types/models';
@@ -33,31 +33,33 @@ export const GenerateUsers = () => {
 	}
 
 	const userList = users.map((value) => (
-		<tr>
-			<td>{value.id}</td>
-			<td>{value.name}</td>
-            <td>{value.coalition}</td>
-            <td>{value.games}</td>
-            <td>{value.wins}</td>
-            <td>{value.ratio}</td>
+		<tr key={value.id}>
+			<td key={0}>{value.id}</td>
+			<td key={1}>{value.name}</td>
+			<td key={2}>{value.coalition}</td>
+			<td key={3}>{value.games}</td>
+			<td key={4}>{value.wins}</td>
+			<td key={5}>{value.ratio}</td>
 		</tr>
 	));
 
-    api.post('/users/generate', users);
+	api.post('/users/generate', users);
 
 	return (
 		// <div className='table_container'>
 		<table>
 			<style>{CSS}</style>
-			<tr>
-				<th>ID</th>
-				<th>NAME</th>
-				<th>COALITION</th>
-				<th>GAMES</th>
-				<th>WINS</th>
-				<th>RATIO</th>
-			</tr>
-			{userList}
+			<thead>
+				<tr>
+					<th key="id">ID</th>
+					<th key="name">NAME</th>
+					<th key="coalition">COALITION</th>
+					<th key="games">GAMES</th>
+					<th key="wins">WINS</th>
+					<th key="ratio">RATIO</th>
+				</tr>
+			</thead>
+			<tbody>{userList}</tbody>
 		</table>
 		// </div>
 	);
