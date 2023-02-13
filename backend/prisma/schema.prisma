@@ -15,7 +15,7 @@ model User {
   id Int @id @default(autoincrement())
   name String @unique
   image String
-  coalition String @default("federation")
+  coalition String @default("Federation")
   status String @default("offline")
   games Int @default(0)
   wins Int @default(0)

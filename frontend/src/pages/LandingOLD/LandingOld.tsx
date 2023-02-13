@@ -18,7 +18,7 @@ const Landing = () => {
     console.log(userList);
   };
   const handleGetOne = () => {
-    const user = backend.getOneUser("35");
+    const user = backend.getOneUser("39");
     console.log(user);
   };
   const handlePatch = () => {
@@ -27,12 +27,12 @@ const Landing = () => {
     };
     /***  user before the change  ***/
     console.log("BEFORE UPDATE");
-    const userbefore = backend.getOneUser("36");
+    const userbefore = backend.getOneUser("39");
     console.log(userbefore);
     /***  Patch user  ***/
-    const user = backend.patchUser("36", patch);
+    const user = backend.patchUser("39", patch);
     /***  see the change of the name  ***/
-    const userafter = backend.getOneUser("36");
+    const userafter = backend.getOneUser("39");
     console.log("AFTER UPDATE");
     console.log(userafter);
   };
