@@ -1,18 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {useState} from 'react';
 
-import Landing from "pages/Landing";
-import Registration from "pages/Registration";
-import Login from "pages/Login";
-import Leaderboard from "pages/Leaderboard";
-import Dashboard from "pages/Dashboard";
-import NotFound from "pages/NotFound";
-import Settings from "pages/Settings";
-import Navbar from "components/Navbar";
-import Headings from "pages/Headings";
+import Pages from 'pages';
 
 import { UserContextProvider } from "contexts/User/userContent";
-import { PictureContextProvider } from "contexts/User/pictureContent";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "styles/global";
 import { dark, light } from "styles/theme";
@@ -28,6 +19,10 @@ import Testpage from "pages/Testpage";
 import LandingPage from "pages/Testlanding/Landingpage";
 import Chat from "pages/Chat/Chat";
 import { MessagesContextProvider } from './contexts/Chat/MessagesContext';
+import Social from "pages/Social";
+import { PopupContextProvider } from "contexts/Popup/popup";
+import SearchPlayer from "components/Popup/SearchPlayer";
+import { ConfigProvider } from "antd";
 
 function App() {
   const userPref =
@@ -38,42 +33,58 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || defaultTheme
   );
+
+  function WithNavbar() {
+    return (
+      <>
+        <Pages.Navbar setTheme={setTheme} />
+        <Routes>
+          <Route path="/oldlanding" element={<Pages.Landing />} />
+          <Route path="/registration" element={<Pages.Registration />} />
+          <Route path="/oldlogin" element={<Pages.Login />} />
+          <Route path="/leaderboard" element={<Pages.Leaderboard />} />
+          <Route path="/dashboard/:id" element={<Pages.Dashboard />} />
+          <Route path="/chat" element={<MessagesContextProvider><Pages.Chat /></MessagesContextProvider>} />
+          <Route path="/settings" element={<Pages.Settings />} />
+          <Route path="/headings" element={<Pages.Headings />} />
+          <Route path="/social" element={<Social />} />
+          <Route path="/users" element={<UserMocks />} />
+          <Route path="/2FA" element={<DoubleAuthentication />} />
+          <Route path="/Victory" element={<Victory />} />
+          <Route path="/Defeat" element={<Defeat />} />
+          {/* <Route path="/game" element={<Game/>} /> */}
+          <Route path="*" element={<Pages.NotFound />} />
+        </Routes>
+      </>
+    );
+  }
+
   return (
     <UserContextProvider>
-      <PictureContextProvider>
+      <PopupContextProvider>
         {/* <SocketContextComponent> */}
         <ThemeProvider theme={theme === "light" ? light : dark}>
-          <GlobalStyle />
-          <Router>
-            {location.pathname !== "/login" && location.pathname !== "/" && (
-              <Navbar setTheme={setTheme} />
-            )}
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/oldlanding" element={<Landing />} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="/oldlogin" element={<Login />} />
-              <Route path="/chat" element={
-                <MessagesContextProvider>
-                  <Chat />
-                </MessagesContextProvider>
-              } />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/dashboard/:id" element={<Dashboard />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/headings" element={<Headings />} />
-              <Route path="/users" element={<UserMocks />} />
-              <Route path="/2FA" element={<DoubleAuthentication />} />
-              <Route path="/Victory" element={<Victory />} />
-              <Route path="/Defeat" element={<Defeat />} />
-              <Route path="/login" element={<Testpage />} />
-              {/* <Route path="/game" element={<Game/>} /> */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>{" "}
-          </Router>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#e04f5f",
+                colorSuccess: "#4bae4f",
+              },
+            }}
+          >
+            <GlobalStyle />
+            <SearchPlayer />
+            <Router>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Testpage />} />
+                <Route path="/*" element={<WithNavbar />} />
+              </Routes>
+            </Router>
+          </ConfigProvider>
         </ThemeProvider>
         {/* </SocketContextComponent> */}
-      </PictureContextProvider>
+      </PopupContextProvider>
     </UserContextProvider>
   );
 }

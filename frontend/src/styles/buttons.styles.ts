@@ -25,7 +25,7 @@ const Button = styled.button`
 
 // prettier-ignore
 export const PrimaryButton = styled(Button)`
-	background-color: #e04f5f;
+	background-color: #DC4F19;
 	border: none;
 	align-items: center;
 
@@ -41,14 +41,14 @@ export const PrimaryButton = styled(Button)`
 // prettier-ignore
 export const SecondaryButton = styled(Button)`
 	background-color: #fff;
-	border: 2px solid #e04f5f;
+	border: 2px solid #DC4F19;
 
 	&, a {
-		color: #e04f5f;
+		color: #DC4F19;;
 	}
 
 	&:hover {
-		background-color: #e04f5f;
+		background-color: #DC4F19;
 		&, a {
 			color: #fff;
 		}
@@ -60,16 +60,44 @@ export const SecondaryButtonSmall = styled(Button)`
 	background-color: #fff;
 	font-size: small;
 	padding: 0.5em 1em;
-	border: 2px solid #e04f5f;
+	border: 2px solid #DC4F19;
 
 	&, a {
-		color: #e04f5f;
+		color: #DC4F19;
 	}
 
 	&:hover {
-		background-color: #e04f5f;
+		background-color: #DC4F19;
 		&, a {
 			color: #fff;
 		}
 	}
+`;
+
+interface Iprops {
+  backgroundColor?: string;
+  border?: string;
+  width?: string;
+}
+
+export const PopupButton = styled(Button)<Iprops>`
+  background-color: ${(p) => p.backgroundColor || "transparent"};
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: center;
+  border: ${(p) => p.border || "none"};
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  border-radius: 48px;
+  width: ${(p) => p.width || " clamp(50px, 35vw, 10rem)"};
+  &,
+  a {
+    color: white;
+  }
+  :hover {
+    transform: scaleY(1.08);
+    border: 1.5px solid #e5e7eb;
+  }
 `;

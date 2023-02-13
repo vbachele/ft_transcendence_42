@@ -47,6 +47,7 @@ function TopBarDirectMessages({data} : IProps) {
 	};
 
     const handleMobileDisplay = () => {
+        setIsRightBarOpenDM(false);
         setIsRightBarClosedDM(false);
         setIsClicked(true);
 	};

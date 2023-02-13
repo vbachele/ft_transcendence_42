@@ -43,8 +43,8 @@ export const MessagesContextProvider = ({
   return (
     <MessagesContext.Provider value={{ dataMessages, setDataMessages, dataChannels, setDataChannels, 
     isClickedDM, setIsClickedDM, isClickedChannel, setIsClickedChannel, isMobileClicked, setIsMobileClicked,
-    isRightBarOpenDM, setIsRightBarOpenDM, isRightBarOpenChannel, setIsRightBarOpenChannel,
-    isRightBarClosedDM, setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel }}>
+    isRightBarOpenDM, setIsRightBarOpenDM, isRightBarOpenChannel, setIsRightBarOpenChannel, isRightBarClosedDM,
+    setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel }}>
       {children}
     </MessagesContext.Provider>
   );

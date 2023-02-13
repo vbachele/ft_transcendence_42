@@ -1,22 +1,22 @@
 .notFound {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .notFound__title {
-	font-size: 9em;
-	font-weight: 800;
-	color: #e04f5f;
+  font-size: 9em;
+  font-weight: 800;
+  color: #e04f5f;
 }
 
 .notFound__gif {
-	margin: 15px auto;
-	width: 40%;
+  margin: 15px auto;
+  width: 10%;
 }
 
 @media (max-width: 350px) {
-	.notFound {
-		font-size: 45%;
-	}
+  .notFound {
+    font-size: 45%;
+  }
 }

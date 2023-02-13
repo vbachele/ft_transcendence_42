@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "assets/logo-text.svg";
-import * as S from "./Landingpage.style";
+import * as S from "./Landingpage.styles";
 import { Link } from "react-router-dom";
 import Popup from "components/Popup/PopupLogout";
 
@@ -25,12 +25,6 @@ const LandingPage = () => {
               <S.italicHighlight className="italic highlight">
                 JOIN THE BATTLE
               </S.italicHighlight>
-            </S.link>
-            {/* <S.link to="/spectate">
-              <S.italic className="italic">SPECTATE</S.italic>
-            </S.link> */}
-            <S.link to="/settings">
-              <S.normal className="normal">WATCH GAMES</S.normal>
             </S.link>
           </S.menus>
         </S.left>
