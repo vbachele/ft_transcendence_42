@@ -1,13 +1,10 @@
 import useFetch from 'hooks/useFetch';
 import RankList from './components/RankList';
 import Empty from './components/Empty';
-import {IUser} from 'types/models';
 import {useLocation} from 'react-router-dom';
+import useFetchAllUsers from 'hooks/useFetchAllUsers';
 import * as S from './Leaderboard.styles';
 import * as F from 'styles/font.styles';
-import UserList from 'mocks/Users/players.json';
-import {backend} from 'lib/backend';
-import useFetchAllUsers from 'hooks/useFetchAllUsers';
 
 const Leaderboard = () => {
 	const {data, isLoading, error} = useFetchAllUsers();
@@ -19,14 +16,14 @@ const Leaderboard = () => {
 	return (
 		<S.Container>
 			<F.H1>Leaderboard</F.H1>
-			{/* {error && <Error text={'error'} />}
-			{isLoading && <Loading />} */}
+			{error && <div>Error</div>}
+			{isLoading && <div>Loading...</div>}
 			{data && data!.filter((player) => player.score > 0).length > 0 && (
 				<RankList players={data} opt={option} />
 			)}
-			{/* {!error &&
+			{!error &&
 				!isLoading &&
-				data!.filter((player) => player.score > 0).length === 0 && <Empty />} */}
+				data!.filter((player) => player.score > 0).length === 0 && <Empty />}
 		</S.Container>
 	);
 };

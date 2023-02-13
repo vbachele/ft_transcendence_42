@@ -7,7 +7,7 @@ export const backend = {
 		return (await response.json()) as {id: string};
 	},
 	async getAllUsers(): Promise<IUser[]> {
-		const response = await api.get('/users/getusers');
+		const response = await api.get('/users');
 		return await response.json();
 	},
 	async getOneUser(id: string) {
