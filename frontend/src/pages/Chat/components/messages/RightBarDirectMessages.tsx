@@ -1,13 +1,15 @@
 import MessagesContext from 'contexts/Chat/MessagesContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogoGameControllerB } from 'react-icons/io';
 import { HiUserAdd } from 'react-icons/hi';
 import { ImBlocked } from 'react-icons/im';
 import { ThemeContext } from 'styled-components';
 import * as F from 'styles/font.styles';
-import * as S from '../Chat.styles';
-import { IMessages } from '../data';
+import * as S from '../../Chat.styles';
+import { IMessages } from '../../data';
+import { ProfilePicRightBar } from '../../Chat.styles';
+import LateralBar from '../containers/LateralBar';
 
 interface IProps {
 	data: IMessages;
@@ -39,24 +41,28 @@ export const displayPastille = (params: IMessages) => {
 
 function RightBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { isClickedDM, setIsClickedDM, setIsRightBarOpen } = useContext(MessagesContext);
+    const { isClickedDM, isRightBarClosedDM, setIsRightBarClosedDM, setIsClickedDM, setIsRightBarOpenDM } = useContext(MessagesContext);
 
-	const handleClick = () => {
-		setIsClickedDM(false);
-        setIsRightBarOpen(true);
+	const handleClickDesktop = () => {
+        setIsRightBarOpenDM(false);
 	};
 
-    return (  
-        <S.ContainerRightField open={isClickedDM}>
+    const handleClickMobile = () => {
+        setIsRightBarClosedDM(true);
+	};
+
+    return ( 
+        <S.ContainerRightField open={isClickedDM && isRightBarClosedDM}>
             <div style={{width: "100%", display: 'text', flexDirection: 'column', justifyContent: "space-between", 
             alignItems: 'center', padding: '0px 0px 16px', borderBottom: theme.name === 'light' ? "0.2px solid rgb(50, 50, 50)" : "0.2px solid rgb(100, 100, 100)"}}>
                 <div style={{ display: 'flex', flexDirection:'row', justifyContent: "space-between", 
                 alignItems:"center", paddingBottom: '32px'}}>
                     <F.Text> {data.name} </F.Text>
-                    <button className='buttonTitles' onClick={handleClick} style={{backgroundColor: 'transparent', border: 'none', color: theme.name === 'light' ? 'black' : 'white'}}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
+                    <button className='buttonTitles hiddenMobile' onClick={handleClickDesktop} style={{backgroundColor: 'transparent', border: 'none', color: theme.name === 'light' ? 'black' : 'white'}}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
+                    <button className='buttonTitles hiddenDesktop' onClick={handleClickMobile} style={{backgroundColor: 'transparent', border: 'none', color: theme.name === 'light' ? 'black' : 'white'}}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <S.ProfilePic src={data.avatar} style={{width: "70%", borderRadius: "50%", paddingBottom: "32px"}} />
+                    <S.ProfilePicRightBar src={data.avatar} style={{paddingBottom: "32px"}} />
                     {displayPastille(data)}
                 </div>
             </div>

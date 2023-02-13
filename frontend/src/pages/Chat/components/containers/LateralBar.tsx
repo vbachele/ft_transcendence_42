@@ -1,10 +1,10 @@
 import React, {FormEvent, FormEventHandler, useContext, useEffect, useState} from 'react';
 import * as F from 'styles/font.styles';
-import * as S from '../Chat.styles';
-import SearchBox from './SearchBox';
+import * as S from '../../Chat.styles';
+import SearchBox from '../modals/SearchBox';
 import {GrFormAdd} from 'react-icons/gr';
-import ChannelsList from './ChannelsList';
-import DirectMessages from './DirectMessages';
+import ChannelsList from '../channels/ChannelsList';
+import DirectMessages from '../messages/DirectMessages';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import { ThemeContext } from 'styled-components';
 
@@ -12,14 +12,14 @@ import { ThemeContext } from 'styled-components';
 function LateralBar() {
     const theme = useContext(ThemeContext);
     const [search, setSearch] = useState<string>('');
-    const { isRightBarOpen } = useContext(MessagesContext);
+    const { isRightBarOpenDM, isClickedChannel, isClickedDM } = useContext(MessagesContext);
 
     function handleChange(event: FormEvent<HTMLInputElement>) {
         setSearch(event.currentTarget.value);
     };
 
     return (
-        <S.LateralBarContainer open={isRightBarOpen}>
+        <S.LateralBarContainer open={isRightBarOpenDM || isClickedChannel || (!isRightBarOpenDM && isClickedDM)}>
             <div style={{display: 'flex', flexDirection: 'column', margin: '8px 16px', gap: '8px'}}>
                 <F.H2>Discussion</F.H2>
                 <SearchBox value={search} setValue={handleChange}/>

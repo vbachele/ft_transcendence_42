@@ -4,15 +4,20 @@ interface IProps {
     open: boolean;
   }
 
-export default styled.div<IProps>`
+export default styled.div`
     .buttonTitles:hover {
         cursor: pointer;
         transform: scale(1.4);
         background-color: ${(p) =>
             p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
     }
-    .hidden {
+    .hiddenDesktop {
         @media only screen and (min-width: 769px) {
+            display: none;
+        }
+    }
+    .hiddenMobile {
+        @media only screen and (max-width: 768px) {
             display: none;
         }
     }
@@ -72,6 +77,8 @@ export const ContainerMiddleField = styled.div`
 export const ContainerRightField = styled.div<IProps>`
     @media only screen and (max-width: 768px) {
         display: ${({open}) => open ? 'none': ''};
+        width: 100%;
+        overflow: auto;
     }
     display: flex;
     flex-direction: column;
@@ -202,6 +209,14 @@ export const ProfilePic = styled.img`
     border-radius: 50%;
 `;
 
+export const ProfilePicRightBar = styled.img`
+    @media only screen and (max-width: 768px) {
+        width: 30%;
+    }
+    width: 70%;
+    border-radius: 50%;
+`;
+
 export const ChatBarContainer = styled.div<IProps>`
     /* @media only screen and (min-width: 769px) {
         width: ${({open}) => open ? '95%' : '67%'};
@@ -232,4 +247,16 @@ export const ChatBarInput = styled.input<IProps>`
     border: 1px solid #E6E6E6; 
     border-radius: 12px;
     padding: 8px 16px; 
+`;
+
+export const IsNotDesktop = styled.div`
+    @media only screen and (min-width: 769px) {
+        display: none;
+    }
+`;
+
+export const IsNotMobile = styled.div`
+    @media only screen and (max-width: 768px) {
+        display: none;
+    }
 `;

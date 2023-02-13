@@ -1,20 +1,24 @@
 import * as F from 'styles/font.styles';
 import * as S from './Chat.styles';
-import LateralBar from './components/LateralBar';
-import MainFieldDirectMessages from './components/MainFieldDirectMessages';
-import RightBarDirectMessages from './components/RightBarDirectMessages';
+import LateralBar from './components/containers/LateralBar';
+import MainFieldDirectMessages from './components/containers/MainFieldDirectMessages';
+import RightBarDirectMessages from './components/messages/RightBarDirectMessages';
 import useContext from 'react';
 import MessagesContext from '../../contexts/Chat/MessagesContext';
 import React from 'react';
+import MainFieldChannel from './components/containers/MainFieldChannel';
+import EmptyChat from './components/messages/EmptyChat';
 
 function Chat() {
 
-    const {isClickedDM, myData} = React.useContext(MessagesContext);
+    const {isClickedDM, isRightBarClosedDM, isClickedChannel, dataMessages, isRightBarOpenDM} = React.useContext(MessagesContext);
     return (
-        <S.default open={isClickedDM}>
+        <S.default>
             <LateralBar />
-            <MainFieldDirectMessages />
-            {isClickedDM && <RightBarDirectMessages data={myData}/>}
+            {!isClickedDM && !isRightBarOpenDM && !isClickedChannel && <EmptyChat />}
+            {isClickedChannel && <MainFieldChannel />}
+            {isClickedDM && <MainFieldDirectMessages />}
+            {(isRightBarOpenDM || (!isRightBarClosedDM && isClickedDM)) && <RightBarDirectMessages data={dataMessages}/>}
         </S.default>
     );
 

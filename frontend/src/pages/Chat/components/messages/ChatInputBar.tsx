@@ -2,7 +2,7 @@ import MessagesContext from 'contexts/Chat/MessagesContext';
 import { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import * as F from 'styles/font.styles';
-import * as S from '../Chat.styles';
+import * as S from '../../Chat.styles';
 
 export const Arrow = () =>{
     return(

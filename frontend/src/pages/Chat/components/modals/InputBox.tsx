@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './inputBox.css'
+import '../style.css'
 import { ChangeEventHandler } from "react";
 
 interface IProps {

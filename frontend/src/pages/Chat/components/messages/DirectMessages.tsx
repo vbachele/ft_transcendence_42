@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
-import { IMessages } from '../data';
+import { IMessages } from '../../data';
 import * as F from 'styles/font.styles';
-import * as S from '../Chat.styles';
+import * as S from '../../Chat.styles';
 import Messages from './Message';
-import { ContainerChannel } from '../Chat.styles';
-import json from '../../../mocks/Users/directMessages.json'
+import { ContainerChannel } from '../../Chat.styles';
+import json from '../../../../mocks/Users/directMessages.json'
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import { message } from 'antd';
 
@@ -30,14 +30,15 @@ const DirectMessages: React.FC<IProps> = (props) => {
 // 	const {data} = useFetch<IMessages[]>(
 // 		'http://localhost:3001/directMessages'
 // 	);
-	const { setMyData, setIsMobileClicked, setIsClickedDM, setIsRightBarOpen, setIsClickedChannel } = useContext(MessagesContext);
+	const { setDataMessages, setIsMobileClicked, setIsRightBarClosedDM, setIsClickedDM, setIsRightBarOpenDM, setIsClickedChannel } = useContext(MessagesContext);
 
 	const handleClick = (data: IMessages) => {
 		setIsClickedDM(true);
+		setIsRightBarClosedDM(true);
 		setIsClickedChannel(false);
 		setIsMobileClicked(false);
-		setIsRightBarOpen(true);
-		setMyData(data)
+		setIsRightBarOpenDM(false);
+		setDataMessages(data)
 	};
 
 	let data: IMessages[] = [];
