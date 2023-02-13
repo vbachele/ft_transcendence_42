@@ -6,13 +6,11 @@ import {useLocation} from 'react-router-dom';
 import * as S from './Leaderboard.styles';
 import * as F from 'styles/font.styles';
 import UserList from 'mocks/Users/players.json';
+import {backend} from 'lib/backend';
+import useFetchAllUsers from 'hooks/useFetchAllUsers';
 
 const Leaderboard = () => {
-	let data: IUser[] = [];
-
-	for (let value in UserList.players) {
-		data.push(UserList.players[value]);
-	}
+	const {data, isLoading, error} = useFetchAllUsers();
 
 	let location = useLocation();
 	let option = new URLSearchParams(location.state).get('selectedOption');
