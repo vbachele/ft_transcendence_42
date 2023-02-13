@@ -99,20 +99,35 @@ export const FriendDetails = styled.div`
 `;
 
 export const FriendOptions = styled.div`
-	width: 128px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: left;
-	text-align: center;
 	gap: 2em;
 
 	svg {
+		fill: ${(p) => p.theme.colors.secondary};
 		width: 24px;
 		height: 24px;
 	}
 
 	button {
 		cursor: pointer;
+		border: none;
+		background: none;
+	}
+
+	a,
+	button {
+		display: flex;
+		gap: 1em;
+		text-decoration: none;
+		color: ${(p) => p.theme.colors.secondary};
+
+		transition: transform 0.2s linear;
+		:hover {
+			transform: translateX(5px);
+			text-decoration: underline;
+		}
 	}
 `;
 

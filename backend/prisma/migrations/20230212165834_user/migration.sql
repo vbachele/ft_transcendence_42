@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "coalition" SET DEFAULT 'federation',
+ALTER COLUMN "games" SET DEFAULT 0,
+ALTER COLUMN "wins" SET DEFAULT 0,
+ALTER COLUMN "ratio" SET DEFAULT 0,
+ALTER COLUMN "score" SET DEFAULT 0,
+ALTER COLUMN "status" SET DEFAULT 'offline';

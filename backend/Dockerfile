@@ -8,13 +8,15 @@ RUN npm install
 
 COPY --chown=node:node . .
 
-COPY --chown=node:node prisma ./prisma
+COPY --chown=node:node ./prisma ./prisma
 
-COPY --chown=node:node ./.env ./.env
+COPY --chown=node:node .env .env
 
 RUN npx prisma generate
 
 RUN npm run build
+
+EXPOSE 3000
 
 USER node
 

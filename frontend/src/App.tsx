@@ -1,26 +1,25 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {useState} from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
-import Pages from 'pages';
+import Pages from "pages";
 
-import {UserContextProvider} from 'contexts/User/userContent';
-import {ThemeProvider} from 'styled-components';
-import {GlobalStyle} from 'styles/global';
-import {dark, light} from 'styles/theme';
-import './App.css';
-import {UserMocks} from './mocks/Users/UserMocks';
-import DoubleAuthentication from 'pages/2FA';
-import Victory from 'components/Victory';
-import Defeat from 'components/Defeat';
-import Testpage from 'pages/Testpage';
-import LandingPage from 'pages/Testlanding/Landingpage';
-import Social from 'pages/Social';
-import {PopupContextProvider} from 'contexts/Popup/popup';
-import SearchPlayer from 'components/Popup/SearchPlayer';
-import {ConfigProvider} from 'antd';
-import SocketContextComponent from 'contexts/Socket/Component';
-import GameInvite from 'components/Popup/GameInvite';
-import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
+import { UserContextProvider } from "contexts/User/userContent";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "styles/global";
+import { dark, light } from "styles/theme";
+import "./App.css";
+import Game from "pages/Game/Game";
+import SocketContextComponent from "contexts/Socket/Component";
+import { UserMocks } from "./mocks/Users/UserMocks";
+import DoubleAuthentication from "pages/2FA";
+import Victory from "components/Victory";
+import Defeat from "components/EditName/Defeat";
+import Testpage from "pages/Home";
+import LandingPage from "pages/Landing/Landingpage";
+import Social from "pages/Social";
+import { PopupContextProvider } from "contexts/Popup/Popup";
+import SearchPlayer from "components/Popup/SearchPlayer";
+import { ConfigProvider } from "antd";
 
 function App() {
 	const userPref =

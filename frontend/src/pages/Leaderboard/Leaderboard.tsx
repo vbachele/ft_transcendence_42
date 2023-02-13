@@ -1,6 +1,4 @@
 import useFetch from 'hooks/useFetch';
-import Loading from 'components/Loading';
-import Error from 'components/Error';
 import RankList from './components/RankList';
 import Empty from './components/Empty';
 import {IUser} from 'types/models';

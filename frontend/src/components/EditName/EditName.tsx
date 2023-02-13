@@ -1,8 +1,16 @@
-import React, { ChangeEventHandler, useContext, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import * as S from "./EditName.styles";
 import * as F from "styles/font.styles";
 import * as UI from "styles/buttons.styles";
 import { useNavigate } from "react-router-dom";
+import { backend } from "lib/backend";
+import { api } from "lib/api";
+import { IUser } from "types/models";
 
 interface Props {
   visible?: boolean;
@@ -12,7 +20,12 @@ interface Props {
 const EditName: React.FC<Props> = (props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
+  let users: IUser[] = [];
   // const userContext = useContext(UserContext);
+  useEffect(() => {
+    const response = backend.createUser(users);
+    console.log(response);
+  }, []);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     // userContext.setUser({nickname: e.target.value});

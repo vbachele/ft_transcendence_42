@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { DatabaseService } from "./database.service";
 import { Prisma, PrismaPromise, User as UserModel } from "@prisma/client";
 
-@Controller('users')
+@Controller("users")
 export class DatabaseController {
   constructor(private readonly databaseService: DatabaseService) {}
 

@@ -26,11 +26,11 @@ const CSS = `
 `;
 
 export const GenerateUsers = () => {
-	let users: IUser[] = [];
+  let users: IUser[] = [];
 
-	for (let value in UserList.players) {
-		users.push(UserList.players[value]);
-	}
+  for (let value in UserList.players) {
+    users.push(UserList.players[value]);
+  }
 
 	const userList = users.map((value) => (
 		<tr key={value.id}>

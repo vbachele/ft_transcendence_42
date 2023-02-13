@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useContext, useEffect, useState} from 'react';
 import * as S from './UserInvitedToGame.styles';
 import {Text, H2, Subtitle} from 'styles/font.styles';
@@ -10,6 +11,17 @@ import GameFound from '../components/GameFound/GameFound';
 import {useSocket} from 'hooks/useSocket';
 import SocketContext from 'contexts/Socket/Context';
 import { ServerEvents } from 'pages/Game/events/game.events';
+=======
+import React, { useContext, useEffect, useState } from "react";
+import * as S from "./UserInvitedToGame.styles";
+import { Text, H2, Subtitle } from "styles/font.styles";
+import { PopupButton } from "styles/buttons.styles";
+import PopupContext, { usePopup } from "contexts/Popup/Popup";
+import { Link } from "react-router-dom";
+import InviteTimer from "../components/LoadingBar/LoadingBar";
+import LoadingBar from "../components/LoadingBar/LoadingBar";
+import GameFound from "../components/GameFound/GameFound";
+>>>>>>> main
 
 function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 	event.stopPropagation();
