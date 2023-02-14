@@ -18,7 +18,7 @@ endif
 
 clean: 
 ifeq ($(shell grep POSTGRES_DIR .env > /dev/null; echo $$?), 0)
-	@sed -i "" "$$(grep -n POSTGRES_DIR .env | cut -f1 -d:)d" ./.env
+	@sed -i "$$(grep -n POSTGRES_DIR .env | cut -f1 -d:)d" ./.env
 	@echo POSTGRES_DIR var removed from .env
 endif
 	docker system prune -a

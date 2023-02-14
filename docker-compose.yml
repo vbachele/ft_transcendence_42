@@ -48,7 +48,7 @@ services:
     networks:
       - ft_transcendence
     volumes:
-      - /Users/vincent/postgres_sql:/var/lib/postgresql/data
+      - postgres_vol:/var/lib/postgresql/data
 
   adminer:
     container_name: adminer
@@ -63,3 +63,10 @@ networks:
   ft_transcendence:
     driver: bridge
 
+volumes:
+  postgres_vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${POSTGRES_DIR}
