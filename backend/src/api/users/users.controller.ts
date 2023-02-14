@@ -1,6 +1,11 @@
 import { Body, Controller, Delete, Get, Patch, Req } from "@nestjs/common";
 import { UserService } from "./users.service";
 import { Request } from "express";
+const express = require("express");
+const app = express();
+
+app.use(express.json({ limit: "500mb" }));
+app.use(express.urlencoded({ limit: "500mb", extended: true }));
 
 @Controller("users")
 export class UserController {
@@ -16,8 +21,11 @@ export class UserController {
   }
   @Patch(":id")
   async PatchUser(@Req() req: Request) {
+    if (req.body.image)
+      return this.userService.uploadImageToCloudinary(req.body.image);
     return this.userService.updateUser(req);
   }
+
   @Delete("deleteall")
   async DeleteAllUsers() {
     return this.userService.deleteAllUsers();
