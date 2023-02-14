@@ -77,11 +77,11 @@ const Dropdown = () => {
 				{/* PROFILE */}
 				<S.User>
 					<>
-						<Link to="/dashboard/:id" onClick={toggleDrop}>
+						<Link to="/dashboard/Drake" onClick={toggleDrop}>
 							<img src={Avatar} />
 						</Link>
 						<S.User__Infos>
-							<Link to="/dashboard/:id" onClick={toggleDrop}>
+							<Link to="/dashboard/Drake" onClick={toggleDrop}>
 								<F.H5>Louisnfr</F.H5>
 							</Link>
 							<Link
@@ -116,7 +116,7 @@ const Dropdown = () => {
 						<F.Text weight="400">Leaderboard</F.Text>
 					</Link>
 					{/* DASHBOARD */}
-					<Link to={`/dashboard/:id`} onClick={toggleDrop}>
+					<Link to={`/dashboard/Drake`} onClick={toggleDrop}>
 						<Dashboard />
 						<F.Text weight="400">Career</F.Text>
 					</Link>

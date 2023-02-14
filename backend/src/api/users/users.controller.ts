@@ -9,11 +9,11 @@ export class UserController {
 	async getUsers() {
 		return this.userService.getAllUsers();
 	}
-	@Get(':id')
-	async getOneUser(@Req() req: Request) {
-		const {id} = req.params;
-		return this.userService.getOneUser(req);
-	}
+	// @Get(':id')
+	// async getOneUser(@Req() req: Request) {
+	// 	const {id} = req.params;
+	// 	return this.userService.getOneUser(req);
+	// }
 	@Get(':name')
 	async getUserByName(@Req() req: Request) {
 		return this.userService.getUserByName(req);

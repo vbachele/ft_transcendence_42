@@ -14,6 +14,10 @@ export const backend = {
 		const response = await api.get('/users/' + id);
 		return (await response.json()) as {id: string};
 	},
+	async getUserByName(name: string) {
+		const response = await api.get('/users/' + name);
+		return await response.json();
+	},
 	async patchUser(id: string, updateUser: unknown) {
 		const response = await api.patch('/users/' + id, updateUser);
 		return (await response.json()) as {id: string};

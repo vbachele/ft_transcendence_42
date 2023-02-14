@@ -11,7 +11,7 @@ async function fetchAllUsers() {
 	}
 }
 
-function useFetchAllUsers() {
+function useFetchUsers() {
 	const [data, setData] = useState<IUser[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,4 +29,4 @@ function useFetchAllUsers() {
 	return {data, isLoading, error};
 }
 
-export default useFetchAllUsers;
+export default useFetchUsers;

@@ -40,7 +40,7 @@ function App() {
 					<Route path="/registration" element={<Pages.Registration />} />
 					<Route path="/oldlogin" element={<Pages.Login />} />
 					<Route path="/leaderboard" element={<Pages.Leaderboard />} />
-					<Route path="/dashboard/:id" element={<Pages.Dashboard />} />
+					<Route path="/dashboard/:name" element={<Pages.Dashboard />} />
 					<Route path="/settings" element={<Pages.Settings />} />
 					<Route path="/headings" element={<Pages.Headings />} />
 					<Route path="/social" element={<Social />} />
