@@ -8,13 +8,13 @@ export type Toggle = {
   toggle: boolean;
 };
 
-// export type Invite = {
-//   invited: boolean;
-// };
+export type Invite = {
+  invited: boolean;
+};
 
-// export type HasInvited = {
-//   hasInvited: boolean;
-// };
+export type HasInvited = {
+  hasInvited: boolean;
+};
 
 export type Navbar = {
   displayNavbar: boolean;

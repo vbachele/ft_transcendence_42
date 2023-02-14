@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text } from "styles/font.styles";
+import * as S from "../Popup/Popup.styles"
 
 const Timer = () => {
   const [hours, setHours] = useState(0);
@@ -21,13 +22,13 @@ const Timer = () => {
   }, [seconds]);
 
   return (
-    <div>
+    <S.Text>
       <Text weight={"400"}>
         {hours > 0 ? ` ${hours} hours` : null}
         {minutes > 0 ? `${minutes} min ` : null}
         {seconds} sec
       </Text>
-    </div>
+    </S.Text>
   );
 };
 

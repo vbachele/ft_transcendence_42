@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const Button = styled.button`
   display: flex;
-  flex: 1 0 0;
+  flex-basis: fit-content;
+  min-width: 168px;
   justify-content: center;
   text-align: center;
   align-items: center;
@@ -85,8 +86,8 @@ interface Iprops {
 export const PopupButton = styled(Button)<Iprops>`
   background-color: ${(p) => p.backgroundColor || "transparent"};
   height: 50px;
-  border-radius: 48px;
   border: ${(p) => p.border || "none"};
+  margin: auto;
   width: ${(p) => p.width || " clamp(50px, 35vw, 10rem)"};
   &,
   a {
