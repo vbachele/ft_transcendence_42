@@ -10,8 +10,9 @@ export class AuthService {
     try {
       const user = await this.prisma.user.create({
         data: {
-          name: "Antoine",
-          image: "",
+          name: "Vincent",
+          image:
+            "https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png",
           coalition: "",
           status: "",
           games: 0,

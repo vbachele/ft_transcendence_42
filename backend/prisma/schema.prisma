@@ -14,7 +14,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   name String @unique
-  image String
+  image String @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
   coalition String @default("Federation")
   status String @default("offline")
   games Int @default(0)

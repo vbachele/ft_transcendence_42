@@ -27,12 +27,15 @@ export const SelectFile = () => {
     let upload = {
       image: base64EncodedImage,
     };
+    const user1 = backend.getOneUser("40");
+    console.log("BEFORE", user1);
     backend.patchUser("40", upload);
     const user = backend.getOneUser("40");
+    console.log("AFTER", user);
   };
 
   return (
-    <form encType="multipart/form-data">
+    <form>
       <label htmlFor="file-input">
         <S.SelectFileIcon>
           <Icon />

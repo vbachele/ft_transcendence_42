@@ -21,8 +21,7 @@ export class UserController {
   }
   @Patch(":id")
   async PatchUser(@Req() req: Request) {
-    if (req.body.image)
-      return this.userService.uploadImageToCloudinary(req.body.image);
+    if (req.body.image) return this.userService.uploadImageToCloudinary(req);
     return this.userService.updateUser(req);
   }
 

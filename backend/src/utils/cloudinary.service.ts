@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { UploadApiErrorResponse, UploadApiResponse, v2 } from "cloudinary";
-import toStream from "buffer-to-stream";
+import { v2 } from "cloudinary";
 
 @Injectable()
 export class CloudinaryService {
@@ -12,6 +11,7 @@ export class CloudinaryService {
       const personalizedUrl = v2.url(uploadedResponse.public_id);
       console.log("Image well uploaded");
       console.log("Personalized URL:", personalizedUrl);
+
       return personalizedUrl;
     } catch (error) {
       throw error;

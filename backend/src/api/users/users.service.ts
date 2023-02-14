@@ -37,10 +37,21 @@ export class UserService {
       throw error;
     }
   }
-  async uploadImageToCloudinary(file: string) {
-    return await this.cloudinary.uploadImage(file).catch(() => {
+  async uploadImageToCloudinary(req: Request) {
+    const image = req.body.image;
+    const urlImage = await this.cloudinary.uploadImage(image).catch(() => {
       throw new BadRequestException("Invalid file type.");
     });
+    const { id } = req.params;
+    const user = await this.prisma.user.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        image: urlImage,
+      },
+    });
+    return user;
   }
 
   async updateUser(req: Request) {
