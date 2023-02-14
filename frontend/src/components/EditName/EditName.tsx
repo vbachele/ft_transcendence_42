@@ -20,20 +20,11 @@ interface Props {
 const EditName: React.FC<Props> = (props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  let users: IUser[] = [];
-  // const userContext = useContext(UserContext);
-  useEffect(() => {
-    const response = backend.createUser(users);
-    console.log(response);
-  }, []);
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    // userContext.setUser({nickname: e.target.value});
     setValue(e.target.value);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    // backend.updateUser({name: userContext?.user?.nickname});
     e.preventDefault();
     navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not
   };
