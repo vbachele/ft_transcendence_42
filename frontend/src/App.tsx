@@ -19,7 +19,7 @@ import LandingPage from 'pages/Landing/Landingpage';
 import Social from 'pages/Social';
 import SearchPlayer from 'components/Popup/SearchPlayer';
 import {ConfigProvider} from 'antd';
-import {PopupContextProvider} from 'contexts/Popup/popup';
+import {PopupContextProvider} from 'contexts/Popup/Popup';
 
 function App() {
 	const userPref =

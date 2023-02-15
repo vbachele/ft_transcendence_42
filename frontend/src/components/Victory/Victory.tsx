@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as S from './Victory.styles';
-import {usePopup} from 'contexts/Popup/popup';
+import {usePopup} from 'contexts/Popup/Popup';
 
 const Victory: React.FC = () => {
 	const [animate, setAnimate] = useState(false);

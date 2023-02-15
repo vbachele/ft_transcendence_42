@@ -4,7 +4,7 @@ import * as S from './Home.styles';
 import {Link} from 'react-router-dom';
 import LogoutPopup from 'components/Popup/Logout/LogoutPopup';
 import SearchPlayer from 'components/Popup/SearchPlayer';
-import PopupContext, {usePopup} from 'contexts/Popup/popup';
+import PopupContext, {usePopup} from 'contexts/Popup/Popup';
 import GameFound from 'components/Popup/components/GameFound/GameFound';
 import GameInvite from 'components/Popup/GameInvite/GameInvite';
 import UserInvitedToGame from 'components/Popup/UserInvitedToGame';

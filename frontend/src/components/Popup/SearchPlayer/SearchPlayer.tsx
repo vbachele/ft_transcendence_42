@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {PopupButton} from 'styles/buttons.styles';
 import {Text, H2} from 'styles/font.styles';
 import * as S from './SearchPlayer.styles';
-import PopupContext from 'contexts/Popup/popup';
+import PopupContext from 'contexts/Popup/Popup';
 import GameFound from '../components/GameFound/GameFound';
 import Timer from '../components/SearchTimer/InviteTimer';
 
