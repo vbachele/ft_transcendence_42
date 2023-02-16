@@ -10,7 +10,7 @@ app.use(express.urlencoded({ limit: "500mb", extended: true }));
 @Controller("users")
 export class UserController {
   constructor(private userService: UserService) {}
-  @Get("getusers")
+  @Get()
   async getUsers() {
     return this.userService.getAllUsers();
   }
@@ -19,12 +19,14 @@ export class UserController {
     const { id } = req.params;
     return this.userService.getOneUser(req);
   }
+  @Get(":name")
+  async getUserByName(@Req() req: Request) {
+    return this.userService.getUserByName(req);
+  }
   @Patch(":id")
   async PatchUser(@Req() req: Request) {
-    if (req.body.image) return this.userService.uploadImageToCloudinary(req);
     return this.userService.updateUser(req);
   }
-
   @Delete("deleteall")
   async DeleteAllUsers() {
     return this.userService.deleteAllUsers();

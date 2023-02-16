@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
 function useFetch<Data>(url: string) {
 	const [data, setData] = useState<Data | null>(null);
@@ -10,22 +10,22 @@ function useFetch<Data>(url: string) {
 			method: 'GET',
 			mode: 'cors',
 			headers: {
-				'Content-Type': 'application/json'
-			}
+				'Content-Type': 'application/json',
+			},
 		})
-			.then(res => res.json())
+			.then((res) => res.json())
 			.then((data: Data) => {
 				setData(data);
 				setIsLoading(false);
 				setError(null);
 			})
-			.catch(err => {
-				setError("Could not fetch the data");
+			.catch((err) => {
+				setError('Could not fetch the data');
 				setIsLoading(false);
-			})
+			});
 	}, [url]);
 
-	return { data, isLoading, error };
+	return {data, isLoading, error};
 }
 
 export default useFetch;

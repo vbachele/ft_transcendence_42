@@ -6,12 +6,16 @@ export const backend = {
     const response = await api.post("/auth/signup", user);
     return (await response.json()) as { id: string };
   },
-  async getAllUsers() {
-    const response = await api.get("/users/getusers");
-    return (await response.json()) as { id: string };
+  async getAllUsers(): Promise<IUser[]> {
+    const response = await api.get("/users");
+    return await response.json();
   },
   async getOneUser(id: string) {
     const response = await api.get("/users/" + id);
+    return (await response.json()) as { id: string };
+  },
+  async getUserByName(name: string) {
+    const response = await api.get("/users/" + name);
     return await response.json();
   },
   async patchUser(id: string, updateUser: unknown) {

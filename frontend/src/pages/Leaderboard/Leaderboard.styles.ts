@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom';
 
 // Leaderboard Page
 export const Container = styled.div`
+	text-align: center;
 	h1 {
 		padding: 32px 0;
-		text-align: center;
 	}
 	.Federation {
 		color: #4180db !important;

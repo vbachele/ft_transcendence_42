@@ -1,16 +1,9 @@
-import React, {
-  ChangeEventHandler,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { ChangeEventHandler, useState } from "react";
 import * as S from "./EditName.styles";
 import * as F from "styles/font.styles";
 import * as UI from "styles/buttons.styles";
 import { useNavigate } from "react-router-dom";
 import { backend } from "lib/backend";
-import { api } from "lib/api";
-import { IUser } from "types/models";
 
 interface Props {
   visible?: boolean;
@@ -28,6 +21,7 @@ const EditName: React.FC<Props> = (props) => {
     e.preventDefault();
     let username = {
       name: value,
+      isRegistered: true,
     };
     backend.patchUser("3", username); // TEST CHANGE
     navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not

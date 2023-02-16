@@ -11,7 +11,7 @@ interface IProps {
 
 const Rank = ({player, rank}: IProps) => {
 	return (
-		<S.Slot to={`/dashboard/${player.id}`}>
+		<S.Slot to={`/dashboard/${player.name}`}>
 			<S.Stat className="rank">
 				<F.Text>#{rank}</F.Text>
 				<F.Subtitle className="rank-subtitle">Rank</F.Subtitle>
