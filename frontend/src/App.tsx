@@ -20,6 +20,7 @@ import Social from 'pages/Social';
 import SearchPlayer from 'components/Popup/SearchPlayer';
 import {ConfigProvider} from 'antd';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
+import { MessagesContextProvider } from 'contexts/Chat/MessagesContext';
 
 function App() {
 	const userPref =
@@ -39,6 +40,7 @@ function App() {
 					<Route path="/oldlanding" element={<Pages.Landing />} />
 					<Route path="/registration" element={<Pages.Registration />} />
 					<Route path="/oldlogin" element={<Pages.Login />} />
+          <Route path="/chat" element={<Pages.Chat />} />
 					<Route path="/leaderboard" element={<Pages.Leaderboard />} />
 					<Route path="/dashboard/:name" element={<Pages.Dashboard />} />
 					<Route path="/settings" element={<Pages.Settings />} />
@@ -58,6 +60,7 @@ function App() {
 	return (
 		<UserContextProvider>
 			<PopupContextProvider>
+      <MessagesContextProvider>
 				{/* <SocketContextComponent> */}
 				<ThemeProvider theme={theme === 'light' ? light : dark}>
 					<ConfigProvider
@@ -80,6 +83,7 @@ function App() {
 					</ConfigProvider>
 				</ThemeProvider>
 				{/* </SocketContextComponent> */}
+        </MessagesContextProvider>
 			</PopupContextProvider>
 		</UserContextProvider>
 	);
