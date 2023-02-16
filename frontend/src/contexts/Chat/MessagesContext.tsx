@@ -24,6 +24,8 @@ type MessagesContextType = {
   setIsRightBarClosedDM: React.Dispatch<React.SetStateAction<boolean>>;
   isRightBarClosedChannel: boolean;
   setIsRightBarClosedChannel: React.Dispatch<React.SetStateAction<boolean>>;
+  isGlitch: boolean;
+  setIsGlitch: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MessagesContext = createContext({} as MessagesContextType);
@@ -36,6 +38,7 @@ export const MessagesContextProvider = ({
   const [isClickedChannel, setIsClickedChannel] = useState<boolean>(false);
   const [isRightBarOpenDM, setIsRightBarOpenDM] = useState<boolean>(false);
   const [isRightBarClosedDM, setIsRightBarClosedDM] = useState<boolean>(false);
+  const [isGlitch, setIsGlitch] = useState<boolean>(false);
   const [isRightBarClosedChannel, setIsRightBarClosedChannel] = useState<boolean>(false);
   const [isRightBarOpenChannel, setIsRightBarOpenChannel] = useState<boolean>(false);
   const [dataChannels, setDataChannels] = useState<IChannels>({name: '', id: -1});
@@ -44,7 +47,7 @@ export const MessagesContextProvider = ({
     <MessagesContext.Provider value={{ dataMessages, setDataMessages, dataChannels, setDataChannels, 
     isClickedDM, setIsClickedDM, isClickedChannel, setIsClickedChannel, isMobileClicked, setIsMobileClicked,
     isRightBarOpenDM, setIsRightBarOpenDM, isRightBarOpenChannel, setIsRightBarOpenChannel, isRightBarClosedDM,
-    setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel }}>
+    setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel, isGlitch, setIsGlitch }}>
       {children}
     </MessagesContext.Provider>
   );

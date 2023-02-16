@@ -6,6 +6,7 @@ import {useContext} from 'react';
 
 function EmptyChat() {
     const { isClickedChannel } = useContext(MessagesContext);
+ 
     return (
         <S.MiddleDiv open={isClickedChannel}>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '80vh'}}>

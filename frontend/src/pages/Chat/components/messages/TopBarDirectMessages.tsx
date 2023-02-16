@@ -32,7 +32,7 @@ export const BurgerMenu = ({fill}: {fill: string}) =>{
 
 function TopBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { dataMessages, isMobileClicked, isRightBarOpenDM , setIsRightBarClosedDM, setIsClickedDM, setIsMobileClicked, setIsRightBarOpenDM } = useContext(MessagesContext);
+    const { dataMessages, isMobileClicked, isRightBarOpenDM , isGlitch, setIsGlitch, setIsRightBarClosedDM, setIsClickedDM, setIsMobileClicked, setIsRightBarOpenDM } = useContext(MessagesContext);
     const [isClicked, setIsClicked] = useState<boolean>(false);
 
     const handleClickBurgerMenu = () => {

@@ -249,6 +249,21 @@ export const ChatBarInput = styled.input<IProps>`
     padding: 8px 16px; 
 `;
 
+export const Input = styled.input`
+  height: 48px;
+  width: clamp(20rem, 50%, 30rem);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 28px;
+
+  ::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+  }
+`;
+
 export const IsNotDesktop = styled.div`
     @media only screen and (min-width: 769px) {
         display: none;

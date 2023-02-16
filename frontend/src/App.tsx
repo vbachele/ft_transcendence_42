@@ -44,7 +44,7 @@ function App() {
           <Route path="/oldlogin" element={<Pages.Login />} />
           <Route path="/leaderboard" element={<Pages.Leaderboard />} />
           <Route path="/dashboard/:id" element={<Pages.Dashboard />} />
-          <Route path="/chat" element={<MessagesContextProvider><Pages.Chat /></MessagesContextProvider>} />
+          <Route path="/chat" element={<Pages.Chat />} />
           <Route path="/settings" element={<Pages.Settings />} />
           <Route path="/headings" element={<Pages.Headings />} />
           <Route path="/social" element={<Social />} />
@@ -62,6 +62,7 @@ function App() {
   return (
     <UserContextProvider>
       <PopupContextProvider>
+      <MessagesContextProvider>
         {/* <SocketContextComponent> */}
         <ThemeProvider theme={theme === "light" ? light : dark}>
           <ConfigProvider
@@ -84,6 +85,7 @@ function App() {
           </ConfigProvider>
         </ThemeProvider>
         {/* </SocketContextComponent> */}
+        </MessagesContextProvider>
       </PopupContextProvider>
     </UserContextProvider>
   );

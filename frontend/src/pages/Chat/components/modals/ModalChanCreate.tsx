@@ -24,7 +24,8 @@ const ModalChanCreate: React.FC = () => {
         width={'393px'}
         open={isModalOpen}
         onOk={handleOk} 
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+        >
             <p> Channel name*</p>
             <InputBox placeHolder='#new-channel'/>
             <p> Description</p>

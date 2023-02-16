@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../style.css'
-import { ChangeEventHandler } from "react";
+import * as F from 'styles/font.styles';
+import * as S from '../../Chat.styles';
 
 interface IProps {
     placeHolder: string;
@@ -8,15 +9,17 @@ interface IProps {
 
 const InputBox:React.FC<IProps> = (props) => {
 
-    const [description, setDescription] = useState('');
 
     return (
-        <textarea
-            value={description}
-            className="firstBoxText"
-            placeholder={props.placeHolder} 
-            onChange={e => setDescription(e.target.value)}>
-        </textarea>
+        <S.Input
+            type="text"
+            className='firstBoxText'
+            // value={description}
+            placeholder={props.placeHolder}
+            // minLength={1}
+            // maxLength={8}
+            required
+        />
 	  )
 }
 

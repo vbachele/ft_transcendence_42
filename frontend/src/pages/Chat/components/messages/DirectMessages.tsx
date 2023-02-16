@@ -31,7 +31,9 @@ const DirectMessages: React.FC<IProps> = (props) => {
 // 		'http://localhost:3001/directMessages'
 // 	);
 	const { setDataMessages, setIsMobileClicked, setIsRightBarClosedDM, setIsClickedDM, setIsRightBarOpenDM, setIsClickedChannel } = useContext(MessagesContext);
-
+    const { isClickedChannel, isClickedDM, isRightBarOpenDM } = useContext(MessagesContext);
+    console.log(isClickedDM, isRightBarOpenDM, isClickedChannel);
+	
 	const handleClick = (data: IMessages) => {
 		setIsClickedDM(true);
 		setIsRightBarClosedDM(true);
