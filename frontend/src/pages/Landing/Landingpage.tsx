@@ -20,7 +20,7 @@ const LandingPage = () => {
           </S.logo>
           <S.menus id="menus">
             <S.menuHighlight id="menu-highlight" />
-            <S.link to="/registration">
+            <S.link href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-8be13340a116eca57b9ba0f248f05297e6b9563bd01c6ec7ccd5a85341b9b499&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fregistration&response_type=code">
               <S.italicHighlight className="italic highlight">
                 JOIN THE BATTLE
               </S.italicHighlight>

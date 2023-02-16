@@ -1,50 +1,56 @@
-import React, { useContext } from "react";
-import { api } from "lib/api";
-import UserContext from "contexts/User/userContent";
+import React, { useState } from "react";
 import { BsFillCameraFill as Icon } from "react-icons/bs";
 import * as S from "../EditAvatar.styles";
+import { backend } from "lib/backend";
+import { IUser } from "types/models";
 
 export const SelectFile = () => {
-  // const handleChange:React.ChangeEventHandler<HTMLInputElement>  = (event) => {
-  const userContext = useContext(UserContext);
+  const [fileInputState, setFileInputState] = useState("");
+  const [previewSource, setPreviewSource] = useState<any>();
 
-  const getBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    previewFile(file);
+    uploadImage(previewSource);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
+  const previewFile = (file: File) => {
+    const reader = new FileReader();
 
-    if (file) {
-      const uploadfile = getBase64(file).then((base64) => {
-        const upload = { image: base64 };
-        api.patch("/users/1", upload);
-        // Save the base64 data to a JSON file or to your state
-      });
-    }
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result as string);
+    };
   };
 
-  // Here I create a label for my cameraIcon and create an input, by giving an id with the name of my labe
-  // I can put the input in my image
+  const uploadImage = async (base64EncodedImage: string) => {
+    let upload = {
+      image: base64EncodedImage,
+    };
+    const user1: Promise<IUser> = await backend.getOneUser("40");
+    console.log("BEFORE", user1);
+    backend.patchUser("40", upload);
+    const user: Promise<IUser> = await backend.getOneUser("40");
+    console.log("AFTER", user);
+  };
 
   return (
-    <label htmlFor="file-input">
-      <S.SelectFileIcon>
-        <Icon />
-      </S.SelectFileIcon>
-      <input
-        type="file"
-        id="file-input"
-        onChange={handleChange}
-        accept="image/*"
-        style={{ display: "none" }}
-      />
-    </label>
+    <form>
+      <label htmlFor="file-input">
+        <S.SelectFileIcon>
+          <Icon />
+        </S.SelectFileIcon>
+        <input
+          type="file"
+          id="file-input"
+          value={fileInputState}
+          onChange={handleFileInputChange}
+          accept="image/*"
+          style={{ display: "none" }}
+        />
+      </label>
+    </form>
   );
 };
 
