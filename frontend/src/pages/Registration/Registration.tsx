@@ -24,7 +24,7 @@ const Registration = () => {
       <F.H2>Create Your Profile</F.H2>
       <S.Form>
         <EditAvatar />
-        <EditName linkTo="/2FA" />
+        <EditName linkTo="/login" />
       </S.Form>
     </S.Container>
   );

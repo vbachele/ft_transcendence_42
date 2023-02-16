@@ -36,10 +36,10 @@ export class AuthService {
         data: {
           coalition: data.coalition,
           achievements: [],
-          accessToken: "rqreg",
+          accessToken: token.access_token,
           isRegistered: false,
           refreshToken: token.refresh_token,
-          user42Name: "prout",
+          user42Name: data.login,
         },
       });
       return user;

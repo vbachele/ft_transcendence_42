@@ -26,6 +26,10 @@ const EditName: React.FC<Props> = (props) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    let username = {
+      name: value,
+    };
+    backend.patchUser("3", username); // TEST CHANGE
     navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not
   };
 

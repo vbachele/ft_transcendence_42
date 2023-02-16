@@ -8,6 +8,7 @@ import PopupContext, { usePopup } from "contexts/Popup/Popup";
 import GameFound from "components/Popup/components/GameFound/GameFound";
 import GameInvite from "components/Popup/GameInvite/GameInvite";
 import UserInvitedToGame from "components/Popup/UserInvitedToGame";
+import { backend } from "lib/backend";
 
 const Testpage = () => {
   const [logout, setLogout] = useState(false);
