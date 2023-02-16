@@ -7,7 +7,7 @@ import {
 import { PrismaService } from "src/prisma/prisma.service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Request } from "express";
-import { CloudinaryService } from "src/utils/cloudinary.service";
+import { CloudinaryService } from "src/cloudinary/cloudinary.service";
 
 @Injectable({})
 export class UserService {

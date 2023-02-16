@@ -22,4 +22,8 @@ export const backend = {
     const response = await api.delete("/users/deleteall");
     return (await response.json()) as { id: string };
   },
+  async Oauth42(code: unknown) {
+    const response = await api.getAccessToken("/auth/Oauth", code);
+    return (await response.json()) as { id: string };
+  },
 };

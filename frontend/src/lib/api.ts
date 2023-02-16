@@ -33,4 +33,12 @@ export const api = {
   async delete(url: string) {
     return await fetch("/api" + url, { ...requestConfig, method: "DELETE" });
   },
+  async getAccessToken(url: string, data: unknown) {
+    console.log(data);
+    return await fetch("/api" + url, {
+      ...requestConfig,
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
 };

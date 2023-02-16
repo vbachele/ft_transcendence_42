@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsFillCameraFill as Icon } from "react-icons/bs";
 import * as S from "../EditAvatar.styles";
 import { backend } from "lib/backend";
+import { IUser } from "types/models";
 
 export const SelectFile = () => {
   const [fileInputState, setFileInputState] = useState("");
@@ -23,14 +24,14 @@ export const SelectFile = () => {
     };
   };
 
-  const uploadImage = (base64EncodedImage: string) => {
+  const uploadImage = async (base64EncodedImage: string) => {
     let upload = {
       image: base64EncodedImage,
     };
-    const user1 = backend.getOneUser("40");
+    const user1: Promise<IUser> = await backend.getOneUser("40");
     console.log("BEFORE", user1);
     backend.patchUser("40", upload);
-    const user = backend.getOneUser("40");
+    const user: Promise<IUser> = await backend.getOneUser("40");
     console.log("AFTER", user);
   };
 
