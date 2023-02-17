@@ -21,6 +21,7 @@ export const Container = styled.div`
 	gap: 24px;
 	width: 375px;
 	width: clamp(80, 80%, 375px);
+	user-select: none;
 `;
 
 export const Button = styled.div`

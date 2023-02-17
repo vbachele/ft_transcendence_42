@@ -79,7 +79,8 @@ function Popup(props: IPopup) {
 	}
 
 	function stopPropagation(event: React.MouseEvent) {
-		if (props.stopPropagation) event.stopPropagation();
+		if (!props.stopPropagation) return;
+		event.stopPropagation();
 	}
 
 	return (

@@ -1,6 +1,5 @@
 import {api} from 'lib/api';
 import React, {useEffect} from 'react';
-import {useAsyncValue} from 'react-router-dom';
 import {IUser} from 'types/models';
 import UserList from './players.json';
 

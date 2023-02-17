@@ -1,28 +1,7 @@
 import { v4 } from "uuid";
 import { AuthenticatedSocket } from "../types/server.type";
 import { Socket, Server } from "socket.io";
-import { ServerEvents } from "../events/game.events";
-
-const withTimeout = (
-  onSuccess: Function,
-  onTimeout: Function,
-  timeout: number
-) => {
-  let called = false;
-
-  const timer = setTimeout(() => {
-    if (called) return;
-    called = true;
-    onTimeout();
-  }, timeout);
-
-  return (...args: any[]) => {
-    if (called) return;
-    called = true;
-    clearTimeout(timer);
-    onSuccess.apply(this, args);
-  };
-};
+import { ClientEvents, ServerEvents } from "../events/game.events";
 
 export class Lobby {
   public readonly id: string = v4();
@@ -41,28 +20,23 @@ export class Lobby {
     this.clients.set(client.id, client);
     client.join(this.id);
     client.data.lobby = this;
+    console.info(`Client - [${client.id}] added to lobby - [${this.id}]`);
     this.dispatchLobbyState();
   }
 
-  public inviteClient(
+  public async inviteClient(
     client: AuthenticatedSocket,
     invitedClient: string
-  ): void {
-    this.server.to(invitedClient).timeout(15_000).emit(
-      ServerEvents.InvitedToLobby,
-      {
+  ): Promise<any> {
+    this.server
+      .to(invitedClient)
+      .timeout(15_000)
+      .emit(ServerEvents.InvitedToLobby, {
         invitation: {
           from: client.id,
+          lobby: this.id,
         },
-      },
-      (error: any, response: any) => {
-        if (error)
-          console.log(`error`);
-          this.server.to(client.id).emit(ServerEvents.InvitationDeclined)
-        if (response && response[0])
-          console.log(response[0].status);
-      }
-    );
+      });
   }
 
   public removeClient(client: AuthenticatedSocket): void {

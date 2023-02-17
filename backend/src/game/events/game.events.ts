@@ -3,6 +3,7 @@ export enum ClientEvents {
   CreateLobby = 'client.createLobby',
   JoinLobby = 'client.joinLobby',
   InviteToLobby = 'client.inviteToLobby',
+  InvitationResponse = 'client.invitationResponse'
 }
 
 export enum ServerEvents {

@@ -2,12 +2,9 @@ import React, { useContext, useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Home.styles";
 import { Link } from "react-router-dom";
-import LogoutPopup from "components/Popup/Logout/LogoutPopup";
-import SearchPlayer from "components/Popup/SearchPlayer";
 import PopupContext, { usePopup } from "contexts/Popup/Popup";
 import GameFound from "components/Popup/components/GameFound/GameFound";
-import GameInvite from "components/Popup/GameInvite/GameInvite";
-import UserInvitedToGame from "components/Popup/UserInvitedToGame";
+import Popup from "components/Popup"
 
 const Testpage = () => {
   const [logout, setLogout] = useState(false);
@@ -16,11 +13,11 @@ const Testpage = () => {
   const { hasInvited, setHasInvited } = usePopup();
 
   const handleInvite = () => {
-    setInvitation({ invited: !invitation.invited });
+    setInvitation(!invitation);
   };
 
   const handleInvited = () => {
-    setHasInvited({ hasInvited: !hasInvited.hasInvited });
+    setHasInvited(!hasInvited);
   };
 
   const handlePlay = () => {
@@ -62,11 +59,11 @@ const Testpage = () => {
             </S.link>
             {/* TO REMOVE AFTER TEST */}
             <S.logoutButton onClick={handleInvite}>
-              {invitation.invited && <GameInvite />}
+              {invitation && <Popup.GameInvite />}
               <S.italic className="italic">INVITE</S.italic>
             </S.logoutButton>
             <S.logoutButton onClick={handleInvited}>
-              {hasInvited.hasInvited && <UserInvitedToGame />}
+              {hasInvited && <Popup.UserInvitedToGame />}
               <S.italic className="italic">INVITED</S.italic>
             </S.logoutButton>
             <S.link to="/social">
@@ -80,10 +77,10 @@ const Testpage = () => {
               onClick={toggleLogout}
             >
               {logout && (
-                <LogoutPopup
+                <Popup.LogoutPopup
                   click={logout}
                   onClose={() => setLogout(false)}
-                ></LogoutPopup>
+                ></Popup.LogoutPopup>
               )}
               <S.normal className="normal">LOGOUT</S.normal>
             </S.logoutButton>

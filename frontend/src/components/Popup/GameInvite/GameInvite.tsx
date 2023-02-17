@@ -1,49 +1,34 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Text} from 'styles/font.styles';
 import {PopupButton} from 'styles/buttons.styles';
-import {usePopup} from 'contexts/Popup/Popup';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
-import SocketContext from 'contexts/Socket/Context';
-import {ServerEvents} from 'pages/Game/events/game.events';
-import {TCallback} from 'types/models';
 import Popup from '../components/Popup/Popup';
-
-function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-	event.stopPropagation();
-}
-
-//BACKEND Chercher le nom du user qui m'a invite ici
-//BACKEND if invited = 1
-//BACKEND gerer quand le user recoit une invit === passe le user en RED
+import LobbyContext from 'contexts/Lobby/Lobby.context';
 
 const GameInvite = () => {
+	const LobbyDispatch = useContext(LobbyContext).LobbyDispatch;
 	const [showComponent, setShowComponent] = useState(false);
-	const [invitationStatus, setInvitationStatus] = useState('')
-	const {invitation, setInvitation} = usePopup();
-	const {socket} = useContext(SocketContext).SocketState;
+	const {status} = useContext(LobbyContext).LobbyState;
 
-	socket?.on(ServerEvents.InvitedToLobby, (data: any, callback: TCallback) => {
-		console.info(`Invitation to a game received`);
-		setInvitationStatus('')
-		setInvitation(true);
-		if (invitationStatus === 'accepted')
-			callback({status: 'accepted'});
-		else if (invitationStatus === 'declined')
-			callback({status: 'declined'})
-	});
+	const renderCounter = useRef(0);
+	renderCounter.current = ++renderCounter.current;
+	console.log(`User Invite has loaded [${renderCounter.current}] times`);
 
 	function onJoin() {
 		setShowComponent(true);
-		setInvitationStatus('accepted');
+		LobbyDispatch({type: 'update_status', payload: 'accepted'});
+		const close = setTimeout(() => {
+			setShowComponent(false);
+			clearTimeout(close);
+		}, 4_000);
 	}
 
 	function onCancel() {
-		setInvitation(false);
-		setInvitationStatus('declined')
+		LobbyDispatch({type: 'update_status', payload: 'declined'});
 	}
 
-	return invitation ? (
+	return status ? (
 		<Popup
 			title="Join game?"
 			subtitle="Bartholomeow has just invited you"
@@ -51,12 +36,7 @@ const GameInvite = () => {
 			stopPropagation={true}
 			overlay={true}
 		>
-			<PopupButton
-				border="1px solid #e5e7eb"
-				onClick={() => {
-					setInvitation(false);
-				}}
-			>
+			<PopupButton border="1px solid #e5e7eb" onClick={onCancel}>
 				<Text weight="500">Cancel</Text>
 			</PopupButton>
 			<PopupButton backgroundColor={'#DC4F19'} onClick={onJoin}>

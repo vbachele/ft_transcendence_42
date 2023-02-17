@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {useTheme} from 'styled-components';
 import {IUser} from 'types/models';
 import ActivityStatus from 'components/ActivityStatus';
@@ -8,11 +8,10 @@ import {ReactComponent as Block} from '../assets/block.svg';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
-import UserInvitedToGame from 'components/Popup/UserInvitedToGame';
-import Invite from './Invite';
-import { usePopup } from 'contexts/Popup/popup';
+import Popup from 'components/Popup'
+import { usePopup } from 'contexts/Popup/Popup';
 import ViewProfile from 'components/Buttons/Social/ViewProfile';
-// import Invite from 'components/Buttons/Social/Invite';
+import Invite from 'components/Buttons/Social/Invite';
 import Message from 'components/Buttons/Social/Message';
 import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
 import AddFriend from 'components/Buttons/Social/AddFriend';
@@ -76,7 +75,7 @@ function Friend({friend}: IProps) {
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>
-				{hasInvited && <UserInvitedToGame />}
+				{hasInvited && <Popup.UserInvitedToGame />}
 			</Drawer>
 		</>
 	);
