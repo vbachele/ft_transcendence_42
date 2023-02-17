@@ -14,19 +14,7 @@ export class UserService {
       throw error;
     }
   }
-  async getOneUser(req: Request) {
-    try {
-      const { id } = req.params;
-      const user = await this.prisma.user.findUnique({
-        where: {
-          id: Number(id),
-        },
-      });
-      return user;
-    } catch (error) {
-      throw error;
-    }
-  }
+
   async getUserByName(req: Request) {
     try {
       const { name } = req.params;
@@ -42,10 +30,10 @@ export class UserService {
   }
   async updateUser(req: Request) {
     try {
-      const { id } = req.params;
+      const { name } = req.params;
       const user = await this.prisma.user.update({
         where: {
-          id: Number(id),
+          name,
         },
         data: req.body,
       });
