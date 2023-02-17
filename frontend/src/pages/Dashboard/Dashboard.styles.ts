@@ -1,13 +1,22 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-	background-image: url('https://cdn.intra.42.fr/coalition/cover/45/federation_background.jpg');
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-color: brightness(10%);
+// https://cdn.intra.42.fr/coalition/cover/45/federation_background.jpg
+// https://cdn.intra.42.fr/coalition/cover/46/alliance_background.jpg
+// https://cdn.intra.42.fr/coalition/cover/47/order_background.jpg
+// https://cdn.intra.42.fr/coalition/cover/48/assembly_background.jpg
 
+export const Container = styled.div`
 	height: 1000vh;
+`;
+
+export const Profile = styled.div`
+	background-image: url('https://cdn.intra.42.fr/coalition/cover/45/federation_background.jpg');
+	/* background-image: url('https://cdn.intra.42.fr/coalition/cover/46/alliance_background.jpg'); */
+	/* background-image: url('https://cdn.intra.42.fr/coalition/cover/47/order_background.jpg'); */
+	/* background-image: url('https://cdn.intra.42.fr/coalition/cover/48/assembly_background.jpg'); */
+	background-position: center left;
+
+	height: 250px;
 `;
 
 export const DashboardGrid = styled.div`

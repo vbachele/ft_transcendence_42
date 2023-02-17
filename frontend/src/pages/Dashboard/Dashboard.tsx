@@ -29,8 +29,11 @@ const Dashboard = () => {
 
 	return (
 		<S.Container>
-			{data?.name}
-			<img src={data?.image}></img>
+			<S.Profile>
+				<img src={data?.image} />
+				{data?.name}
+				{data?.coalition}
+			</S.Profile>
 		</S.Container>
 	);
 };
