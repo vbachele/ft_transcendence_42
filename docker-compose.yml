@@ -69,4 +69,3 @@ volumes:
       type: none
       o: bind
       device: ${POSTGRES_DIR}
-

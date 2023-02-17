@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {useTheme} from 'styled-components';
 import {IUser} from 'types/models';
 import ActivityStatus from 'components/ActivityStatus';
@@ -8,6 +8,8 @@ import {ReactComponent as Block} from '../assets/block.svg';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
+import Popup from 'components/Popup'
+import { usePopup } from 'contexts/Popup/Popup';
 import ViewProfile from 'components/Buttons/Social/ViewProfile';
 import Invite from 'components/Buttons/Social/Invite';
 import Message from 'components/Buttons/Social/Message';
@@ -25,6 +27,8 @@ interface IProps {
 function Friend({friend}: IProps) {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
+	// const [invited, setInvited] = useState(false);
+	const {hasInvited} = usePopup();
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -71,6 +75,7 @@ function Friend({friend}: IProps) {
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>
+				{hasInvited && <Popup.UserInvitedToGame />}
 			</Drawer>
 		</>
 	);

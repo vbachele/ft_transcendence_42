@@ -16,3 +16,5 @@ export enum StateEnum {
   ingame = "In Game",
   offline = "Offline",
 }
+
+export type TCallback = ({}) => void;

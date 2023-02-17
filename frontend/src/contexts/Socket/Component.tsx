@@ -10,7 +10,7 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
     const [SocketState, SocketDispatch] = useReducer(SocketReducer, defaultSocketContextState);
     const [loading, setLoading] = useState(true);
 
-    const socket = useSocket('ws://localhost:3000', {
+    const socket = useSocket('/', {
         reconnectionAttempts: 5,
         reconnectionDelay: 5000,
         autoConnect: false,
