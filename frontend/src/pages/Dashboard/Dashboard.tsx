@@ -25,26 +25,33 @@ const Dashboard = () => {
 	const name = useParams().name!;
 	const {data, isLoading, error} = useFetchUserByName(name);
 
+	console.log(data?.coalition);
+
 	return (
-		<>
-			{error && <NotFound />}
-			{isLoading && <Loading />}
-			{data && (
-				<S.DashboardGrid>
-					<Player player={data} />
-					<div className="subcontainer">
-						<F.H3>Top players (coa and global)</F.H3>
-					</div>
-					<div className="subcontainer">
-						<F.H3>History</F.H3>
-					</div>
-					<div className="subcontainer">
-						<F.H3>Achievements</F.H3>
-					</div>
-				</S.DashboardGrid>
-			)}
-		</>
+		<S.Container>
+			{data?.name}
+			<img src={data?.image}></img>
+		</S.Container>
 	);
 };
 
 export default Dashboard;
+
+// <>
+// 	{error && <NotFound />}
+// 	{isLoading && <Loading />}
+// 	{data && (
+// 		<S.DashboardGrid>
+// 			<Player player={data} />
+// 			<div className="subcontainer">
+// 				<F.H3>Top players (coa and global)</F.H3>
+// 			</div>
+// 			<div className="subcontainer">
+// 				<F.H3>History</F.H3>
+// 			</div>
+// 			<div className="subcontainer">
+// 				<F.H3>Achievements</F.H3>
+// 			</div>
+// 		</S.DashboardGrid>
+// 	)}
+// </>
