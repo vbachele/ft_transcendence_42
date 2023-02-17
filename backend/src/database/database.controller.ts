@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { DatabaseService } from "./database.service";
-import { Prisma, PrismaPromise, User as UserModel } from "@prisma/client";
+import { Prisma, User as UserModel } from "@prisma/client";
 
 @Controller("users")
 export class DatabaseController {

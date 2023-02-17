@@ -12,7 +12,8 @@ async function getUserImage(id: string) {
 
 async function getUser42login(id: string) {
   const user = await backend.getOneUser(id);
-  return user.user42Name;
+  // return user.user42Name;
+  return user.name;
 }
 
 async function getUser42coalition(id: string) {

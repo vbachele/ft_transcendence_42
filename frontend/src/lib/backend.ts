@@ -10,9 +10,9 @@ export const backend = {
     const response = await api.get("/users");
     return await response.json();
   },
-  async getOneUser(id: string) {
+  async getOneUser(id: string): Promise<IUser> {
     const response = await api.get("/users/" + id);
-    return (await response.json()) as { id: string };
+    return (await response.json());
   },
   async getUserByName(name: string) {
     const response = await api.get("/users/" + name);

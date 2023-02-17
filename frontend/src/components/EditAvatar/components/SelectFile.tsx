@@ -28,10 +28,10 @@ export const SelectFile = () => {
     let upload = {
       image: base64EncodedImage,
     };
-    const user1: Promise<IUser> = await backend.getOneUser("40");
+    const user1: IUser = await backend.getOneUser("40");
     console.log("BEFORE", user1);
     backend.patchUser("40", upload);
-    const user: Promise<IUser> = await backend.getOneUser("40");
+    const user: IUser = await backend.getOneUser("40");
     console.log("AFTER", user);
   };
 
