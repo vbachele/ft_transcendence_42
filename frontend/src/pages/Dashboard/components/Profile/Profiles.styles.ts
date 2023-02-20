@@ -20,13 +20,14 @@ export const Profile = styled.div<IProfile>`
 	align-items: center;
 	gap: 64px;
 	padding: 16px 96px;
-	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;`;
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+	`;
 
 export const Avatar = styled.img`
 	width: 192px;
 	height: 192px;
 	border-radius: 50%;
-	border: 1px solid white;
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 `;
 
 export const VDiv = styled.div`

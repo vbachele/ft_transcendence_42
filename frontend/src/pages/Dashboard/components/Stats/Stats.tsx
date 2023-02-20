@@ -5,7 +5,6 @@ import {IUser} from 'types/models';
 import * as S from './Stats.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
-import {Progress} from 'antd';
 
 interface IProps {
 	user: IUser;
@@ -36,8 +35,8 @@ const Stats = ({user}: IProps) => {
 					<F.Subtitle>Wins</F.Subtitle>
 					<F.H3>{user.wins}</F.H3>
 					<S.StyledProgress
-						percent={user.ratio * 100}
-						format={(percent) => `${percent} %`}
+						percent={Math.round(user.ratio * 100)}
+						format={(percent) => `${percent} % Ratio`}
 					/>
 				</S.VDiv>
 			</S.Card>

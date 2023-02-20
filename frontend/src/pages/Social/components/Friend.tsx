@@ -40,7 +40,7 @@ function Friend({friend}: IProps) {
 				<img className="avatar" src={friend.image} />
 				<div style={{textAlign: 'left'}}>
 					<F.H5>{friend.name}</F.H5>
-					<ActivityStatus state={friend.status} />
+					<ActivityStatus size="16px" state={friend.status} />
 				</div>
 			</S.Friend>
 			<Drawer

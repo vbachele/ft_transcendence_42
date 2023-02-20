@@ -48,6 +48,7 @@ export const Friend = styled.button`
 	cursor: pointer;
 	padding: 8px;
 	display: flex;
+	gap: 16px;
 	border: none;
 	border-radius: 8px;
 	align-items: center;

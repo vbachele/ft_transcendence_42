@@ -5,6 +5,7 @@ import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
 import {Button, Dropdown} from 'antd';
+import {Link} from 'react-router-dom';
 
 interface IProps {
 	user: IUser;
@@ -13,39 +14,15 @@ interface IProps {
 const items = [
 	{
 		key: '1',
-		label: (
-			<a
-				target="_blank"
-				rel="noopener noreferrer"
-				href="https://www.antgroup.com"
-			>
-				Add friend
-			</a>
-		),
+		label: <Link to="/add">Add friend</Link>,
 	},
 	{
 		key: '2',
-		label: (
-			<a
-				target="_blank"
-				rel="noopener noreferrer"
-				href="https://www.aliyun.com"
-			>
-				Message
-			</a>
-		),
+		label: <Link to="/chat">Message</Link>,
 	},
 	{
 		key: '3',
-		label: (
-			<a
-				target="_blank"
-				rel="noopener noreferrer"
-				href="https://www.luohanacademy.com"
-			>
-				Block
-			</a>
-		),
+		label: <Link to="/block">Block</Link>,
 	},
 ];
 
@@ -65,7 +42,7 @@ const Profile = ({user}: IProps) => {
 					}}
 					placement="bottomLeft"
 				>
-					<Button size="small" style={{marginTop: '16px'}}>
+					<Button size="small" style={{marginTop: '16px', width: '96px'}}>
 						Options
 					</Button>
 				</Dropdown>

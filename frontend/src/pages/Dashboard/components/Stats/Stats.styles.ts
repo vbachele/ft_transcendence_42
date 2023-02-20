@@ -30,7 +30,7 @@ export const Card = styled.div`
 
 export const VDiv = styled.div`
 	flex-direction: column;
-	width: 60%;
+	width: 50%;
 `;
 
 export const StyledProgress = styled(Progress)`

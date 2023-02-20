@@ -5,7 +5,6 @@ export const Leaderboard = styled.div`
 	grid-area: 1/2/3/3;
 	position: relative;
 	top: -175px;
-	/* height: 120%; */
 
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
