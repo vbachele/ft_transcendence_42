@@ -1,60 +1,35 @@
-import {Link, useParams} from 'react-router-dom';
-import {IUser} from 'types/models';
-import Player from './components/Player';
-import avatar from 'assets/default-avatar.png';
-import * as S from './Dashboard.styles';
-import * as F from 'styles/font.styles';
+import {useParams} from 'react-router-dom';
 import useFetchUserByName from 'hooks/useFetchUserByName';
 import NotFound from 'pages/NotFound/NotFound';
 import Loading from 'components/Loading';
-
-// const player: IUser = {
-// 	name: 'Louis',
-// 	image: avatar,
-// 	coalition: 'Alliance',
-// 	status: 'ingame',
-// 	score: 987987,
-// 	games: 564,
-// 	wins: 321,
-// 	ratio: 0.54,
-// 	achievements: ['achievement 1', 'achievement 2', 'achievement 3'],
-// 	id: 5,
-// };
+import Profile from './components/Profile';
+import Stats from './components/Stats';
+import Leaderboard from './components/Leaderboard';
+import History from './components/History';
+import * as S from './Dashboard.styles';
+import * as F from 'styles/font.styles';
 
 const Dashboard = () => {
 	const name = useParams().name!;
 	const {data, isLoading, error} = useFetchUserByName(name);
 
-	console.log(data?.coalition);
-
 	return (
-		<S.Container>
-			<S.Profile>
-				<img src={data?.image} />
-				{data?.name}
-				{data?.coalition}
-			</S.Profile>
-		</S.Container>
+		<>
+			{error && <div>Error</div>}
+			{isLoading && <Loading />}
+			{data && (
+				<S.Container>
+					<Profile user={data} />
+					<S.SubContainer>
+						<Stats user={data} />
+						<Leaderboard user={data} />
+						<History />
+					</S.SubContainer>
+					{/* <Achievements user={data} /> */}
+				</S.Container>
+			)}
+		</>
 	);
 };
 
 export default Dashboard;
-
-// <>
-// 	{error && <NotFound />}
-// 	{isLoading && <Loading />}
-// 	{data && (
-// 		<S.DashboardGrid>
-// 			<Player player={data} />
-// 			<div className="subcontainer">
-// 				<F.H3>Top players (coa and global)</F.H3>
-// 			</div>
-// 			<div className="subcontainer">
-// 				<F.H3>History</F.H3>
-// 			</div>
-// 			<div className="subcontainer">
-// 				<F.H3>Achievements</F.H3>
-// 			</div>
-// 		</S.DashboardGrid>
-// 	)}
-// </>

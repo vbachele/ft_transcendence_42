@@ -17,7 +17,7 @@ function ActivityStatus({state}: IProps) {
 	return (
 		<S.Status state={state}>
 			<span></span>
-			<F.Text weight="500">{output}</F.Text>
+			<F.Text weight="600">{output}</F.Text>
 		</S.Status>
 	);
 }

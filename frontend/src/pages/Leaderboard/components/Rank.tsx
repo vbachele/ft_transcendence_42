@@ -38,7 +38,7 @@ const Rank = ({player, rank}: IProps) => {
 				<F.Subtitle>Wins</F.Subtitle>
 			</S.Stat>
 			<S.Stat className="ratio">
-				<F.Text>{player.ratio}</F.Text>
+				<F.Text>{(player.ratio * 100).toFixed(0)} %</F.Text>
 				<F.Subtitle>Ratio</F.Subtitle>
 			</S.Stat>
 			<S.Stat className="achievements">
