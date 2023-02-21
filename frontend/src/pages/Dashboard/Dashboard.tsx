@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import Stats from './components/Stats';
 import Leaderboard from './components/Leaderboard';
 import History from './components/History';
+import Achievements from './components/Achievements';
 import * as S from './Dashboard.styles';
 import * as F from 'styles/font.styles';
 
@@ -25,7 +26,7 @@ const Dashboard = () => {
 						<Leaderboard user={data} />
 						<History />
 					</S.SubContainer>
-					{/* <Achievements user={data} /> */}
+					<Achievements user={data} />
 				</S.Container>
 			)}
 		</>
