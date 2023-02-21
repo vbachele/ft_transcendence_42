@@ -2,7 +2,11 @@ import styled from "styled-components";
 
 const Button = styled.button`
   display: flex;
+  flex-basis: fit-content;
+  min-width: 168px;
   justify-content: center;
+  text-align: center;
+  align-items: center;
   padding: 1em 2em;
   border-radius: 37px;
   font-size: 16px;
@@ -27,7 +31,6 @@ const Button = styled.button`
 export const PrimaryButton = styled(Button)`
 	background-color: #DC4F19;
 	border: none;
-	align-items: center;
 
 	&, a {
 		color: #fff;
@@ -82,15 +85,9 @@ interface Iprops {
 
 export const PopupButton = styled(Button)<Iprops>`
   background-color: ${(p) => p.backgroundColor || "transparent"};
-  display: flex;
-  flex-direction: row;
   height: 50px;
-  justify-content: center;
   border: ${(p) => p.border || "none"};
-  align-items: center;
-  align-content: center;
   margin: auto;
-  border-radius: 48px;
   width: ${(p) => p.width || " clamp(50px, 35vw, 10rem)"};
   &,
   a {

@@ -3,7 +3,6 @@ version: "3.8"
 services:
   backend:
     container_name: backend
-    stdin_open: true
     build:
       context: ./backend
       target: development
@@ -48,7 +47,7 @@ services:
     networks:
       - ft_transcendence
     volumes:
-      - /Users/antoine/postgres_vol:/var/lib/postgresql/data
+      - postgres_vol:/var/lib/postgresql/data
 
   adminer:
     container_name: adminer
@@ -70,4 +69,3 @@ volumes:
       type: none
       o: bind
       device: ${POSTGRES_DIR}
-

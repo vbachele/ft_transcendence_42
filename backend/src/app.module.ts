@@ -8,6 +8,7 @@ import { GameModule } from "./game/game.module";
 import { AuthModule } from "./auth/auth.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { UserModule } from "./api/users/users.module";
+import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UserModule } from "./api/users/users.module";
     AuthModule,
     UserModule,
     PrismaModule,
+    CloudinaryModule,
   ],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],

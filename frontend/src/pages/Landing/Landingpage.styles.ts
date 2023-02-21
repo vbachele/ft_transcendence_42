@@ -180,6 +180,6 @@ export const bgvid = styled.video`
   background-size: cover;
 `;
 
-export const link = styled(Link)`
+export const link = styled.a`
   text-decoration: none;
 `;

@@ -2,25 +2,28 @@ import {
   ConnectedSocket,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-} from '@nestjs/websockets';
+} from "@nestjs/websockets";
 
-import { MessageBody } from '@nestjs/websockets';
+import { MessageBody } from "@nestjs/websockets";
+import { randomUUID } from "crypto";
 
-import { Server, Socket } from 'socket.io';
+import { Server, Socket } from "socket.io";
 
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
+import { SessionStoreService } from "./websocket.service";
 
-@WebSocketGateway({ cors: true, origin: '*' })
+@WebSocketGateway({ cors: true, origin: "*" })
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
   public users: { [uid: string]: string };
 
-  constructor() {
+  constructor(protected readonly sessionStoreService: SessionStoreService) {
     this.users = {};
   }
 
@@ -36,17 +39,17 @@ export class WebsocketGateway
       delete this.users[uid];
       const users = Object.values(this.users);
       this.SendMessage(
-        'user_disconnected',
+        "user_disconnected",
         users.filter((id) => id !== client.id),
-        users,
+        users
       );
     }
   }
 
-  @SubscribeMessage('handshake')
+  @SubscribeMessage("handshake")
   handleHandshake(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data: string,
+    @MessageBody() data: string
   ) {
     console.info(`Handshake received from `, client.id);
     console.log(typeof data);
@@ -69,12 +72,12 @@ export class WebsocketGateway
     this.users[uid] = client.id;
     const users = Object.values(this.users);
 
-    console.info('Sending callback for handshake...');
-    this.server.to(client.id).emit('handshake', uid, users);
+    console.info("Sending callback for handshake...");
+    this.server.to(client.id).emit("handshake", uid, users);
     this.SendMessage(
-      'user_connected',
+      "user_connected",
       users.filter((id) => id !== client.id),
-      users,
+      users
     );
   }
   GetUidFromSocketId = (id: string) =>
@@ -85,7 +88,7 @@ export class WebsocketGateway
     users.forEach((id) =>
       payload
         ? this.server.to(id).emit(name, payload)
-        : this.server.to(id).emit(name),
+        : this.server.to(id).emit(name)
     );
   };
 }
