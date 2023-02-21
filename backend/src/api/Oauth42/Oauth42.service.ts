@@ -3,15 +3,28 @@ import { response } from "express";
 
 @Injectable()
 export class Oauth42Service {
+  async access42Code() {
+    // try {
+    //   const response = await fetch(`${process.env.API42_ACCESSURL}`, {
+    //     method: "GET",
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    //   console.log(response);
+    //   const data = await response.json();
+    //   return data;
+    // } catch (error) {
+    //   throw error;
+    // }
+  }
+
   async accessToken(req: string) {
     try {
       const response = await fetch("https://api.intra.42.fr/oauth/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `grant_type=authorization_code&client_id=${process.env.API42_ID}&client_secret=${process.env.API42_SECRET}&code=${req}&redirect_uri=http://localhost:5173/registration`,
+        body: `grant_type=authorization_code&client_id=${process.env.API42_ID}&client_secret=${process.env.API42_SECRET}&code=${req}&redirect_uri=${process.env.API42_URI}`,
       });
       const data = await response.json();
-
       return data;
     } catch (error) {
       throw error;
@@ -19,6 +32,7 @@ export class Oauth42Service {
   }
 
   async access42UserInformation(accessToken: string) {
+    console.log("42userinfos");
     try {
       const response = await fetch("https://api.intra.42.fr/v2/me", {
         method: "GET",
@@ -39,19 +53,4 @@ export class Oauth42Service {
         );
     }
   }
-
-  //   async access42RefreshToken() {
-  //     try {
-  //       const response = await fetch("https://api.intra.42.fr/oauth/token", {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //         body: `grant_type=refresh_token&client_id=${process.env.API42_ID}&client_secret=${process.env.API42_SECRET}&refresh_token=c288bf542c38a34f759fcd3b572be3804e006efd464d5fa814417b36024cb53d`,
-  //       });
-  //       const data = await response.json();
-  //       console.log(data);
-  //       //   return data;
-  //     } catch (error) {
-  //       throw error;
-  //     }
-  //   }
 }

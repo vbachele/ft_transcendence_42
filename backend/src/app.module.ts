@@ -9,6 +9,7 @@ import { AuthModule } from "./auth/auth.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { UserModule } from "./api/users/users.module";
 import { CloudinaryModule } from "./cloudinary/cloudinary.module";
+import { AuthController } from "./auth/auth.controller";
 
 @Module({
   imports: [

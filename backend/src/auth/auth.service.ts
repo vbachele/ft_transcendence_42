@@ -1,12 +1,15 @@
 import { ForbiddenException, Injectable, Post } from "@nestjs/common";
+import { UserService } from "src/api/users/users.service";
 import { PrismaService } from "src/prisma/prisma.service";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 @Injectable({})
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private userService: UserService
+  ) {}
   async createDataBaseUser(
-    data: any,
+    user42: any,
     token: any,
     name: string,
     isRegistered: boolean
@@ -14,12 +17,12 @@ export class AuthService {
     try {
       const user = await this.prisma.user.create({
         data: {
-          coalition: data.coalition,
+          coalition: user42.coalition,
           achievements: [],
           accessToken: token.access_token,
           isRegistered: isRegistered,
           refreshToken: token.refresh_token,
-          user42Name: data.login,
+          user42Name: user42.login,
           name: name,
         },
       });
@@ -27,5 +30,9 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+  async checkIfUserExists(email: any) {
+    const userExists = await this.userService.getUserByEmail(email);
+    return userExists;
   }
 }

@@ -50,4 +50,18 @@ export class UserService {
       throw error;
     }
   }
+  async getUserByEmail(user42Name: string) {
+    console.log(user42Name);
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          user42Name,
+        },
+      });
+      console.log(user);
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
