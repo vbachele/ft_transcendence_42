@@ -6,9 +6,9 @@ import {ReactComponent as WinIcon} from '../../assets/win.svg';
 import {ReactComponent as LossIcon} from '../../assets/loss.svg';
 
 interface IMatch {
-	opponent: string;
+	user: string;
 	myScore: number;
-	opponentScore: number;
+	userScore: number;
 	id: number;
 }
 
@@ -17,20 +17,20 @@ interface IProps {
 }
 
 const Card = ({match}: IProps) => {
-	const {data: opponent, isLoading, error} = useFetchUserByName(match.opponent);
-	const result: string = match.myScore > match.opponentScore ? 'win' : 'loss';
+	const {data: user, isLoading, error} = useFetchUserByName(match.user);
+	const result: string = match.myScore > match.userScore ? 'win' : 'loss';
 
 	return (
 		<S.CardContainer>
-			{opponent && (
+			{user && (
 				<S.Card result={result}>
-					<img src={opponent.image} />
-					<F.H4>{opponent.name}</F.H4>
+					<img src={user.image} />
+					<F.H4>{user.name}</F.H4>
 					<F.H5>
 						<S.Result>
 							{match.myScore}
 							{' - '}
-							{match.opponentScore}
+							{match.userScore}
 						</S.Result>
 					</F.H5>
 				</S.Card>

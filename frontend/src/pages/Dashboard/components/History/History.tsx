@@ -5,20 +5,19 @@ import Card from './Card';
 import {IUser} from 'types/models';
 
 interface IMatch {
-	opponent: string;
-	// score: number[2]; // [5,8]
+	user: string;
 	myScore: number;
-	opponentScore: number;
+	userScore: number;
 	id: number;
 }
 
 // prettier-ignore
 const matches: IMatch[] = [
-	{"id":23,"opponent":"Minnis",myScore:5,opponentScore:8},
-	{"id":24,"opponent":"Dalston",myScore:10,opponentScore:3},
-	{"id":25,"opponent":"Toppin",myScore:7,opponentScore:5},
-	{"id":26,"opponent":"Coleman",myScore:5,opponentScore:6},
-	{"id":27,"opponent":"Helder",myScore:8,opponentScore:9},
+	{"id":23,"user":"Minnis",myScore:5,userScore:8},
+	{"id":24,"user":"Dalston",myScore:10,userScore:3},
+	{"id":25,"user":"Toppin",myScore:7,userScore:5},
+	{"id":26,"user":"Coleman",myScore:5,userScore:6},
+	{"id":27,"user":"Helder",myScore:8,userScore:9},
 ];
 
 const History = () => {

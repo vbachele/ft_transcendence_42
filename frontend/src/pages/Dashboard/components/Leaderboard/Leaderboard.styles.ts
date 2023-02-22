@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Leaderboard = styled.div`
 	grid-area: 1/2/3/3;
 	position: relative;
-	top: -175px;
+	top: -150px;
 
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
@@ -54,13 +54,13 @@ export const MiniRank = styled(Link)`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 16px;
+	padding: 8px 16px;
 	border-radius: 8px;
 `;
 
 export const Avatar = styled.img`
-	width: 64px;
-	height: 64px;
+	width: 48px;
+	height: 48px;
 	border-radius: 50%;
 `;
 

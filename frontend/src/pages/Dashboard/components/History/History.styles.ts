@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	grid-area: 2/1/3/2;
+	margin-top: 16px;
 `;
 
 export const History = styled.div`
-	margin-top: 16px;
+	margin-top: 48px;
 	display: flex;
 	justify-content: space-between;
 `;
