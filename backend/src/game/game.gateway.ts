@@ -29,31 +29,31 @@ export class GameGateway extends WebsocketGateway implements OnGatewayInit {
 
   afterInit(server: Server) {
     this.lobbyService.server = this.server;
-    this.server.use((socket, next) => {
-      const sessionID = socket.handshake.auth.sessionID;
-      if (sessionID) {
-        const session = this.sessionStoreService.findSession(sessionID);
-        if (session) {
-          socket.data.sessionID = sessionID;
-          socket.data.userID = session.userID;
-          socket.data.username = session.username;
-          return next();
-        }
-      }
-      const username = socket.handshake.auth.username;
-      if (!username) {
-        return next(new Error("invalid username"));
-      }
-      socket.data.sessionID = randomUUID();
-      socket.data.userID = randomUUID();
-      socket.data.username = username;
-      this.sessionStoreService.saveSession({
-        id: socket.data.sessionID,
-        userID: socket.data.userID,
-        username: socket.data.username,
-      });
-      next();
-    });
+    // this.server.use((socket, next) => {
+    //   const sessionID = socket.handshake.auth.sessionID;
+    //   if (sessionID) {
+    //     const session = this.sessionStoreService.findSession(sessionID);
+    //     if (session) {
+    //       socket.data.sessionID = sessionID;
+    //       socket.data.userID = session.userID;
+    //       socket.data.username = session.username;
+    //       return next();
+    //     }
+    //   }
+    //   const username = socket.handshake.auth.username;
+    //   if (!username) {
+    //     return next(new Error("invalid username"));
+    //   }
+    //   socket.data.sessionID = randomUUID();
+    //   socket.data.userID = randomUUID();
+    //   socket.data.username = username;
+    //   this.sessionStoreService.saveSession({
+    //     id: socket.data.sessionID,
+    //     userID: socket.data.userID,
+    //     username: socket.data.username,
+    //   });
+    //   next();
+    // });
   }
 
   @SubscribeMessage(ClientEvents.CreateLobby)
