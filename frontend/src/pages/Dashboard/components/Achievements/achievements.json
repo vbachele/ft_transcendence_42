@@ -1,5 +1,109 @@
 {
 	"achievements": [
-		{"id": 1,"name": "Gamer"}
+		{
+			"id": 1,
+			"api": "NOOB",
+			"name": "Beginner",
+			"description": "Play your first game",
+			"image": "https://cdn-icons-png.flaticon.com/512/7783/7783439.png"
+		},
+		{
+			"id": 2,
+			"api": "GAMER",
+			"name": "Hardcore Gamer",
+			"description": "Play 10 games",
+			"image": "https://cdn-icons-png.flaticon.com/512/8072/8072588.png"
+		},
+		{
+			"id": 3,
+			"api": "WIN",
+			"name": "Winner",
+			"description": "Win 5 games",
+			"image": "https://cdn-icons-png.flaticon.com/512/6702/6702576.png"
+		},
+		{
+			"id": 4,
+			"api": "LOSE",
+			"name": "Loser",
+			"description": "Lose 5 games",
+			"image": "https://cdn-icons-png.flaticon.com/512/8519/8519650.png"
+		},
+		{
+			"id": 5,
+			"api": "TOP5",
+			"name": "Conqueror",
+			"description": "Reach the top 5 of the global leaderboard",
+			"image": "https://cdn-icons-png.flaticon.com/512/7346/7346399.png"
+		},
+		{
+			"id": 6,
+			"api": "WATCH",
+			"name": "Cheerleader",
+			"description": "Watch a game",
+			"image": "https://cdn-icons-png.flaticon.com/512/9182/9182274.png"
+		},
+		{
+			"id": 7,
+			"api": "ADD",
+			"name": "Follow me",
+			"description": "Add a friend",
+			"image": "https://cdn-icons-png.flaticon.com/512/7080/7080669.png"
+		},
+		{
+			"id": 8,
+			"api": "TEAM",
+			"name": "Squad",
+			"description": "Add 3 friends",
+			"image": "https://cdn-icons-png.flaticon.com/512/9050/9050482.png"
+		},
+		{
+			"id": 9,
+			"api": "DUEL",
+			"name": "Duel",
+			"description": "Challenge a friend",
+			"image": "https://cdn-icons-png.flaticon.com/512/9329/9329110.png"
+		},
+		{
+			"id": 10,
+			"api": "BLOCK",
+			"name": "I hate you",
+			"description": "Block a user",
+			"image": "https://cdn-icons-png.flaticon.com/512/6144/6144518.png"
+		},
+		{
+			"id": 11,
+			"api": "CREATE",
+			"name": "Creator",
+			"description": "Create a channel",
+			"image": "https://cdn-icons-png.flaticon.com/512/8336/8336849.png"
+		},
+		{
+			"id": 12,
+			"api": "JOIN",
+			"name": "Hello World !",
+			"description": "Join a channel",
+			"image": "https://cdn-icons-png.flaticon.com/512/7083/7083630.png"
+		},
+		{
+			"id": 13,
+			"api": "AVATAR",
+			"name": "New Look",
+			"description": "Change your avatar",
+			"image": "https://cdn-icons-png.flaticon.com/512/7098/7098115.png"
+		},
+		{
+			"id": 14,
+			"api": "2FA",
+			"name": "Never safe enough",
+			"description": "Enable 2FA",
+			"image": "https://cdn-icons-png.flaticon.com/512/6931/6931621.png"
+		},
+		{
+			"id": 15,
+			"api": "JACK",
+			"name": "C'est la piquette Jack",
+			"description": "Win a game without the opponent scoring a point",
+			"image": "https://cdn-icons-png.flaticon.com/512/8189/8189843.png"
+		}
 	]
 }

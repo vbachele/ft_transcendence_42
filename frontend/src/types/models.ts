@@ -13,6 +13,7 @@ export interface IUser {
 
 export interface IAchievement {
 	id: number;
+	api: string;
 	name: string;
 	description: string;
 	image: string;

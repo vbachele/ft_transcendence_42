@@ -9,8 +9,8 @@ export const Achievements = styled.div`
 	margin-top: 48px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 40px;
-	justify-content: center;
+	gap: 32px;
+	justify-content: space-between;
 
 	svg {
 		width: 48px;
@@ -20,7 +20,7 @@ export const Achievements = styled.div`
 `;
 
 interface IProps {
-	locked: boolean;
+	unlocked: boolean;
 }
 
 // prettier-ignore
@@ -29,13 +29,23 @@ export const Card = styled.div<IProps>`
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	display: flex;
-	padding: 24px 48px;
+	flex-direction: column;
+	padding: 24px;
 	align-items: center;
+	justify-content: center;
+	text-align: center;
 	gap: 24px;
 	border-radius: 8px;
-	width: 488px;
+	width: 250px;
 
-	${(p) => p.locked && css`
+	.vertical {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		word-wrap: normal;
+	}
+
+	${(p) => !p.unlocked && css`
 		svg, img {
 			filter: grayscale(1);
 		}
@@ -48,9 +58,16 @@ export const Card = styled.div<IProps>`
 export const State = styled.div<IProps>`
 	padding: 8px 12px;
 	border-radius: 8px;
+	/* border: 2px solid white; */
+	text-align: center;
 
 	background-color: ${(p) =>
-		p.locked ? 'rgba(224, 79, 95, 0.2)' : 'rgba(75, 174, 79, 0.2)'};
+		p.unlocked ? 'rgba(75, 174, 79, 0.2)' : 'rgba(224, 79, 95, 0.2)'};
 
-	color: ${(p) => (p.locked ? '#fa394f' : '#44db4a')};
+	color: ${(p) => (p.unlocked ? '#44db4a' : '#fa394f')};
+`;
+
+export const Icon = styled.img`
+	width: 48px;
+	height: 48px;
 `;

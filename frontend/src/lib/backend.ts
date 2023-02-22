@@ -26,4 +26,8 @@ export const backend = {
 		const response = await api.delete('/users/deleteall');
 		return (await response.json()) as {id: string};
 	},
+	async getAllAchievements() {
+		const response = await api.get('/achievements');
+		return await response.json();
+	},
 };
