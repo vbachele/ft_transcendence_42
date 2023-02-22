@@ -14,10 +14,8 @@ export class AuthController {
   /***  Create the user in database from the page registration ***/
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request) {
-    const token = req.cookies.token;
-    const user42infos = await this.Oauth42.access42UserInformation(
-      token.access_token
-    );
+    const token: string = req.cookies.token;
+    const user42infos = await this.Oauth42.access42UserInformation(token);
     const finalUser = await this.authService.createDataBaseUser(
       user42infos,
       token,
@@ -30,15 +28,18 @@ export class AuthController {
   /***  After the user said yes to connect to 42 API, we attribute the token and we check if he exists in the database ***/
   @Get("callback")
   async getToken(@Req() req: Request, @Res() res: Response) {
-    const code = req.query.code as string;
-    const token = await this.Oauth42.accessToken(code);
+    const codeFromUrl = req.query.code as string;
+    const token = await this.Oauth42.accessToken(codeFromUrl);
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token
     );
-    res.cookie("token", token);
+    this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.login);
-    if (!userExists?.name)
-      res.redirect(301, `http://localhost:5173/registration`);
-    else res.redirect(301, `http://localhost:5173/login`);
+    this.authService.RedirectConnectingUser(res, userExists?.name);
+  }
+
+  @Get("logout")
+  async deleteCookies(@Req() req: Request, @Res() res: Response) {
+    this.authService.deleteCookies(res);
   }
 }

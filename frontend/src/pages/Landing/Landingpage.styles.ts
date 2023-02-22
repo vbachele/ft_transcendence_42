@@ -180,6 +180,9 @@ export const bgvid = styled.video`
   background-size: cover;
 `;
 
-export const link = styled.a`
+export const link = styled.button`
   text-decoration: none;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 `;

@@ -3,19 +3,6 @@ import { response } from "express";
 
 @Injectable()
 export class Oauth42Service {
-  async access42Code() {
-    // try {
-    //   const response = await fetch(`${process.env.API42_ACCESSURL}`, {
-    //     method: "GET",
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   console.log(response);
-    //   const data = await response.json();
-    //   return data;
-    // } catch (error) {
-    //   throw error;
-    // }
-  }
 
   async accessToken(req: string) {
     try {
@@ -32,7 +19,6 @@ export class Oauth42Service {
   }
 
   async access42UserInformation(accessToken: string) {
-    console.log("42userinfos");
     try {
       const response = await fetch("https://api.intra.42.fr/v2/me", {
         method: "GET",

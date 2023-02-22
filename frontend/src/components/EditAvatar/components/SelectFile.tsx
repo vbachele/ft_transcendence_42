@@ -3,54 +3,59 @@ import { BsFillCameraFill as Icon } from "react-icons/bs";
 import * as S from "../EditAvatar.styles";
 import { backend } from "lib/backend";
 import { IUser } from "types/models";
+import { useUserInfos } from "contexts/User/userContent";
 
+/* MAIN FUNCTION*/
 export const SelectFile = () => {
+  /* Variables declarations */
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState<any>();
+  const { image, setImage } = useUserInfos();
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    previewFile(file);
-    uploadImage(previewSource);
-  };
+  function storeImageUserContext() {
+    setImage({ image: previewSource });
+    const timer = setTimeout(() => {
+      console.log(" AU MOMENT OU JE LA STOCK ", image);
+    }, 2000);
+  }
 
-  const previewFile = (file: File) => {
+  const transformFiletoURL = (file: File) => {
+    // console.log(file);
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result as string);
+      // console.log(reader.result as string);
+      // setPreviewSource(reader.result as string);
+      setImage({ image: reader.result as string });
+      console.log(image);
     };
   };
 
-  const uploadImage = async (base64EncodedImage: string) => {
-    let upload = {
-      image: base64EncodedImage,
-    };
-    const user1: Promise<IUser> = await backend.getOneUser("40");
-    console.log("BEFORE", user1);
-    backend.patchUser("40", upload);
-    const user: Promise<IUser> = await backend.getOneUser("40");
-    console.log("AFTER", user);
+  /* Function to store the image */
+  const handleFileInputChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const image1 = transformFiletoURL(file);
+    // storeImageUserContext();
   };
 
+  /* BODY */
   return (
-    <form>
-      <label htmlFor="file-input">
-        <S.SelectFileIcon>
-          <Icon />
-        </S.SelectFileIcon>
-        <input
-          type="file"
-          id="file-input"
-          value={fileInputState}
-          onChange={handleFileInputChange}
-          accept="image/*"
-          style={{ display: "none" }}
-        />
-      </label>
-    </form>
+    <label htmlFor="file-input">
+      <S.SelectFileIcon>
+        <Icon />
+      </S.SelectFileIcon>
+      <input
+        type="file"
+        id="file-input"
+        value={fileInputState}
+        onChange={handleFileInputChange}
+        accept="image/*"
+        style={{ display: "none" }}
+      />
+    </label>
   );
 };
 

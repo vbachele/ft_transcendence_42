@@ -4,6 +4,7 @@ import { PopupButton } from "styles/buttons.styles";
 import { H1, Text, Subtitle, H2, H6 } from "styles/font.styles";
 import { Link } from "react-router-dom";
 import * as S from "./LogoutPopup.styles";
+import { backend } from "lib/backend";
 
 interface Props {
   click: boolean;
@@ -28,6 +29,10 @@ const LogoutPopup: React.FC<Props> = (props) => {
     // Do nothing, allowing event to propagate
   }
 
+  function deleteCookies() {
+    backend.deleteTokenCookie();
+  }
+
   return (
     <S.Overlay onClick={(e) => allowPropagation(e)}>
       <S.Overlay__Container onClick={(e) => stopPropagation(e)}>
@@ -46,7 +51,11 @@ const LogoutPopup: React.FC<Props> = (props) => {
             </Text>
           </PopupButton>
           <PopupButton className="logout" backgroundColor={"#DC4F19"}>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link
+              to="/login"
+              style={{ textDecoration: "none" }}
+              onClick={deleteCookies}
+            >
               <Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)">
                 Log out
               </Text>

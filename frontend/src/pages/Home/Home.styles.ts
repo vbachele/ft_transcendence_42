@@ -129,7 +129,6 @@ export const logoutButton = styled.button`
   color: white;
   display: flex;
   align-items: center;
-  text-decoration: none;
   margin: 4px 0px;
   border: none;
   text-decoration: none;

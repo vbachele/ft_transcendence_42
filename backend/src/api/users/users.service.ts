@@ -51,7 +51,6 @@ export class UserService {
     }
   }
   async getUserByEmail(user42Name: string) {
-    console.log(user42Name);
     try {
       const user = await this.prisma.user.findFirst({
         where: {
@@ -59,6 +58,21 @@ export class UserService {
         },
       });
       console.log(user);
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getUserByToken(req: Request) {
+    const { accessToken } = req.params;
+    try {
+      console.log(accessToken);
+      const user = await this.prisma.user.findFirst({
+        where: {
+          accessToken,
+        },
+      });
+      // console.log(user);
       return user;
     } catch (error) {
       throw error;

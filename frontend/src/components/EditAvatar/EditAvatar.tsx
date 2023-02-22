@@ -4,45 +4,29 @@ import * as F from "styles/font.styles";
 import * as S from "./EditAvatar.styles";
 import { backend } from "lib/backend";
 import { useEffect, useState } from "react";
+import { IUser } from "types/models";
 
-async function getUserImage(id: string) {
-  const user = await backend.getOneUser("6");
-  return user.image;
-}
+// async function getUserImage(id: string) {
+//   const user = await backend.getOneUser("3");
+//   return user.image;
+// }
 
-async function getUser42login(id: string) {
-  const user = await backend.getOneUser(id);
-  return user.user42Name;
-}
-
-async function getUser42coalition(id: string) {
-  const user = await backend.getOneUser(id);
-  return user.coalition;
-}
-
-export function EditAvatar() {
+/* MAIN FUNCTION */
+export const EditAvatar = () => {
   const [image, setImage] = useState("");
-  const [coalition, setCoalition] = useState("");
-  const [user42Login, setUser42Login] = useState("");
 
-  useEffect(() => {
-    getUserImage("3").then((image) => setImage(image));
-    getUser42login("3").then((login) => setCoalition(login));
-    getUser42coalition("3").then((coalition) => setUser42Login(coalition));
-    // remplacer ici par le useContext
-  }, []);
   return (
     <S.Container>
       <S.AvatarContainer>
-        <S.Avatar src={image} />
+        <S.Avatar src={Default} />
         <SelectFile />
       </S.AvatarContainer>
       <S.NameContainer>
-        <F.Text weight="700">{user42Login}</F.Text>
-        <F.Subtitle>{coalition}</F.Subtitle>
+        <F.Text weight="700">New adventurer</F.Text>
+        <F.Subtitle>Ready for your mission?</F.Subtitle>
       </S.NameContainer>
     </S.Container>
   );
-}
+};
 
 export default EditAvatar;

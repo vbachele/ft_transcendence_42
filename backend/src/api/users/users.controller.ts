@@ -14,15 +14,19 @@ export class UserController {
     private userService: UserService,
     private cloudinaryService: CloudinaryService
   ) {}
+  @Get(":token")
+  async getUserByToken(@Req() req: Request) {
+    return this.userService.getUserByToken(req);
+  }
+  @Get(":name")
+  async getUserByName(@Req() req: Request) {
+    return this.userService.getUserByName(req);
+  }
   @Get()
   async getUsers() {
     return this.userService.getAllUsers();
   }
-  @Get(":name")
-  async getUserByName(@Req() req: Request) {
-    console.log(req.body.image);
-    return this.userService.getUserByName(req);
-  }
+  /***  Here we check it the request if an image to update otherwise we update the user ***/
   @Patch(":name")
   async PatchUser(@Req() req: Request) {
     if (req.body.image) {
@@ -31,6 +35,9 @@ export class UserController {
     }
     return this.userService.updateUser(req);
   }
+
+  /*** get the user info thanks to its token ***/
+
   @Delete("deleteall")
   async DeleteAllUsers() {
     return this.userService.deleteAllUsers();
