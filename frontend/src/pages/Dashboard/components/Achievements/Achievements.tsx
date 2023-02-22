@@ -16,10 +16,10 @@ const Achievements = ({user}: IProps) => {
 			</F.Subtitle>
 			<S.Achievements>
 				<Card locked={false} />
-				<Card locked={false} />
+				<Card locked={true} />
 				<Card locked={false} />
 				<Card locked={true} />
-				<Card locked={true} />
+				<Card locked={false} />
 				<Card locked={true} />
 				<Card locked={false} />
 				{/* {user.achievements.map((achievement) => (

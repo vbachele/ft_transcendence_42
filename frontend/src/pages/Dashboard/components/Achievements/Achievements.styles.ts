@@ -33,6 +33,7 @@ export const Card = styled.div<IProps>`
 	align-items: center;
 	gap: 24px;
 	border-radius: 8px;
+	width: 488px;
 
 	${(p) => p.locked && css`
 		svg, img {
