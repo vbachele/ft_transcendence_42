@@ -21,13 +21,23 @@ export const Profile = styled.div<IProfile>`
 	gap: 64px;
 	padding: 16px 96px;
 	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-	`;
+
+	@media screen and (max-width: 768px) {
+		height: 192px;
+		gap: 32px;
+	}
+`;
 
 export const Avatar = styled.img`
 	width: 192px;
 	height: 192px;
 	border-radius: 50%;
 	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+	@media screen and (max-width: 768px) {
+		width: 128px;
+		height: 128px;
+	}
 `;
 
 export const VDiv = styled.div`

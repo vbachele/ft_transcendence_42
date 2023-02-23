@@ -14,7 +14,7 @@ const Card = ({achievement, unlocked}: IProps) => {
 			<S.Icon src={achievement.image} />
 			<div className="vertical">
 				<F.Text>{achievement.name}</F.Text>
-				<F.Subtitle>{achievement.description}</F.Subtitle>
+				<F.Subtitle className="subtitle">{achievement.description}</F.Subtitle>
 			</div>
 			<S.State unlocked={unlocked}>{unlocked ? `Unlocked` : `Locked`}</S.State>
 		</S.Card>

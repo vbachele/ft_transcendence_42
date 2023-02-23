@@ -10,7 +10,7 @@ export const Achievements = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	gap: 32px;
-	justify-content: space-between;
+	justify-content: center;
 
 	svg {
 		width: 48px;
@@ -45,20 +45,27 @@ export const Card = styled.div<IProps>`
 		word-wrap: normal;
 	}
 
+
+
+	${(p) => p.theme.name === 'light' && css`
+		.subtitle {
+			color: #767676;
+		}
+	`}
+
 	${(p) => !p.unlocked && css`
 		svg, img {
 			filter: grayscale(1);
 		}
 		color: white;
 		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#3e3e3e' : '#101010'};
+			p.theme.name === 'light' ? '#a9a9a9' : '#101010'};
 	`}
 `;
 
 export const State = styled.div<IProps>`
 	padding: 8px 12px;
 	border-radius: 8px;
-	/* border: 2px solid white; */
 	text-align: center;
 
 	background-color: ${(p) =>
