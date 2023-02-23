@@ -14,8 +14,6 @@ export default ({mode}) => {
 	return defineConfig({
 		plugins: [react(), svgr(), tsconfigPaths()],
 		server: {
-			// hmr: false,
-			// host: 'true',
 			proxy: {
 				'/api': {
 					target: 'http://backend:' + env.VITE_SERVER_PORT.toString(),
@@ -26,9 +24,6 @@ export default ({mode}) => {
 				'/socket': {
 					target: 'ws://backend:' + env.VITE_SERVER_PORT.toString(),
 					ws: true,
-					// changeOrigin: true,
-					// secure: true,
-					// rewrite: (path) => path.replace(/^\/socket/, ''),
 				}
 			},
 			port: parseInt(env.VITE_PORT),

@@ -18,5 +18,17 @@ CREATE TABLE "User" (
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Lobby" (
+    "id" TEXT NOT NULL,
+    "creatorId" INTEGER NOT NULL,
+    "type" TEXT NOT NULL,
+
+    CONSTRAINT "Lobby_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
+
+-- AddForeignKey
+ALTER TABLE "Lobby" ADD CONSTRAINT "Lobby_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

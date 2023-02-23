@@ -4,18 +4,26 @@ import {PopupButton} from 'styles/buttons.styles';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
-import LobbyContext from 'contexts/Lobby/Lobby.context';
+import LobbyContext from 'contexts/Lobby/lobby.context';
+import {GameEvents} from 'contexts/Lobby/events';
+import SocketContext from '../../../contexts/Socket/Context';
+import {ClientEvents} from '../../../pages/Game/events/game.events';
 
 const GameInvite = () => {
 	const LobbyDispatch = useContext(LobbyContext).LobbyDispatch;
 	const [showComponent, setShowComponent] = useState(false);
-	const {status} = useContext(LobbyContext).LobbyState;
+	const {status, lobbyId} = useContext(LobbyContext).LobbyState;
+	const {socket} = useContext(SocketContext).SocketState;
 
 	const renderCounter = useRef(0);
 	renderCounter.current = ++renderCounter.current;
 	console.log(`User Invite has loaded [${renderCounter.current}] times`);
 
 	function onJoin() {
+		socket?.emit(ClientEvents.InvitationResponse, {
+			lobbyId: lobbyId,
+			status: 'accepted',
+		});
 		setShowComponent(true);
 		LobbyDispatch({type: 'update_status', payload: 'accepted'});
 		const close = setTimeout(() => {
@@ -25,10 +33,14 @@ const GameInvite = () => {
 	}
 
 	function onCancel() {
+		socket?.emit(ClientEvents.InvitationResponse, {
+			lobbyId: lobbyId,
+			status: 'declined',
+		});
 		LobbyDispatch({type: 'update_status', payload: 'declined'});
 	}
 
-	return status ? (
+	return status === GameEvents.Invited ? (
 		<Popup
 			title="Join game?"
 			subtitle="Bartholomeow has just invited you"

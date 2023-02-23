@@ -1,18 +1,20 @@
-import {createContext} from 'react';
+import React, {createContext} from 'react';
 
 export interface ILobbyContextState {
 	status: string;
 	lobbyId: string;
+	type: string;
 }
 
 export const defaultLobbyContextState: ILobbyContextState = {
 	status: '',
 	lobbyId: '',
+	type: '',
 };
 
-export type TLobbyContextActions = 'update_status' | 'update_lobbyId';
+export type TLobbyContextActions = 'update_status' | 'update_lobbyId' | 'update_type';
 
-export type TLobbyContextPayload = string | string;
+export type TLobbyContextPayload = string;
 
 export interface ILobbyContextActions {
 	type: TLobbyContextActions;
@@ -28,6 +30,8 @@ export const LobbyReducer = (
 			return {...state, status: action.payload as string};
 		case 'update_lobbyId':
 			return {...state, lobbyId: action.payload as string};
+		case 'update_type':
+			return {...state, type: action.payload as string};
 		default:
 			return {...state};
 	}

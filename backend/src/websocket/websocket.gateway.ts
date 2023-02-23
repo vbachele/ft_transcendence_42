@@ -1,46 +1,41 @@
 import {
   ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from "@nestjs/websockets";
 
-import { MessageBody } from "@nestjs/websockets";
-import { randomUUID } from "crypto";
-
 import { Server, Socket } from "socket.io";
+import { AuthenticatedSocket } from "src/lobby/types/server.type";
 
-import { v4 } from "uuid";
-import { SessionStoreService } from "./websocket.service";
-
-@WebSocketGateway({ cors: true, origin: "*" })
+@WebSocketGateway()
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
-  public users: { [uid: string]: string };
+  public users: Map<string, string> = new Map<string, string>();
 
-  constructor(protected readonly sessionStoreService: SessionStoreService) {
-    this.users = {};
-  }
-
-  async handleConnection(@ConnectedSocket() client: Socket, ...args: any[]) {
-    console.info(`Connected - Client ID [${client.id}]`);
+  async handleConnection(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    ...args: any[]
+  ) {
+    client.data.name = client.handshake.query.name as string;
+    console.info(`Connected - Client Name [${client.data.name}]`);
   }
 
   async handleDisconnect(@ConnectedSocket() client: Socket) {
-    console.info(`Disconnected - Client ID [${client.id}]`);
+    console.info(`Disconnected - Client ID [${client.data.name}]`);
 
-    const uid = this.GetUidFromSocketId(client.id);
-    if (uid) {
-      delete this.users[uid];
-      const users = Object.values(this.users);
+    const name = this.GetNameFromSocketId(client.id);
+    if (name) {
+      this.users.delete(name);
+      const users = Object.keys(this.users);
       this.SendMessage(
         "user_disconnected",
-        users.filter((id) => id !== client.id),
+        users.filter((name) => name !== client.data.name),
         users
       );
     }
@@ -51,44 +46,40 @@ export class WebsocketGateway
     @ConnectedSocket() client: Socket,
     @MessageBody() data: string
   ) {
-    console.info(`Handshake received from `, client.id);
-    console.log(typeof data);
+    console.info(`Handshake received from [${client.data.name}]`);
 
     const reconnected = Object.values(this.users).includes(client.id);
 
     if (reconnected) {
-      console.info(`This user has reconnected`);
-      const uid = this.GetUidFromSocketId(client.id);
-      const users = Object.values(this.users);
-
-      if (uid) {
-        console.info(`Sending callback for reconnect...`);
-        // eval(data)(uid, users);
+      console.info(`User [${client.data.name}] has reconnected`);
+      const name = this.GetNameFromSocketId(client.id);
+      if (name) {
         return;
       }
     }
 
-    const uid = v4();
-    this.users[uid] = client.id;
-    const users = Object.values(this.users);
+    this.users.set(client.data.name, client.id);
+    const users = Object.keys(this.users);
 
     console.info("Sending callback for handshake...");
-    this.server.to(client.id).emit("handshake", uid, users);
+    this.server.to(client.id).emit("handshake", client.data.name, users);
     this.SendMessage(
       "user_connected",
-      users.filter((id) => id !== client.id),
+      users.filter((name) => name !== client.data.name),
       users
     );
   }
-  GetUidFromSocketId = (id: string) =>
-    Object.keys(this.users).find((uid) => this.users[uid] === id);
+
+  GetNameFromSocketId = (id: string) => {
+    return [...this.users.keys()].find((key) => key.includes(id));
+  };
 
   SendMessage = (name: string, users: string[], payload?: Object) => {
     console.info(`Emitting event: ` + name + ` to `, users);
-    users.forEach((id) =>
+    users.forEach((username) =>
       payload
-        ? this.server.to(id).emit(name, payload)
-        : this.server.to(id).emit(name)
+        ? this.server.to(this.users.get(username) as string).emit(name, payload)
+        : this.server.to(this.users.get(username) as string).emit(name)
     );
   };
 }
