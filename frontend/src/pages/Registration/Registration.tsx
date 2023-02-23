@@ -14,8 +14,8 @@ const Registration = () => {
     <S.Container>
       <F.H2>Create Your Profile</F.H2>
       <S.Form>
-        <EditAvatar />
-        <EditName linkTo="/" />
+        <EditAvatar page="registration" />
+        <EditName linkTo="/" page="registration" />
       </S.Form>
     </S.Container>
   );

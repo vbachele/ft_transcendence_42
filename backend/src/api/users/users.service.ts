@@ -29,6 +29,7 @@ export class UserService {
     }
   }
   async updateUser(req: Request) {
+    console.log(req.body);
     try {
       const { name } = req.params;
       const user = await this.prisma.user.update({

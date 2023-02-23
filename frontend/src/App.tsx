@@ -19,6 +19,7 @@ import SearchPlayer from "components/Popup/SearchPlayer";
 import { ConfigProvider } from "antd";
 import { PopupContextProvider } from "contexts/Popup/Popup";
 import Homepage from "pages/Home";
+import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 
 function App() {
   const userPref =
@@ -40,7 +41,14 @@ function App() {
           <Route path="/oldlogin" element={<Pages.Login />} />
           <Route path="/leaderboard" element={<Pages.Leaderboard />} />
           <Route path="/dashboard/:name" element={<Pages.Dashboard />} />
-          <Route path="/settings" element={<Pages.Settings />} />
+          <Route
+            path="/settings"
+            element={
+              // <PrivateRoute>
+              <Pages.Settings />
+              // </PrivateRoute>
+            }
+          />
           <Route path="/headings" element={<Pages.Headings />} />
           <Route path="/social" element={<Social />} />
           <Route path="/users" element={<UserMocks />} />

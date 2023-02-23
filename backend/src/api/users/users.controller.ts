@@ -33,6 +33,7 @@ export class UserController {
       const user = this.cloudinaryService.uploadImage(req);
       return user;
     }
+    console.log(req.body);
     return this.userService.updateUser(req);
   }
 

@@ -5,14 +5,17 @@ import * as UI from "styles/buttons.styles";
 import { useNavigate } from "react-router-dom";
 import { backend } from "lib/backend";
 import { useUserInfos } from "contexts/User/userContent";
+import getInfosFromDB from "contexts/User/GetuserFromDB";
 
 interface Props {
   visible?: boolean;
   linkTo: string;
+  page: string;
 }
 
 /* Function to create the user in the database */
 async function createUser(value: string) {
+  // Here n'aller dans la condition seulement si le user n'est pas deja registered" sinon just PATCH LE NOM
   let UserCreation = {
     name: value,
     isRegistered: true,
@@ -24,8 +27,40 @@ async function createUser(value: string) {
 const EditName = (props: Props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const { setUserName } = useUserInfos();
+  const { userName, setUserName, setCoalition, setAchievements, setImage } =
+    useUserInfos();
   const { image } = useUserInfos();
+
+  function setUserInfosContext() {
+    const userInfos = getInfosFromDB();
+    userInfos.then((res) => {
+      setUserName({ userName: value });
+      setImage({ image: res.image });
+      setAchievements({ achievements: res.achievements });
+      setCoalition({ coalition: res.coalition });
+      navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not
+    });
+  }
+  /* Registration of the user in database in the page /registration*/
+  function userRegistrationPage() {
+    if (props.page === "registration") {
+      createUser(value);
+      backend.patchUser(value, image);
+      setUserInfosContext();
+    }
+  }
+
+  /* Change settings of the user in the page /settings */
+  function userSettingsPage() {
+    if (props.page === "settings") {
+      let newuserName = {
+        name: value,
+      };
+      backend.patchUser(userName.userName, newuserName);
+      backend.patchUser(value, image);
+      setUserName({ userName: value });
+    }
+  }
 
   /* On click functions */
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -34,18 +69,18 @@ const EditName = (props: Props) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    createUser(value);
-    setUserName({ userName: value });
-    backend.patchUser(value, image);
-    backend.getUserByName(value);
-    navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not
+    userRegistrationPage(); // if in registrationPage
+    userSettingsPage(); // if in settingsPage
   };
 
   /* RETURN BODY */
   return (
     <S.FormContainer onSubmit={handleSubmit}>
       <S.InputContainer>
-        <F.Text weight="600">Choose a nickname*</F.Text>
+        <F.Text weight="600">
+          {props.page === "settings" && "Change your nickname"}
+          {props.page === "registration" && "Choose a nickname*"}
+        </F.Text>
         <S.Input
           type="text"
           value={value}
@@ -56,14 +91,11 @@ const EditName = (props: Props) => {
           required
         />
       </S.InputContainer>
-      {props.visible === true && (
-        <UI.SecondaryButton type="submit">Continue</UI.SecondaryButton>
-      )}
+      <UI.SecondaryButton type="submit">
+        {props.page === "settings" && "Confirm"}
+        {props.page === "registration" && "Continue"}
+      </UI.SecondaryButton>
     </S.FormContainer>
   );
-};
-
-EditName.defaultProps = {
-  visible: true,
 };
 export default EditName;

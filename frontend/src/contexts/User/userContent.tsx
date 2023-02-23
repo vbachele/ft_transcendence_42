@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import getInfosFromDB from "./GetuserFromDB";
-import { userInfo } from "os";
 
 type UserContextProviderProps = {
   children: React.ReactNode;
+};
+
+export type Coalition = {
+  coalition: string;
 };
 
 export type Achievements = {
@@ -26,6 +28,8 @@ type UserContextType = {
   setImage: React.Dispatch<React.SetStateAction<AuthImage>>;
   achievements: Achievements;
   setAchievements: React.Dispatch<React.SetStateAction<Achievements>>;
+  coalition: Coalition;
+  setCoalition: React.Dispatch<React.SetStateAction<Coalition>>;
 };
 
 export const UserContext = createContext({} as UserContextType);
@@ -36,6 +40,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [achievements, setAchievements] = useState<Achievements>({
     achievements: 0,
   });
+  const [coalition, setCoalition] = useState<Coalition>({ coalition: "" });
   useEffect(() => {
     const userInfos = getInfosFromDB();
     userInfos.then((res) => {
@@ -43,6 +48,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
       setUserName({ userName: res.name });
       setImage({ image: res.image });
       setAchievements({ achievements: res.achievements });
+      setCoalition({ coalition: res.coalition });
     });
   }, []);
   return (
@@ -54,6 +60,8 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setImage,
         achievements,
         setAchievements,
+        coalition,
+        setCoalition,
       }}
     >
       {children}

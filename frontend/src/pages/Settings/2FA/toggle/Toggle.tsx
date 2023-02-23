@@ -27,7 +27,7 @@ const Toggle: React.FC<Props> = (props) => {
         <S.ToggleCheckbox
           type="checkbox"
           id="toggle"
-          checked={value}
+          // checked={value}
           onClick={handleToggle}
         />
         <S.ToggleSwitch>
