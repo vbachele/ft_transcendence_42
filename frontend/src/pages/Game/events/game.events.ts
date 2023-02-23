@@ -9,8 +9,9 @@ export enum ClientEvents {
 export enum ServerEvents {
   BallPosition = "server.ballPosition",
   LobbyCreated = 'server.lobbyCreated',
-  GameMessage = 'server.gameMessage',
+  LobbyMessage = 'server.lobbyMessage',
   LobbyState = 'server.lobbyState',
   InvitedToLobby = 'server.invitedToLobby',
   InvitationDeclined = 'server.invitationDeclined',
+  InvitationResponse = 'server.invitationResponse'
 }

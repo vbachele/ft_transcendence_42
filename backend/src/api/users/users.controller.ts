@@ -21,7 +21,7 @@ export class UserController {
   }
   @Get(":name")
   async getUserByName(@Req() req: Request) {
-    return this.userService.getUserByName(req);
+    return this.userService.getUserByName(req.params.name);
   }
   @Patch(":id")
   async PatchUser(@Req() req: Request) {
