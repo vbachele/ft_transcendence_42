@@ -32,7 +32,7 @@ const Profile = ({user}: IProps) => {
 	return (
 		<S.Profile coalition={user.coalition}>
 			<S.Avatar src={user.image} />
-			<S.VDiv>
+			<S.VDiv className="name">
 				<F.H1>{user.name}</F.H1>
 				<ActivityStatus state={user.status} />
 				<Dropdown
@@ -48,15 +48,16 @@ const Profile = ({user}: IProps) => {
 				</Dropdown>
 			</S.VDiv>
 
-			<S.VDivLink to="/leaderboard" state={{selectedOption: 'All'}}>
-				<F.H1 className="rank"># {global}</F.H1>
-				<F.H4>Global</F.H4>
-			</S.VDivLink>
-
-			<S.VDivLink to="/leaderboard" state={{selectedOption: user.coalition}}>
-				<F.H1 className="rank"># {coalition}</F.H1>
-				<F.H4>{user.coalition}</F.H4>
-			</S.VDivLink>
+			<S.VDiv className="ranks-div">
+				<S.VDivLink to="/leaderboard" state={{selectedOption: 'All'}}>
+					<F.H1 className="rank"># {global}</F.H1>
+					<F.H4>Global</F.H4>
+				</S.VDivLink>
+				<S.VDivLink to="/leaderboard" state={{selectedOption: user.coalition}}>
+					<F.H1 className="rank"># {coalition}</F.H1>
+					<F.H4>{user.coalition}</F.H4>
+				</S.VDivLink>
+			</S.VDiv>
 		</S.Profile>
 	);
 };

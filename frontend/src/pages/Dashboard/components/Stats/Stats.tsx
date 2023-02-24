@@ -36,8 +36,11 @@ const Stats = ({user}: IProps) => {
 					<F.H3>{user.wins}</F.H3>
 					<S.StyledProgress
 						percent={Math.round(user.ratio * 100)}
-						format={(percent) => `${percent} % Win Rate`}
+						format={(percent) => `${percent} % Winrate`}
 					/>
+					<F.Subtitle className="ratio">
+						{Math.round(user.ratio * 100)} % Winrate
+					</F.Subtitle>
 				</S.VDiv>
 			</S.Card>
 		</S.Stats>

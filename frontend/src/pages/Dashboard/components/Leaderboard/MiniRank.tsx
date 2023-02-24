@@ -11,12 +11,14 @@ interface IProps {
 const MiniRank = ({user, rank}: IProps) => {
 	return (
 		<S.MiniRank to={`/dashboard/${user.name}`}>
-			<F.H6>{rank}</F.H6>
+			<F.Text>{rank}</F.Text>
 			<S.User>
 				<S.Avatar src={user.image} />
-				<F.H6>{user.name}</F.H6>
+				<F.Text weight="500">{user.name}</F.Text>
 			</S.User>
-			<F.Text>{user.score} pts</F.Text>
+			<F.Text className="score" weight="500">
+				{user.score} pts
+			</F.Text>
 		</S.MiniRank>
 	);
 };

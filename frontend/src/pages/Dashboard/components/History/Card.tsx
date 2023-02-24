@@ -25,14 +25,14 @@ const Card = ({match}: IProps) => {
 			{user && (
 				<S.Card result={result}>
 					<img src={user.image} />
-					<F.H4>{user.name}</F.H4>
-					<F.H5>
-						<S.Result>
+					<F.H5>{user.name}</F.H5>
+					<S.Result>
+						<F.Text weight="500">
 							{match.myScore}
 							{' - '}
 							{match.userScore}
-						</S.Result>
-					</F.H5>
+						</F.Text>
+					</S.Result>
 				</S.Card>
 			)}
 			{result === 'win' ? <WinIcon /> : <LossIcon />}

@@ -1,8 +1,12 @@
 import styled, {css} from 'styled-components';
 
 export const Container = styled.div`
-	margin-top: -80px;
+	margin-top: -128px;
 	grid-area: 3/1/3/3;
+
+	@media screen and (max-width: 1280px) {
+		margin-top: 0;
+	}
 `;
 
 export const Achievements = styled.div`
@@ -12,10 +16,8 @@ export const Achievements = styled.div`
 	gap: 32px;
 	justify-content: center;
 
-	svg {
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
+	@media screen and (max-width: 768px) {
+		gap: 16px;
 	}
 `;
 
@@ -45,8 +47,6 @@ export const Card = styled.div<IProps>`
 		word-wrap: normal;
 	}
 
-
-
 	${(p) => p.theme.name === 'light' && css`
 		.subtitle {
 			color: #767676;
@@ -61,6 +61,17 @@ export const Card = styled.div<IProps>`
 		background-color: ${(p) =>
 			p.theme.name === 'light' ? '#a9a9a9' : '#101010'};
 	`}
+
+	@media screen and (max-width: 768px) {
+		width: 128px;
+
+		.title {
+			font-size: 16px;
+		}
+		.subtitle {
+			font-size: 12px
+		}
+	}
 `;
 
 export const State = styled.div<IProps>`
@@ -72,9 +83,19 @@ export const State = styled.div<IProps>`
 		p.unlocked ? 'rgba(75, 174, 79, 0.2)' : 'rgba(224, 79, 95, 0.2)'};
 
 	color: ${(p) => (p.unlocked ? '#44db4a' : '#fa394f')};
+
+	@media screen and (max-width: 768px) {
+		font-size: 12px;
+		padding: 8px;
+	}
 `;
 
 export const Icon = styled.img`
 	width: 48px;
 	height: 48px;
+
+	@media screen and (max-width: 768px) {
+		width: 32px;
+		height: 32px;
+	}
 `;

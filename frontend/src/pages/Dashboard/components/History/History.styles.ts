@@ -9,6 +9,12 @@ export const History = styled.div`
 	margin-top: 48px;
 	display: flex;
 	justify-content: space-between;
+
+	@media screen and (max-width: 768px) {
+		overflow-x: auto;
+		gap: 24px;
+		padding: 24px 8px;
+	}
 `;
 
 export const CardContainer = styled.div`
@@ -18,10 +24,17 @@ export const CardContainer = styled.div`
 	gap: 24px;
 
 	svg {
-		width: 48px;
-		height: 48px;
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
+
+	@media screen and (max-width: 1600px) {
+		svg {
+			width: 32px;
+			height: 32px;
+		}
 	}
 `;
 
@@ -43,12 +56,23 @@ export const Card = styled.div<ICardProps>`
 	gap: 24px;
 	border-radius: 8px;
 	width: 192px;
-	height: 300px;
+	height: 256px;
+	user-select: none;
 
 	img {
 		border-radius: 50%;
+		width: 92px;
+		height: 92px;
+	}
+
+	@media screen and (max-width: 1600px) {
 		width: 128px;
-		height: 128px;
+		height: 192px;
+
+		img {
+			width: 48px;
+			height: 48px;
+		}
 	}
 `;
 

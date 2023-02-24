@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Leaderboard = ({user}: IProps) => {
-	const {data, isLoading, error} = useFetchUsers();
+	let {data, isLoading, error} = useFetchUsers();
 	if (data) {
 		data.sort(compareScore);
 	}
@@ -21,22 +21,24 @@ const Leaderboard = ({user}: IProps) => {
 			<F.Subtitle weight="700" fontSize="30px" style={{textAlign: 'left'}}>
 				Leaderboard
 			</F.Subtitle>
-			<F.H4>Best Player</F.H4>
-			{data && (
-				<S.FirstPlayer to={`/dashboard/${data[0].name}`}>
-					<img src={data[0].image} />
-					<F.H4>{data[0].name}</F.H4>
-					<F.Text>{data[0].score} points</F.Text>
-				</S.FirstPlayer>
-			)}
-			{data && (
-				<S.TopFive>
-					<MiniRank user={data[1]} rank="2nd" />
-					<MiniRank user={data[2]} rank="3rd" />
-					<MiniRank user={data[3]} rank="4th" />
-					<MiniRank user={data[4]} rank="5th" />
-				</S.TopFive>
-			)}
+			<div className="subcontainer">
+				{data && (
+					<S.FirstPlayer to={`/dashboard/${data[0].name}`}>
+						<F.H4>Best Player</F.H4>
+						<img src={data[0].image} />
+						<F.H4>{data[0].name}</F.H4>
+						<F.Text>{data[0].score} points</F.Text>
+					</S.FirstPlayer>
+				)}
+				{data && (
+					<S.TopFive>
+						<MiniRank user={data[1]} rank="2nd" />
+						<MiniRank user={data[2]} rank="3rd" />
+						<MiniRank user={data[3]} rank="4th" />
+						<MiniRank user={data[4]} rank="5th" />
+					</S.TopFive>
+				)}
+			</div>
 		</S.Leaderboard>
 	);
 };

@@ -14,8 +14,22 @@ export const Leaderboard = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 32px;
-	padding: 16px 32px;
+	padding: 16px 20px;
 	text-align: center;
+
+	@media screen and (max-width: 1280px) {
+		top: 0;
+		padding: 16px 20px 64px 20px;
+
+		.subcontainer {
+			display: flex;
+			justify-content: space-around;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
 `;
 
 export const FirstPlayer = styled(Link)`
@@ -28,7 +42,7 @@ export const FirstPlayer = styled(Link)`
 
 	img {
 		align-self: center;
-		margin-bottom: 16px;
+		margin: 16px 0;
 		width: 128px;
 		height: 128px;
 		border-radius: 50%;
@@ -42,20 +56,33 @@ export const TopFive = styled.div`
 	margin-top: 24px;
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 20px;
 `;
 
 export const MiniRank = styled(Link)`
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#ececee' : '#1c1c1d'};
-	text-decoration: none;
 	color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+	text-decoration: none;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 8px 16px;
+	gap: 16px;
+	padding: 8px 12px;
 	border-radius: 8px;
+
+	@media screen and (max-width: 1600px) {
+		.score {
+			display: none;
+		}
+	}
+
+	@media screen and (max-width: 1280px) {
+		.score {
+			display: block;
+		}
+	}
 `;
 
 export const Avatar = styled.img`
@@ -69,4 +96,9 @@ export const User = styled.div`
 	align-items: center;
 	gap: 8px;
 	width: 50%;
+	word-break: break-all;
+
+	@media screen and (max-width: 1600px) {
+		width: 70%;
+	}
 `;

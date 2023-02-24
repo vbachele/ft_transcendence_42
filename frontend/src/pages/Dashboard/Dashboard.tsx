@@ -16,7 +16,7 @@ const Dashboard = () => {
 
 	return (
 		<>
-			{error && <div>Error</div>}
+			{error && <NotFound />}
 			{isLoading && <Loading />}
 			{data && (
 				<S.Container>
