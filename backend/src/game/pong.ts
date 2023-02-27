@@ -1,6 +1,4 @@
-import { Instance } from "../lobby/instance";
-
-export class Pong extends Instance {
+export class Pong {
     run(): void {
         console.info(`Pong running`);
     }

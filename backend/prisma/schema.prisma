@@ -27,14 +27,13 @@ model User {
   refreshToken String @default("noRefreshToken")
   isRegistered Boolean @default(false)
   ownedLobbies Lobby[] @relation("owned")
-  lobbies Lobby[]
 }
 
 model Lobby {
   id String @id
-  admin User @relation(name: "owned", fields: [adminId], references: [id])
-  adminId Int
-  clients User[]
+  admin User? @relation(name: "owned", fields: [adminId], references: [id])
+  adminId Int?
   createdAt DateTime
   type String
+  maxClients Int?
 }

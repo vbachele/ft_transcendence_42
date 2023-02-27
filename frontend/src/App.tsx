@@ -18,7 +18,7 @@ import LandingPage from 'pages/Landing/Landingpage';
 import Social from 'pages/Social';
 import {PopupContextProvider, usePopup} from 'contexts/Popup/Popup';
 import Popup from './components/Popup';
-import {ConfigProvider} from 'antd';
+// import {ConfigProvider} from 'antd';
 import LobbyContextComponent from 'contexts/Lobby/Lobby';
 import FakeLogin from 'mocks/Login/FakeLogin';
 import {MessagesContextProvider} from "./contexts/Chat/MessagesContext";
@@ -55,6 +55,7 @@ function App() {
 					<Route path="/game" element={<Pages.Game/>}/>
 					<Route path="*" element={<Pages.NotFound/>}/>
 					<Route path="/fake_login" element={<FakeLogin/>}/>
+					<Route path="/chat" element={<Pages.Chat />} />
 				</Routes>
 			</>
 		);
@@ -62,19 +63,20 @@ function App() {
 
 	return (
 		<UserContextProvider>
-			<PopupContextProvider>
 				<MessagesContextProvider>
 					<SocketContextComponent>
 						<LobbyContextComponent>
-							<ThemeProvider theme={theme === 'light' ? light : dark}>
-								<ConfigProvider
-									theme={{
-										token: {
-											colorPrimary: '#e04f5f',
-											colorSuccess: '#4bae4f',
-										},
-									}}
-								>
+							<PopupContextProvider>
+
+								<ThemeProvider theme={theme === 'light' ? light : dark}>
+									{/*<ConfigProvider*/}
+									{/*	theme={{*/}
+									{/*		token: {*/}
+									{/*			colorPrimary: '#e04f5f',*/}
+									{/*			colorSuccess: '#4bae4f',*/}
+									{/*		},*/}
+									{/*	}}*/}
+									{/*>*/}
 									<GlobalStyle/>
 									<Popup.GameInvite/>
 									<Popup.SearchPlayer/>
@@ -85,12 +87,12 @@ function App() {
 											<Route path="/*" element={<WithNavbar/>}/>
 										</Routes>
 									</Router>
-								</ConfigProvider>
-							</ThemeProvider>
+									{/*</ConfigProvider>*/}
+								</ThemeProvider>
+							</PopupContextProvider>
 						</LobbyContextComponent>
 					</SocketContextComponent>
 				</MessagesContextProvider>
-			</PopupContextProvider>
 		</UserContextProvider>
 	);
 }

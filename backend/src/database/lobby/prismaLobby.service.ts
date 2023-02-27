@@ -6,36 +6,25 @@ import { Lobby, Prisma } from "@prisma/client";
 export class PrismaLobbyService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async pushLobby(lobby: Lobby, owner: string): Promise<Lobby> {
+  async pushLobby(lobby: Lobby): Promise<Lobby> {
     try {
-      const user = await this.prismaService.user.findFirst({
-        where: {
-          name: owner,
-        },
-      });
       return this.prismaService.lobby.create({
         data: {
           ...lobby,
-          adminId: user?.id as number,
-          clients: {connect: {id: user?.id}},
         },
       });
     } catch (e) {
-      throw new Error(`Couldn't find user [${owner}`);
+      throw new Error(`Lobby database entry creation failed`);
     }
   }
 
-  async lobbiesFromUserName(name: string): Promise<Lobby[] | undefined> {
+  async lobbiesFromUserName(name: string) {
     try {
-      const user = await this.prismaService.user.findUnique({
+      return await this.prismaService.lobby.findFirst({
         where: {
-          name: name,
-        },
-        include: {
-          lobbies: true,
+          id: name,
         },
       });
-      return user?.lobbies;
     } catch (error) {
       console.error(error);
     }

@@ -18,15 +18,15 @@ function Invite({id}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const lobbyDispatch = useContext(LobbyContext).LobbyDispatch;
 
-	// useInviteToLobby({invitedClient: id, type: 'game'});
 	function onInvite() {
-		socket?.emit(ClientEvents.CreateLobby, {mode: 'duo', type: 'game'});
+		socket?.emit(ClientEvents.CreateLobby, {type: 'game', mode: 'duo'});
 		socket?.once(ServerEvents.LobbyMessage, (data) => {
 			if (data.message === 'Lobby created') {
 				console.info(`Sending invitation request`);
 				lobbyDispatch({type: 'update_status', payload: GameEvents.Invited});
 				socket?.emit(ClientEvents.InviteToLobby, {
 					invitedClient: id,
+					lobbyId: data.lobbyId,
 				});
 			}
 		});
