@@ -59,7 +59,7 @@ export const Card = styled.div<IProps>`
 		}
 		color: white;
 		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#a9a9a9' : '#101010'};
+			p.theme.name === 'light' ? '#b5b5bd' : '#101010'};
 	`}
 
 	@media screen and (max-width: 768px) {
@@ -75,14 +75,15 @@ export const Card = styled.div<IProps>`
 `;
 
 export const State = styled.div<IProps>`
+	font-weight: 500;
 	padding: 8px 12px;
 	border-radius: 8px;
 	text-align: center;
 
 	background-color: ${(p) =>
-		p.unlocked ? 'rgba(75, 174, 79, 0.2)' : 'rgba(224, 79, 95, 0.2)'};
+		p.unlocked ? 'rgba(75, 174, 79, 0.15)' : 'rgba(224, 79, 95, 0.15)'};
 
-	color: ${(p) => (p.unlocked ? '#44db4a' : '#fa394f')};
+	color: ${(p) => (p.unlocked ? '#80db69' : '#fa394f')};
 
 	@media screen and (max-width: 768px) {
 		font-size: 12px;
