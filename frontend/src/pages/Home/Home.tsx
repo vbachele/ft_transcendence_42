@@ -1,9 +1,9 @@
 import { useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Home.styles";
-import LogoutPopup from "components/Popup/Logout/LogoutPopup";
-import PopupContext, { usePopup } from "contexts/Popup/Popup";
 import { useUserInfos } from "contexts/User/userContent";
+import { usePopup } from "contexts/Popup/Popup";
+import Popup from "components/Popup";
 
 /* Main Functions */
 const Homepage = () => {
@@ -15,7 +15,6 @@ const Homepage = () => {
   const handlePlay = () => {
     setPopup({ toggle: !popup.toggle });
   };
-
   const toggleLogout = () => {
     setLogout(!logout);
   };
@@ -44,7 +43,7 @@ const Homepage = () => {
             <S.link to="/leaderboard">
               <S.italic className="italic">LEADERBOARD</S.italic>
             </S.link>
-            <S.link to="/career">
+            <S.link to="/dashboard/${userName.userName}">
               <S.italic className="italic">CAREER</S.italic>
             </S.link>
             <S.link to="/chat">
@@ -61,10 +60,10 @@ const Homepage = () => {
               onClick={toggleLogout}
             >
               {logout && (
-                <LogoutPopup
+                <Popup.LogoutPopup
                   click={logout}
                   onClose={() => setLogout(false)}
-                ></LogoutPopup>
+                ></Popup.LogoutPopup>
               )}
               <S.normal className="normal">LOGOUT</S.normal>
             </S.logoutButton>

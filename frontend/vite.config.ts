@@ -8,7 +8,7 @@ const cacheDir =
     ? "/usr/src/app/node_modules/.vite"
     : "node_modules/.vite";
 
-export default ({ mode }) => {
+export default ({ mode }: any) => {
   const env = loadEnv(mode, process.cwd());
 
   return defineConfig({

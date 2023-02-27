@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useRoutes,
+} from "react-router-dom";
 import { useState } from "react";
 
 import Pages from "pages";
@@ -15,11 +20,15 @@ import Victory from "components/Victory";
 import Defeat from "components/EditName/Defeat";
 import LandingPage from "pages/Landing/Landingpage";
 import Social from "pages/Social";
-import SearchPlayer from "components/Popup/SearchPlayer";
 import { ConfigProvider } from "antd";
 import { PopupContextProvider } from "contexts/Popup/Popup";
 import Homepage from "pages/Home";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
+import LobbyContextComponent from "contexts/Lobby/Lobby";
+import { MessagesContextProvider } from "contexts/Chat/MessagesContext";
+import Game from "pages/Game/Game";
+import SearchPlayer from "components/Popup/SearchPlayer/SearchPlayer";
+import Registration from "pages/Registration/Registration";
 
 function App() {
   const userPref =
@@ -36,31 +45,71 @@ function App() {
       <>
         <Pages.Navbar setTheme={setTheme} />
         <Routes>
-          <Route path="/oldlanding" element={<Pages.Landing />} />
-          <Route path="/registration" element={<Pages.Registration />} />
           <Route path="/oldlogin" element={<Pages.Login />} />
+          <Route path="/chat" element={<Pages.Chat />} />
           <Route path="/leaderboard" element={<Pages.Leaderboard />} />
           <Route path="/dashboard/:name" element={<Pages.Dashboard />} />
-          <Route
-            path="/settings"
-            element={
-              // <PrivateRoute>
-              <Pages.Settings />
-              // </PrivateRoute>
-            }
-          />
+          <Route path="/settings" element={<Pages.Settings />} />
           <Route path="/headings" element={<Pages.Headings />} />
           <Route path="/social" element={<Social />} />
           <Route path="/users" element={<UserMocks />} />
-          <Route path="/2FA" element={<DoubleAuthentication />} />
-          <Route path="/Victory" element={<Victory />} />
-          <Route path="/Defeat" element={<Defeat />} />
           {/* <Route path="/game" element={<Game/>} /> */}
           <Route path="*" element={<Pages.NotFound />} />
         </Routes>
       </>
     );
   }
+
+  const routes = useRoutes([
+    {
+      path: "/login",
+      element: <LandingPage />,
+    },
+    {
+      path: "/",
+      element: (
+        <PrivateRoute>
+          <Homepage />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/registration",
+      element: <Registration />,
+    },
+    {
+      path: "/2FA",
+      element: (
+        <PrivateRoute>
+          <DoubleAuthentication />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/Victory",
+      element: (
+        <PrivateRoute>
+          <Victory />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/Defeat",
+      element: (
+        <PrivateRoute>
+          <Defeat />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/*",
+      element: (
+        <PrivateRoute>
+          <WithNavbar />
+        </PrivateRoute>
+      ),
+    },
+  ]);
 
   return (
     <UserContextProvider>
@@ -77,13 +126,7 @@ function App() {
           >
             <GlobalStyle />
             <SearchPlayer />
-            <Router>
-              <Routes>
-                <Route path="/login" element={<LandingPage />} />
-                <Route path="/" element={<Homepage />} />
-                <Route path="/*" element={<WithNavbar />} />
-              </Routes>
-            </Router>
+            {routes}
           </ConfigProvider>
         </ThemeProvider>
         {/* </SocketContextComponent> */}

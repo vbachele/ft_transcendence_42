@@ -1,13 +1,15 @@
-import { ForbiddenException, Injectable, Post, Res } from "@nestjs/common";
+import { BadRequestException, Injectable, Req, Res } from "@nestjs/common";
 import { UserService } from "src/api/users/users.service";
 import { PrismaService } from "src/prisma/prisma.service";
-import { Response } from "express";
+import { Request, Response, request } from "express";
+import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
 
 @Injectable({})
 export class AuthService {
   constructor(
     private prisma: PrismaService,
-    private userService: UserService
+    private userService: UserService,
+    private Oauth42: Oauth42Service
   ) {}
   async createDataBaseUser(
     user42: any,
@@ -55,5 +57,20 @@ export class AuthService {
 
   async deleteCookies(@Res() res: Response) {
     res.clearCookie("token").end();
+  }
+
+  async checkIfTokenValid(@Req() req: Request, @Res() res: Response) {
+    const token: string = req.cookies.token;
+    const tokenValid = await this.Oauth42.access42UserInformation(token);
+    if (!tokenValid) {
+      throw new BadRequestException("InvalidToken", {
+        cause: new Error(),
+        description: "Json empty, the token is invalid",
+      });
+    }
+    return res.status(200).json({
+      statusCode: 200,
+      path: request.url,
+    });
   }
 }

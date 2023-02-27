@@ -8,6 +8,7 @@ import Settings from "pages/Settings";
 import Navbar from "components/Navbar";
 import Headings from "./Headings/Headings";
 import Game from "./Game/Game";
+import Chat from "./Chat/Chat";
 
 export default {
   Landing,
@@ -20,4 +21,5 @@ export default {
   Navbar,
   Headings,
   Game,
+  Chat,
 };

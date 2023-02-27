@@ -1,20 +1,28 @@
-import getInfosFromDB from "contexts/User/GetuserFromDB";
 import { useUserInfos } from "contexts/User/userContent";
-import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { backend } from "lib/backend";
+import LandingPage from "pages/Landing/Landingpage";
+import React, { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-type ChildrenProps = {
-  children: React.ReactNode;
-};
-
-const PrivateRoute = ({ children }: ChildrenProps) => {
+const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
   const navigate = useNavigate();
-  const { userName } = useUserInfos();
-  // useEffect (() => async {
-  // 	const user = await getInfosFromDB();
-  // 	setUserInfos(user),
-  // })
-  return !userName ? children : navigate("/login");
+  const [tokenExists, setTokenExists] = useState(false);
+
+  async function checkUserToken() {
+    const response = await backend.checkToken();
+    if (response.statusCode == "400" || response.statusCode == "403") {
+      navigate("/login");
+      return;
+    }
+    setTokenExists(true);
+  }
+  useEffect(() => {
+    checkUserToken();
+  }, []);
+  if (tokenExists) {
+    return children;
+  }
+  return <LandingPage />;
 };
 
 export default PrivateRoute;

@@ -38,7 +38,12 @@ export const backend = {
         }
       | undefined
   ): Promise<any> {
+    console.log(token);
     const response = await api.get("/users/token" + token);
+    return await response.json();
+  },
+  async checkToken(): Promise<any> {
+    const response = await api.get("/auth/token");
     return await response.json();
   },
 };

@@ -3,7 +3,6 @@ import { response } from "express";
 
 @Injectable()
 export class Oauth42Service {
-
   async accessToken(req: string) {
     try {
       const response = await fetch("https://api.intra.42.fr/oauth/token", {
@@ -30,13 +29,9 @@ export class Oauth42Service {
         );
       }
       const data = await response.json();
-      //   this.access42RefreshToken();
       return data;
     } catch (error) {
-      if (!accessToken)
-        throw new ForbiddenException(
-          'If this error appears twice on the console during developmentplease get a new access code from "Join the battle"'
-        );
+      if (!accessToken) throw new ForbiddenException("Token is invalid");
     }
   }
 }

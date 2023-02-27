@@ -44,7 +44,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   useEffect(() => {
     const userInfos = getInfosFromDB();
     userInfos.then((res) => {
-      console.log(res);
       setUserName({ userName: res.name });
       setImage({ image: res.image });
       setAchievements({ achievements: res.achievements });

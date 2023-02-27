@@ -29,7 +29,6 @@ export class UserService {
     }
   }
   async updateUser(req: Request) {
-    console.log(req.body);
     try {
       const { name } = req.params;
       const user = await this.prisma.user.update({
@@ -58,7 +57,6 @@ export class UserService {
           user42Name,
         },
       });
-      console.log(user);
       return user;
     } catch (error) {
       throw error;
@@ -67,13 +65,11 @@ export class UserService {
   async getUserByToken(req: Request) {
     const { accessToken } = req.params;
     try {
-      console.log(accessToken);
       const user = await this.prisma.user.findFirst({
         where: {
           accessToken,
         },
       });
-      // console.log(user);
       return user;
     } catch (error) {
       throw error;

@@ -32,6 +32,4 @@ COPY . .
 
 COPY --chown=node:node --from=development /usr/src/app/dist ./dist
 
-EXPOSE 5173
-
 CMD ["node", "dist/main"]

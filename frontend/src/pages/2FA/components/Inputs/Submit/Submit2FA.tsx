@@ -42,7 +42,6 @@ const Submit2FA = () => {
       e.currentTarget.value === "" &&
       index > 1
     ) {
-      console.log("inside");
       setTimeout(() => {
         inputRefs[index - 1].current.value = "";
         inputRefs[index - 2].current.focus();

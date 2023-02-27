@@ -42,4 +42,9 @@ export class AuthController {
   async deleteCookies(@Req() req: Request, @Res() res: Response) {
     this.authService.deleteCookies(res);
   }
+
+  @Get("token")
+  async checkIfTokenValid(@Req() req: Request, @Res() res: Response) {
+    return this.authService.checkIfTokenValid(req, res);
+  }
 }

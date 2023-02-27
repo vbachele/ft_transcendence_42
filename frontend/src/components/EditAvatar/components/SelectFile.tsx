@@ -14,7 +14,6 @@ export const SelectFile = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage({ image: reader.result as string });
-      console.log(image);
     };
   };
 
