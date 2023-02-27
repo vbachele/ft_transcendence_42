@@ -1,14 +1,13 @@
-import { AuthenticatedSocket } from "./types/server.type";
+import { AuthenticatedSocket } from "./types/lobby.type";
 import { ServerEvents } from "./events/lobby.events";
 import { Server, Socket } from "socket.io";
 import { v4 } from "uuid";
 import { Injectable } from "@nestjs/common";
 
 /**
- * @Description This is the base Lobby class. It contains basic functions that are common to a Lobby.
+ * @description This is the base Lobby class. It contains basic functions that are common to lobbies.
  * You can extend this class to customize your own Lobby without having to rewrite the basic functions
- * @remarks
- * This class is the base class of {@link GameLobby} and {@link ChatLobby}
+ * @remarks This class is the base class of {@link GameLobby} and {@link ChatLobby}
  * @param id uuid generated using the uuid library
  * @param createdAt creation date as a Date object
  * @param server The WebSocketServer. It is used to dispatch lobby state to clients

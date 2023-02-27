@@ -9,7 +9,7 @@ import {
 } from "@nestjs/websockets";
 
 import { Server, Socket } from "socket.io";
-import { AuthenticatedSocket } from "src/lobby/types/server.type";
+import { AuthenticatedSocket } from "src/lobby/types/lobby.type";
 
 @WebSocketGateway()
 export class WebsocketGateway

@@ -1,39 +1,12 @@
 import { GameLobby, GameLobbyDto } from "./gameLobby";
 import { ChatLobby, ChatLobbyDto } from "./chatLobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
-import { LobbyDto } from "./dtos/lobby.dto";
-import { validate } from "class-validator";
-import { plainToInstance } from "class-transformer";
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  PipeTransform,
-} from "@nestjs/common";
+import { LobbyDto } from "./dto/lobby.dto";
 
-export class LobbyValidationPipe implements PipeTransform<LobbyDto> {
-  async transform(body: any, metadata: ArgumentMetadata) {
-    if (!body.type)
-      throw new BadRequestException(`Request is missing the [type] property`);
-    let obj;
-    switch (body.type) {
-      case "game":
-        obj = plainToInstance(GameLobbyDto, body.data);
-        break;
-      case "chat":
-        obj = plainToInstance(ChatLobbyDto, body.data);
-        break;
-      default:
-        throw new BadRequestException(`Invalid lobby type [${body.type}]`);
-    }
-    const errors = await validate(obj);
-    if (errors.length > 0) {
-      console.log(errors);
-      throw new BadRequestException(`LobbyDto validation failed`);
-    }
-    return body;
-  }
-}
-
+/**
+ * This is the lobby factory. It returns a lobby based on the type specified in the payload.
+ * If the type doesn't exist, throw an error
+ */
 export const factory = {
   provide: "LOBBY_FACTORY",
   useFactory: (prismaLobbyService: PrismaLobbyService): any => {
