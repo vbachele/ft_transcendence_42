@@ -14,15 +14,21 @@ export const Arrow = () =>{
 
 function ChatInputBar() {
     const theme = useContext(ThemeContext);
-    const { isClickedDM } = useContext(MessagesContext);
+    const { isClickedDM, setIsSubmitted } = useContext(MessagesContext);
+
+    const handleSubmit = (event: React.FormEvent) => 
+    {
+        event.preventDefault();
+        setIsSubmitted(true);
+    };
 
     return ( 
-        <div style={{position: 'relative', margin: '8px 16px'}}>
-            <S.ChatBarInput open={isClickedDM} placeholder="Message" />
-            <div style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
+        <form onSubmit={handleSubmit} style={{position: 'relative', margin: '8px 16px'}}>
+            <S.ChatBarInput type="text" open={isClickedDM} placeholder="Message"/>
+            <div onClick={handleSubmit} style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
                 <Arrow />
             </div>
-        </div>
+        </form>
     );
 }
 

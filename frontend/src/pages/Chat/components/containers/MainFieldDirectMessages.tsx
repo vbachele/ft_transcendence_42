@@ -4,8 +4,6 @@ import * as S from '../../Chat.styles';
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import TopBarDirectMessages from '../messages/TopBarDirectMessages';
 import ChatInputBar from '../messages/ChatInputBar';
-import EmptyChat from '../messages/EmptyChat';
-import RightBarDirectMessages from '../messages/RightBarDirectMessages';
 
 function MainFieldDirectMessages() {
 	const { dataMessages, isRightBarClosedDM, isRightBarOpenDM, isClickedDM } = useContext(MessagesContext);

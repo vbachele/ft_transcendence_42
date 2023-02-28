@@ -7,6 +7,8 @@ import { ContainerChannel } from '../../Chat.styles';
 import json from '../../../../mocks/Users/directMessages.json'
 import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import { message } from 'antd';
+import useFetchUsers from 'hooks/useFetchUsers';
+import { IUser } from 'types/models';
 
 interface IProps {
 	value: string
@@ -31,10 +33,9 @@ const DirectMessages: React.FC<IProps> = (props) => {
 // 		'http://localhost:3001/directMessages'
 // 	);
 	const { setDataMessages, setIsMobileClicked, setIsRightBarClosedDM, setIsClickedDM, setIsRightBarOpenDM, setIsClickedChannel } = useContext(MessagesContext);
-    const { isClickedChannel, isClickedDM, isRightBarOpenDM } = useContext(MessagesContext);
-    console.log(isClickedDM, isRightBarOpenDM, isClickedChannel);
-	
-	const handleClick = (data: IMessages) => {
+	const {data, isLoading, error} = useFetchUsers();
+
+	const handleClick = (data: IUser) => {
 		setIsClickedDM(true);
 		setIsRightBarClosedDM(true);
 		setIsClickedChannel(false);
@@ -43,10 +44,10 @@ const DirectMessages: React.FC<IProps> = (props) => {
 		setDataMessages(data)
 	};
 
-	let data: IMessages[] = [];
-	for (let value in json.directMessages) {
-		data.push(json.directMessages[value]);
-	}
+	// let data: IMessages[] = [];
+	// for (let value in json.directMessages) {
+	// 	data.push(json.directMessages[value]);
+	// }
 
 	let filter = new RegExp(`^.*${props.value}.*`, 'i');
 	
@@ -57,7 +58,7 @@ const DirectMessages: React.FC<IProps> = (props) => {
 				.filter((message) => {
 					return filter.test(message.name)
 				})
-				.map((message: IMessages) => (
+				.map((message: IUser) => (
 					<li style={{listStyle: 'none'}} key={message.id}>
 							<Messages onClick={() => handleClick(message)} data={message} />
 					</li>

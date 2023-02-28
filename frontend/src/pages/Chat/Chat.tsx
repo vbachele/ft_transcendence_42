@@ -11,22 +11,20 @@ import EmptyChat from './components/messages/EmptyChat';
 import ModalChanSettings from './components/modals/ModalChanSettings';
 import ModalChanPass from './components/modals/ModalChanPass';
 import ModalChanCreate from './components/modals/ModalChanCreate';
+import ModalUserSearch from './components/modals/ModalUserSearch';
 
 function Chat() {
 
-    const {isClickedDM, isRightBarClosedDM, isClickedChannel, dataMessages, isRightBarOpenDM} = React.useContext(MessagesContext);
+    const {isClickedDM, isRightBarClosedDM, isClickedChannel, dataMessages, isRightBarOpenDM, isPopupClicked} = React.useContext(MessagesContext);
     return (
         <S.default>
             <LateralBar />
             {!isClickedDM && !isRightBarOpenDM && !isClickedChannel && <EmptyChat />}
+            {isPopupClicked && <ModalUserSearch/>}
             {isClickedChannel && <MainFieldChannel />}
             {isClickedDM && <MainFieldDirectMessages />}
             {(isRightBarOpenDM || (!isRightBarClosedDM && isClickedDM)) && <RightBarDirectMessages data={dataMessages}/>}
         </S.default>
-
-        // <ModalChanSettings />
-        // <ModalChanPass />
-        // <ModalChanCreate />
     );
 }
 

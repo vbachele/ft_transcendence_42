@@ -10,20 +10,21 @@ import * as S from '../../Chat.styles';
 import { IMessages } from '../../data';
 import { ProfilePicRightBar } from '../../Chat.styles';
 import LateralBar from '../containers/LateralBar';
+import { IUser } from 'types/models';
 
 interface IProps {
-	data: IMessages;
+	data: IUser;
 }
 
-export const displayPastille = (params: IMessages) => {
-    if (params.pastille == 1)
+export const displayPastille = (params: IUser) => {
+    if (params.status == 'online')
         return (
             <div style={{display: 'flex', flexDirection:'row', alignItems:'center', paddingBottom: '16px', gap: "8px"}}>
                 <S.Pastille style={{background: '#2FE837'}} />
                 <F.Text weight='400'> Available</F.Text>
             </div>
         );
-    else if (params.pastille == 2)
+    else if (params.status == 'offline')
         return (
             <div style={{display: 'flex', flexDirection:'row', alignItems:'center', paddingBottom: '16px', gap: "8px"}}>
                 <S.Pastille style={{background: '#9CA3AF'}} />
@@ -62,7 +63,7 @@ function RightBarDirectMessages({data} : IProps) {
                     <button className='buttonTitles hiddenDesktop' onClick={handleClickMobile} style={{backgroundColor: 'transparent', border: 'none', color: theme.name === 'light' ? 'black' : 'white'}}><F.Text style={{fontSize: "1.4rem", transform: "rotate(-45deg)"}}> + </F.Text></button>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <S.ProfilePicRightBar src={data.avatar} style={{paddingBottom: "32px"}} />
+                    <S.ProfilePicRightBar src={data.image} style={{paddingBottom: "32px"}} />
                     {displayPastille(data)}
                 </div>
             </div>

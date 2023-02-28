@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { IUser } from "types/models";
 import { IMessages, IChannels } from '../../pages/Chat/data';
 
 type MessagesContextProviderProps = {
@@ -6,8 +7,8 @@ type MessagesContextProviderProps = {
 };
 
 type MessagesContextType = {
-  dataMessages: IMessages;
-  setDataMessages: React.Dispatch<React.SetStateAction<IMessages>>;
+  dataMessages: IUser;
+  setDataMessages: React.Dispatch<React.SetStateAction<IUser>>;
   dataChannels: IChannels;
   setDataChannels: React.Dispatch<React.SetStateAction<IChannels>>;
   isClickedDM: boolean;
@@ -24,8 +25,10 @@ type MessagesContextType = {
   setIsRightBarClosedDM: React.Dispatch<React.SetStateAction<boolean>>;
   isRightBarClosedChannel: boolean;
   setIsRightBarClosedChannel: React.Dispatch<React.SetStateAction<boolean>>;
-  isGlitch: boolean;
-  setIsGlitch: React.Dispatch<React.SetStateAction<boolean>>;
+  isSubmitted: boolean;
+  setIsSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
+  isPopupClicked: boolean;
+  setIsPopupClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MessagesContext = createContext({} as MessagesContextType);
@@ -38,16 +41,17 @@ export const MessagesContextProvider = ({
   const [isClickedChannel, setIsClickedChannel] = useState<boolean>(false);
   const [isRightBarOpenDM, setIsRightBarOpenDM] = useState<boolean>(false);
   const [isRightBarClosedDM, setIsRightBarClosedDM] = useState<boolean>(false);
-  const [isGlitch, setIsGlitch] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isRightBarClosedChannel, setIsRightBarClosedChannel] = useState<boolean>(false);
   const [isRightBarOpenChannel, setIsRightBarOpenChannel] = useState<boolean>(false);
+  const [isPopupClicked, setIsPopupClicked] = useState<boolean>(false);
   const [dataChannels, setDataChannels] = useState<IChannels>({name: '', id: -1});
-  const [dataMessages, setDataMessages] = useState<IMessages>({id: -1, name: '', avatar: '', time: '', message: '', missedMessages: -1, pastille: -1});
+  const [dataMessages, setDataMessages] = useState<IUser>({id: -1, name: '', image: '', coalition: '', status: '', score: -1, games: -1, wins: -1, ratio: -1, achievements: []});
   return (
     <MessagesContext.Provider value={{ dataMessages, setDataMessages, dataChannels, setDataChannels, 
     isClickedDM, setIsClickedDM, isClickedChannel, setIsClickedChannel, isMobileClicked, setIsMobileClicked,
     isRightBarOpenDM, setIsRightBarOpenDM, isRightBarOpenChannel, setIsRightBarOpenChannel, isRightBarClosedDM,
-    setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel, isGlitch, setIsGlitch }}>
+    setIsRightBarClosedDM, isRightBarClosedChannel, setIsRightBarClosedChannel, isSubmitted, setIsSubmitted, isPopupClicked, setIsPopupClicked }}>
       {children}
     </MessagesContext.Provider>
   );
