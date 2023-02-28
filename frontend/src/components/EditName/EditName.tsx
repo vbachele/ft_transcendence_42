@@ -51,13 +51,12 @@ const EditName = (props: Props) => {
   }
 
   /* Change settings of the user in the page /settings */
-  function userSettingsPage() {
+  async function userSettingsPage() {
     if (props.page === "settings") {
       let newuserName = {
         name: value,
       };
       backend.patchUser(userName.userName, newuserName);
-      backend.patchUser(value, image);
       setUserName({ userName: value });
     }
   }

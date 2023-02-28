@@ -45,7 +45,6 @@ function App() {
       <>
         <Pages.Navbar setTheme={setTheme} />
         <Routes>
-          <Route path="/oldlogin" element={<Pages.Login />} />
           <Route path="/chat" element={<Pages.Chat />} />
           <Route path="/leaderboard" element={<Pages.Leaderboard />} />
           <Route path="/dashboard/:name" element={<Pages.Dashboard />} />

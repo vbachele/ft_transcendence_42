@@ -14,7 +14,7 @@ export const backend = {
     const response = await api.get("/users/" + name);
     return await response.json();
   },
-  async patchUser(name: string, updateUser: unknown): Promise<IUser> {
+  async patchUser(name: string, updateUser: unknown): Promise<any> {
     const response = await api.patch("/users/" + name, updateUser);
     return response.json();
   },
@@ -22,7 +22,7 @@ export const backend = {
     const response = await api.delete("/users/deleteall");
     return await response.json();
   },
-  async createUser(user: unknown): Promise<IUser> {
+  async createUser(user: unknown): Promise<any> {
     const response = await api.post("/auth/Oauth", user);
     return await response.json();
   },

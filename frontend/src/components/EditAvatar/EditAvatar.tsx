@@ -28,7 +28,7 @@ export const EditAvatar = (props: Props) => {
     <S.Container>
       <S.AvatarContainer>
         <S.Avatar src={image.image} />
-        <SelectFile />
+        <SelectFile page={props.page} />
       </S.AvatarContainer>
       <S.NameContainer>
         <F.Text weight="700">

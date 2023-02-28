@@ -19,6 +19,7 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
   useEffect(() => {
     checkUserToken();
   }, []);
+
   if (tokenExists) {
     return children;
   }
