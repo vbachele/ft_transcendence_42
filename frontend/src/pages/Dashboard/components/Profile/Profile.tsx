@@ -6,9 +6,15 @@ import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
 import {Button, Dropdown} from 'antd';
 import {Link} from 'react-router-dom';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface IProps {
 	user: IUser;
+}
+
+function blockUser() {
+	console.log('block user'); //TODO implement block user
+	unlockAchievement('BLOCK');
 }
 
 const items = [
@@ -22,7 +28,11 @@ const items = [
 	},
 	{
 		key: '3',
-		label: <Link to="/block">Block</Link>,
+		label: (
+			<S.OptionButton className="option-button" onClick={blockUser}>
+				Block
+			</S.OptionButton>
+		),
 	},
 ];
 

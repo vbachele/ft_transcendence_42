@@ -83,3 +83,11 @@ export const VDivLink = styled(Link)`
 		color: #ffbf00;
 	}
 `;
+
+export const OptionButton = styled.button`
+	border: none;
+	background: none;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+`;

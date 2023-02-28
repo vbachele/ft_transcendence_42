@@ -66,7 +66,7 @@
 		{
 			"id": 10,
 			"api": "BLOCK",
-			"name": "I hate you",
+			"name": "Hater",
 			"description": "Block a user",
 			"image": "https://cdn-icons-png.flaticon.com/512/6144/6144518.png"
 		},

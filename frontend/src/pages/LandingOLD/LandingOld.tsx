@@ -26,6 +26,7 @@ const Landing = () => {
 		let patch = {
 			name: 'Domingo',
 		};
+
 		/***  user before the change  ***/
 		console.log('BEFORE UPDATE');
 		const userbefore = backend.getOneUser('39');
