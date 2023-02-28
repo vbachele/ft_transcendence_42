@@ -28,6 +28,7 @@ endif
 	@echo POSTGRES_DIR var removed from .env
 endif
 	docker system prune -a
+	docker volume prune
 	sudo rm -rf ${POSTGRES_DIR}
 	sudo rm -rf ./backend/.env
 	sudo rm -rf ./frontend/.env

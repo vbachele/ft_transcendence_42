@@ -31,7 +31,7 @@ const emptyLobby = (): Lobby => ({
 });
 
 function Game() {
-	const {socket, users, uid} = useContext(SocketContext).SocketState;
+	const {socket, users, name} = useContext(SocketContext).SocketState;
 	// const [position, setPosition] = useState({x: 0, y: 0});
 	// const canvasRef = useRef(null);
 	// let pong: Pong;
