@@ -4,7 +4,7 @@ export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5em;
+  gap: 4em;
 
   @media only screen and (max-width: 768px) {
     align-items: center;
@@ -24,7 +24,7 @@ export const InputContainer = styled.div`
 
 export const Input = styled.input`
   height: 48px;
-  width: clamp(20rem, 50%, 30rem);
+  width: clamp(18rem, 50%, 30rem);
   /* Text box */
   font-family: "Montserrat";
   font-style: normal;

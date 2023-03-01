@@ -25,11 +25,10 @@ export const SelectFile = (props: Props) => {
 
   function checkImageError(response: any, uploadedImage: string) {
     if (response.statusCode == "400") {
-      setError(!error);
+      setError(true);
       return;
     }
     setImage({ image: uploadedImage });
-    // setError(false);
   }
 
   /* Check file and upload file in database */
@@ -40,6 +39,9 @@ export const SelectFile = (props: Props) => {
         uploadedImage
       );
       checkImageError(response, uploadedImage.image);
+    }
+    if (props.page === "registration") {
+      setImage(uploadedImage);
     }
   }
 

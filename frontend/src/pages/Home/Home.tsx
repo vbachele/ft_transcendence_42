@@ -72,7 +72,7 @@ const Homepage = () => {
         <S.hero id="hero">
           <S.heroName id="hero-name">{userName?.userName}</S.heroName>
           <S.heroUnlocks id="hero-unlocks">
-            <span>{achievements?.achievements}</span>/26 ACHIEVEMENTS
+            <span>{achievements?.achievements}</span>/15 ACHIEVEMENTS
           </S.heroUnlocks>
         </S.hero>
       </S.main>

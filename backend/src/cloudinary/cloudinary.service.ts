@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { v2 } from "cloudinary";
 import { Request } from "express";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -12,6 +12,7 @@ export class CloudinaryService {
     try {
       const uploadedResponse = await v2.uploader.upload(image, {
         upload_preset: "uz3pb2ns",
+        allowed_formats: ["jpg", "png"],
       });
       const personalizedUrl = v2.url(uploadedResponse.public_id);
       const user = await this.prisma.user.update({
@@ -24,7 +25,10 @@ export class CloudinaryService {
       });
       return user;
     } catch (error) {
-      throw error;
+      throw new BadRequestException("Invalidfile", {
+        cause: new Error(),
+        description: error,
+      });
     }
   }
 }

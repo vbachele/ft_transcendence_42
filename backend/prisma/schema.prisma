@@ -14,7 +14,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   name String? @unique
-  user42Name String @default("No42userName")
+  user42Name String?
   email String? @default("")
   image String? @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
   coalition String? @default("Federation")
@@ -26,5 +26,6 @@ model User {
   score Int? @default(0)
   accessToken String @default("noToken")
   refreshToken String? @default("noRefreshToken")
-  isRegistered Boolean @default(false)
+  isRegistered Boolean? @default(false)
+  // @@unique([name, user42Name, email])
 }

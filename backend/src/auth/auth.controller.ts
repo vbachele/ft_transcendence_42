@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res } from "@nestjs/common";
+import { Controller, Get, Post, Redirect, Req, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
 import { Request, Response } from "express";
@@ -13,16 +13,20 @@ export class AuthController {
   ) {}
   /***  Create the user in database from the page registration ***/
   @Post("Oauth")
-  async userOauthCreationInDataBase(@Req() req: Request) {
+  async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response) {
     const token: string = req.cookies.token;
     const user42infos = await this.Oauth42.access42UserInformation(token);
     const finalUser = await this.authService.createDataBaseUser(
+      res,
       user42infos,
       token,
       req.body.name,
       req.body.isRegistered
     );
-    return finalUser;
+    return res.status(200).json({
+      statusCode: 200,
+      path: finalUser,
+    });
   }
 
   /***  After the user said yes to connect to 42 API, we attribute the token and we check if he exists in the database ***/
@@ -34,8 +38,8 @@ export class AuthController {
       token.access_token
     );
     this.authService.createCookies(res, token);
-    const userExists = await this.userService.getUserByEmail(user42infos.login);
-    this.authService.RedirectConnectingUser(res, userExists?.name);
+    const userExists = await this.userService.getUserByEmail(user42infos.email);
+    this.authService.RedirectConnectingUser(res, userExists?.email);
   }
 
   @Get("logout")

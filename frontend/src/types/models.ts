@@ -8,7 +8,6 @@ export interface IUser {
   wins: number;
   ratio: number;
   achievements: string[];
-  id: number;
 }
 
 export enum StateEnum {

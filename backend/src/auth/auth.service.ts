@@ -12,6 +12,7 @@ export class AuthService {
     private Oauth42: Oauth42Service
   ) {}
   async createDataBaseUser(
+    @Res() res: Response,
     user42: any,
     token: string,
     name: string,
@@ -26,6 +27,7 @@ export class AuthService {
           isRegistered: isRegistered,
           user42Name: user42.login,
           name: name,
+          email: user42.email,
         },
       });
       return user;

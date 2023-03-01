@@ -50,11 +50,11 @@ export class UserService {
       throw error;
     }
   }
-  async getUserByEmail(user42Name: string) {
+  async getUserByEmail(email: string) {
     try {
       const user = await this.prisma.user.findFirst({
         where: {
-          user42Name,
+          email: email,
         },
       });
       return user;
@@ -63,11 +63,11 @@ export class UserService {
     }
   }
   async getUserByToken(req: Request) {
-    const { accessToken } = req.params;
+    const accessToken: string = req.cookies.token;
     try {
       const user = await this.prisma.user.findFirst({
         where: {
-          accessToken,
+          accessToken: accessToken,
         },
       });
       return user;

@@ -6,8 +6,8 @@ export const Container = styled.div`
   align-items: center;
   margin: auto;
   width: clamp(60vw, 394px, 50vw);
-  margin-top: 15vh;
-  gap: 30px;
+  margin-top: 6vh;
+  gap: 20px;
   /* Inside auto layout */
 
   flex: none;

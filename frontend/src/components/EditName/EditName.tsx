@@ -5,7 +5,6 @@ import * as UI from "styles/buttons.styles";
 import { useNavigate } from "react-router-dom";
 import { backend } from "lib/backend";
 import { useUserInfos } from "contexts/User/userContent";
-import getInfosFromDB from "contexts/User/GetuserFromDB";
 
 interface Props {
   visible?: boolean;
@@ -13,40 +12,48 @@ interface Props {
   page: string;
 }
 
-/* Function to create the user in the database */
-async function createUser(value: string) {
-  // Here n'aller dans la condition seulement si le user n'est pas deja registered" sinon just PATCH LE NOM
-  let UserCreation = {
-    name: value,
-    isRegistered: true,
-  };
-  backend.createUser(UserCreation);
-}
-
 /* MAIN FUNCTION */
 const EditName = (props: Props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const { userName, setUserName, setCoalition, setAchievements, setImage } =
-    useUserInfos();
-  const { image } = useUserInfos();
+  const {
+    userName,
+    setUserName,
+    setCoalition,
+    setAchievements,
+    image,
+    setImage,
+  } = useUserInfos();
 
-  function setUserInfosContext() {
-    const userInfos = getInfosFromDB();
-    userInfos.then((res) => {
-      setUserName({ userName: value });
-      setImage({ image: res.image });
-      setAchievements({ achievements: res.achievements });
-      setCoalition({ coalition: res.coalition });
-      navigate(props.linkTo); // put a condition here if the user is 2FA enabled or not
-    });
+  /* Store infos in the user context */
+  async function setUserInfosContext(value: string) {
+    const userInfos: any = await backend.getUserByToken();
+    setUserName({ userName: value });
+    setImage({ image: image.image });
+    setAchievements({ achievements: userInfos.achievements });
+    setCoalition({ coalition: userInfos.coalition });
+    navigate("/");
   }
+
+  async function createUser(value: string) {
+    // Here n'aller dans la condition seulement si le user n'est pas deja registered" sinon just PATCH LE NOM
+    try {
+      let UserCreation = {
+        name: value,
+        isRegistered: true,
+      };
+      const user = await backend.createUser(UserCreation);
+      const upload = await backend.patchUser(value, image);
+      setUserInfosContext(value);
+    } catch (err) {
+      console.log("Error in creation user", err);
+    }
+  }
+
   /* Registration of the user in database in the page /registration*/
-  function userRegistrationPage() {
+  async function userRegistrationPage() {
     if (props.page === "registration") {
-      createUser(value);
-      backend.patchUser(value, image);
-      setUserInfosContext();
+      const user = await createUser(value);
     }
   }
 
@@ -72,7 +79,6 @@ const EditName = (props: Props) => {
     userSettingsPage(); // if in settingsPage
   };
 
-  /* RETURN BODY */
   return (
     <S.FormContainer onSubmit={handleSubmit}>
       <S.InputContainer>

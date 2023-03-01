@@ -30,16 +30,8 @@ export const backend = {
     const response = await api.get("/auth/logout");
     return await response.json();
   },
-  async getUserByToken(
-    token:
-      | string
-      | {
-          [property: string]: string;
-        }
-      | undefined
-  ): Promise<any> {
-    console.log(token);
-    const response = await api.get("/users/token" + token);
+  async getUserByToken(): Promise<any> {
+    const response = await api.get("/users/token");
     return await response.json();
   },
   async checkToken(): Promise<any> {

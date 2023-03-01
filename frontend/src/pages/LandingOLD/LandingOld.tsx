@@ -9,11 +9,7 @@ import { use } from "matter-js";
 import Loading from "components/Loading";
 
 const Landing = () => {
-  const handlePost = () => {
-    // let user: IUser = [];
-    // const response = backend.createUser(user);
-    // console.log(response);
-  };
+  const handlePost = () => {};
   const handleGetAll = () => {
     const userList = backend.getAllUsers();
     console.log(userList);

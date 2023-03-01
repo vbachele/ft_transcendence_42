@@ -9,7 +9,6 @@ import Loading from "components/Loading";
 
 const Leaderboard = () => {
   const { data, isLoading, error } = useFetchUsers();
-  console.log(data);
   let location = useLocation();
   let option = new URLSearchParams(location.state).get("selectedOption");
   if (!option) option = "All";

@@ -1,8 +1,9 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT,
-    "user42Name" TEXT NOT NULL DEFAULT 'No42userName',
+    "user42Name" TEXT,
+    "email" TEXT NOT NULL,
     "image" TEXT DEFAULT 'https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png',
     "coalition" TEXT DEFAULT 'Federation',
     "status" TEXT DEFAULT 'offline',
@@ -12,11 +13,11 @@ CREATE TABLE "User" (
     "achievements" TEXT[],
     "score" INTEGER DEFAULT 0,
     "accessToken" TEXT NOT NULL DEFAULT 'noToken',
-    "refreshToken" TEXT NOT NULL DEFAULT 'noRefreshToken',
+    "refreshToken" TEXT DEFAULT 'noRefreshToken',
     "isRegistered" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
