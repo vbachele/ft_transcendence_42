@@ -1,28 +1,27 @@
-import useFetch from 'hooks/useFetch';
-import { IUser } from 'types/models';
+import {IUser} from 'types/models';
 import compareScore from './compareScore';
+import useFetchUsers from 'hooks/useFetchUsers';
 
 function isEqual(player1: IUser, player2: IUser): boolean {
 	return JSON.stringify(player1) === JSON.stringify(player2);
 }
 
 function getRanks(player: IUser) {
-	const { data, isLoading, error } = useFetch<IUser[]>(
-		'http://localhost:3000/players'
-	);
-	let rankedPlayers: IUser[];
-	let globalRank: number = NaN;
-	let coalitionRank: number = NaN;
+	const {data, isLoading, error} = useFetchUsers();
+
+	let sorted: IUser[];
+	let global: number = NaN;
+	let coalition: number = NaN;
 
 	if (data) {
-		rankedPlayers = data.sort(compareScore);
-		globalRank = rankedPlayers.findIndex((p) => isEqual(p, player)) + 1;
-		coalitionRank =
-			rankedPlayers
+		sorted = data.sort(compareScore);
+		global = sorted.findIndex((p) => isEqual(p, player)) + 1;
+		coalition =
+			sorted
 				.filter((p) => player.coalition === p.coalition)
 				.findIndex((p) => isEqual(p, player)) + 1;
 	}
-	return { globalRank, coalitionRank };
+	return {global, coalition};
 }
 
 export default getRanks;

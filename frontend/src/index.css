@@ -16,10 +16,6 @@ code {
 	font-family: 'Montserrat', sans-serif;
 }
 
-body::-webkit-scrollbar {
-	display: none;
-}
-
 #root {
 	display: flex;
 	flex-direction: column;

@@ -37,3 +37,11 @@ model Lobby {
   type String
   maxClients Int?
 }
+
+model Achievement {
+  id Int @id @default(autoincrement())
+	api String @unique
+  name String
+  image String
+  description String
+}

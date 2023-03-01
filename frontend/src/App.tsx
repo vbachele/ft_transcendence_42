@@ -24,10 +24,11 @@ import FakeLogin from 'mocks/Login/FakeLogin';
 import {MessagesContextProvider} from "./contexts/Chat/MessagesContext";
 
 function App() {
-	const userPref =
-		window.matchMedia &&
-		window.matchMedia('(prefers-color-scheme: dark)').matches;
-	const defaultTheme = userPref ? 'dark' : 'light';
+	// const userPref =
+	// 	window.matchMedia &&
+	// 	window.matchMedia('(prefers-color-scheme: light)').matches;
+	// const defaultTheme = userPref ? 'light' : 'dark';
+	const defaultTheme = 'dark';
 
 	const [theme, setTheme] = useState(
 		localStorage.getItem('theme') || defaultTheme
