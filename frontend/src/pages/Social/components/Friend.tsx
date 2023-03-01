@@ -19,8 +19,7 @@ import BlockUser from 'components/Buttons/Social/BlockUser';
 import AdminRights from 'components/Buttons/Channel/AdminRights';
 import Mute from 'components/Buttons/Channel/Mute';
 import Ban from 'components/Buttons/Channel/Ban';
-import LobbyContext from 'contexts/Lobby/lobby.context';
-import { GameEvents } from 'contexts/Lobby/events';
+import UserInvitedToGame from "../../../components/Popup/UserInvitedToGame/UserInvitedToGame";
 
 interface IProps {
 	friend: IUser;
@@ -29,7 +28,6 @@ interface IProps {
 function Friend({friend}: IProps) {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
-	const {status} = useContext(LobbyContext).LobbyState;
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -76,7 +74,7 @@ function Friend({friend}: IProps) {
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>
-				{status === GameEvents.Invited && <Popup.UserInvitedToGame />}
+				<UserInvitedToGame />
 			</Drawer>
 		</>
 	);

@@ -30,7 +30,7 @@ export class LobbyGateway {
    * @param body request body, protected by a validation pipe
    * (see {@link LobbyValidationPipe} and {@link LobbyDto} for more information
    * @return Dispatch the lobby creation result status to the client
-   * with the lobbyId if it appliesk
+   * with the lobbyId if it applies
    */
   @SubscribeMessage(ClientEvents.CreateLobby)
   onCreateLobby(
@@ -48,7 +48,7 @@ export class LobbyGateway {
     return {
       event: ServerEvents.LobbyMessage,
       data: {
-        message: "Lobby creation",
+        message: "Lobby created",
         status: "created",
         lobbyId: lobby.id,
       },

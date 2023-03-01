@@ -4,43 +4,88 @@ import {PopupButton} from 'styles/buttons.styles';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
-import LobbyContext from 'contexts/Lobby/lobby.context';
-import {GameEvents} from 'contexts/Lobby/events';
 import SocketContext from '../../../contexts/Socket/Context';
-import {ClientEvents} from '../../../pages/Game/events/game.events';
+import {ClientEvents} from '../../../events/socket.events';
+import {usePopup} from '../../../contexts/Popup/Popup';
+import {ServerGameEvents} from '../../../events/game.events';
+import {useNavigate, createSearchParams} from 'react-router-dom';
+
+interface ILobbyData {
+	id: string;
+	type: string;
+}
 
 const GameInvite = () => {
-	const LobbyDispatch = useContext(LobbyContext).LobbyDispatch;
 	const [showComponent, setShowComponent] = useState(false);
-	const {status, lobbyId} = useContext(LobbyContext).LobbyState;
 	const {socket} = useContext(SocketContext).SocketState;
+	const {invited, setInvited} = usePopup();
+	const [lobby, setLobby] = useState<ILobbyData | null>(null);
+	const timeout = useRef<NodeJS.Timeout>();
+	const navigate = useNavigate();
 
 	const renderCounter = useRef(0);
 	renderCounter.current = ++renderCounter.current;
 	console.log(`User Invite has loaded [${renderCounter.current}] times`);
 
-	function onJoin() {
-		socket?.emit(ClientEvents.InvitationResponse, {
-			lobbyId: lobbyId,
-			status: 'accepted',
+	useEffect(() => {
+		socket?.on(ServerGameEvents.Invitation, (data) => {
+			console.info(`Invitation received`);
+			console.log(`Lobby data: `, data);
+			setLobby(data.lobby);
+			setInvited(true);
 		});
+		return () => {
+			socket?.off(ServerGameEvents.Invitation);
+		};
+	}, [socket]);
+
+	useEffect(() => {
+		if (invited) {
+			timeout.current = setTimeout(() => {
+				dispatchResponse('declined');
+				setInvited(false);
+			}, 15_000);
+		}
+	}, [invited]);
+
+	function dispatchResponse(status: string) {
+		console.log(`lobby is `, lobby);
+		socket?.emit(ClientEvents.InvitationResponse, {
+			status: status,
+			lobby: lobby,
+		});
+		console.info(`Invitation response sent`);
+		setLobby(null);
+	}
+
+	function onJoin() {
+		clearTimeout(timeout.current);
+		dispatchResponse('accepted');
 		setShowComponent(true);
-		LobbyDispatch({type: 'update_status', payload: 'accepted'});
 		const close = setTimeout(() => {
 			setShowComponent(false);
+			setInvited(false);
 			clearTimeout(close);
+			navigate({
+				pathname: '/game',
+				search: createSearchParams({
+					lobbyId: lobby!.id,
+				}).toString()
+			});
 		}, 4_000);
 	}
 
 	function onCancel() {
-		socket?.emit(ClientEvents.InvitationResponse, {
-			lobbyId: lobbyId,
-			status: 'declined',
-		});
-		LobbyDispatch({type: 'update_status', payload: 'declined'});
+		clearTimeout(timeout.current);
+		dispatchResponse('declined');
+		setInvited(false);
 	}
 
-	return status === GameEvents.Invited ? (
+	if (!invited) {
+		return null;
+	}
+
+	return (
 		<Popup
 			title="Join game?"
 			subtitle="Bartholomeow has just invited you"
@@ -56,7 +101,7 @@ const GameInvite = () => {
 			</PopupButton>
 			{showComponent ? <GameFound /> : ''}
 		</Popup>
-	) : null;
+	);
 };
 
 export default GameInvite;

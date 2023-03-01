@@ -15,7 +15,7 @@ const Navbar = ({ setTheme }: IProps) => {
   const [log, setLog] = useState<boolean>(true);
 
   return (
-    <S.StyledNav>
+    <S.StyledNav id="navbar">
       <Link to="/">
         <S.Brand>
           <Logo className="logo" />

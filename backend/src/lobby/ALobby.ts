@@ -3,6 +3,7 @@ import { ServerEvents } from "./events/lobby.events";
 import { Server, Socket } from "socket.io";
 import { v4 } from "uuid";
 import { Injectable } from "@nestjs/common";
+import { WebsocketGateway } from "../websocket/websocket.gateway";
 
 /**
  * @description This is the base Lobby class. It contains basic functions that are common to lobbies.
@@ -16,11 +17,10 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export abstract class ALobby {
-
   protected constructor(
+    public readonly server: Server,
     public readonly id: string = v4(),
-    public readonly createdAt = new Date(),
-    protected server: Server = new Server()
+    public readonly createdAt = new Date()
   ) {}
 
   public readonly clients: Map<
@@ -56,7 +56,7 @@ export abstract class ALobby {
     });
   }
 
-  public dispatchToLobby<T>(event: ServerEvents, payload: T): void {
+  public dispatchToLobby<T>(event: any, payload: T): void {
     if (!this.server) throw new Error("Server is undefined");
     this.server.to(this.id).emit(event, payload);
   }

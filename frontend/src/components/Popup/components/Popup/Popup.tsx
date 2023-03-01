@@ -85,7 +85,7 @@ function Popup(props: IPopup) {
 
 	return (
 		<ConditionalOverlay
-			condition={props.overlay ? true : false}
+			condition={!!props.overlay}
 			wrapper={(children: React.ReactNode) => (
 				<S.Overlay onMouseDown={stopPropagation}>{children}</S.Overlay>
 			)}

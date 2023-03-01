@@ -18,3 +18,8 @@ export enum StateEnum {
 }
 
 export type TCallback = ({}) => void;
+
+export interface ILobbyData {
+  id: string;
+  type: string;
+}
