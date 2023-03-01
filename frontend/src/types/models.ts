@@ -18,3 +18,5 @@ export interface IAchievement {
 	description: string;
 	image: string;
 }
+
+export type TCallback = ({}) => void;

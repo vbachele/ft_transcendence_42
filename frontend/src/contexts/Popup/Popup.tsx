@@ -8,14 +8,6 @@ export type Toggle = {
   toggle: boolean;
 };
 
-export type Invite = {
-  invited: boolean;
-};
-
-export type HasInvited = {
-  hasInvited: boolean;
-};
-
 export type Navbar = {
   displayNavbar: boolean;
 };
@@ -23,10 +15,12 @@ export type Navbar = {
 type PopupContextType = {
   popup: Toggle;
   setPopup: React.Dispatch<React.SetStateAction<Toggle>>;
-  invitation: Invite;
-  setInvitation: React.Dispatch<React.SetStateAction<Invite>>;
-  hasInvited: HasInvited;
-  setHasInvited: React.Dispatch<React.SetStateAction<HasInvited>>;
+  invitation: boolean;
+  setInvitation: React.Dispatch<React.SetStateAction<boolean>>;
+  hasInvited: boolean;
+  setHasInvited: React.Dispatch<React.SetStateAction<boolean>>;
+  invitationStatus: string;
+  setInvitationStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 export const PopupContext = createContext({} as PopupContextType);
 
@@ -34,10 +28,9 @@ export const PopupContextProvider = ({
   children,
 }: PopupContextProviderProps) => {
   const [popup, setPopup] = useState<Toggle>({ toggle: false });
-  const [invitation, setInvitation] = useState<Invite>({ invited: false });
-  const [hasInvited, setHasInvited] = useState<HasInvited>({
-    hasInvited: false,
-  });
+  const [invitation, setInvitation] = useState<boolean>(false);
+  const [hasInvited, setHasInvited] = useState<boolean>(false);
+  const [invitationStatus, setInvitationStatus] = useState<string>('');
 
   return (
     <PopupContext.Provider
@@ -48,6 +41,8 @@ export const PopupContextProvider = ({
         setInvitation,
         hasInvited,
         setHasInvited,
+        invitationStatus,
+        setInvitationStatus,
       }}
     >
       {children}
