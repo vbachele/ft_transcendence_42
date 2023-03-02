@@ -8,9 +8,10 @@ import LateralBar from '../containers/LateralBar';
 import RightBarDirectMessages from './RightBarDirectMessages';
 import MainFieldDirectMessages from '../containers/MainFieldDirectMessages';
 import {useState} from 'react';
+import { IUser } from 'types/models';
 
 interface IProps {
-	data: IMessages;
+	data: IUser;
 }
 
 export const DisplayProfile = ({fill}: {fill: string}) =>{
@@ -32,7 +33,7 @@ export const BurgerMenu = ({fill}: {fill: string}) =>{
 
 function TopBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { dataMessages, isMobileClicked, isRightBarOpenDM , isGlitch, setIsGlitch, setIsRightBarClosedDM, setIsClickedDM, setIsMobileClicked, setIsRightBarOpenDM } = useContext(MessagesContext);
+    const { dataMessages, isMobileClicked, isRightBarOpenDM, setIsRightBarClosedDM, setIsClickedDM, setIsMobileClicked, setIsRightBarOpenDM } = useContext(MessagesContext);
     const [isClicked, setIsClicked] = useState<boolean>(false);
 
     const handleClickBurgerMenu = () => {
@@ -57,7 +58,7 @@ function TopBarDirectMessages({data} : IProps) {
             <div className='hiddenDesktop' onClick={handleClickBurgerMenu} style={{cursor: "pointer", padding: '15px'}}> 
                 <BurgerMenu fill={theme.name === "light" ? "black" : "white"}/> 
             </div>
-            <S.ProfilePic src={data.avatar} style={{width: "40px", borderRadius: "50%"}} />
+            <S.ProfilePic src={data.image} style={{width: "40px", borderRadius: "50%"}} />
             {/* <div style={{display: 'flex', flexDirection: 'column', padding: '0px'}}> */}
                 <F.Text weight='700'> {data.name} </F.Text>
                 {/* <F.Subtitle weight='400'> Last seen 5 mins ago </F.Subtitle> */}

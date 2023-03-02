@@ -1,11 +1,10 @@
-import useFetch from 'hooks/useFetch';
-import RankList from './components/RankList';
-import Empty from './components/Empty';
-import {useLocation} from 'react-router-dom';
-import useFetchUsers from 'hooks/useFetchUsers';
-import * as S from './Leaderboard.styles';
-import * as F from 'styles/font.styles';
 import Loading from 'components/Loading';
+import useFetchUsers from 'hooks/useFetchUsers';
+import { useLocation } from 'react-router-dom';
+import * as F from 'styles/font.styles';
+import Empty from './components/Empty';
+import RankList from './components/RankList';
+import * as S from './Leaderboard.styles';
 
 const Leaderboard = () => {
 	const {data, isLoading, error} = useFetchUsers();

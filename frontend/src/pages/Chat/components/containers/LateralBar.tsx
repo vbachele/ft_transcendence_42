@@ -12,11 +12,17 @@ import { ThemeContext } from 'styled-components';
 function LateralBar() {
     const theme = useContext(ThemeContext);
     const [search, setSearch] = useState<string>('');
-    const { isRightBarOpenDM, isClickedChannel, isClickedDM } = useContext(MessagesContext);
+    const { isRightBarOpenDM, isClickedChannel, isClickedDM, setIsPopupClicked } = useContext(MessagesContext);
 
     function handleChange(event: FormEvent<HTMLInputElement>) {
         setSearch(event.currentTarget.value);
     };
+
+    const handleClicked = () => 
+    {
+        setIsPopupClicked(true);
+    };
+
 
     return (
         <S.LateralBarContainer open={isRightBarOpenDM || isClickedChannel || (!isRightBarOpenDM && isClickedDM)}>
@@ -31,7 +37,7 @@ function LateralBar() {
                 <ChannelsList value={search} />
                 <S.ContainerTitles>
                     <F.H3> Direct messages</F.H3>
-                    <button className='buttonTitles' style={{border : 'none', color: theme.name === 'light' ? 'black' : 'white', backgroundColor : 'transparent'}}><F.H3> + </F.H3></button>
+                    <button onClick={handleClicked} className='buttonTitles' style={{border : 'none', color: theme.name === 'light' ? 'black' : 'white', backgroundColor : 'transparent'}}><F.H3> + </F.H3></button>
                 </S.ContainerTitles>
                 <DirectMessages value={search}/>
         </S.LateralBarContainer>

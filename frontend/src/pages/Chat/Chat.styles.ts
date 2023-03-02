@@ -125,6 +125,8 @@ export const ContainerTitles = styled.div`
 export const ContainerChannels = styled.div`
 
     display: flex;
+    /* flex-grow: 0; */
+    min-height: 5%;
     flex-direction: column;
     justify-content: space-between;
     /* max-height: 33vh; */
@@ -167,12 +169,15 @@ export const ContainerMessage = styled.div`
 export const ContainerMessages = styled.div`
     /* width: 100%; */
     display: flex;
+    flex-shrink: 1;
+    max-height: 55%;
     flex-direction: column;
     justify-content: space-between;
     /* max-height: 33vh; */
     overflow: auto;
     /* flex: 1; */
     gap: 8px;
+    /* max-height: 50%; */
 `;
 
 export const ContainerSubMessages = styled.div`
@@ -274,4 +279,55 @@ export const IsNotMobile = styled.div`
     @media only screen and (max-width: 768px) {
         display: none;
     }
+`;
+
+export const Friend = styled.button`
+	cursor: pointer;
+	padding: 8px;
+	display: flex;
+	border: none;
+	border-radius: 8px;
+	align-items: center;
+	color: ${(p) => p.theme.colors.secondary};
+	background-color: ${(p) =>
+		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+	transition: transform 0.1s linear;
+
+	.avatar {
+		border-radius: 50%;
+		width: 64px;
+		height: 64px;
+	}
+
+	:hover {
+		transform: scale(1.01);
+		background-color: ${(p) =>
+			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
+	}
+`;
+
+export const Status = styled.div<IProps>`
+	display: flex;
+	align-items: center;
+	gap: 5px;
+
+	span {
+		background-color: ${(p) =>
+		p.state === "online" ? '#4bae4f'
+			: p.state === "ingame" ? '#fa8c16'
+			: p.state === "offline" ? '#9ca3af'
+			: '#000'};
+		height: 10px;
+		width: 10px;
+		border-radius: 50%;
+	}
+
+	p {
+		color: ${(p) =>
+		p.state === "online" ? '#4bae4f'
+			: p.state === "ingame" ? '#fa8c16'
+			: p.state === "offline" ? '#9ca3af'
+			: '#000'};
+	}
 `;
