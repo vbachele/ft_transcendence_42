@@ -3,7 +3,7 @@ import { ServerEvents } from "./events/lobby.events";
 import { Server, Socket } from "socket.io";
 import { v4 } from "uuid";
 import { Injectable } from "@nestjs/common";
-import { WebsocketGateway } from "../websocket/websocket.gateway";
+import { GameLobby } from "./gameLobby";
 
 /**
  * @description This is the base Lobby class. It contains basic functions that are common to lobbies.

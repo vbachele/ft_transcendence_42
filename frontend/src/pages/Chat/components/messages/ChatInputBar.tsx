@@ -25,9 +25,9 @@ function ChatInputBar() {
     return ( 
         <form onSubmit={handleSubmit} style={{position: 'relative', margin: '8px 16px'}}>
             <S.ChatBarInput type="text" open={isClickedDM} placeholder="Message"/>
-            <form onSubmit={handleSubmit} style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
+            <div onClick={handleSubmit} style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
                 <Arrow />
-            </form>
+            </div>
         </form>
     );
 }
