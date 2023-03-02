@@ -1,25 +1,63 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Text} from 'styles/font.styles';
 import {PopupButton} from 'styles/buttons.styles';
 import {usePopup} from 'contexts/Popup/Popup';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
-import LobbyContext from 'contexts/Lobby/lobby.context';
-import { GameEvents } from 'contexts/Lobby/events';
-
-
-//BACKEND Chercher le nom du user que l'on invite ici
-//BACKEND if hasinvited = 1
-//BACKEND gerer quand le user envoie l'invitation une invit === passe le user en RED
+import {ServerEvents} from '../../../events/socket.events';
+import SocketContext from '../../../contexts/Socket/Context';
+import {createSearchParams, useNavigate} from 'react-router-dom';
+import {ILobbyData} from "../../../types/models";
 
 function UserInvitedToGame() {
 	const [showComponent, setShowComponent] = useState(false);
-	const {status} = useContext(LobbyContext).LobbyState;
-	const lobbyDispatch = useContext(LobbyContext).LobbyDispatch;
+	const {socket} = useContext(SocketContext).SocketState;
+	const {hasInvited, setHasInvited} = usePopup();
+	const [response, setResponse] = useState('');
+	const navigate = useNavigate();
+	const [lobby, setLobby] = useState<ILobbyData>();
+
+	useEffect(() => {
+		socket?.on(ServerEvents.InvitationResponse, (data) => {
+			console.info(`Invitation response - [${data.response}]`);
+			console.log(`Lobby data `, data.lobby)
+			setLobby(data.lobby);
+			setResponse(data.response);
+		});
+		return () => {
+			socket?.off(ServerEvents.InvitationResponse);
+		};
+	}, [socket]);
+
+	useEffect(() => {
+		if (response === 'accepted') {
+			setShowComponent(true);
+			const close = setTimeout(() => {
+				setShowComponent(false);
+				setHasInvited(false);
+				setResponse('');
+				clearTimeout(close);
+				navigate({
+					pathname: '/game',
+					search: createSearchParams({
+						lobbyId: lobby!.id,
+					}).toString(),
+				});
+			}, 4_000);
+		} else if (response === 'declined') {
+			setHasInvited(false);
+			setResponse('');
+		}
+		setLobby(undefined);
+	}, [response]);
 
 	function onCancel() {
-		lobbyDispatch({type: 'update_status', payload: GameEvents.Declined});
+		setHasInvited(false);
+	}
+
+	if (!hasInvited) {
+		return null;
 	}
 
 	return (
@@ -30,13 +68,13 @@ function UserInvitedToGame() {
 			stopPropagation={true}
 			overlay={true}
 		>
-				<PopupButton
-					onClick={onCancel}
-					border="1px solid #e5e7eb"
-					className="Cancel"
-				>
-					<Text weight="500">Cancel invitation</Text>
-				</PopupButton>
+			<PopupButton
+				onClick={onCancel}
+				border="1px solid #e5e7eb"
+				className="Cancel"
+			>
+				<Text weight="500">Cancel invitation</Text>
+			</PopupButton>
 			{showComponent ? <GameFound /> : ''}
 		</Popup>
 	);

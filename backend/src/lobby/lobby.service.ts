@@ -39,10 +39,17 @@ export class LobbyService {
   public join(lobbyId: string, client: AuthenticatedSocket) {
     const lobby = this.getLobby(lobbyId);
     lobby.addClient(client);
+    console.info(`Client [${client.data.name}] joined lobby [${lobbyId}]`);
   }
 
   public leave(lobbyId: string, client: AuthenticatedSocket) {
     const lobby = this.getLobby(lobbyId);
     lobby.removeClient(client);
+    console.info(`Client [${client.data.name}] left lobby [${lobbyId}]`)
+  }
+
+  public delete(lobbyId: string) {
+    this.lobbies.delete(lobbyId);
+    console.info(`Lobby [${lobbyId}] deleted`);
   }
 }

@@ -1,14 +1,10 @@
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './invite.svg';
-import useInviteToLobby from '../../../../hooks/Lobby/useInviteToLobby';
-import {
-	ClientEvents,
-	ServerEvents,
-} from '../../../../pages/Game/events/game.events';
-import {GameEvents} from '../../../../contexts/Lobby/events';
-import {useContext} from 'react';
+import {ClientEvents, ServerEvents} from '../../../../events/socket.events';
+import {useContext, useRef} from 'react';
 import SocketContext from '../../../../contexts/Socket/Context';
-import LobbyContext from '../../../../contexts/Lobby/lobby.context';
+import {ClientGameEvents} from '../../../../events/game.events';
+import {usePopup} from '../../../../contexts/Popup/Popup';
 
 interface IProps {
 	id: string;
@@ -16,24 +12,27 @@ interface IProps {
 
 function Invite({id}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
-	const lobbyDispatch = useContext(LobbyContext).LobbyDispatch;
+	const {hasInvited, setHasInvited} = usePopup();
 
 	function onInvite() {
-		socket?.emit(ClientEvents.CreateLobby, {type: 'game', mode: 'duo'});
+		console.log(`friend id `, id)
+		socket?.emit(ClientEvents.CreateLobby, {
+			type: 'game',
+			data: {
+				mode: 'duo',
+			},
+		});
 		socket?.once(ServerEvents.LobbyMessage, (data) => {
 			if (data.message === 'Lobby created') {
+				setHasInvited(true);
 				console.info(`Sending invitation request`);
-				lobbyDispatch({type: 'update_status', payload: GameEvents.Invited});
-				socket?.emit(ClientEvents.InviteToLobby, {
-					invitedClient: id,
+				socket?.emit(ClientGameEvents.Invite, {
 					lobbyId: data.lobbyId,
+					invitedClientName: id,
 				});
 			}
 		});
 
-		socket?.on(ServerEvents.InvitationDeclined, () => {
-			lobbyDispatch({type: 'update_status', payload: GameEvents.Declined});
-		});
 	}
 
 	return (

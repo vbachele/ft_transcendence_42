@@ -1,63 +1,69 @@
 import {
+  ConnectedSocket,
+  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsResponse,
 } from "@nestjs/websockets";
-import { ClientEvents } from "../lobby/events/lobby.events";
-import { LobbyService } from "../lobby/lobby.service";
-import { AuthenticatedSocket } from "../lobby/types/lobby.type";
-import { GameLobby } from "../lobby/gameLobby";
+import {ClientEvents, ServerEvents} from "../lobby/events/lobby.events";
+import { AuthenticatedSocket, ServerPayloads } from "../lobby/types/lobby.type";
 import { Server } from "socket.io";
+import {GameInviteDto, MovePaddleDto} from "./dto/game.dto";
+import { ClientGameEvents } from "./events/game.events";
+import { GameService } from "./game.service";
+import { ValidationPipe } from "@nestjs/common";
+import {LobbyService} from "../lobby/lobby.service";
 
 @WebSocketGateway()
 export class GameGateway {
-  constructor(private readonly lobbyService: LobbyService) {}
+  constructor(
+    private readonly gameService: GameService,
+  ) {}
 
-  @WebSocketServer()
-  server: Server;
-
-  @SubscribeMessage(ClientEvents.InviteToLobby)
-  onInviteToLobby(client: AuthenticatedSocket, data: any) {
-    const lobby = this.lobbyService.getLobby(data.lobbyId) as GameLobby;
-    lobby.invitation();
+  @SubscribeMessage(ClientGameEvents.Invite)
+  onInviteToLobby(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody(new ValidationPipe()) data: GameInviteDto
+  ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
+    console.log(data.invitedClientName);
+    this.gameService.invite(client, data.invitedClientName, data.lobbyId);
+    return {
+      event: ServerEvents.LobbyMessage,
+      data: {
+        message: `Invitation sent`,
+      },
+    };
   }
 
-  // @SubscribeMessage(ClientEvents.InviteToLobby)
-  // onInviteToLobby(
-  //   client: AuthenticatedSocket,
-  //   data: LobbyInviteDto
-  // ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
-  //   const lobby = client.data.gameLobby;
-  //   if (!lobby) throw new Error(`No lobby attached to user - [${client.data.name}]`);
-  //   else lobby.inviteClient(client, data.invitedClient);
-  //   return {
-  //     event: ServerEvents.LobbyMessage,
-  //     data: {
-  //       message: `Invitation sent`,
-  //     },
-  //   };
-  // }
+  @SubscribeMessage(ClientEvents.InvitationResponse)
+  onInvitationResponse(
+    client: AuthenticatedSocket,
+    data: any
+  ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
+    console.log(data);
+    this.gameService.dispatchInvitationResponse(client, data);
+    return {
+      event: ServerEvents.LobbyMessage,
+      data: {
+        message: `Invitation ${data.status}`,
+        status: data.status,
+      },
+    };
+  }
 
-  // @SubscribeMessage(ClientEvents.InvitationResponse)
-  // onInvitationResponse(
-  //   client: AuthenticatedSocket,
-  //   data: any
-  // ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
-  //   console.log(data);
-  //   switch (data.status) {
-  //     case "accepted":
-  //       this.lobbyService.join(data.lobbyId, client);
-  //       break;
-  //     case "declined":
-  //       this.lobbyService.delete(data.lobbyId);
-  //   }
-  //   this.lobbyService.dispatchResponse(data.lobbyId, data.status);
-  //   return {
-  //     event: ServerEvents.InvitationResponse,
-  //     data: {
-  //       message: `Invitation ${data.status}`,
-  //       status: data.status,
-  //     },
-  //   };
-  // }
+  @SubscribeMessage(ClientGameEvents.Ready)
+  onReady(
+      @ConnectedSocket() client: AuthenticatedSocket
+  ) {
+    console.info(`Client [${client.data.name}] ready`)
+  }
+
+  @SubscribeMessage(ClientGameEvents.MovePaddle)
+  onMovePaddle(
+      @ConnectedSocket() client: AuthenticatedSocket,
+      @MessageBody(new ValidationPipe()) data: MovePaddleDto,
+  ) {
+    this.gameService.movePaddle(client, data);
+  }
 }

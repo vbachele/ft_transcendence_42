@@ -20,3 +20,8 @@ export interface IAchievement {
 }
 
 export type TCallback = ({}) => void;
+
+export interface ILobbyData {
+  id: string;
+  type: string;
+}

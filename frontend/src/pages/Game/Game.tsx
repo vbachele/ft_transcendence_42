@@ -1,20 +1,11 @@
-import React, {
-	ChangeEvent,
-	ChangeEventHandler,
-	KeyboardEventHandler,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
+import {StyledCanvas, StyledGame} from './Game.styles';
 import SocketContext from '../../contexts/Socket/Context';
-import {useRef} from 'react';
 import {Pong} from './Pong';
-import {Socket} from 'socket.io-client';
-import Matter from 'matter-js';
-import {ClientEvents, ServerEvents} from './events/game.events';
-import SocketContextComponent from 'contexts/Socket/Component';
-import {StyledGame} from './Game.styles';
+import Countdown from '../../components/Popup/Countdown/Countdown';
+
+const scaleWidth = 500;
+const scaleHeight = 500;
 
 export interface Lobby {
 	id: string;
@@ -31,59 +22,30 @@ const emptyLobby = (): Lobby => ({
 });
 
 function Game() {
-	const {socket, users, name} = useContext(SocketContext).SocketState;
-	// const [position, setPosition] = useState({x: 0, y: 0});
-	// const canvasRef = useRef(null);
-	// let pong: Pong;
+	const canvasRef = useRef(null);
+	const {socket} = useContext(SocketContext).SocketState;
+	const pongRef = useRef<Pong>();
 
-	// useEffect(() => {
-	// 	pong = new Pong(canvasRef.current!, socket as Socket);
-	// 	console.log(position);
-	// 	pong.run();
-	// 	pong.paddleController();
-	// 	setPosition(pong.leftPaddlePosition());
-	// 	redraw();
-	// }, []);
-
-	// function redraw() {
-	// 	const canvas: HTMLCanvasElement = canvasRef.current!;
-	// 	canvas.width = canvas.clientWidth;
-	// 	canvas.height = canvas.clientHeight;
-	// const navigate = useNavigate();
-	// }
-	const [lobby, setLobby] = useState<Lobby>(emptyLobby());
 	useEffect(() => {
-		socket?.emit(ClientEvents.CreateLobby, {mode: 'duo'});
-		socket?.on(ServerEvents.LobbyState, (payload) => {
-			setLobby(payload);
-		});
-		console.log(lobby);
+		pongRef.current = new Pong(canvasRef.current!, socket!, 'right');
+		pongRef.current.run();
+		pongRef.current?.paddleController();
+		addEventListener('resize', resize);
 	}, []);
 
-	function onJoinLobby() {
-		socket?.emit(ClientEvents.JoinLobby, {lobbyId: 'f4292269-0998-45fd-bd92-a1952fc48bc3'})
-		socket?.on(ServerEvents.LobbyState, (payload) => {
-			setLobby(payload);
-		});
+	function resize() {
+		const canvas: HTMLCanvasElement = canvasRef.current!;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 	}
 
 	return (
-		<StyledGame>
-			<p>User socket: {socket?.id}</p>
-			<p>Users: {users.length}</p>
-			<p>Lobby ID: {lobby?.id}</p>
-			<p>Lobby creation date: {lobby?.createdAt}</p>
-			<p>Lobby created by: {lobby?.createdBy}</p>
-			<li style={{display: 'flex'}}>
-				Players in lobby:
-				<ul>
-					{lobby?.clients.map((client) => {
-						return <li style={{border: 'none', padding: '0px 8px'}}>{client}</li>;
-					})}
-				</ul>
-			</li>
-			<button onClick={onJoinLobby}>Join Lobby</button>
-		</StyledGame>
+		<div>
+			<StyledCanvas ref={canvasRef} tabIndex={1}>
+			</StyledCanvas>
+			<Countdown />
+		</div>
+
 	);
 }
 
