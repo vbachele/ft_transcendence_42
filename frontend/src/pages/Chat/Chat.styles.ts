@@ -169,8 +169,8 @@ export const ContainerMessage = styled.div`
 export const ContainerMessages = styled.div`
     /* width: 100%; */
     display: flex;
-    flex-shrink: 1;
-    max-height: 55%;
+    flex-shrink: 2;
+    /* max-height: 55%; */
     flex-direction: column;
     justify-content: space-between;
     /* max-height: 33vh; */
@@ -307,27 +307,27 @@ export const Friend = styled.button`
 	}
 `;
 
-export const Status = styled.div<IProps>`
-	display: flex;
-	align-items: center;
-	gap: 5px;
+// export const Status = styled.div<IProps>`
+// 	display: flex;
+// 	align-items: center;
+// 	gap: 5px;
 
-	span {
-		background-color: ${(p) =>
-		p.state === "online" ? '#4bae4f'
-			: p.state === "ingame" ? '#fa8c16'
-			: p.state === "offline" ? '#9ca3af'
-			: '#000'};
-		height: 10px;
-		width: 10px;
-		border-radius: 50%;
-	}
+// 	span {
+// 		background-color: ${(p) =>
+// 		p.state === "online" ? '#4bae4f'
+// 			: p.state === "ingame" ? '#fa8c16'
+// 			: p.state === "offline" ? '#9ca3af'
+// 			: '#000'};
+// 		height: 10px;
+// 		width: 10px;
+// 		border-radius: 50%;
+// 	}
 
-	p {
-		color: ${(p) =>
-		p.state === "online" ? '#4bae4f'
-			: p.state === "ingame" ? '#fa8c16'
-			: p.state === "offline" ? '#9ca3af'
-			: '#000'};
-	}
-`;
+// 	p {
+// 		color: ${(p) =>
+// 		p.state === "online" ? '#4bae4f'
+// 			: p.state === "ingame" ? '#fa8c16'
+// 			: p.state === "offline" ? '#9ca3af'
+// 			: '#000'};
+// 	}
+// `;

@@ -9,6 +9,8 @@ import { MessagesContext } from 'contexts/Chat/MessagesContext';
 import { message } from 'antd';
 import useFetchUsers from 'hooks/useFetchUsers';
 import { IUser } from 'types/models';
+import SocketContext from 'contexts/Socket/Context';
+import { ClientEvents } from 'pages/Game/events/game.events';
 
 interface IProps {
 	value: string
@@ -34,6 +36,7 @@ const DirectMessages: React.FC<IProps> = (props) => {
 // 	);
 	const { setDataMessages, setIsMobileClicked, setIsRightBarClosedDM, setIsClickedDM, setIsRightBarOpenDM, setIsClickedChannel } = useContext(MessagesContext);
 	const {data, isLoading, error} = useFetchUsers();
+	const {socket} = useContext(SocketContext).SocketState;
 
 	const handleClick = (data: IUser) => {
 		setIsClickedDM(true);
@@ -41,7 +44,8 @@ const DirectMessages: React.FC<IProps> = (props) => {
 		setIsClickedChannel(false);
 		setIsMobileClicked(false);
 		setIsRightBarOpenDM(false);
-		setDataMessages(data)
+		setDataMessages(data);
+		socket?.emit(ClientEvents.CreateLobby, {type:"chat"});
 	};
 
 	// let data: IMessages[] = [];
