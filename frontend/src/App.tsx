@@ -1,37 +1,31 @@
+import { useState } from "react";
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
-  useRoutes,
+  useRoutes
 } from "react-router-dom";
-import { useState } from "react";
 
-import Pages from "pages";
+import Defeat from "components/EditName/Defeat";
+import PrivateRoute from "components/PrivateRoute/PrivateRoute";
+import Victory from "components/Victory";
+import { MessagesContextProvider } from "contexts/Chat/MessagesContext";
+import { PopupContextProvider } from "contexts/Popup/Popup";
+import SocketContextComponent from "contexts/Socket/Component";
 import { UserContextProvider } from "contexts/User/userContent";
+import FakeLogin from "mocks/Login/FakeLogin";
+import Pages from "pages";
+import DoubleAuthentication from "pages/2FA";
+import Game from "pages/Game/Game";
+import Homepage from "pages/Home";
+import LandingPage from "pages/Landing/Landingpage";
+import Registration from "pages/Registration/Registration";
+import Social from "pages/Social";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "styles/global";
 import { dark, light } from "styles/theme";
 import "./App.css";
-import SocketContextComponent from "contexts/Socket/Component";
-import { UserMocks } from "./mocks/Users/UserMocks";
-import DoubleAuthentication from "pages/2FA";
-import Victory from "components/Victory";
-import Defeat from "components/EditName/Defeat";
-import LandingPage from "pages/Landing/Landingpage";
-import Social from "pages/Social";
-import { ConfigProvider } from "antd";
-import { PopupContextProvider } from "contexts/Popup/Popup";
-import Homepage from "pages/Home";
-import PrivateRoute from "components/PrivateRoute/PrivateRoute";
-import LobbyContextComponent from "contexts/Lobby/Lobby";
-import { MessagesContextProvider } from "contexts/Chat/MessagesContext";
-import Game from "pages/Game/Game";
-import SearchPlayer from "components/Popup/SearchPlayer/SearchPlayer";
-import Registration from "pages/Registration/Registration";
-import Testpage from "pages/Home";
-import { usePopup } from "contexts/Popup/Popup";
 import Popup from "./components/Popup";
-import FakeLogin from "mocks/Login/FakeLogin";
+import { UserMocks } from "./mocks/Users/UserMocks";
 
 function App() {
   // const userPref =
@@ -44,7 +38,6 @@ function App() {
     localStorage.getItem("theme") || defaultTheme
   );
 
-  const { invitation } = usePopup();
 
   function WithNavbar() {
     return (
@@ -58,7 +51,7 @@ function App() {
           <Route path="/headings" element={<Pages.Headings />} />
           <Route path="/social" element={<Social />} />
           <Route path="/users" element={<UserMocks />} />
-          {/* <Route path="/game" element={<Game/>} /> */}
+          <Route path="/game" element={<Game/>} />
           <Route path="*" element={<Pages.NotFound />} />
           <Route path="/fake_login" element={<FakeLogin />} />
           <Route path="/chat" element={<Pages.Chat />} />
@@ -122,7 +115,6 @@ function App() {
     <UserContextProvider>
       <MessagesContextProvider>
         <SocketContextComponent>
-          <LobbyContextComponent>
             <PopupContextProvider>
               <ThemeProvider theme={theme === "light" ? light : dark}>
                 {/*<ConfigProvider*/}
@@ -140,7 +132,6 @@ function App() {
                 {/*</ConfigProvider>*/}
               </ThemeProvider>
             </PopupContextProvider>
-          </LobbyContextComponent>
         </SocketContextComponent>
       </MessagesContextProvider>
     </UserContextProvider>

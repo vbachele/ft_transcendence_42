@@ -1,21 +1,28 @@
 import {
   ArgumentMetadata,
   BadRequestException,
-  PipeTransform,
+  Injectable,
+  PipeTransform, ValidationPipe,
 } from "@nestjs/common";
 import { LobbyDto } from "./lobby.dto";
 import { plainToInstance } from "class-transformer";
 import { GameLobbyDto } from "../gameLobby";
 import { ChatLobbyDto } from "../chatLobby";
 import { validate } from "class-validator";
+import {MessageBody} from "@nestjs/websockets";
 
 /**
  * @description Validate the lobby dto based on the lobby type passed in body
  */
+
 export class LobbyValidationPipe implements PipeTransform<LobbyDto> {
-  async transform(body: any, metadata: ArgumentMetadata) {
+  async transform(body: LobbyDto, metadata: ArgumentMetadata) {
     if (!body.type)
       throw new BadRequestException(`Request is missing the [type] property`);
+    console.log(`in lobby validation pipe`, body)
+    if (!body.data)
+      throw new BadRequestException(`Request is missing the [data] property`)
+
     let obj;
     switch (body.type) {
       case "game":

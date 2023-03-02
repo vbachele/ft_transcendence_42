@@ -15,12 +15,10 @@ export type Navbar = {
 type PopupContextType = {
   popup: Toggle;
   setPopup: React.Dispatch<React.SetStateAction<Toggle>>;
-  invitation: boolean;
-  setInvitation: React.Dispatch<React.SetStateAction<boolean>>;
+  invited: boolean;
+  setInvited: React.Dispatch<React.SetStateAction<boolean>>;
   hasInvited: boolean;
   setHasInvited: React.Dispatch<React.SetStateAction<boolean>>;
-  invitationStatus: string;
-  setInvitationStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 export const PopupContext = createContext({} as PopupContextType);
 
@@ -28,21 +26,18 @@ export const PopupContextProvider = ({
   children,
 }: PopupContextProviderProps) => {
   const [popup, setPopup] = useState<Toggle>({ toggle: false });
-  const [invitation, setInvitation] = useState<boolean>(false);
+  const [invited, setInvited] = useState<boolean>(false);
   const [hasInvited, setHasInvited] = useState<boolean>(false);
-  const [invitationStatus, setInvitationStatus] = useState<string>('');
 
   return (
     <PopupContext.Provider
       value={{
         popup,
         setPopup,
-        invitation,
-        setInvitation,
+        invited,
+        setInvited,
         hasInvited,
         setHasInvited,
-        invitationStatus,
-        setInvitationStatus,
       }}
     >
       {children}

@@ -3,6 +3,7 @@ import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
 import { Lobby } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
 import { IsNumber } from "class-validator";
+import {WebsocketService} from "../websocket/websocket.service";
 
 export class ChatLobbyDto {
   @IsNumber()
@@ -17,9 +18,10 @@ export class ChatLobby extends ALobby {
 
   constructor(
   data: ChatLobbyDto,
-    private readonly prismaLobbyService: PrismaLobbyService
+    private readonly prismaLobbyService: PrismaLobbyService,
+    private readonly websocketService: WebsocketService,
   ) {
-    super();
+    super(websocketService.server);
     this.maxClients = data.maxClients;
     this.afterInit();
   }

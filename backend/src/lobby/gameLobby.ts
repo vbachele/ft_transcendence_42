@@ -1,7 +1,10 @@
 import { ALobby } from "./ALobby";
 import { Server } from "socket.io";
-import {Injectable} from "@nestjs/common";
+import {ForbiddenException, Injectable} from "@nestjs/common";
 import {IsString} from "class-validator";
+import {AuthenticatedSocket} from "./types/lobby.type";
+import {WebsocketService} from "../websocket/websocket.service";
+import {WsException} from "@nestjs/websockets";
 
 export class GameLobbyDto {
   @IsString()
@@ -11,21 +14,17 @@ export class GameLobbyDto {
 @Injectable()
 export class GameLobby extends ALobby {
   data: GameLobbyDto;
-  constructor(data: GameLobbyDto) {
-    super();
+  constructor(data: GameLobbyDto, private readonly websocketService: WebsocketService) {
+    super(websocketService.server);
     this.data = data;
     this.afterInit();
   }
 
   afterInit() {
-    this.testFunc();
   }
 
-  testFunc() {
-    console.log(`I'm in GameLobby!`);
+  validateClient(client: AuthenticatedSocket) {
+    if (!this.clients.has(client.data.name)) throw new ForbiddenException(`The client doesn't belong to the lobby`)
   }
 
-  invitation() {
-    console.log(`Sending invitation to a gameLobby`);
-  }
 }

@@ -2,7 +2,7 @@ import {
   ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
-  OnGatewayDisconnect,
+  OnGatewayDisconnect, OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -10,13 +10,21 @@ import {
 
 import { Server, Socket } from "socket.io";
 import { AuthenticatedSocket } from "src/lobby/types/lobby.type";
+import {WebsocketService} from "./websocket.service";
 
 @WebSocketGateway()
 export class WebsocketGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
+  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   @WebSocketServer() server: Server;
-  public users: Map<string, string> = new Map<string, string>();
+  public users: Map<string, AuthenticatedSocket> = new Map<string, AuthenticatedSocket>();
+
+  constructor(private websocketService: WebsocketService) {
+  }
+
+  afterInit(server: Server) {
+    this.websocketService.server = this.server;
+  }
 
   async handleConnection(
     @ConnectedSocket() client: AuthenticatedSocket,
@@ -26,7 +34,7 @@ export class WebsocketGateway
     console.info(`Connected - Client Name [${client.data.name}]`);
   }
 
-  async handleDisconnect(@ConnectedSocket() client: Socket) {
+  async handleDisconnect(@ConnectedSocket() client: AuthenticatedSocket) {
     console.info(`Disconnected - Client ID [${client.data.name}]`);
 
     const name = this.GetNameFromSocketId(client.id);
@@ -43,12 +51,12 @@ export class WebsocketGateway
 
   @SubscribeMessage("handshake")
   handleHandshake(
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: AuthenticatedSocket,
     @MessageBody() data: string
   ) {
     console.info(`Handshake received from [${client.data.name}]`);
 
-    const reconnected = Object.values(this.users).includes(client.id);
+    const reconnected = Object.keys(this.users).includes(client.data.name);
 
     if (reconnected) {
       console.info(`User [${client.data.name}] has reconnected`);
@@ -58,7 +66,7 @@ export class WebsocketGateway
       }
     }
 
-    this.users.set(client.data.name, client.id);
+    this.users.set(client.data.name, client);
     const users = Object.keys(this.users);
 
     console.info("Sending callback for handshake...");
@@ -70,6 +78,12 @@ export class WebsocketGateway
     );
   }
 
+  public getClient(username: string): AuthenticatedSocket {
+    const client = this.users.get(username);
+    if (!client) throw new Error(`Client [${username}] doesn't exist`);
+    return client;
+  }
+
   GetNameFromSocketId = (id: string) => {
     return [...this.users.keys()].find((key) => key.includes(id));
   };
@@ -78,8 +92,8 @@ export class WebsocketGateway
     console.info(`Emitting event: ` + name + ` to `, users);
     users.forEach((username) =>
       payload
-        ? this.server.to(this.users.get(username) as string).emit(name, payload)
-        : this.server.to(this.users.get(username) as string).emit(name)
+        ? this.server.to(this.users.get(username)?.id as string).emit(name, payload)
+        : this.server.to(this.users.get(username)?.id as string).emit(name)
     );
   };
 }
