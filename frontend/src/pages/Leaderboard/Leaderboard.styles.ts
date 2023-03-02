@@ -72,7 +72,7 @@ export const Slot = styled(Link)`
 	display: flex;
 	justify-content: space-between;
 	text-decoration: none;
-	color: ${(p) => (p.theme.name === 'light' ? 'black' : 'white')};
+	color: ${(p) => p.theme.colors.secondary};
 	margin: 24px 10%;
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};

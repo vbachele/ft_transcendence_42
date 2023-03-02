@@ -3,6 +3,8 @@ import * as F from 'styles/font.styles';
 
 interface IProps {
 	state: string;
+	weight?: string;
+	size?: string;
 }
 
 const stateEnumLookup: {[key: string]: string} = {
@@ -11,13 +13,15 @@ const stateEnumLookup: {[key: string]: string} = {
 	offline: 'Offline',
 };
 
-function ActivityStatus({state}: IProps) {
+function ActivityStatus({state, weight, size}: IProps) {
 	const output: string = stateEnumLookup[state];
 
 	return (
 		<S.Status state={state}>
 			<span></span>
-			<F.Text weight="500">{output}</F.Text>
+			<F.Text weight={weight || '500'} fontSize={size}>
+				{output}
+			</F.Text>
 		</S.Status>
 	);
 }
