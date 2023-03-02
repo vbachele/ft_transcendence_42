@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, Post } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "src/database/prisma.service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Request } from "express";
 
@@ -15,9 +15,22 @@ export class UserService {
     }
   }
 
-  async getUserByName(req: Request) {
+  async getOneUser(req: Request) {
     try {
-      const { name } = req.params;
+      const { id } = req.params;
+      const user = await this.prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  async getUserByName(name: string) {
+    try {
       const user = await this.prisma.user.findFirst({
         where: {
           name,
@@ -28,6 +41,7 @@ export class UserService {
       throw error;
     }
   }
+  
   async updateUser(req: Request) {
     try {
       const { name } = req.params;

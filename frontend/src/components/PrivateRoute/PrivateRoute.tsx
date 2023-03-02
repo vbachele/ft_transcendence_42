@@ -12,11 +12,12 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function checkUserToken() {
-    const response = await backend.checkToken();
-    if (response.statusCode == "400" || response.statusCode == "403") {
-      navigate("/login");
-      return;
-    }
+    
+    // const response = await backend.checkToken();
+    // if (response.statusCode == "400" || response.statusCode == "403") {
+    //   navigate("/login");
+    //   return;
+    // }
     setIsLoading(false);
     setTokenExists(true);
   }

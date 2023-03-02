@@ -1,4 +1,4 @@
-import LobbyContext from 'contexts/Lobby/Lobby.context';
+import LobbyContext from 'contexts/Lobby/lobby.context';
 import {usePopup} from 'contexts/Popup/Popup';
 import SocketContext from 'contexts/Socket/Context';
 import {ServerEvents} from 'pages/Game/events/game.events';

@@ -1,18 +1,19 @@
 import SocketContext from 'contexts/Socket/Context';
 import {ClientEvents, ServerEvents} from 'pages/Game/events/game.events';
-import {
+import React, {
 	PropsWithChildren,
 	useContext,
 	useEffect,
 	useReducer,
 	useState,
 } from 'react';
-import {TCallback} from 'types/models';
+import { GameEvents } from './events';
 import LobbyContext, {
 	LobbyReducer,
 	defaultLobbyContextState,
 	LobbyContextProvider,
-} from './Lobby.context';
+} from './lobby.context';
+import { LobbyService } from './lobby.service';
 
 export interface ILobbyContextComponentProps extends PropsWithChildren {}
 
@@ -21,6 +22,7 @@ const LobbyContextComponent: React.FunctionComponent<
 > = (props) => {
 	const {children} = props;
 	const {socket} = useContext(SocketContext).SocketState;
+	const lobbyService = new LobbyService;
 
 	const [LobbyState, LobbyDispatch] = useReducer(
 		LobbyReducer,
@@ -28,27 +30,34 @@ const LobbyContextComponent: React.FunctionComponent<
 	);
 
 	useEffect(() => {
-		if (LobbyState.status === ('accepted' || 'declined')) {
-			socket?.emit(ClientEvents.InvitationResponse, {
-				status: LobbyState.status,
-				lobbyId: LobbyState.lobbyId,
-			});
-            const close = setTimeout(() => {
-                LobbyDispatch({type: 'update_status', payload: ''});
-                clearTimeout(close);
-            }, 4_000)
-		}
+		console.log(`New status - [${LobbyState.status}]`)
+		if (LobbyState.status)
+			lobbyService.handleResponse();
 	}, [LobbyState.status]);
 
 	useEffect(() => {
 		socket?.on(ServerEvents.InvitedToLobby, (data) => {
-			LobbyDispatch({type: 'update_status', payload: 'invited'});
-			LobbyDispatch({type: 'update_lobbyId', payload: data.invitation.lobby});
+			console.info(`Invitation received`);
+			LobbyDispatch({type: 'update_type', payload: data.invitation.lobby.type});
+			LobbyDispatch({type: 'update_lobbyId', payload: data.invitation.lobby.id});
+			LobbyDispatch({type: 'update_status', payload: GameEvents.Invited})
+			// lobbyService.handleInvite(data.invitation);
+			console.log(LobbyState);
 		});
 		return () => {
 			socket?.off(ServerEvents.InvitedToLobby);
 		};
 	}, [socket]);
+
+	useEffect(() => {
+		socket?.on(ServerEvents.InvitationResponse, (data) => {
+			console.info(`Invitation response - [${data.response}]`);
+			LobbyDispatch({type: 'update_status', payload: data.response});
+		})
+		return () => {
+			socket?.off(ServerEvents.InvitationResponse)
+		}
+	}, [socket])
 
 	return (
 		<LobbyContextProvider value={{LobbyState, LobbyDispatch}}>

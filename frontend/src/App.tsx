@@ -7,7 +7,6 @@ import {
 import { useState } from "react";
 
 import Pages from "pages";
-
 import { UserContextProvider } from "contexts/User/userContent";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "styles/global";
@@ -29,16 +28,23 @@ import { MessagesContextProvider } from "contexts/Chat/MessagesContext";
 import Game from "pages/Game/Game";
 import SearchPlayer from "components/Popup/SearchPlayer/SearchPlayer";
 import Registration from "pages/Registration/Registration";
+import Testpage from "pages/Home";
+import { usePopup } from "contexts/Popup/Popup";
+import Popup from "./components/Popup";
+import FakeLogin from "mocks/Login/FakeLogin";
 
 function App() {
-  const userPref =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const defaultTheme = userPref ? "dark" : "light";
+  // const userPref =
+  //   window.matchMedia &&
+  //   window.matchMedia("(prefers-color-scheme: dark)").matches;
+  // const defaultTheme = userPref ? 'light' : 'dark';
+  const defaultTheme = "dark";
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || defaultTheme
   );
+
+  const { invitation } = usePopup();
 
   function WithNavbar() {
     return (
@@ -54,6 +60,8 @@ function App() {
           <Route path="/users" element={<UserMocks />} />
           {/* <Route path="/game" element={<Game/>} /> */}
           <Route path="*" element={<Pages.NotFound />} />
+          <Route path="/fake_login" element={<FakeLogin />} />
+          <Route path="/chat" element={<Pages.Chat />} />
         </Routes>
       </>
     );
@@ -112,24 +120,29 @@ function App() {
 
   return (
     <UserContextProvider>
-      <PopupContextProvider>
-        {/* <SocketContextComponent> */}
-        <ThemeProvider theme={theme === "light" ? light : dark}>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: "#e04f5f",
-                colorSuccess: "#4bae4f",
-              },
-            }}
-          >
-            <GlobalStyle />
-            <SearchPlayer />
-            {routes}
-          </ConfigProvider>
-        </ThemeProvider>
-        {/* </SocketContextComponent> */}
-      </PopupContextProvider>
+      <MessagesContextProvider>
+        <SocketContextComponent>
+          <LobbyContextComponent>
+            <PopupContextProvider>
+              <ThemeProvider theme={theme === "light" ? light : dark}>
+                {/*<ConfigProvider*/}
+                {/*	theme={{*/}
+                {/*		token: {*/}
+                {/*			colorPrimary: '#e04f5f',*/}
+                {/*			colorSuccess: '#4bae4f',*/}
+                {/*		},*/}
+                {/*	}}*/}
+                {/*>*/}
+                <GlobalStyle />
+                <Popup.GameInvite />
+                <Popup.SearchPlayer />
+                {routes}
+                {/*</ConfigProvider>*/}
+              </ThemeProvider>
+            </PopupContextProvider>
+          </LobbyContextComponent>
+        </SocketContextComponent>
+      </MessagesContextProvider>
     </UserContextProvider>
   );
 }

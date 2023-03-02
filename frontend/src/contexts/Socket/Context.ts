@@ -3,17 +3,17 @@ import { Socket } from "socket.io-client";
 
 export interface ISocketContextState {
     socket: Socket | undefined;
-    uid: string;
+    name: string;
     users: string[];
 }
 
 export const defaultSocketContextState: ISocketContextState = {
     socket: undefined,
-    uid: '',
+    name: '',
     users: [],
 }
 
-export type TSocketContextActions = 'update_socket' | 'update_uid' | 'update_users' | 'remove_user';
+export type TSocketContextActions = 'update_socket' | 'update_users' | 'remove_user' | 'update_name';
 
 export type TSocketContextPayload = string | string[] | Socket;
 
@@ -28,12 +28,12 @@ export const SocketReducer = (state: ISocketContextState, action: ISocketContext
     switch(action.type) {
         case 'update_socket':
             return {...state, socket: action.payload as Socket};
-        case 'update_uid':
-            return {...state, uid: action.payload as string};
         case 'update_users':
             return {...state, users: action.payload as string[]};
         case 'remove_user':
-            return {...state, users: state.users.filter((id) => id != action.payload as string) };
+            return {...state, users: state.users.filter((name) => name != action.payload as string) };
+        case 'update_name':
+            return {...state, name: action.payload as string};
         default:
             return {...state};
     }

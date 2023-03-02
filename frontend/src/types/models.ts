@@ -10,10 +10,12 @@ export interface IUser {
   achievements: string[];
 }
 
-export enum StateEnum {
-  online = "Online",
-  ingame = "In Game",
-  offline = "Offline",
+export interface IAchievement {
+  id: number;
+  api: string;
+  name: string;
+  description: string;
+  image: string;
 }
 
 export type TCallback = ({}) => void;

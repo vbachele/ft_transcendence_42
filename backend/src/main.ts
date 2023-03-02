@@ -1,9 +1,11 @@
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import express from "express";
 import { AppModule } from "./app.module";
 import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
+import * as session from 'express-session'
+import * as cookieParser from 'cookie-parser'
+
+const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
 async function bootstrap() {
   // Set the maximum size of a request body to 50MB
@@ -12,7 +14,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
   app.enableCors({
-    origin: ["http://localhost:5173", "http://localhost3000"],
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     allowedHeaders: ["content-type"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: false,
@@ -20,6 +22,15 @@ async function bootstrap() {
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
+  app.use(
+    session({
+      secret: 'pass',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {maxAge: oneWeek},
+    })
+  )
   await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
 bootstrap();

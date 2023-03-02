@@ -9,7 +9,8 @@
       "wins": 21,
       "ratio": 0.4,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1904
+      "score": 1904,
+      "accessToken": "1"
     },
     {
       "name": "Harmour",
@@ -20,7 +21,8 @@
       "wins": 72,
       "ratio": 0.99,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 7183
+      "score": 7183,
+      "accessToken": "2"
     },
     {
       "name": "Prodrick",
@@ -31,7 +33,8 @@
       "wins": 13,
       "ratio": 0.23,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1340
+      "score": 1340,
+      "accessToken": "3"
     },
     {
       "name": "Smerdon",
@@ -42,7 +45,8 @@
       "wins": 5,
       "ratio": 0.05,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1239
+      "score": 1239,
+      "accessToken": "4"
     },
     {
       "name": "Mainz",
@@ -53,7 +57,8 @@
       "wins": 59,
       "ratio": 0.91,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 5749
+      "score": 5749,
+      "accessToken": "5"
     },
     {
       "name": "Beddie",
@@ -64,7 +69,8 @@
       "wins": 12,
       "ratio": 0.38,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1104
+      "score": 1104,
+      "accessToken": "6"
     },
     {
       "name": "Tournay",
@@ -75,7 +81,8 @@
       "wins": 34,
       "ratio": 0.69,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 3126
+      "score": 3126,
+      "accessToken": "7"
     },
     {
       "name": "Fogel",
@@ -86,7 +93,8 @@
       "wins": 37,
       "ratio": 0.9,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 3591
+      "score": 3591,
+      "accessToken": "8"
     },
     {
       "name": "Sketch",
@@ -97,7 +105,8 @@
       "wins": 12,
       "ratio": 0.18,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1368
+      "score": 1368,
+      "accessToken": "9"
     },
     {
       "name": "Lockier",
@@ -108,7 +117,8 @@
       "wins": 4,
       "ratio": 0.13,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 531
+      "score": 531,
+      "accessToken": "10"
     },
     {
       "name": "Wymer",
@@ -119,7 +129,8 @@
       "wins": 44,
       "ratio": 0.98,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4375
+      "score": 4375,
+      "accessToken": "11"
     },
     {
       "name": "Palatini",
@@ -130,7 +141,8 @@
       "wins": 7,
       "ratio": 0.24,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 706
+      "score": 706,
+      "accessToken": "12"
     },
     {
       "name": "Dorcey",
@@ -141,7 +153,8 @@
       "wins": 7,
       "ratio": 0.11,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1010
+      "score": 1010,
+      "accessToken": "13"
     },
     {
       "name": "Eyckelbeck",
@@ -152,7 +165,8 @@
       "wins": 25,
       "ratio": 0.93,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2451
+      "score": 2451,
+      "accessToken": "14"
     },
     {
       "name": "Bril",
@@ -163,7 +177,8 @@
       "wins": 52,
       "ratio": 0.95,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 5128
+      "score": 5128,
+      "accessToken": "15"
     },
     {
       "name": "Dorkins",
@@ -174,7 +189,8 @@
       "wins": 12,
       "ratio": 0.22,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1244
+      "score": 1244,
+      "accessToken": "16"
     },
     {
       "name": "Aspenlon",
@@ -185,7 +201,8 @@
       "wins": 24,
       "ratio": 0.31,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2266
+      "score": 2266,
+      "accessToken": "17"
     },
     {
       "name": "Epps",
@@ -196,7 +213,8 @@
       "wins": 18,
       "ratio": 0.31,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1716
+      "score": 1716,
+      "accessToken": "18"
     },
     {
       "name": "Elies",
@@ -207,7 +225,8 @@
       "wins": 13,
       "ratio": 0.28,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1267
+      "score": 1267,
+      "accessToken": "19"
     },
     {
       "name": "Ropert",
@@ -218,7 +237,8 @@
       "wins": 55,
       "ratio": 0.62,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 5005
+      "score": 5005,
+      "accessToken": "20"
     },
     {
       "name": "Nossent",
@@ -229,7 +249,8 @@
       "wins": 8,
       "ratio": 0.15,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 989
+      "score": 989,
+      "accessToken": "21"
     },
     {
       "name": "Chiechio",
@@ -240,7 +261,8 @@
       "wins": 1,
       "ratio": 0.14,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 125
+      "score": 125,
+      "accessToken": "22"
     },
     {
       "name": "Minnis",
@@ -251,7 +273,8 @@
       "wins": 6,
       "ratio": 0.38,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 552
+      "score": 552,
+      "accessToken": "23"
     },
     {
       "name": "Dalston",
@@ -262,7 +285,8 @@
       "wins": 0,
       "ratio": 0.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 330
+      "score": 330,
+      "accessToken": "24"
     },
     {
       "name": "Toppin",
@@ -273,7 +297,8 @@
       "wins": 41,
       "ratio": 0.95,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4036
+      "score": 4036,
+      "accessToken": "25"
     },
     {
       "name": "Coleman",
@@ -284,7 +309,8 @@
       "wins": 1,
       "ratio": 0.03,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 350
+      "score": 350,
+      "accessToken": "26"
     },
     {
       "name": "Helder",
@@ -295,7 +321,8 @@
       "wins": 59,
       "ratio": 0.86,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 5673
+      "score": 5673,
+      "accessToken": "27"
     },
     {
       "name": "Kingcott",
@@ -306,7 +333,8 @@
       "wins": 23,
       "ratio": 1.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2300
+      "score": 2300,
+      "accessToken": "28"
     },
     {
       "name": "Tripett",
@@ -317,7 +345,8 @@
       "wins": 1,
       "ratio": 0.08,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 183
+      "score": 183,
+      "accessToken": "29"
     },
     {
       "name": "Gummory",
@@ -328,7 +357,8 @@
       "wins": 3,
       "ratio": 1.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 300
+      "score": 300,
+      "accessToken": "30"
     },
     {
       "name": "Doddemeade",
@@ -339,7 +369,8 @@
       "wins": 28,
       "ratio": 0.39,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2543
+      "score": 2543,
+      "accessToken": "31"
     },
     {
       "name": "Esser",
@@ -350,7 +381,8 @@
       "wins": 22,
       "ratio": 0.71,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2034
+      "score": 2034,
+      "accessToken": "32"
     },
     {
       "name": "Laval",
@@ -361,7 +393,8 @@
       "wins": 25,
       "ratio": 0.39,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2293
+      "score": 2293,
+      "accessToken": "33"
     },
     {
       "name": "Ambroziak",
@@ -372,7 +405,8 @@
       "wins": 52,
       "ratio": 0.84,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4968
+      "score": 4968,
+      "accessToken": "34"
     },
     {
       "name": "Snoddin",
@@ -383,7 +417,8 @@
       "wins": 46,
       "ratio": 0.61,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4169
+      "score": 4169,
+      "accessToken": "35"
     },
     {
       "name": "Barson",
@@ -394,7 +429,8 @@
       "wins": 83,
       "ratio": 0.9,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 8056
+      "score": 8056,
+      "accessToken": "36"
     },
     {
       "name": "Campbell-Dunlop",
@@ -405,7 +441,8 @@
       "wins": 3,
       "ratio": 0.18,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 342
+      "score": 342,
+      "accessToken": "37"
     },
     {
       "name": "Wimbush",
@@ -416,7 +453,8 @@
       "wins": 36,
       "ratio": 0.74,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 3358
+      "score": 3358,
+      "accessToken": "38"
     },
     {
       "name": "Royse",
@@ -427,7 +465,8 @@
       "wins": 8,
       "ratio": 0.14,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1014
+      "score": 1014,
+      "accessToken": "39"
     },
     {
       "name": "Gilks",
@@ -438,7 +477,8 @@
       "wins": 32,
       "ratio": 0.65,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2920
+      "score": 2920,
+      "accessToken": "40"
     },
     {
       "name": "Radwell",
@@ -449,7 +489,8 @@
       "wins": 32,
       "ratio": 0.82,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 3039
+      "score": 3039,
+      "accessToken": "41"
     },
     {
       "name": "Cattrall",
@@ -460,7 +501,8 @@
       "wins": 60,
       "ratio": 0.94,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 5897
+      "score": 5897,
+      "accessToken": "42"
     },
     {
       "name": "Shere",
@@ -471,7 +513,8 @@
       "wins": 4,
       "ratio": 1.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 400
+      "score": 400,
+      "accessToken": "43"
     },
     {
       "name": "Kubis",
@@ -482,7 +525,8 @@
       "wins": 37,
       "ratio": 0.47,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 3336
+      "score": 3336,
+      "accessToken": "44"
     },
     {
       "name": "Crowley",
@@ -493,7 +537,8 @@
       "wins": 28,
       "ratio": 0.42,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2527
+      "score": 2527,
+      "accessToken": "45"
     },
     {
       "name": "Gready",
@@ -504,7 +549,8 @@
       "wins": 83,
       "ratio": 0.84,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 7930
+      "score": 7930,
+      "accessToken": "46"
     },
     {
       "name": "Mityushin",
@@ -515,7 +561,8 @@
       "wins": 4,
       "ratio": 0.33,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 372
+      "score": 372,
+      "accessToken": "47"
     },
     {
       "name": "Fincher",
@@ -526,7 +573,8 @@
       "wins": 6,
       "ratio": 0.6,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 544
+      "score": 544,
+      "accessToken": "48"
     },
     {
       "name": "Liepina",
@@ -537,7 +585,8 @@
       "wins": 21,
       "ratio": 0.38,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1918
+      "score": 1918,
+      "accessToken": "49"
     },
     {
       "name": "Melato",
@@ -548,7 +597,8 @@
       "wins": 48,
       "ratio": 0.96,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4743
+      "score": 4743,
+      "accessToken": "50"
     },
     {
       "name": "Lemoir",
@@ -559,7 +609,8 @@
       "wins": 2,
       "ratio": 0.14,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 250
+      "score": 250,
+      "accessToken": "51"
     },
     {
       "name": "Bess",
@@ -570,7 +621,8 @@
       "wins": 45,
       "ratio": 0.79,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4242
+      "score": 4242,
+      "accessToken": "52"
     },
     {
       "name": "Thowes",
@@ -581,7 +633,8 @@
       "wins": 3,
       "ratio": 0.03,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1112
+      "score": 1112,
+      "accessToken": "53"
     },
     {
       "name": "Werrett",
@@ -592,7 +645,8 @@
       "wins": 0,
       "ratio": 0.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 40
+      "score": 40,
+      "accessToken": "54"
     },
     {
       "name": "Jandl",
@@ -603,7 +657,8 @@
       "wins": 4,
       "ratio": 0.13,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 531
+      "score": 531,
+      "accessToken": "55"
     },
     {
       "name": "Crain",
@@ -614,7 +669,8 @@
       "wins": 28,
       "ratio": 0.36,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2584
+      "score": 2584,
+      "accessToken": "56"
     },
     {
       "name": "Swindells",
@@ -625,7 +681,8 @@
       "wins": 22,
       "ratio": 0.5,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1980
+      "score": 1980,
+      "accessToken": "57"
     },
     {
       "name": "Pandey",
@@ -636,7 +693,8 @@
       "wins": 8,
       "ratio": 0.08,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1382
+      "score": 1382,
+      "accessToken": "58"
     },
     {
       "name": "Owtram",
@@ -647,7 +705,8 @@
       "wins": 0,
       "ratio": 0.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 20
+      "score": 20,
+      "accessToken": "59"
     },
     {
       "name": "Blencowe",
@@ -658,7 +717,8 @@
       "wins": 72,
       "ratio": 0.88,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 6956
+      "score": 6956,
+      "accessToken": "60"
     },
     {
       "name": "Loader",
@@ -669,7 +729,8 @@
       "wins": 10,
       "ratio": 0.2,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 1092
+      "score": 1092,
+      "accessToken": "61"
     },
     {
       "name": "Rosetti",
@@ -680,7 +741,8 @@
       "wins": 6,
       "ratio": 0.1,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 957
+      "score": 957,
+      "accessToken": "62"
     },
     {
       "name": "Gairdner",
@@ -691,7 +753,8 @@
       "wins": 23,
       "ratio": 0.42,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 2087
+      "score": 2087,
+      "accessToken": "63"
     },
     {
       "name": "Brotherton",
@@ -702,7 +765,8 @@
       "wins": 40,
       "ratio": 1.0,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 4000
+      "score": 4000,
+      "accessToken": "64"
     },
     {
       "name": "De Benedetti",
@@ -713,7 +777,8 @@
       "wins": 5,
       "ratio": 0.14,
       "achievements": ["Achievement 1", "Achievement 2"],
-      "score": 649
+      "score": 649,
+      "accessToken": "65"
     }
   ]
 }

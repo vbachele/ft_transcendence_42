@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, Req, Res } from "@nestjs/common";
 import { UserService } from "src/api/users/users.service";
-import { PrismaService } from "src/prisma/prisma.service";
 import { Request, Response, request } from "express";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
+import { PrismaService } from "src/database/prisma.service";
 
 @Injectable({})
 export class AuthService {

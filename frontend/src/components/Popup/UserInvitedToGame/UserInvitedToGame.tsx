@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text} from 'styles/font.styles';
 import {PopupButton} from 'styles/buttons.styles';
 import {usePopup} from 'contexts/Popup/Popup';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
+import LobbyContext from 'contexts/Lobby/lobby.context';
+import { GameEvents } from 'contexts/Lobby/events';
 
 
 //BACKEND Chercher le nom du user que l'on invite ici
@@ -13,13 +15,14 @@ import Popup from '../components/Popup/Popup';
 
 function UserInvitedToGame() {
 	const [showComponent, setShowComponent] = useState(false);
-	const {hasInvited, setHasInvited} = usePopup();
+	const {status} = useContext(LobbyContext).LobbyState;
+	const lobbyDispatch = useContext(LobbyContext).LobbyDispatch;
 
 	function onCancel() {
-		setHasInvited(false);
+		lobbyDispatch({type: 'update_status', payload: GameEvents.Declined});
 	}
 
-	return hasInvited ? (
+	return (
 		<Popup
 			title="Waiting for..."
 			subtitle="Vbachele to send him to hell"
@@ -36,7 +39,7 @@ function UserInvitedToGame() {
 				</PopupButton>
 			{showComponent ? <GameFound /> : ''}
 		</Popup>
-	) : null;
+	);
 }
 
 export default UserInvitedToGame;

@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import {useTheme} from 'styled-components';
 import {IUser} from 'types/models';
 import ActivityStatus from 'components/ActivityStatus';
@@ -19,6 +19,8 @@ import BlockUser from 'components/Buttons/Social/BlockUser';
 import AdminRights from 'components/Buttons/Channel/AdminRights';
 import Mute from 'components/Buttons/Channel/Mute';
 import Ban from 'components/Buttons/Channel/Ban';
+import LobbyContext from 'contexts/Lobby/lobby.context';
+import { GameEvents } from 'contexts/Lobby/events';
 
 interface IProps {
 	friend: IUser;
@@ -27,8 +29,7 @@ interface IProps {
 function Friend({friend}: IProps) {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
-	// const [invited, setInvited] = useState(false);
-	const {hasInvited} = usePopup();
+	const {status} = useContext(LobbyContext).LobbyState;
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -44,7 +45,7 @@ function Friend({friend}: IProps) {
 				<img className="avatar" src={friend.image} />
 				<div style={{textAlign: 'left'}}>
 					<F.H5>{friend.name}</F.H5>
-					<ActivityStatus state={friend.status} />
+					<ActivityStatus size="16px" state={friend.status} />
 				</div>
 			</S.Friend>
 			<Drawer
@@ -67,7 +68,7 @@ function Friend({friend}: IProps) {
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
 					<ViewProfile id={1} />
-					<Invite id={1} />
+					<Invite id={friend.name} />
 					<Message id={1} />
 					<AddFriend id={1} />
 					<RemoveFriend id={1} />
@@ -75,7 +76,7 @@ function Friend({friend}: IProps) {
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>
-				{hasInvited && <Popup.UserInvitedToGame />}
+				{status === GameEvents.Invited && <Popup.UserInvitedToGame />}
 			</Drawer>
 		</>
 	);

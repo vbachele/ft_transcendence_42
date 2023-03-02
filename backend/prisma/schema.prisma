@@ -26,6 +26,23 @@ model User {
   score Int? @default(0)
   accessToken String @default("noToken")
   refreshToken String? @default("noRefreshToken")
-  isRegistered Boolean? @default(false)
-  // @@unique([name, user42Name, email])
+  isRegistered Boolean @default(false)
+  ownedLobbies Lobby[] @relation("owned")
+}
+
+model Lobby {
+  id String @id
+  admin User? @relation(name: "owned", fields: [adminId], references: [id])
+  adminId Int?
+  createdAt DateTime
+  type String
+  maxClients Int?
+}
+
+model Achievement {
+  id Int @id @default(autoincrement())
+	api String @unique
+  name String
+  image String
+  description String
 }
