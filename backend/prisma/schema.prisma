@@ -13,7 +13,7 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-  name String? @unique
+  name String? @unique  @default("")
   user42Name String?
   email String? @default("")
   image String? @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
@@ -28,6 +28,12 @@ model User {
   refreshToken String? @default("noRefreshToken")
   isRegistered Boolean @default(false)
   ownedLobbies Lobby[] @relation("owned")
+  otp_enabled  Boolean @default(false)
+  otp_verified Boolean @default(false)
+  otp_ascii    String? @default("")
+  otp_hex      String? @default("")
+  otp_base32   String? @default("")
+  otp_auth_url String? @default("")
 }
 
 model Lobby {

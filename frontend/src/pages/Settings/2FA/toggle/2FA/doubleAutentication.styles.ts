@@ -111,3 +111,12 @@ export const ButtonText = styled.div`
   justify-content: center;
   
 `;
+
+export const Qrcode = styled.img`
+    display: "flex"
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+`
+

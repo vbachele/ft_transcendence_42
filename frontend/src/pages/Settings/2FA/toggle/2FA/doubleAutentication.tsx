@@ -1,11 +1,15 @@
 import React, { ChangeEventHandler, Component, useState } from "react";
 import { PopupButton } from "styles/buttons.styles";
-import { Text, H2 } from "styles/font.styles";
+import { Text, H2, Subtitle } from "styles/font.styles";
 import * as S from "./doubleAutentication.styles";
+import { backend } from "lib/backend";
+import { useUserInfos } from "contexts/User/userContent";
 
 interface Props {
   click: boolean;
   onClose: React.MouseEventHandler<HTMLButtonElement>;
+  QRcode: string;
+  secretKey: string;
 }
 
 function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -14,19 +18,35 @@ function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 
 // BACKEND retrieve information from the backend
 const DoubleAutentication: React.FC<Props> = (props) => {
+  const {userName} = useUserInfos();
+  const [errorCode, setErrorCode]= useState(false)
+  const [doubleAuthEnabled, setDoubleAuthEnabled]= useState(false);
+
+
   // set up variables
-  const DoubleAuthEnabled: boolean = false;
   if (!props.click) return null;
 
   // 2FA DISABLED - USER ENTERS HIS NUMBER
   function AddPhoneNumber() {
-    const [phoneNumber, setPhoneNumber] = useState("");
-
+    const [verifyCode, setVerifyCode] = useState("");
     const handleFormPhone: ChangeEventHandler<HTMLInputElement> = (e) => {
-      setPhoneNumber(e.target.value);
+      setVerifyCode(e.target.value);
     };
-    function handleSubmitPhone(event: React.FormEvent<HTMLFormElement>) {
+
+    async function handleSubmitCode(event: React.FormEvent<HTMLFormElement>) {
       event.preventDefault();
+      const userForm = {
+        userName,
+        token : verifyCode
+      }
+      const response = await backend.verify2FA(userForm);
+      if (response.status === "fail"){
+        console.error(response.message);
+        setErrorCode(true);
+        return;
+      }
+      setDoubleAuthEnabled(true);
+        
     }
 
     function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -42,19 +62,25 @@ const DoubleAutentication: React.FC<Props> = (props) => {
             <H2>Enable 2FA</H2>
           </S.TitleGif>
           <Text style={{ textAlign: "center" }} weight={"350"} fontSize="1rem">
-            Enter your phone number to enable 2FA
+            Scan this QRcode
+            or enter you secret key : {props.secretKey}
+          </Text>
+          <S.Qrcode src={props.QRcode}/>
+          <Text style={{ textAlign: "center" }} weight={"350"} fontSize="1rem">
+           verify the code
           </Text>
         </S.Text>
-        <S.FormNumber key="phone" onSubmit={handleSubmitPhone}>
+        <S.FormNumber key="phone" onSubmit={handleSubmitCode}>
           <S.Input
             key="phone"
             type="text"
-            value={phoneNumber}
+            value={verifyCode}
             onChange={handleFormPhone}
             onKeyPress={handleKeyPress}
-            placeholder="Ex: 0665156514"
+            placeholder="Ex: 066578"
             required
           />
+          {errorCode && <Subtitle style={{ textAlign: "center" }} weight={"350"} fontSize="1rem">Your code is wrong</Subtitle>}
           <Buttons />
         </S.FormNumber>
       </S.Overlay__Container>
@@ -85,8 +111,8 @@ const DoubleAutentication: React.FC<Props> = (props) => {
           backgroundColor={"#DC4F19"}
           // onClick={() => handleClick()}
         >
-          {DoubleAuthEnabled && <Text weight="500"> Disable </Text>}
-          {!DoubleAuthEnabled && <Text weight="500"> Confirm </Text>}
+          {doubleAuthEnabled && <Text weight="500"> Disable </Text>}
+          {!doubleAuthEnabled && <Text weight="500"> Confirm </Text>}
         </PopupButton>
       </S.Button>
     );
@@ -95,8 +121,8 @@ const DoubleAutentication: React.FC<Props> = (props) => {
   // MAIN FUNCTION
   return (
     <S.Overlay>
-      {!DoubleAuthEnabled && <AddPhoneNumber />}
-      {DoubleAuthEnabled && <Disable2FA />}
+      {!doubleAuthEnabled && <AddPhoneNumber />}
+      {doubleAuthEnabled && <Disable2FA />}
     </S.Overlay>
   );
 };

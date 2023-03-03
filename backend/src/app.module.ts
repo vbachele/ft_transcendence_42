@@ -12,6 +12,7 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { GameModule } from "./game/game.module";
 import { WebsocketModule } from "./websocket/websocket.module";
 import {LobbyModule} from "./lobby/lobby.module";
+import { DoubleAuthModule } from "./doubleAuth/doubleAuth.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import {LobbyModule} from "./lobby/lobby.module";
     PrismaModule,
     CloudinaryModule,
     WebsocketModule,
+    DoubleAuthModule,
   ],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],
