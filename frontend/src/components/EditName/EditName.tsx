@@ -27,7 +27,9 @@ const EditName = (props: Props) => {
 
   /* Store infos in the user context */
   async function setUserInfosContext(value: string) {
+    console.log("Before getting token ");
     const userInfos: any = await backend.getUserByToken();
+    console.log(userInfos);
     setUserName({ userName: value });
     setImage({ image: image.image });
     setAchievements({ achievements: userInfos.achievements });
@@ -37,7 +39,6 @@ const EditName = (props: Props) => {
 
   async function createUser(value: string) {
     // Here n'aller dans la condition seulement si le user n'est pas deja registered" sinon just PATCH LE NOM
-    try {
       let UserCreation = {
         name: value,
         isRegistered: true,
@@ -45,9 +46,6 @@ const EditName = (props: Props) => {
       const user = await backend.createUser(UserCreation);
       const upload = await backend.patchUser(value, image);
       setUserInfosContext(value);
-    } catch (err) {
-      console.log("Error in creation user", err);
-    }
   }
 
   /* Registration of the user in database in the page /registration*/

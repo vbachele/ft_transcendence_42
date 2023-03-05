@@ -2,6 +2,8 @@ import { IUser } from "types/models";
 import { api } from "./api";
 
 export const backend = {
+
+  //User part
   async getAllUsers(): Promise<any> {
     const response = await api.get("/users");
     return await response.json();
@@ -26,6 +28,8 @@ export const backend = {
     const response = await api.post("/auth/Oauth", user);
     return await response.json();
   },
+
+  //Token part
   async deleteTokenCookie(): Promise<any> {
     const response = await api.get("/auth/logout");
     return await response.json();

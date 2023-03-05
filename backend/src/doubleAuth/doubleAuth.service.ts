@@ -86,10 +86,8 @@ export class DoubleAuthService {
 	
 	async ValidateOTP(req: Request, res: Response) {
 			try {
-			//   const { user_id, token } = req.body;
-			const token = "168830";
-			  const user = await this.prisma.user.findUnique({ where: { id: 1 } });
-			console.log("users is :", user);
+			const { userName, token} = req.body;
+			  const user = await this.prisma.user.findUnique({ where: { name : userName.userName} });
 			  const message = "Token is invalid or user doesn't exist";
 			  if (!user) {
 				return res.status(401).json({
@@ -101,11 +99,8 @@ export class DoubleAuthService {
 			  const validToken = speakeasy.totp.verify({
 				secret: user.otp_base32!,
 				encoding: "base32",
-				token,
-				window: 1
-			  });
-			  console.log(validToken);
-
+				token,	
+				 });
 			  if (!validToken) {
 				return res.status(401).json({
 				  status: "fail",
@@ -115,6 +110,20 @@ export class DoubleAuthService {
 		  
 			  res.status(200).json({
 				otp_valid: true,
+			  });
+			  const updatedUser = await this.prisma.user.update({
+				where: { name : userName.userName },
+				data: {
+					otp_validated : true,
+				},
+			  });
+			  res.status(200).json({
+				user: {
+				  id: updatedUser.id,
+				  name: updatedUser.name,
+				  email: updatedUser.email,
+				  otp_validated: updatedUser.otp_validated,
+				},
 			  });
 			} catch (error) {
 			  res.status(500).json({
@@ -126,23 +135,22 @@ export class DoubleAuthService {
 	
 	async DisableOTP(req: Request, res: Response){
 	try {
-		const { user_id } = req.body;
-
-		const user = await this.prisma.user.findUnique({ where: { id: 1 } });
+		const { userName } = req.body;
+		const user = await this.prisma.user.findUnique({ where: {name : userName} });
 		if (!user) {
 		return res.status(401).json({
 			status: "fail",
 			message: "User doesn't exist",
 		});
 		}
-
 		const updatedUser = await this.prisma.user.update({
-		where: { id: 1 },
+		where: {name : userName},
 		data: {
 			otp_enabled: false,
+			otp_validated : false,
 		},
 		});
-
+		console.log(updatedUser);
 		res.status(200).json({
 		otp_disabled: true,
 		user: {

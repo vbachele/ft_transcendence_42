@@ -18,22 +18,21 @@ function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 
 // BACKEND retrieve information from the backend
 const DoubleAutentication: React.FC<Props> = (props) => {
-  const {userName} = useUserInfos();
+  const {userName, setDoubleAuth, doubleAuth} = useUserInfos();
   const [errorCode, setErrorCode]= useState(false)
-  const [doubleAuthEnabled, setDoubleAuthEnabled]= useState(false);
 
 
   // set up variables
-  if (!props.click) return null;
+  // if (!props.click) return null;
 
-  // 2FA DISABLED - USER ENTERS HIS NUMBER
-  function AddPhoneNumber() {
+  function Add2FA() {
     const [verifyCode, setVerifyCode] = useState("");
     const handleFormPhone: ChangeEventHandler<HTMLInputElement> = (e) => {
       setVerifyCode(e.target.value);
     };
 
     async function handleSubmitCode(event: React.FormEvent<HTMLFormElement>) {
+      props.onClose;
       event.preventDefault();
       const userForm = {
         userName,
@@ -45,7 +44,8 @@ const DoubleAutentication: React.FC<Props> = (props) => {
         setErrorCode(true);
         return;
       }
-      setDoubleAuthEnabled(true);
+      setDoubleAuth({doubleAuth : true});
+      props.onClose;
         
     }
 
@@ -54,6 +54,7 @@ const DoubleAutentication: React.FC<Props> = (props) => {
         event.preventDefault();
       }
     }
+    
     return (
       <S.Overlay__Container onClick={(e) => stopPropagation(e)}>
         <S.Text>
@@ -80,39 +81,22 @@ const DoubleAutentication: React.FC<Props> = (props) => {
             placeholder="Ex: 066578"
             required
           />
-          {errorCode && <Subtitle style={{ textAlign: "center" }} weight={"350"} fontSize="1rem">Your code is wrong</Subtitle>}
+          {errorCode && <Subtitle style={{color:'#E04F5F',  textAlign: "center" }} weight={"350"} fontSize="1rem">Your code is wrong</Subtitle>}
           <Buttons />
         </S.FormNumber>
       </S.Overlay__Container>
     );
   }
-
-  // 2FA DISABLE - ASKING USER IF HE WANTS TO ENABLE IT
-  function Disable2FA() {
-    return (
-      <S.Overlay__Container onClick={(e) => stopPropagation(e)}>
-        <S.Text>
-          <H2 style={{ textAlign: "center" }}>Disable 2FA</H2>
-          <Text style={{ textAlign: "center" }} weight={"350"} fontSize="1rem">
-            Are you sure ?
-          </Text>
-        </S.Text>
-        <Buttons />
-      </S.Overlay__Container>
-    );
-  }
-
   // BUTTONS OF THE POPUP
   function Buttons() {
     return (
       <S.Button>
         <PopupButton
-          className="logout"
+          className="ActivateDoubleAuth"
           backgroundColor={"#DC4F19"}
-          // onClick={() => handleClick()}
+          onClick={props.onClose}
         >
-          {doubleAuthEnabled && <Text weight="500"> Disable </Text>}
-          {!doubleAuthEnabled && <Text weight="500"> Confirm </Text>}
+         <Text weight="500"> Confirm </Text>
         </PopupButton>
       </S.Button>
     );
@@ -121,8 +105,7 @@ const DoubleAutentication: React.FC<Props> = (props) => {
   // MAIN FUNCTION
   return (
     <S.Overlay>
-      {!doubleAuthEnabled && <AddPhoneNumber />}
-      {doubleAuthEnabled && <Disable2FA />}
+      <Add2FA />
     </S.Overlay>
   );
 };

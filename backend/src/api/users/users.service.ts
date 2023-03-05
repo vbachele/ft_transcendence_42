@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, Post } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { Request } from "express";
+import { Request} from "express";
 
 @Injectable({})
 export class UserService {
@@ -43,6 +43,7 @@ export class UserService {
   }
   
   async updateUser(req: Request) {
+    console.log("works")
     try {
       const { name } = req.params;
       const user = await this.prisma.user.update({

@@ -5,6 +5,14 @@ type UserContextProviderProps = {
   children: React.ReactNode;
 };
 
+export type DoubleAuthVerified = {
+  verified2FA: boolean;
+};
+
+export type DoubleAuth = {
+  doubleAuth: boolean;
+};
+
 export type Coalition = {
   coalition: string;
 };
@@ -21,6 +29,7 @@ export type AuthImage = {
   image: string;
 };
 
+
 type UserContextType = {
   userName: UserName;
   setUserName: React.Dispatch<React.SetStateAction<UserName>>;
@@ -30,6 +39,11 @@ type UserContextType = {
   setAchievements: React.Dispatch<React.SetStateAction<Achievements>>;
   coalition: Coalition;
   setCoalition: React.Dispatch<React.SetStateAction<Coalition>>;
+  doubleAuth:DoubleAuth;
+  setDoubleAuth: React.Dispatch<React.SetStateAction<DoubleAuth>>;
+  verified2FA: DoubleAuthVerified;
+  setVerified2FA: React.Dispatch<React.SetStateAction<DoubleAuthVerified>>;
+
 };
 
 export const UserContext = createContext({} as UserContextType);
@@ -41,6 +55,10 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     achievements: 0,
   });
   const [coalition, setCoalition] = useState<Coalition>({ coalition: "" });
+  const [doubleAuth, setDoubleAuth] = useState<DoubleAuth>({ doubleAuth: false});
+  const [verified2FA, setVerified2FA] = useState<DoubleAuthVerified>({ verified2FA: false});
+
+
   useEffect(() => {
     const userInfos = getInfosFromDB();
     userInfos.then((res) => {
@@ -48,6 +66,9 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
       setImage({ image: res.image });
       setAchievements({ achievements: res.achievements });
       setCoalition({ coalition: res.coalition });
+      setDoubleAuth({doubleAuth : res.otp_enabled});
+      setVerified2FA({verified2FA : res.otp_validated});
+
     });
   }, []);
   return (
@@ -61,6 +82,10 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setAchievements,
         coalition,
         setCoalition,
+        doubleAuth,
+        setDoubleAuth,
+        verified2FA,
+        setVerified2FA,
       }}
     >
       {children}

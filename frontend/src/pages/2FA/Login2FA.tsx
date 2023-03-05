@@ -1,14 +1,11 @@
-import React, {ChangeEventHandler} from 'react';
-import {Link} from 'react-router-dom';
-import Qrcode from 'assets/qrcode.png';
-import * as UI from 'styles/buttons.styles';
+import {useNavigate} from 'react-router-dom';
 import * as F from 'styles/font.styles';
 import * as S from './Login2FA.styles';
-import styled from 'styled-components';
-import {useState} from 'react';
 import Submit2FA from './components/Inputs/Submit/Submit2FA';
 
 const DoubleAuthentication = () => {
+	const navigate = useNavigate();
+
 	return (
 		<S.Container>
 			<S.Container__Text>

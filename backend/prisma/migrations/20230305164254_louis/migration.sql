@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
+    "name" TEXT DEFAULT '',
     "user42Name" TEXT,
     "email" TEXT DEFAULT '',
     "image" TEXT DEFAULT 'https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png',
@@ -15,8 +15,9 @@ CREATE TABLE "User" (
     "accessToken" TEXT NOT NULL DEFAULT 'noToken',
     "refreshToken" TEXT DEFAULT 'noRefreshToken',
     "isRegistered" BOOLEAN NOT NULL DEFAULT false,
-    "otp_enabled" BOOLEAN NOT NULL DEFAULT false,
-    "otp_verified" BOOLEAN NOT NULL DEFAULT false,
+    "otp_enabled" BOOLEAN DEFAULT false,
+    "otp_verified" BOOLEAN DEFAULT false,
+    "otp_validated" BOOLEAN DEFAULT false,
     "otp_ascii" TEXT DEFAULT '',
     "otp_hex" TEXT DEFAULT '',
     "otp_base32" TEXT DEFAULT '',

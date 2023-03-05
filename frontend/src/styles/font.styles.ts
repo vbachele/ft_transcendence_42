@@ -20,7 +20,7 @@ export const MenuText = styled(Text)`
 export const Subtitle = styled.p<IProps>`
 	font-weight: ${(p) => p.weight || 500};
 	font-size: ${(p) => p.fontSize || '1rem'};
-	color: #949494;
+	color: ${(p) => p.color || '#949494'};
 	@media only screen and (max-width: 768px) {
 	}
 `;
