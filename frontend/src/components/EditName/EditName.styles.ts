@@ -47,3 +47,16 @@ export const Input = styled.input`
     font-size: 14px;
   }
 `;
+
+export const ConfirmContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 16px;
+
+`
+
+export const loadingimg = styled.img`
+  width: 32px;
+  height: 32px;
+`

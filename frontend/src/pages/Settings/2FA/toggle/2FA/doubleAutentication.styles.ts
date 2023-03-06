@@ -27,7 +27,7 @@ export const Overlay__Container = styled.div`
   position: relative;
   width: clamp(80px, 80%, 375px);
   padding: 24px;
-  gap: 24px;
+  gap: 16px;
 `;
 
 export const Text = styled.div`
@@ -120,3 +120,7 @@ export const Qrcode = styled.img`
     height: 100px;
 `
 
+export const divider = styled.hr `
+  width: clamp(100px, 70vw, 320px);
+  border-bottom:1px solid #ccc;
+`

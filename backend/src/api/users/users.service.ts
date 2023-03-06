@@ -43,7 +43,6 @@ export class UserService {
   }
   
   async updateUser(req: Request) {
-    console.log("works")
     try {
       const { name } = req.params;
       const user = await this.prisma.user.update({
@@ -78,7 +77,8 @@ export class UserService {
     }
   }
   async getUserByToken(req: Request) {
-    const accessToken: string = req.cookies.token;
+    const accessToken = req.cookies.token;
+    console.log(accessToken);
     try {
       const user = await this.prisma.user.findFirst({
         where: {

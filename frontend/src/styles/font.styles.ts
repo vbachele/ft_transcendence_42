@@ -10,6 +10,7 @@ export const Text = styled.p<IProps>`
 	font-size: ${(p) => p.fontSize || '1.1rem'};
 	@media only screen and (max-width: 768px) {
 	}
+	
 `;
 export const MenuText = styled(Text)`
 	color: white;

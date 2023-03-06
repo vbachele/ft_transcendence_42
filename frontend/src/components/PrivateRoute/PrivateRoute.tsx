@@ -1,4 +1,5 @@
 import Loading from "components/Loading";
+import getInfosFromDB from "contexts/User/GetuserFromDB";
 import { useUserInfos } from "contexts/User/userContent";
 import { backend } from "lib/backend";
 import LandingPage from "pages/Landing/Landingpage";
@@ -14,11 +15,11 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
 
   async function checkUserToken() {
     
-    const response = await backend.checkToken();
-    if (response.statusCode == "400" || response.statusCode == "403") {
-      navigate("/login");
-      return;
-    }
+    // const response = await backend.checkToken();
+    // if (response.statusCode == "400" || response.statusCode == "403") {
+    //   navigate("/login");
+    //   return;
+    // }
     setIsLoading(false);
     setTokenExists(true);
 
@@ -26,6 +27,7 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
 
   async function check2FAEnabled() {
     const path = location.pathname;
+
     if (verified2FA.verified2FA === false && doubleAuth.doubleAuth === true) {
       navigate("/2FA");
       return;
@@ -38,6 +40,16 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
   useEffect(() => {
     checkUserToken();
     check2FAEnabled();
+    // const userInfos = getInfosFromDB();
+    // console.log("USERINFOS", userInfos);
+    // userInfos.then((res) => {
+    //   setUserName({ userName: res.name });
+    //   setImage({ image: res.image });
+    //   setAchievements({ achievements: res.achievements });
+    //   setCoalition({ coalition: res.coalition });
+    //   setDoubleAuth({doubleAuth : res.otp_enabled});
+    //   setVerified2FA({verified2FA : res.otp_validated});
+
   }, []);
 
   if (tokenExists && userName.userName) {

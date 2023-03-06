@@ -9,12 +9,12 @@ import { PopupButton } from "styles/buttons.styles";
 
 interface Props {
   page?: string;
+  setLoadingTrue: () => void;
+  setUploadedimg: () => void;
+  setLoadingFalse: () => void;
+  setUploadedimgFalse: () => void;
 }
 
-interface IProps {
-  click: boolean;
-  onClose: React.MouseEventHandler<HTMLButtonElement>;
-}
 /* MAIN FUNCTION*/
 export const SelectFile = (props: Props) => {
   /* Variables declarations */
@@ -26,11 +26,14 @@ export const SelectFile = (props: Props) => {
   function checkImageError(response: any, uploadedImage: string) {
     if (response.statusCode == "400") {
       setError(true);
+      props.setUploadedimgFalse()
       return;
     }
+    props.setUploadedimg();
     setImage({ image: uploadedImage });
   }
 
+  
   /* Check file and upload file in database */
   async function uploadImageDataBase(uploadedImage: any) {
     if (props.page === "settings") {
@@ -42,7 +45,9 @@ export const SelectFile = (props: Props) => {
     }
     if (props.page === "registration") {
       setImage(uploadedImage);
+      props.setUploadedimg();
     }
+    props.setLoadingFalse();
   }
 
   /* Transform file into a base64 string */
@@ -59,6 +64,8 @@ export const SelectFile = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!e.target.files) return;
+    props.setLoadingTrue();
+    props.setUploadedimgFalse();
     const file = e.target.files[0];
     transformFiletoURL(file);
   };

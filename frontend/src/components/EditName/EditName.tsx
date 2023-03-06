@@ -16,6 +16,9 @@ interface Props {
 const EditName = (props: Props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [uploadApproved, setUploadApproved] = useState(false)
+
   const {
     userName,
     setUserName,
@@ -27,9 +30,9 @@ const EditName = (props: Props) => {
 
   /* Store infos in the user context */
   async function setUserInfosContext(value: string) {
-    console.log("Before getting token ");
     const userInfos: any = await backend.getUserByToken();
-    console.log(userInfos);
+    setUploadApproved(true);
+    setLoading(false);
     setUserName({ userName: value });
     setImage({ image: image.image });
     setAchievements({ achievements: userInfos.achievements });
@@ -61,8 +64,10 @@ const EditName = (props: Props) => {
       let newuserName = {
         name: value,
       };
-      backend.patchUser(userName.userName, newuserName);
+      const response = await backend.patchUser(userName.userName, newuserName);
       setUserName({ userName: value });
+      setUploadApproved(true);
+      setLoading(false);
     }
   }
 
@@ -73,6 +78,7 @@ const EditName = (props: Props) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    setLoading(true);
     userRegistrationPage(); // if in registrationPage
     userSettingsPage(); // if in settingsPage
   };
@@ -94,10 +100,14 @@ const EditName = (props: Props) => {
           required
         />
       </S.InputContainer>
+      <S.ConfirmContainer>
       <UI.SecondaryButton type="submit">
         {props.page === "settings" && "Confirm"}
         {props.page === "registration" && "Continue"}
       </UI.SecondaryButton>
+      {loading && <S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif"></S.loadingimg>}
+      {uploadApproved && <S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png"></S.loadingimg>}
+      </S.ConfirmContainer>
     </S.FormContainer>
   );
 };

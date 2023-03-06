@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import getInfosFromDB from "./GetuserFromDB";
+import { Achievements } from "pages/Dashboard/components/Achievements/Achievements.styles";
 
 type UserContextProviderProps = {
   children: React.ReactNode;
@@ -64,11 +65,10 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     userInfos.then((res) => {
       setUserName({ userName: res.name });
       setImage({ image: res.image });
-      setAchievements({ achievements: res.achievements });
+      setAchievements({ achievements: res.achievements.length });
       setCoalition({ coalition: res.coalition });
       setDoubleAuth({doubleAuth : res.otp_enabled});
       setVerified2FA({verified2FA : res.otp_validated});
-
     });
   }, []);
   return (
