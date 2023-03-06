@@ -2,32 +2,40 @@ import { IUser } from "types/models";
 import { api } from "./api";
 
 export const backend = {
-  async createUser(user: IUser[]) {
-    const response = await api.post("/auth/signup", user);
-    return (await response.json()) as { id: string };
-  },
-  async getAllUsers(): Promise<IUser[]> {
+  async getAllUsers(): Promise<any> {
     const response = await api.get("/users");
     return await response.json();
   },
-  async getOneUser(id: string): Promise<IUser> {
+  async getOneUser(id: string): Promise<any> {
     const response = await api.get("/users/" + id);
-    return (await response.json());
+    return await response.json();
   },
-  async getUserByName(name: string) {
+  async getUserByName(name: string): Promise<IUser> {
     const response = await api.get("/users/" + name);
     return await response.json();
   },
-  async patchUser(id: string, updateUser: unknown) {
-    const response = await api.patch("/users/" + id, updateUser);
-    return (await response.json()) as { id: string };
+  async patchUser(name: string, updateUser: unknown): Promise<any> {
+    const response = await api.patch("/users/" + name, updateUser);
+    return response.json();
   },
-  async deleteAllUsers() {
+  async deleteAllUsers(): Promise<IUser> {
     const response = await api.delete("/users/deleteall");
-    return (await response.json()) as { id: string };
+    return await response.json();
   },
-  async Oauth42(code: unknown) {
-    const response = await api.getAccessToken("/auth/Oauth", code);
-    return (await response.json()) as { id: string };
+  async createUser(user: unknown): Promise<any> {
+    const response = await api.post("/auth/Oauth", user);
+    return await response.json();
+  },
+  async deleteTokenCookie(): Promise<any> {
+    const response = await api.get("/auth/logout");
+    return await response.json();
+  },
+  async getUserByToken(): Promise<any> {
+    const response = await api.get("/users/token");
+    return await response.json();
+  },
+  async checkToken(): Promise<any> {
+    const response = await api.get("/auth/token");
+    return await response.json();
   },
 };

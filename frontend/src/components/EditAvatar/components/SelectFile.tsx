@@ -1,56 +1,104 @@
 import React, { useState } from "react";
 import { BsFillCameraFill as Icon } from "react-icons/bs";
 import * as S from "../EditAvatar.styles";
+import { useUserInfos } from "contexts/User/userContent";
 import { backend } from "lib/backend";
-import { IUser } from "types/models";
+import Popup from "components/Popup/components/Popup/Popup";
+import { Text } from "styles/font.styles";
+import { PopupButton } from "styles/buttons.styles";
 
-export const SelectFile = () => {
-  const [fileInputState, setFileInputState] = useState("");
-  const [previewSource, setPreviewSource] = useState<any>();
+interface Props {
+  page?: string;
+}
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    previewFile(file);
-    uploadImage(previewSource);
-  };
+interface IProps {
+  click: boolean;
+  onClose: React.MouseEventHandler<HTMLButtonElement>;
+}
+/* MAIN FUNCTION*/
+export const SelectFile = (props: Props) => {
+  /* Variables declarations */
+  const [fileInputState] = useState("");
+  const { image, setImage } = useUserInfos();
+  const [error, setError] = useState(false);
+  const { userName } = useUserInfos();
 
-  const previewFile = (file: File) => {
+  function checkImageError(response: any, uploadedImage: string) {
+    if (response.statusCode == "400") {
+      setError(true);
+      return;
+    }
+    setImage({ image: uploadedImage });
+  }
+
+  /* Check file and upload file in database */
+  async function uploadImageDataBase(uploadedImage: any) {
+    if (props.page === "settings") {
+      const response = await backend.patchUser(
+        userName.userName,
+        uploadedImage
+      );
+      checkImageError(response, uploadedImage.image);
+    }
+    if (props.page === "registration") {
+      setImage(uploadedImage);
+    }
+  }
+
+  /* Transform file into a base64 string */
+  const transformFiletoURL = (file: File) => {
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result as string);
+      uploadImageDataBase({ image: reader.result as string });
     };
   };
 
-  const uploadImage = async (base64EncodedImage: string) => {
-    let upload = {
-      image: base64EncodedImage,
-    };
-    const user1: IUser = await backend.getOneUser("40");
-    console.log("BEFORE", user1);
-    backend.patchUser("40", upload);
-    const user: IUser = await backend.getOneUser("40");
-    console.log("AFTER", user);
+  /* Function to store the image */
+  const handleFileInputChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    transformFiletoURL(file);
   };
 
+  const handlePopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setError(!error);
+  };
+
+  /* BODY */
   return (
-    <form>
-      <label htmlFor="file-input">
-        <S.SelectFileIcon>
-          <Icon />
-        </S.SelectFileIcon>
-        <input
-          type="file"
-          id="file-input"
-          value={fileInputState}
-          onChange={handleFileInputChange}
-          accept="image/*"
-          style={{ display: "none" }}
-        />
-      </label>
-    </form>
+    <label htmlFor="file-input">
+      {error && (
+        <Popup
+          title="Wrong file"
+          subtitle="Please upload a png or a jpeg file"
+          overlay={true}
+        >
+          <PopupButton
+            onClick={handlePopup}
+            border="1px solid #e5e7eb"
+            className="Cancel"
+          >
+            <Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)">
+              I got it!
+            </Text>
+          </PopupButton>
+        </Popup>
+      )}
+      <S.SelectFileIcon>
+        <Icon />
+      </S.SelectFileIcon>
+      <input
+        type="file"
+        id="file-input"
+        value={fileInputState}
+        onChange={handleFileInputChange}
+        accept="image/*"
+        style={{ display: "none" }}
+      />
+    </label>
   );
 };
 

@@ -15,6 +15,7 @@ export const NameContainer = styled.div``;
 
 export const Avatar = styled.img`
   width: 80px;
+  height: 80px;
   display: block;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

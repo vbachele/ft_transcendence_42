@@ -4,46 +4,43 @@ import * as F from "styles/font.styles";
 import * as S from "./EditAvatar.styles";
 import { backend } from "lib/backend";
 import { useEffect, useState } from "react";
+import { IUser } from "types/models";
+import { useUserInfos } from "contexts/User/userContent";
 
-async function getUserImage(id: string) {
-  const user = await backend.getOneUser("6");
-  return user.image;
+interface Props {
+  page: string;
 }
 
-async function getUser42login(id: string) {
-  const user = await backend.getOneUser(id);
-  // return user.user42Name;
-  return user.name;
-}
+/* MAIN FUNCTION */
+export const EditAvatar = (props: Props) => {
+  const { userName, image, setImage, coalition } = useUserInfos();
 
-async function getUser42coalition(id: string) {
-  const user = await backend.getOneUser(id);
-  return user.coalition;
-}
-
-export function EditAvatar() {
-  const [image, setImage] = useState("");
-  const [coalition, setCoalition] = useState("");
-  const [user42Login, setUser42Login] = useState("");
-
+  /* in first render add the default image */
   useEffect(() => {
-    getUserImage("3").then((image) => setImage(image));
-    getUser42login("3").then((login) => setCoalition(login));
-    getUser42coalition("3").then((coalition) => setUser42Login(coalition));
-    // remplacer ici par le useContext
+    if (!image.image)
+      setImage({
+        image:
+          "https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png",
+      });
   }, []);
+
   return (
     <S.Container>
       <S.AvatarContainer>
-        <S.Avatar src={image} />
-        <SelectFile />
+        <S.Avatar src={image.image} />
+        <SelectFile page={props.page} />
       </S.AvatarContainer>
       <S.NameContainer>
-        <F.Text weight="700">{user42Login}</F.Text>
-        <F.Subtitle>{coalition}</F.Subtitle>
+        <F.Text weight="700">
+          {props.page === "registration" && "New adventurer"}
+          {props.page === "settings" && userName.userName}
+        </F.Text>
+        <F.Subtitle>
+          {props.page === "registration" && "Ready for your mission"}
+          {props.page === "settings" && coalition.coalition}
+        </F.Subtitle>
       </S.NameContainer>
     </S.Container>
   );
-}
-
+};
 export default EditAvatar;

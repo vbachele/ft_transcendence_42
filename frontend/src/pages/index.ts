@@ -1,6 +1,5 @@
 import Landing from "./LandingOLD/LandingOld";
 import Registration from "./Registration/Registration";
-import Login from "pages/Login";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Dashboard from "./Dashboard/Dashboard";
 import NotFound from "./NotFound/NotFound";
@@ -13,7 +12,6 @@ import Chat from "./Chat/Chat";
 export default {
   Landing,
   Registration,
-  Login,
   Leaderboard,
   Dashboard,
   NotFound,

@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Landingpage.styles";
-import { Link } from "react-router-dom";
 
 const LandingPage = () => {
+  const [click, setClick] = useState(false);
+  const Oauth42 = () => {
+    setClick(!click);
+    let url = `${import.meta.env.VITE_AUTH42_URL}`;
+    window.open(url, "_self");
+  };
+
   return (
     <S.Container>
       <S.bgvid id="bgvid" autoPlay loop muted playsInline>
@@ -20,7 +26,7 @@ const LandingPage = () => {
           </S.logo>
           <S.menus id="menus">
             <S.menuHighlight id="menu-highlight" />
-            <S.link href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-8be13340a116eca57b9ba0f248f05297e6b9563bd01c6ec7ccd5a85341b9b499&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fregistration&response_type=code">
+            <S.link onClick={Oauth42}>
               <S.italicHighlight className="italic highlight">
                 JOIN THE BATTLE
               </S.italicHighlight>

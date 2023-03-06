@@ -14,6 +14,7 @@ export class UserService {
       throw error;
     }
   }
+
   async getOneUser(req: Request) {
     try {
       const { id } = req.params;
@@ -43,10 +44,10 @@ export class UserService {
   
   async updateUser(req: Request) {
     try {
-      const { id } = req.params;
+      const { name } = req.params;
       const user = await this.prisma.user.update({
         where: {
-          id: Number(id),
+          name,
         },
         data: req.body,
       });
@@ -58,6 +59,31 @@ export class UserService {
   async deleteAllUsers() {
     try {
       const user = await this.prisma.user.deleteMany({});
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getUserByEmail(email: string) {
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          email: email,
+        },
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getUserByToken(req: Request) {
+    const accessToken: string = req.cookies.token;
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          accessToken: accessToken,
+        },
+      });
       return user;
     } catch (error) {
       throw error;

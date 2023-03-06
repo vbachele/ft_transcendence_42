@@ -1,27 +1,75 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import getInfosFromDB from "./GetuserFromDB";
 
 type UserContextProviderProps = {
   children: React.ReactNode;
 };
 
-export type AuthUser = {
-  nickname: string;
+export type Coalition = {
+  coalition: string;
+};
+
+export type Achievements = {
+  achievements: number;
+};
+
+export type UserName = {
+  userName: string;
+};
+
+export type AuthImage = {
+  image: string;
 };
 
 type UserContextType = {
-  user: AuthUser | null;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
+  userName: UserName;
+  setUserName: React.Dispatch<React.SetStateAction<UserName>>;
+  image: AuthImage;
+  setImage: React.Dispatch<React.SetStateAction<AuthImage>>;
+  achievements: Achievements;
+  setAchievements: React.Dispatch<React.SetStateAction<Achievements>>;
+  coalition: Coalition;
+  setCoalition: React.Dispatch<React.SetStateAction<Coalition>>;
 };
 
 export const UserContext = createContext({} as UserContextType);
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [userName, setUserName] = useState<UserName>({ userName: "" });
+  const [image, setImage] = useState<AuthImage>({ image: "" });
+  const [achievements, setAchievements] = useState<Achievements>({
+    achievements: 0,
+  });
+  const [coalition, setCoalition] = useState<Coalition>({ coalition: "" });
+  useEffect(() => {
+    const userInfos = getInfosFromDB();
+    userInfos.then((res) => {
+      setUserName({ userName: res.name });
+      setImage({ image: res.image });
+      setAchievements({ achievements: res.achievements });
+      setCoalition({ coalition: res.coalition });
+    });
+  }, []);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{
+        userName,
+        setUserName,
+        image,
+        setImage,
+        achievements,
+        setAchievements,
+        coalition,
+        setCoalition,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
+
+export function useUserInfos() {
+  return useContext(UserContext);
+}
 
 export default UserContext;

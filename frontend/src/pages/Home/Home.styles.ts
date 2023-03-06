@@ -46,7 +46,7 @@ export const left = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 500px;
+  width: clamp(300px, 60vw, 500px);
   height: 100%;
 `;
 
@@ -56,7 +56,7 @@ export const logo = styled.div`
   opacity: 0.9;
   z-index: -1;
   &img {
-    width: 390px;
+    width: clamp(300px, 60vw, 500px);
   } */
 `;
 
@@ -69,7 +69,7 @@ export const slogan = styled(logo)`
 `;
 
 export const img = styled.img`
-  width: 390px;
+  width: clamp(300px, 60vw, 500px);
 `;
 
 export const menuHighlight = styled.canvas`
@@ -129,7 +129,6 @@ export const logoutButton = styled.button`
   color: white;
   display: flex;
   align-items: center;
-  text-decoration: none;
   margin: 4px 0px;
   border: none;
   text-decoration: none;

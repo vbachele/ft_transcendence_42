@@ -13,9 +13,9 @@ const Settings = () => {
           <F.Subtitle>Manage your information and security</F.Subtitle>
         </S.Container__Text>
         <S.Container__Infos>
-          <EditAvatar />
+          <EditAvatar page="settings" />
           <Toggle name="Enable 2FA" />
-          <EditName linkTo={""} visible={false} />
+          <EditName linkTo={""} visible={false} page="settings" />
         </S.Container__Infos>
       </S.Container>
     </div>

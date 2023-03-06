@@ -46,7 +46,7 @@ export const left = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 500px;
+  width: clamp(300px, 60vw, 500px);
   height: 100%;
 `;
 
@@ -54,7 +54,7 @@ export const logo = styled.div`
   position: relative;
   padding: 7px 0 0 30px;
   &img {
-    width: 390px;
+    width: clamp(300px, 60vw, 500px);
   } */
 `;
 
@@ -67,7 +67,7 @@ export const slogan = styled(logo)`
 `;
 
 export const img = styled.img`
-  width: 390px;
+  width: clamp(300px, 60vw, 500px);
 `;
 
 export const menuHighlight = styled.canvas`
@@ -180,6 +180,9 @@ export const bgvid = styled.video`
   background-size: cover;
 `;
 
-export const link = styled.a`
+export const link = styled.button`
   text-decoration: none;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 `;
