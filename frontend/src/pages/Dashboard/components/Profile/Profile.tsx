@@ -4,37 +4,19 @@ import {IUser} from 'types/models';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
-import {Button, Dropdown} from 'antd';
 import {Link} from 'react-router-dom';
 import unlockAchievement from 'helpers/unlockAchievement';
+
+import UserDropdown from './UserDropdown';
 
 interface IProps {
 	user: IUser;
 }
 
-function blockUser() {
+function blockUser(user: string) {
 	console.log('block user'); //TODO implement block user
 	unlockAchievement('BLOCK');
 }
-
-const items = [
-	{
-		key: '1',
-		label: <Link to="/add">Add friend</Link>,
-	},
-	{
-		key: '2',
-		label: <Link to="/chat">Message</Link>,
-	},
-	{
-		key: '3',
-		label: (
-			<S.OptionButton className="option-button" onClick={blockUser}>
-				Block
-			</S.OptionButton>
-		),
-	},
-];
 
 const Profile = ({user}: IProps) => {
 	const {global, coalition} = getRanks(user);
@@ -45,17 +27,7 @@ const Profile = ({user}: IProps) => {
 			<S.VDiv className="name">
 				<F.H1>{user.name}</F.H1>
 				<ActivityStatus state={user.status} />
-				<Dropdown
-					trigger={['click']}
-					menu={{
-						items,
-					}}
-					placement="bottomLeft"
-				>
-					<Button size="small" style={{marginTop: '16px', width: '96px'}}>
-						Options
-					</Button>
-				</Dropdown>
+				<UserDropdown user={user.name} />
 			</S.VDiv>
 
 			<S.VDiv className="ranks-div">
