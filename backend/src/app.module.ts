@@ -12,6 +12,7 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { GameModule } from "./game/game.module";
 import { WebsocketModule } from "./websocket/websocket.module";
 import {LobbyModule} from "./lobby/lobby.module";
+import { DashboardController } from './dashboard/dashboard.controller';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import {LobbyModule} from "./lobby/lobby.module";
     CloudinaryModule,
     WebsocketModule,
   ],
-  controllers: [AppController, DatabaseController],
+  controllers: [AppController, DatabaseController, DashboardController],
   providers: [AppService, DatabaseService],
 })
 export class AppModule {}
