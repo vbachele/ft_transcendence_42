@@ -4,10 +4,13 @@ import FireGif from '../components/FireGif/FireGif';
 import {Text} from '../../../styles/font.styles';
 import SocketContext from '../../../contexts/Socket/Context';
 import {ClientGameEvents} from '../../../events/game.events';
+import {useSearchParams} from "react-router-dom";
 
 function Countdown() {
 	const [countdown, setCountdown] = useState(3);
 	const {socket} = useContext(SocketContext).SocketState;
+	const [searchParams] = useSearchParams();
+
 
 	useEffect(() => {
 		const timeout = setInterval(() => {
@@ -19,7 +22,8 @@ function Countdown() {
 	}, [countdown]);
 
 	if (!countdown) {
-		socket?.emit(ClientGameEvents.Ready);
+		const lobbyId = searchParams.get('lobbyId');
+		socket?.emit(ClientGameEvents.Ready, {lobbyId: lobbyId});
 		return null;
 	}
 	return (

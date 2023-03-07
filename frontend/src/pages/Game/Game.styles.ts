@@ -9,6 +9,9 @@ export const StyledGame = styled.div`
 `
 
 export const StyledCanvas = styled.canvas`
+  //padding: 256px;
+  //margin: 256px;
+  
   //flex: 1 1 auto;
   //aspect-ratio: 16/9;
   //margin: auto;

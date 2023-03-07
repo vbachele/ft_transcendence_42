@@ -50,7 +50,7 @@ function App() {
 					<Route path="/2FA" element={<DoubleAuthentication />} />
 					<Route path="/Victory" element={<Victory />} />
 					<Route path="/Defeat" element={<Defeat />} />
-					<Route path="/game" element={<Pages.Game />} />
+					<Route path="game" element={<Pages.Game />} />
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
 					<Route path="/chat" element={<Pages.Chat />} />

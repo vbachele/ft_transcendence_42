@@ -5,7 +5,7 @@ import {
   OnGatewayDisconnect, OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
+  WebSocketServer, WsException,
 } from "@nestjs/websockets";
 
 import { Server, Socket } from "socket.io";
@@ -80,7 +80,7 @@ export class WebsocketGateway
 
   public getClient(username: string): AuthenticatedSocket {
     const client = this.users.get(username);
-    if (!client) throw new Error(`Client [${username}] doesn't exist`);
+    if (!client) throw new WsException(`Client [${username}] doesn't exist`);
     return client;
   }
 

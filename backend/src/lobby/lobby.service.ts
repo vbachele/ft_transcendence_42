@@ -24,7 +24,6 @@ export class LobbyService {
   server: Server;
 
   public getLobby(lobbyId: string): ALobby {
-    console.log(`Get lobbies = `, this.lobbies.keys());
     const lobby = this.lobbies.get(lobbyId);
     if (!lobby) throw new Error(`Lobby [${lobbyId}] doesn't exist`);
     return lobby;

@@ -3,7 +3,7 @@ import {
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
+  WebSocketServer, WsException,
   WsResponse,
 } from "@nestjs/websockets";
 import { ClientEvents, ServerEvents } from "./events/lobby.events";
@@ -35,7 +35,7 @@ export class LobbyGateway {
   @SubscribeMessage(ClientEvents.CreateLobby)
   onCreateLobby(
     @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody(new LobbyValidationPipe()) body: LobbyDto
+    @MessageBody(new LobbyValidationPipe()) body: LobbyDto,
   ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
     const lobby = this.lobbyService.create(body.type, body.data);
     if (!lobby) throw new Error("Lobby creation error");

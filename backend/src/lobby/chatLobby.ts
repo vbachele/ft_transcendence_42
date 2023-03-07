@@ -14,15 +14,13 @@ export class ChatLobbyDto {
 
 @Injectable()
 export class ChatLobby extends ALobby {
-  maxClients: number;
 
   constructor(
   data: ChatLobbyDto,
     private readonly prismaLobbyService: PrismaLobbyService,
     private readonly websocketService: WebsocketService,
   ) {
-    super(websocketService.server);
-    this.maxClients = data.maxClients;
+    super(websocketService.server, data.maxClients);
     this.afterInit();
   }
 
