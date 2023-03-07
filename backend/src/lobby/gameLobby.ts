@@ -45,26 +45,54 @@ export class GameLobby extends ALobby {
           id: this.instance.ball.id,
           type: this.instance.ball.type,
           position: this.instance.ball.position,
+          velocity: this.instance.ball.velocity,
         });
-        prevBallPos = {...this.instance.ball.position};
+        prevBallPos = { ...this.instance.ball.position };
+      }
+    });
+    Events.on(this.instance.engine, "collisionStart", (event) => {
+      const pairs = event.pairs;
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i];
+        if (
+          pair.bodyA.label === "leftPaddle" ||
+          pair.bodyB.label === "leftPaddle"
+        ) {
+          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
+            position: this.instance.paddles[0].position,
+          });
+        } else if (
+          pair.bodyA.label === "rightPaddle" ||
+          pair.bodyB.label === "rightPaddle"
+        ) {
+          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
+            position: this.instance.paddles[1].position,
+          });
+        }
       }
     });
   }
 
   movePaddle(
-    @ConnectedSocket() client: AuthenticatedSocket,
+    @ConnectedSocket()
+    client: AuthenticatedSocket,
     paddle: Matter.Body,
-    direction: string,
+    direction: string
   ) {
     switch (direction) {
       case "up":
-        Matter.Body.setPosition(paddle, { x: paddle.position.x, y: paddle.position.y - 20 });
+        Matter.Body.setPosition(paddle, {
+          x: paddle.position.x,
+          y: paddle.position.y - 5,
+        });
         break;
       case "down":
-        Matter.Body.setPosition(paddle, { x: paddle.position.x, y: paddle.position.y + 20 });
+        Matter.Body.setPosition(paddle, {
+          x: paddle.position.x,
+          y: paddle.position.y + 5,
+        });
         break;
     }
-    console.log(`paddle position`, paddle.position);
     this.dispatchToLobby(ServerGameEvents.MovePaddle, {
       id: paddle.id,
       type: paddle.type,
@@ -91,13 +119,17 @@ export class GameLobby extends ALobby {
     console.info(`Game setup dispatched to lobby`);
   }
 
-  validateClient(@ConnectedSocket() client: AuthenticatedSocket) {
+  validateClient(
+    @ConnectedSocket()
+    client: AuthenticatedSocket
+  ) {
     if (!this.clients.has(client.data.name))
       throw new ForbiddenException(`The client doesn't belong to the lobby`);
   }
 
   dispatchToOpponent<T>(
-    @ConnectedSocket() client: AuthenticatedSocket,
+    @ConnectedSocket()
+    client: AuthenticatedSocket,
     event: ServerGameEvents,
     payload: T
   ) {

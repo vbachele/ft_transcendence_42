@@ -12,5 +12,6 @@ export enum ServerGameEvents {
   Setup = "server.game.setup",
   MoveBall = "server.game.moveBall",
   Start = "server.game.start",
+  PaddleHit = "server.game.paddleHit",
 }
 

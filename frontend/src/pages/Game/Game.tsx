@@ -5,9 +5,9 @@ import {Pong} from './Pong';
 import Countdown from '../../components/Popup/Countdown/Countdown';
 import {useParams, useSearchParams} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
-
-const scaleWidth = 500;
-const scaleHeight = 500;
+import {Player} from '@lottiefiles/react-lottie-player';
+import FireBall from 'assets/fireBall.json';
+import PaddleHit from 'assets/paddleHit.json';
 
 export interface Lobby {
 	id: string;
@@ -16,32 +16,28 @@ export interface Lobby {
 	clients: string[];
 }
 
-const emptyLobby = (): Lobby => ({
-	id: 'none',
-	createdAt: 'null',
-	createdBy: 'null',
-	clients: ['null'],
-});
-
 function Game() {
 	const canvasRef = useRef(null);
 	const {socket} = useContext(SocketContext).SocketState;
 	const pongRef = useRef<Pong>();
 	const [searchParams] = useSearchParams();
+	const fireBall = useRef<HTMLElement>();
+	const canvasPos = useRef<DOMRect>();
+	const paddleHitRef = React.createRef<Player>();
+	const paddleHitElem = useRef<HTMLElement>();
 
 	useEffect(() => {
 		const lobbyId = searchParams.get('lobbyId');
-		// pongRef.current = new Pong(canvasRef.current!, socket!, 'right', 'alksjdf');
-		// pongRef.current.run();
-		// pongRef.current?.paddleController();
+		const canvas = canvasRef.current! as HTMLCanvasElement;
+		canvasPos.current = canvas.getBoundingClientRect();
 
 		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
 		socket?.on(ServerGameEvents.Setup, (data) => {
 			pongRef.current = new Pong(canvasRef.current!, socket!, data, lobbyId!);
-			// pongRef.current = new Pong(canvasRef.current!, socket!, data.paddle, lobbyId!);
-			// pongRef.current.run();
 			pongRef.current?.paddleController();
 		});
+		fireBall.current = document.getElementById('fireBall')!;
+		paddleHitElem.current = document.getElementById('paddleHit')!;
 		addEventListener('resize', resize);
 		return () => {
 			socket?.off(ServerGameEvents.Setup);
@@ -50,25 +46,33 @@ function Game() {
 
 	useEffect(() => {
 		socket?.on(ServerGameEvents.MoveBall, (data) => {
-			console.log(`update`);
-			pongRef.current?.updateBody(data);
+			const angle = Math.atan2(data.velocity.x, data.velocity.y);
+			fireBall.current!.style.transform = `translate(${
+				data.position.x - fireBall.current?.clientWidth! / 2
+			}px, ${
+				data.position.y - fireBall.current?.clientHeight!
+			}px) rotate(${-angle}rad)`;
 		});
 		socket?.on(ServerGameEvents.MovePaddle, (data) => {
-			console.log(`move paddle`);
 			pongRef.current?.updateBody(data);
 		});
+		socket?.on(ServerGameEvents.PaddleHit, (data) => {
+			paddleHitElem.current!.style.visibility = 'visible';
+			paddleHitElem.current!.style.transform = `translate(${
+				data.position.x - paddleHitElem.current?.clientWidth! / 2
+			}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
+
+			paddleHitRef.current?.play();
+			setTimeout(() => {
+				paddleHitElem.current!.style.visibility = 'hidden';
+			}, 1_000);
+		});
 		return () => {
-			socket?.off(ServerGameEvents.Setup);
 			socket?.off(ServerGameEvents.MoveBall);
+			socket?.off(ServerGameEvents.MovePaddle);
+			socket?.off(ServerGameEvents.PaddleHit);
 		};
 	}, [socket]);
-
-	// useEffect(() => {
-	// 	socket?.on(ServerGameEvents.MovePaddle, (pos) => {
-	// 		console.log(`updating opponent paddle`);
-	// 		pongRef.current?.updatePaddle(pos);
-	// 	});
-	// }, [socket]);
 
 	function resize() {
 		const canvas: HTMLCanvasElement = canvasRef.current!;
@@ -78,7 +82,38 @@ function Game() {
 
 	return (
 		<div>
-			<StyledCanvas ref={canvasRef} tabIndex={1}></StyledCanvas>
+			<div style={{position: 'relative'}}>
+				<StyledCanvas
+					id="canvas"
+					ref={canvasRef}
+					tabIndex={1}
+					style={{position: 'absolute'}}
+				></StyledCanvas>
+				<Player
+					id={'fireBall'}
+					autoplay={true}
+					loop={true}
+					src={FireBall}
+					style={{
+						position: 'absolute',
+						transformOrigin: 'bottom center',
+					}}
+				/>
+				<Player
+					id={'paddleHit'}
+					src={PaddleHit}
+					autoplay={false}
+					loop={false}
+					ref={paddleHitRef}
+					style={{
+						position: 'absolute',
+						transformOrigin: 'center',
+						width: '200px',
+						height: '200px',
+						visibility: 'hidden',
+					}}
+				/>
+			</div>
 			<Countdown />
 		</div>
 	);

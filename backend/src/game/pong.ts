@@ -12,7 +12,7 @@ const PLAYGROUND_SIZE = { x: 800, y: 600 };
 const PADDLE_SIZE = { x: 20, y: 100 };
 const PADDLE_BORDER_SPACING = 20;
 const WALL_THICKNESS = 20;
-const BALL_SIZE = 20;
+const BALL_SIZE = 1;
 const BALL_STARTING_POSTION = {
   x: PLAYGROUND_SIZE.x / 2,
   y: PLAYGROUND_SIZE.y / 2,
@@ -89,6 +89,9 @@ export class Pong {
         frictionStatic: 0,
         frictionAir: 0,
         restitution: 1,
+        render: {
+          visible: true,
+        }
       }
     );
     World.add(this.world, this.ball);
