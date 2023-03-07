@@ -10,13 +10,13 @@ export interface IUser {
 	achievements: string[];
 }
 
-// export interface IAchievement {
-//   id: number;
-//   api: string;
-//   name: string;
-//   description: string;
-//   image: string;
-// }
+export interface IAchievement {
+	id: number;
+	api: string;
+	name: string;
+	description: string;
+	image: string;
+}
 
 export type TCallback = ({}) => void;
 

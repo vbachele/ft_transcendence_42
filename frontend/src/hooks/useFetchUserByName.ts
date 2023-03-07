@@ -6,6 +6,8 @@ import useFetchUsers from './useFetchUsers';
 async function fetchUser(name: string) {
 	try {
 		const data = await backend.getUserByName(name);
+		console.log('NAME:', name);
+
 		return {data, error: null};
 	} catch (err) {
 		return {data: null, error: 'Could not fetch the data'};
