@@ -7,7 +7,7 @@ export const backend = {
 		return await response.json();
 	},
 	async getUserByName(name: string): Promise<IUser> {
-		const response = await api.get('/users/' + name);
+		const response = await api.get('/dashboard/' + name);
 		return await response.json();
 	},
 	async patchUser(name: string, updateUser: unknown): Promise<any> {

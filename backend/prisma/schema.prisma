@@ -22,7 +22,7 @@ model User {
   games Int? @default(0)
   wins Int? @default(0)
   ratio Float? @default(0)
-  achievements String[] 
+  achievements String[]
   score Int? @default(0)
   accessToken String @default("noToken")
   refreshToken String? @default("noRefreshToken")
@@ -37,12 +37,4 @@ model Lobby {
   createdAt DateTime
   type String
   maxClients Int?
-}
-
-model Achievement {
-  id Int @id @default(autoincrement())
-	api String @unique
-  name String
-  image String
-  description String
 }
