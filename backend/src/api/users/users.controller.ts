@@ -18,10 +18,6 @@ export class UserController {
 	async getUserByToken(@Req() req: Request) {
 		return this.userService.getUserByToken(req);
 	}
-	// @Get('dashboard/:name')
-	// async getUserByName(@Req() req: Request) {
-	// 	return this.userService.getUserByName(req.params.name);
-	// }
 	@Get()
 	async getUsers() {
 		return this.userService.getAllUsers();

@@ -27,6 +27,11 @@ export const Profile = styled.div<IProfile>`
 		gap: 48px;
 	}
 
+	.antd-space {
+		width: fit-content;
+		cursor: pointer;
+		margin-top: 16px;
+	}
 
 	@media screen and (max-width: 1600px) {
 		.ranks-div {

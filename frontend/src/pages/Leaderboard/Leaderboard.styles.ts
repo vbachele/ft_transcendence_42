@@ -63,7 +63,7 @@ export const SearchCoalition = styled.select`
 	transition: border-color 0.2s linear;
 
 	:hover {
-		border-color: #e04f5f;
+		border-color: #dc4f19;
 	}
 `;
 

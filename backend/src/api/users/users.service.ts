@@ -14,22 +14,6 @@ export class UserService {
 			throw error;
 		}
 	}
-
-	async getUserByName(name: string) {
-		try {
-			// console.log(name);
-
-			const user = await this.prisma.user.findUnique({
-				where: {
-					name: name,
-				},
-			});
-			return user;
-		} catch (error) {
-			throw error;
-		}
-	}
-
 	async updateUser(req: Request) {
 		try {
 			const {name} = req.params;

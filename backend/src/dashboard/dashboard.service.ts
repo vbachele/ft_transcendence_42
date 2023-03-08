@@ -9,8 +9,6 @@ export class DashboardService {
 
 	async getUserByName(name: string) {
 		try {
-			console.log(name);
-
 			const user = await this.prisma.user.findUnique({
 				where: {
 					name: name,

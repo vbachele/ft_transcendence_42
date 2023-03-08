@@ -143,7 +143,7 @@ export const Blocked = styled.div`
 		cursor: pointer;
 		width: 48px;
 		height: 24px;
-		fill: #e04f5f;
+		fill: #dc4f19;
 
 		:hover {
 			transform: scale(1.1);

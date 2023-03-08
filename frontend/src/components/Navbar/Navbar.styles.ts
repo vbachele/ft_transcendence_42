@@ -75,6 +75,6 @@ export const StyledToggleTheme = styled.label`
 	}
 
 	svg:hover {
-		fill: #e04f5f;
+		fill: #dc4f19;
 	}
 `;
