@@ -49,12 +49,14 @@ export const left = styled.div`
 `;
 
 export const logo = styled.div`
-	position: relative;
-	padding: 7px 0 0 30px;
-	opacity: 0.9;
-	z-index: -1;
-	&img {
-		width: clamp(300px, 60vw, 500px);
+	/* position: relative; */
+	/* padding: 7px 0 0 30px; */
+	/* opacity: 0.9; */
+	/* z-index: -1; */
+	img {
+		width: 256px;
+		height: 256px;
+		/* width: clamp(300px, 60vw, 500px); */
 	}
 `;
 

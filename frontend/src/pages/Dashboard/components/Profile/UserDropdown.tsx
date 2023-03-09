@@ -5,6 +5,8 @@ import {Dropdown, Space} from 'antd';
 import type {MenuProps} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
 import BlockUser from 'components/Buttons/Social/BlockUser';
+import AddFriend from 'components/Buttons/Social/AddFriend';
+import Message from 'components/Buttons/Social/Message';
 
 interface IProps {
 	user: string;
@@ -17,17 +19,17 @@ const UserDropdown = ({user}: IProps) => {
 	const items: MenuProps['items'] = [
 		{
 			label: (
-				<F.Text weight="400" fontSize="14px">
-					Add Friend
-				</F.Text>
+				<S.OptionButton>
+					<AddFriend user={user} />
+				</S.OptionButton>
 			),
 			key: '0',
 		},
 		{
 			label: (
-				<F.Text weight="400" fontSize="14px">
-					Message
-				</F.Text>
+				<S.OptionButton>
+					<Message user={user} />
+				</S.OptionButton>
 			),
 			key: '1',
 		},

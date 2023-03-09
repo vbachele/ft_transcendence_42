@@ -35,7 +35,7 @@ const Card = ({match}: IProps) => {
 					</S.Result>
 				</S.Card>
 			)}
-			{result === 'win' ? <WinIcon /> : <LossIcon />}
+			{user && (result === 'win' ? <WinIcon /> : <LossIcon />)}
 		</S.CardContainer>
 	);
 };

@@ -8,6 +8,7 @@ export const Container = styled.div`
 export const History = styled.div`
 	margin-top: 48px;
 	display: flex;
+	align-items: stretch;
 	justify-content: space-between;
 
 	@media screen and (max-width: 768px) {

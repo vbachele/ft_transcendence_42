@@ -1,8 +1,6 @@
 import * as S from './History.styles';
 import * as F from 'styles/font.styles';
-import * as UI from 'styles/buttons.styles';
 import Card from './Card';
-import {IUser} from 'types/models';
 
 interface IMatch {
 	user: string;
@@ -11,13 +9,13 @@ interface IMatch {
 	id: number;
 }
 
-// prettier-ignore
+// prettier-ignore //? 4 ou 5 max ? + pas beau quand semi complet
 const matches: IMatch[] = [
-	{"id":23,"user":"Minnis",myScore:5,userScore:8},
-	{"id":24,"user":"Dalston",myScore:10,userScore:3},
-	{"id":25,"user":"Toppin",myScore:7,userScore:5},
-	{"id":26,"user":"Coleman",myScore:5,userScore:6},
-	{"id":27,"user":"Helder",myScore:8,userScore:9},
+	{id: 23, user: 'Melato', myScore: 5, userScore: 8},
+	{id: 24, user: 'Lemoir', myScore: 10, userScore: 3},
+	{id: 25, user: 'Bess', myScore: 7, userScore: 5},
+	{id: 26, user: 'Thowes', myScore: 5, userScore: 6},
+	// {"id":26,"user":"Thowes",myScore:5,userScore:6},
 ];
 
 const History = () => {
@@ -27,11 +25,9 @@ const History = () => {
 				Last Matches
 			</F.Subtitle>
 			<S.History>
-				<Card match={matches[0]} />
-				<Card match={matches[1]} />
-				<Card match={matches[2]} />
-				<Card match={matches[3]} />
-				<Card match={matches[4]} />
+				{matches.map((match: IMatch) => (
+					<Card match={match} />
+				))}
 			</S.History>
 		</S.Container>
 	);

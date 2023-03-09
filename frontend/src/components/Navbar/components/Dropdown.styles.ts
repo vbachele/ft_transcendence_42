@@ -134,7 +134,8 @@ export const LinksContainer = styled.div`
 		gap: 1.5em;
 
 		a,
-		p {
+		p,
+		button {
 			font-weight: 600;
 			font-size: 24px;
 			justify-content: center;
@@ -146,38 +147,6 @@ export const LinksContainer = styled.div`
 `;
 
 export const PopupButton = styled.button`
-	display: flex;
-	flex-direction: row;
-	align-items: left;
-	gap: 16px;
-	color: white;
-
-	background-color: transparent !important;
-	border: none !important;
-	transition: all 0.2s linear;
-	:hover {
-		p {
-			font-weight: 600;
-		}
-		transform: translateX(8px);
-	}
-	svg {
-		fill: white;
-		width: 24px;
-		height: 24px;
-		border-radius: 0;
-	}
-	@media only screen and (max-width: 768px) {
-		gap: 1.5em;
-
-		.a {
-			font-weight: 600;
-			font-size: 24px;
-			justify-content: center;
-			align-items: center;
-		}
-		svg {
-			display: none;
-		}
-	}
+	background-color: transparent;
+	border: none;
 `;

@@ -2,7 +2,6 @@ import {notification} from 'antd';
 import {backend} from 'lib/backend';
 import AchievementList from 'assets/achievements.json';
 import {IAchievement} from 'types/models';
-import {useUserInfos} from 'contexts/User/userContent';
 
 const unlockAchievement = async (achName: string, userName: string) => {
 	// get user
@@ -13,10 +12,10 @@ const unlockAchievement = async (achName: string, userName: string) => {
 		(achievement: IAchievement) => achievement.api === achName
 	);
 
-	// check if already has achievement
+	// check if user already has achievement
 	if (data?.achievements.includes(achievement!.api)) return;
 
-	// add new achievement to the list
+	// add new achievement to the list of user achievements
 	let userAchList = data.achievements;
 	userAchList?.push(achievement!.api);
 
@@ -24,7 +23,7 @@ const unlockAchievement = async (achName: string, userName: string) => {
 	const patch = {
 		achievements: userAchList,
 	};
-	backend.patchUser(userName, patch); //TODO: use context
+	backend.patchUser(userName, patch);
 
 	// show notification
 	notification.success({

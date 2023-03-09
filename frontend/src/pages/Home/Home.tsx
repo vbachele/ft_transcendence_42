@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
 import logo from 'assets/logo-text.svg';
+import logo_ai from 'assets/logo_ai.png';
 import Popup from 'components/Popup';
 import * as S from './Home.styles';
 
@@ -31,7 +32,7 @@ const Homepage = () => {
 			<S.main id="main">
 				<S.left id="left">
 					<S.logo id="logo">
-						<S.img src={logo} alt="" />
+						<S.img src={logo_ai} alt="" />
 					</S.logo>
 					<S.menus id="menus">
 						<S.menuHighlight id="menu-highlight" />
@@ -72,7 +73,7 @@ const Homepage = () => {
 				<S.hero id="hero">
 					<S.heroName id="hero-name">{userName?.userName}</S.heroName>
 					<S.heroUnlocks id="hero-unlocks">
-						{achievements?.achievements.length} / 15 ACHIEVEMENTS
+						{achievements?.achievements.length} / 16 ACHIEVEMENTS
 					</S.heroUnlocks>
 				</S.hero>
 			</S.main>

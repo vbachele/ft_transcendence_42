@@ -11,8 +11,8 @@ function BlockUser({user}: IProps) {
 	const {userName} = useUserInfos();
 
 	const handleClick = () => {
-		console.log(userName.userName, 'wants to block', user);
-		unlockAchievement('BLOCK', user);
+		console.log(userName.userName, 'wants to block', user); //TODO add user to blocked list
+		unlockAchievement('BLOCK', userName.userName);
 	};
 
 	return (

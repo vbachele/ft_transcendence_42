@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { IUser } from "types/models";
-import { Divider, Input } from "antd";
-import Friend from "./components/Friend";
-import * as S from "./Social.styles";
-import * as F from "styles/font.styles";
-import compareStatus from "helpers/compareStatus";
-import Blocked from "./components/Blocked";
-import filterByName from "helpers/filterByName";
+import {useState} from 'react';
+import {IUser} from 'types/models';
+import {Divider, Input} from 'antd';
+import Friend from './components/Friend';
+import * as S from './Social.styles';
+import * as F from 'styles/font.styles';
+import compareStatus from 'helpers/compareStatus';
+import Blocked from './components/Blocked';
+import filterByName from 'helpers/filterByName';
 
 // prettier-ignore
 const friends: IUser[] = [
@@ -150,51 +150,51 @@ const blocked: IUser[] = [
 	{"name":"Atton","image":"https://robohash.org/voluptaseosplaceat.png?size=200x200&set=set1","coalition":"Assembly","status":"ingame","games":33,"wins":32,"ratio":0.97,"achievements":["Achievement 1","Achievement 2"],"score":3171},
 ];
 
-const { Search } = Input;
+const {Search} = Input;
 
 function Social() {
-  const [search, setSearch] = useState("");
-  const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
+	const [search, setSearch] = useState('');
+	const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(event.target.value);
+	};
 
-  return (
-    <S.Container>
-      <Search
-        placeholder="Search a user"
-        size="large"
-        onChange={onSearch}
-        style={{
-          width: "30%",
-        }}
-        enterButton
-      />
-      <F.H3>
-        Friends -{" "}
-        {friends.filter((friend) => filterByName(friend, search)).length}
-      </F.H3>
-      <S.UserContainer>
-        {friends
-          .sort(compareStatus)
-          .filter((friend) => filterByName(friend, search))
-          .map((friend: IUser) => (
-            <Friend friend={friend} key={friend.name} />
-          ))}
-      </S.UserContainer>
-      <Divider style={{ visibility: "hidden" }} />
-      <F.H3>
-        Blocked -{" "}
-        {blocked.filter((blocked) => filterByName(blocked, search)).length}
-      </F.H3>
-      <S.UserContainer>
-        {blocked
-          .filter((user) => filterByName(user, search))
-          .map((user: IUser) => (
-            <Blocked user={user} key={user.name} />
-          ))}
-      </S.UserContainer>
-    </S.Container>
-  );
+	return (
+		<S.Container>
+			<Search
+				placeholder="Search a user"
+				size="large"
+				onChange={onSearch}
+				style={{
+					width: '250px',
+				}}
+				enterButton
+			/>
+			<F.H3>
+				Friends -{' '}
+				{friends.filter((friend) => filterByName(friend, search)).length}
+			</F.H3>
+			<S.UserContainer>
+				{friends
+					.sort(compareStatus)
+					.filter((friend) => filterByName(friend, search))
+					.map((friend: IUser) => (
+						<Friend friend={friend} key={friend.name} />
+					))}
+			</S.UserContainer>
+			<Divider style={{visibility: 'hidden'}} />
+			<F.H3>
+				Blocked -{' '}
+				{blocked.filter((blocked) => filterByName(blocked, search)).length}
+			</F.H3>
+			<S.UserContainer>
+				{blocked
+					.filter((user) => filterByName(user, search))
+					.map((user: IUser) => (
+						<Blocked user={user} key={user.name} />
+					))}
+			</S.UserContainer>
+		</S.Container>
+	);
 }
 
 export default Social;

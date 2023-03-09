@@ -90,8 +90,10 @@ export const VDivLink = styled(Link)`
 `;
 
 export const OptionButton = styled.div`
-	button {
+	button,
+	a {
 		p {
+			color: black;
 			font-weight: 400;
 			font-size: 14px;
 		}
