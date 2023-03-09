@@ -10,7 +10,7 @@ import { message } from 'antd';
 import useFetchUsers from 'hooks/useFetchUsers';
 import { IUser } from 'types/models';
 import SocketContext from 'contexts/Socket/Context';
-import { ClientEvents } from 'pages/Game/events/game.events';
+import { ClientEvents } from 'events/socket.events';
 
 interface IProps {
 	value: string
@@ -45,7 +45,7 @@ const DirectMessages: React.FC<IProps> = (props) => {
 		setIsMobileClicked(false);
 		setIsRightBarOpenDM(false);
 		setDataMessages(data);
-		socket?.emit(ClientEvents.CreateLobby, {type:"chat"});
+		// socket?.emit(ClientEvents.CreateLobby, {type:"chat", data:{maxClients:2}});
 	};
 
 	// let data: IMessages[] = [];
@@ -64,7 +64,7 @@ const DirectMessages: React.FC<IProps> = (props) => {
 				})
 				.map((message: IUser) => (
 					<li style={{listStyle: 'none'}} key={message.id}>
-							<Messages onClick={() => handleClick(message)} data={message} />
+						<Messages onClick={() => handleClick(message)} data={message} />
 					</li>
 				))}
 			</ul>

@@ -1,8 +1,11 @@
 import MessagesContext from 'contexts/Chat/MessagesContext';
-import { useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { ThemeContext } from 'styled-components';
 import * as F from 'styles/font.styles';
 import * as S from '../../Chat.styles';
+import FormEventHandler from 'react';
+import SearchBox from '../modals/SearchBox';
+import SearchBoxChat from '../modals/SearchBoxChat';
 
 export const Arrow = () =>{
     return(
@@ -14,20 +17,44 @@ export const Arrow = () =>{
 
 function ChatInputBar() {
     const theme = useContext(ThemeContext);
-    const { isClickedDM, setIsSubmitted } = useContext(MessagesContext);
+    const [search, setSearch] = useState<string>('');
+    const { isClickedDM } = useContext(MessagesContext);
+    const [input, setInput] = useState<string>('');
 
-    const handleSubmit = (event: React.FormEvent) => 
-    {
-        event.preventDefault();
-        setIsSubmitted(true);
+    function handleChange(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setSearch('');
+        console.log(search);
+    };
+    
+    const putInput = (e: (FormEvent<HTMLInputElement>)) => {
+        e.currentTarget.value.trim();
+        setSearch(e.currentTarget.value);
     };
 
+    // function handleSubmit = (event: FormEventHandler) => 
+    // {
+    //     event.preventDefault();
+    //     let msg = event.currentTarget.value;
+    //     msg = msg.trim();
+    //     if (!msg) {
+    //         return false;
+    //       }
+
+    //       event.target.elements.value = '';
+    //     event.target.elements.focus();
+    //     setIsSubmitted(true);
+    // };
+
     return ( 
-        <form onSubmit={handleSubmit} style={{position: 'relative', margin: '8px 16px'}}>
-            <S.ChatBarInput type="text" open={isClickedDM} placeholder="Message"/>
-            <div onClick={handleSubmit} style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
-                <Arrow />
-            </div>
+        // <form onSubmit={handleChange} style={{position: 'relative', margin: '8px 16px'}}>
+        //     <S.ChatBarInput type="text" open={isClickedDM} placeholder="Message"/>
+        //     <div onClick={handleChange} style={{position: 'absolute', right: 8, top: '25%', cursor: 'pointer'}}>
+        //         <Arrow />
+        //     </div>
+        // </form>
+        <form onSubmit={handleChange}>
+            <SearchBoxChat value={search} setValue={putInput}/>
         </form>
     );
 }

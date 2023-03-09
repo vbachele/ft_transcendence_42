@@ -13,51 +13,7 @@ function MainFieldDirectMessages() {
             {isClickedDM && <TopBarDirectMessages data={dataMessages} />}
             {(isClickedDM || isRightBarOpenDM) &&
                 <div style={{overflow: 'auto', flex: 1}}>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
+              
                 </div>
             }
             {isClickedDM && <ChatInputBar/>}

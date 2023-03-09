@@ -2,27 +2,29 @@ import { ALobby } from "./ALobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
 import { Lobby } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
-import { IsNumber } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 import {WebsocketService} from "../websocket/websocket.service";
 
 export class ChatLobbyDto {
   @IsNumber()
   maxClients: number;
-  owner: string;
+  @IsString()
+  adminName: string
+  // owner: string;
 }
 
 
 @Injectable()
 export class ChatLobby extends ALobby {
   maxClients: number;
-
+  
   constructor(
-  data: ChatLobbyDto,
+    data: ChatLobbyDto,
     private readonly prismaLobbyService: PrismaLobbyService,
     private readonly websocketService: WebsocketService,
-  ) {
-    super(websocketService.server);
-    this.maxClients = data.maxClients;
+    ) {
+      super(websocketService.server);
+      this.maxClients = data.maxClients;
     this.afterInit();
   }
 
@@ -32,7 +34,7 @@ export class ChatLobby extends ALobby {
       adminId: 23,
       createdAt: this.createdAt,
       maxClients: this.maxClients,
-      type: 'game',
+      type: 'chat',
     }
     this.prismaLobbyService
       .pushLobby(lobby)

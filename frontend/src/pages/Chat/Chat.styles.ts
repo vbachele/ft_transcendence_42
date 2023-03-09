@@ -123,7 +123,27 @@ export const ContainerTitles = styled.div`
 `;
 
 export const ContainerChannels = styled.div`
-
+    ::-webkit-scrollbar {
+        display: none;
+    } 
+     ::-webkit-scrollbar-button {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-track {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-track-piece {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-thumb {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-corner {
+      display: none !important;
+    }
+    ::-webkit-resizer {
+      display: none !important;
+    }
     display: flex;
     /* flex-grow: 0; */
     min-height: 5%;
@@ -167,6 +187,29 @@ export const ContainerMessage = styled.div`
 `;
 
 export const ContainerMessages = styled.div`
+::-webkit-scrollbar {
+        display: none !important;
+        width: 0px !important;
+	    height: 0px !important;
+    } 
+     ::-webkit-scrollbar-button {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-track {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-track-piece {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-thumb {
+      display: none !important;
+    }
+    ::-webkit-scrollbar-corner {
+      display: none !important;
+    }
+    ::-webkit-resizer {
+      display: none !important;
+    }
     /* width: 100%; */
     display: flex;
     flex-shrink: 2;
