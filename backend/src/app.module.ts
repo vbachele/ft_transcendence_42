@@ -12,6 +12,8 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { GameModule } from "./game/game.module";
 import { WebsocketModule } from "./websocket/websocket.module";
 import {LobbyModule} from "./lobby/lobby.module";
+import { ChatGateway } from './chat/chat.gateway';
+import {ChatModule} from "./chat/chat.module";
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import {LobbyModule} from "./lobby/lobby.module";
     PrismaModule,
     CloudinaryModule,
     WebsocketModule,
+      ChatModule
   ],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],

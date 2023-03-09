@@ -1,33 +1,56 @@
-import * as F from 'styles/font.styles';
 import * as S from './Chat.styles';
 import LateralBar from './components/containers/LateralBar';
-import MainFieldDirectMessages from './components/containers/MainFieldDirectMessages';
+import MainField from './components/containers/MainFieldDirectMessages';
 import RightBarDirectMessages from './components/messages/RightBarDirectMessages';
-import useContext from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import MessagesContext from '../../contexts/Chat/MessagesContext';
-import React from 'react';
-import MainFieldChannel from './components/containers/MainFieldChannel';
-import EmptyChat from './components/messages/EmptyChat';
-import ModalChanSettings from './components/modals/ModalChanSettings';
-import ModalChanPass from './components/modals/ModalChanPass';
-import ModalChanCreate from './components/modals/ModalChanCreate';
+import {useJoinLobby} from '../../hooks/chat/useJoinLobby';
 
 function Chat() {
+	const {joinLobby, lobbyId} = useJoinLobby();
+	const [openUserPanel, setOpenUserPanel] = useState(false);
+	const [openLateralBar, setOpenLateralBar] = useState(false);
+	const {dataMessages} = React.useContext(MessagesContext);
+	const [responsive, setResponsive] = useState(true);
 
-    const {isClickedDM, isRightBarClosedDM, isClickedChannel, dataMessages, isRightBarOpenDM} = React.useContext(MessagesContext);
-    return (
-        <S.default>
-            <LateralBar />
-            {!isClickedDM && !isRightBarOpenDM && !isClickedChannel && <EmptyChat />}
-            {isClickedChannel && <MainFieldChannel />}
-            {isClickedDM && <MainFieldDirectMessages />}
-            {(isRightBarOpenDM || (!isRightBarClosedDM && isClickedDM)) && <RightBarDirectMessages data={dataMessages}/>}
-        </S.default>
+	useLayoutEffect(() => {
+		function updateSize() {
+			if (window.innerWidth < 768) {
+				setResponsive(true);
+			} else {
+				setResponsive(false);
+			}
+		}
+		window.addEventListener('resize', updateSize);
+		updateSize();
+		return () => window.removeEventListener('resize', updateSize);
+	}, []);
 
-        // <ModalChanSettings />
-        // <ModalChanPass />
-        // <ModalChanCreate />
-    );
+	if (responsive) return (
+		<S.default style={{display: 'flex', flexDirection: 'row', flexGrow: '1'}}>
+			{!lobbyId && <LateralBar joinLobby={joinLobby}/>}
+			{lobbyId && !openUserPanel && <MainField lobbyId={lobbyId} setOpenUserPanel={setOpenUserPanel} />}
+			{openUserPanel && (
+				<RightBarDirectMessages
+					data={dataMessages}
+					setOpenUserPanel={setOpenUserPanel}
+				/>
+			)}
+		</S.default>
+	)
+
+	return (
+		<S.default style={{display: 'flex', flexDirection: 'row', flexGrow: '1'}}>
+			<LateralBar joinLobby={joinLobby} />
+			<MainField lobbyId={lobbyId} setOpenUserPanel={setOpenUserPanel} />
+			{openUserPanel && (
+				<RightBarDirectMessages
+					data={dataMessages}
+					setOpenUserPanel={setOpenUserPanel}
+				/>
+			)}
+		</S.default>
+	);
 }
 
 export default Chat;

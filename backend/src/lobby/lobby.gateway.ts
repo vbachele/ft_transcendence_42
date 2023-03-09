@@ -1,6 +1,6 @@
 import {
   ConnectedSocket,
-  MessageBody,
+  MessageBody, OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer, WsException,
@@ -18,9 +18,13 @@ import { ValidationPipe } from "@nestjs/common";
  * @brief This is where all the lobby requests are handled
  */
 @WebSocketGateway()
-export class LobbyGateway {
+export class LobbyGateway implements OnGatewayInit {
   @WebSocketServer()
   server: Server;
+
+  async afterInit() {
+    await this.lobbyService.loadLobbies();
+  }
 
   constructor(protected readonly lobbyService: LobbyService) {}
 
@@ -57,7 +61,7 @@ export class LobbyGateway {
 
   @SubscribeMessage(ClientEvents.JoinLobby)
   onJoinLobby(
-    client: AuthenticatedSocket,
+    @ConnectedSocket() client: AuthenticatedSocket,
     @MessageBody(new ValidationPipe()) data: JoinLobbyDto
   ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
     this.lobbyService.join(data.lobbyId, client);

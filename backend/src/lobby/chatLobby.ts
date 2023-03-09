@@ -1,45 +1,77 @@
 import { ALobby } from "./ALobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
-import { Lobby } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
-import { IsNumber } from "class-validator";
-import {WebsocketService} from "../websocket/websocket.service";
+import {
+  IsBoolean,
+  IsBooleanString,
+  IsIn,
+  IsNumber,
+  IsString,
+} from "class-validator";
+import { WebsocketService } from "../websocket/websocket.service";
+import { AuthenticatedSocket } from "./types/lobby.type";
+import { ConnectedSocket } from "@nestjs/websockets";
 
 export class ChatLobbyDto {
+  id?: string;
   @IsNumber()
   maxClients: number;
+  @IsString()
   owner: string;
+  @IsString()
+  @IsIn(["public", "private"])
+  privacy: string;
+  @IsBooleanString()
+  init: boolean;
 }
 
+export interface Lobby {
+  id: string;
+  createdAt: Date;
+  maxClients: number;
+  type: string;
+  privacy: string;
+}
 
 @Injectable()
 export class ChatLobby extends ALobby {
-
   constructor(
-  data: ChatLobbyDto,
+    data: ChatLobbyDto,
     private readonly prismaLobbyService: PrismaLobbyService,
-    private readonly websocketService: WebsocketService,
+    private readonly websocketService: WebsocketService
   ) {
     super(websocketService.server, data.maxClients);
-    this.afterInit();
-  }
-
-  afterInit() {
-    const lobby: Lobby = {
-      id: this.id,
-      adminId: 23,
-      createdAt: this.createdAt,
-      maxClients: this.maxClients,
-      type: 'game',
+    if (data.id) {
+      this.id = data.id;
     }
-    this.prismaLobbyService
-      .pushLobby(lobby)
-      .catch((e) => {
-        console.error(e);
-      });
+    this.afterInit(data);
   }
 
-  public someRandomFunc() {
-    console.log(`I'm in chat lobby!`);
+  afterInit(data: ChatLobbyDto) {
+    if (data.init) {
+      console.log(`push to database`);
+      const lobby: Lobby = {
+        id: this.id,
+        createdAt: this.createdAt,
+        maxClients: this.maxClients,
+        type: "chat",
+        privacy: data.privacy,
+      };
+      this.prismaLobbyService.pushLobby(lobby, data.owner).catch((e) => {
+        throw new Error(e);
+      });
+    }
+  }
+
+  addClient(@ConnectedSocket() client: AuthenticatedSocket): ALobby {
+    setTimeout(() => {
+      super.addClient(client);
+      this.prismaLobbyService
+        .pushUserToLobby(client.data.name, this.id)
+        .catch((e) => {
+          throw e;
+        });
+    }, 1_000);
+    return this;
   }
 }

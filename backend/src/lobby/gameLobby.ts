@@ -27,10 +27,7 @@ export class GameLobby extends ALobby {
     super(websocketService.server, 2);
     this.data = data;
     this.instance = new Pong();
-    this.afterInit();
   }
-
-  afterInit() {}
 
   runGame() {
     this.instance.start();

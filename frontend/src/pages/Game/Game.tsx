@@ -8,6 +8,7 @@ import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import {Player} from '@lottiefiles/react-lottie-player';
 import FireBall from 'assets/fireBall.json';
 import PaddleHit from 'assets/paddleHit.json';
+import Background from 'pages/Game/pong_background.jpg';
 
 export interface Lobby {
 	id: string;
@@ -25,6 +26,7 @@ function Game() {
 	const canvasPos = useRef<DOMRect>();
 	const paddleHitRef = React.createRef<Player>();
 	const paddleHitElem = useRef<HTMLElement>();
+	const background = new Image(600, 400)
 
 	useEffect(() => {
 		const lobbyId = searchParams.get('lobbyId');
@@ -32,13 +34,22 @@ function Game() {
 		canvasPos.current = canvas.getBoundingClientRect();
 
 		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
-		socket?.on(ServerGameEvents.Setup, (data) => {
-			pongRef.current = new Pong(canvasRef.current!, socket!, data, lobbyId!);
-			pongRef.current?.paddleController();
-		});
+		// socket?.on(ServerGameEvents.Setup, (data) => {
+		// 	pongRef.current = new Pong(canvasRef.current!, socket!, data, lobbyId!);
+		// 	pongRef.current?.paddleController();
+		// });
 		fireBall.current = document.getElementById('fireBall')!;
 		paddleHitElem.current = document.getElementById('paddleHit')!;
-		addEventListener('resize', resize);
+		const newImage = new Image();
+		const canvasCtx = canvas.getContext('2d')!;
+		newImage.addEventListener("load", () => {
+			canvasCtx.drawImage(newImage, 0, 0, 1920, 1080);
+			console.log(`drawing`)
+		},
+		false);
+		newImage.src = 'https://cdn.discordapp.com/attachments/1052973968652509254/1083027464709742722/vbachele_high_resolution_dark_background_city_in_fire__vector_i_aeae9986-ac94-43e0-9c3e-4c85a7f42888.png';
+
+		// addEventListener('resize', resize);
 		return () => {
 			socket?.off(ServerGameEvents.Setup);
 		};
@@ -53,9 +64,9 @@ function Game() {
 				data.position.y - fireBall.current?.clientHeight!
 			}px) rotate(${-angle}rad)`;
 		});
-		socket?.on(ServerGameEvents.MovePaddle, (data) => {
-			pongRef.current?.updateBody(data);
-		});
+		// socket?.on(ServerGameEvents.MovePaddle, (data) => {
+		// 	pongRef.current?.updateBody(data);
+		// });
 		socket?.on(ServerGameEvents.PaddleHit, (data) => {
 			paddleHitElem.current!.style.visibility = 'visible';
 			paddleHitElem.current!.style.transform = `translate(${

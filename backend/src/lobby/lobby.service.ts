@@ -3,7 +3,10 @@ import { AuthenticatedSocket } from "./types/lobby.type";
 import { ALobby } from "./ALobby";
 import { Server } from "socket.io";
 import { WebSocketServer } from "@nestjs/websockets";
-import {TLobbyDto} from "./dto/lobby.dto";
+import { TLobbyDto } from "./dto/lobby.dto";
+import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
+import { ChatLobbyDto } from "./chatLobby";
+import { WebsocketService } from "../websocket/websocket.service";
 
 /**
  * @brief This service manage all the lobby instances on the server
@@ -12,8 +15,11 @@ import {TLobbyDto} from "./dto/lobby.dto";
  */
 @Injectable()
 export class LobbyService {
-
-  constructor(@Inject("LOBBY_FACTORY") private readonly lobbyCreator: any) {}
+  constructor(
+    @Inject("LOBBY_FACTORY") private readonly lobbyCreator: any,
+    private readonly prismaLobbyService: PrismaLobbyService,
+    private readonly websocketService: WebsocketService
+  ) {}
 
   private readonly lobbies: Map<ALobby["id"], ALobby> = new Map<
     ALobby["id"],
@@ -22,6 +28,24 @@ export class LobbyService {
 
   @WebSocketServer()
   server: Server;
+
+  async loadLobbies() {
+    const lobbies = await this.prismaLobbyService.fetchLobbies();
+    lobbies.forEach((lobby) => {
+      const data = {
+        id: lobby.id,
+        maxClients: lobby.maxClients,
+        privacy: lobby.privacy,
+        createdAt: lobby.createdAt,
+        init: false,
+      };
+      this.lobbies.set(
+        lobby.id,
+        this.lobbyCreator.create({ type: lobby.type, data: data })
+      );
+      console.info(`Loaded lobby - [${lobby.id}]`);
+    });
+  }
 
   public getLobby(lobbyId: string): ALobby {
     const lobby = this.lobbies.get(lobbyId);
@@ -44,7 +68,7 @@ export class LobbyService {
   public leave(lobbyId: string, client: AuthenticatedSocket) {
     const lobby = this.getLobby(lobbyId);
     lobby.removeClient(client);
-    console.info(`Client [${client.data.name}] left lobby [${lobbyId}]`)
+    console.info(`Client [${client.data.name}] left lobby [${lobbyId}]`);
   }
 
   public delete(lobbyId: string) {

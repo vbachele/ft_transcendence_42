@@ -21,16 +21,15 @@ export abstract class ALobby {
     protected readonly server: Server,
     protected readonly maxClients = 128,
 
-    public readonly id: string = v4(),
+    public id: string = v4(),
     public readonly createdAt = new Date(),
-  ) {}
+  ) {
+  }
 
   public readonly clients: Map<
     AuthenticatedSocket["data"]["name"],
     AuthenticatedSocket
   > = new Map<Socket["id"], AuthenticatedSocket>();
-
-  public abstract afterInit(): void;
 
   public addClient(client: AuthenticatedSocket): ALobby {
     if (this.clients.size >= this.maxClients)

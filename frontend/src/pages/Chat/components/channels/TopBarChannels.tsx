@@ -48,7 +48,7 @@ function TopBarDirectMessages({data} : IProps) {
         setIsClickedChannel(false);
 	};
 
-    return !isMobileClicked ? (  
+    return (
        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', height: '56px', padding: '8px 16px', gap: '8px', borderLeft: 0, borderRight: 0, borderTop: theme.name === 'light' ? '0' : "0.2px solid rgb(100, 100, 100)", borderBottom: theme.name === 'light' ? '1px solid #DDDDCC' : "0.2px solid rgb(100, 100, 100)"}}>
             <button className='hiddenDesktop' onClick={handleClickBurgerMenu} style={{cursor: "pointer", border: 'none', backgroundColor: 'transparent'}}> 
                 <BurgerMenu fill={theme.name === "light" ? "black" : "white"}/> 
@@ -63,8 +63,7 @@ function TopBarDirectMessages({data} : IProps) {
                 <div style={{cursor: 'pointer'}}><QuitChannel fill={theme.name === "light" ? "black" : "white"}/></div>
             </div> 
        </div>
-    ) : <LateralBar />;
-
+    )
 }
 
 export default TopBarDirectMessages;

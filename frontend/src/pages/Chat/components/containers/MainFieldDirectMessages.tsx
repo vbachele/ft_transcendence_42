@@ -1,70 +1,58 @@
-import React, {useContext} from 'react';
-import * as F from 'styles/font.styles';
+import React, {Dispatch, SetStateAction, useContext} from 'react';
 import * as S from '../../Chat.styles';
-import { MessagesContext } from 'contexts/Chat/MessagesContext';
+import {MessagesContext} from 'contexts/Chat/MessagesContext';
 import TopBarDirectMessages from '../messages/TopBarDirectMessages';
 import ChatInputBar from '../messages/ChatInputBar';
-import EmptyChat from '../messages/EmptyChat';
-import RightBarDirectMessages from '../messages/RightBarDirectMessages';
+import EmptyChat from "../messages/EmptyChat";
+import RightBarDirectMessages from "../messages/RightBarDirectMessages";
+import styled from "styled-components";
 
-function MainFieldDirectMessages() {
-	const { dataMessages, isRightBarClosedDM, isRightBarOpenDM, isClickedDM } = useContext(MessagesContext);
+const MainFieldLayout = styled.div`
+	flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
 
-    return (
-        <S.MiddleDiv open={isRightBarOpenDM || (!isRightBarOpenDM && isClickedDM && isRightBarClosedDM)}>
-            {isClickedDM && <TopBarDirectMessages data={dataMessages} />}
-            {(isClickedDM || isRightBarOpenDM) &&
-                <div style={{overflow: 'auto', flex: 1}}>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                    Content Messages<br/>
-                </div>
-            }
-            {isClickedDM && <ChatInputBar/>}
-        </S.MiddleDiv>
-    );
+const TextZone = styled.div`
+	text-align: center;
+`
+
+interface MainFieldProps {
+	lobbyId: string | null;
+	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
 }
 
-export default MainFieldDirectMessages;
+
+function MainField({lobbyId, setOpenUserPanel}: MainFieldProps) {
+	const {dataMessages, isRightBarClosedDM, isRightBarOpenDM, isClickedDM} =
+		useContext(MessagesContext);
+
+	if (!lobbyId) return <EmptyChat />;
+
+	return (
+		<MainFieldLayout>
+			<TopBarDirectMessages setOpenUserPanel={setOpenUserPanel} lobbyId={lobbyId} />
+			<TextZone>
+				<div style={{overflow: 'auto', flex: 1}}>
+					Content Messages
+					<br />
+				</div>
+				<ChatInputBar />
+			</TextZone>
+
+
+		</MainFieldLayout>
+			// <S.MiddleDiv
+			// 	open={
+			// 		isRightBarOpenDM ||
+			// 		(!isRightBarOpenDM && isClickedDM && isRightBarClosedDM)
+			// 	}
+			// >
+			//
+			//
+			// </S.MiddleDiv>
+	);
+}
+
+export default MainField

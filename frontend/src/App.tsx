@@ -21,6 +21,7 @@ import Popup from './components/Popup';
 import FakeLogin from 'mocks/Login/FakeLogin';
 import {MessagesContextProvider} from './contexts/Chat/MessagesContext';
 import {ConfigProvider} from 'antd';
+import {ChatTest} from 'pages/ChatTest/ChatTest';
 
 function App() {
 	// const userPref =
@@ -54,6 +55,7 @@ function App() {
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
 					<Route path="/chat" element={<Pages.Chat />} />
+					<Route path="/chatTest" element={<ChatTest />} />
 				</Routes>
 			</>
 		);
