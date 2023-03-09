@@ -55,7 +55,7 @@ export const logo = styled.div`
   padding: 7px 0 0 30px;
   &img {
     width: 390px;
-  } */
+  } 
 `;
 
 export const slogan = styled(logo)`
