@@ -4,12 +4,9 @@ import AchievementList from 'assets/achievements.json';
 import {IAchievement} from 'types/models';
 import {useUserInfos} from 'contexts/User/userContent';
 
-const unlockAchievement = async (achName: string) => {
-	// get user, //TODO use context
-	const data = await backend.getUserByName('Barson');
-	const {userName, achievements} = useUserInfos();
-
-	// console.log('user:', userName?.userName);
+const unlockAchievement = async (achName: string, userName: string) => {
+	// get user
+	const data = await backend.getUserByName(userName);
 
 	// get achievement
 	let achievement: IAchievement | undefined = AchievementList.achievements.find(
@@ -27,7 +24,7 @@ const unlockAchievement = async (achName: string) => {
 	const patch = {
 		achievements: userAchList,
 	};
-	backend.patchUser('louisnfr', patch); //TODO: use context
+	backend.patchUser(userName, patch); //TODO: use context
 
 	// show notification
 	notification.success({

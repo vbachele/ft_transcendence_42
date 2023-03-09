@@ -8,8 +8,8 @@ import {ReactComponent as Block} from '../assets/block.svg';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
-import Popup from 'components/Popup'
-import { usePopup } from 'contexts/Popup/Popup';
+import Popup from 'components/Popup';
+import {usePopup} from 'contexts/Popup/Popup';
 import ViewProfile from 'components/Buttons/Social/ViewProfile';
 import Invite from 'components/Buttons/Social/Invite';
 import Message from 'components/Buttons/Social/Message';
@@ -19,7 +19,7 @@ import BlockUser from 'components/Buttons/Social/BlockUser';
 import AdminRights from 'components/Buttons/Channel/AdminRights';
 import Mute from 'components/Buttons/Channel/Mute';
 import Ban from 'components/Buttons/Channel/Ban';
-import UserInvitedToGame from "../../../components/Popup/UserInvitedToGame/UserInvitedToGame";
+import UserInvitedToGame from '../../../components/Popup/UserInvitedToGame/UserInvitedToGame';
 
 interface IProps {
 	friend: IUser;
@@ -70,7 +70,7 @@ function Friend({friend}: IProps) {
 					<Message id={1} />
 					<AddFriend id={1} />
 					<RemoveFriend id={1} />
-					<BlockUser id={1} />
+					<BlockUser user="nobody" />
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>

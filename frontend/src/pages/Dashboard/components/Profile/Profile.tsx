@@ -3,19 +3,11 @@ import ActivityStatus from 'components/ActivityStatus';
 import {IUser} from 'types/models';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
-import * as UI from 'styles/buttons.styles';
-import {Link} from 'react-router-dom';
-import unlockAchievement from 'helpers/unlockAchievement';
 
 import UserDropdown from './UserDropdown';
 
 interface IProps {
 	user: IUser;
-}
-
-function blockUser(user: string) {
-	console.log('block user'); //TODO implement block user
-	unlockAchievement('BLOCK');
 }
 
 const Profile = ({user}: IProps) => {

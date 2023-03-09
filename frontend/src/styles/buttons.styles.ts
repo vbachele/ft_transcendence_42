@@ -37,7 +37,7 @@ export const PrimaryButton = styled(Button)`
 	}
 
 	&:hover {
-		background-color: #ce2437;
+		background-color: #a53b13;
 	}
 	`;
 
