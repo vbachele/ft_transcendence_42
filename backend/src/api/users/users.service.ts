@@ -76,18 +76,4 @@ export class UserService {
       throw error;
     }
   }
-  async getUserByToken(req: Request) {
-    const accessToken = req.cookies.token;
-    console.log(accessToken);
-    try {
-      const user = await this.prisma.user.findFirst({
-        where: {
-          accessToken: accessToken,
-        },
-      });
-      return user;
-    } catch (error) {
-      throw error;
-    }
-  }
 }

@@ -67,6 +67,8 @@ export class DoubleAuthService {
 				  otp_verified: true,
 				},
 			  });
+			  console.log("2FA enabled in settings");
+			  
 			  res.status(200).json({
 				otp_verified: true,
 				user: {
@@ -85,53 +87,62 @@ export class DoubleAuthService {
 		  };
 	
 	async ValidateOTP(req: Request, res: Response) {
-			try {
-			const { userName, token} = req.body;
-			  const user = await this.prisma.user.findUnique({ where: { name : userName.userName} });
-			  const message = "Token is invalid or user doesn't exist";
-			  if (!user) {
-				return res.status(401).json({
-				  status: "fail",
-				  message,
-				});
-			  }
-		  
-			  const validToken = speakeasy.totp.verify({
-				secret: user.otp_base32!,
-				encoding: "base32",
-				token,	
-				 });
-			  if (!validToken) {
-				return res.status(401).json({
-				  status: "fail",
-				  message,
-				});
-			  }
-		  
-			  res.status(200).json({
-				otp_valid: true,
-			  });
-			  const updatedUser = await this.prisma.user.update({
-				where: { name : userName.userName },
-				data: {
-					otp_validated : true,
-				},
-			  });
-			  res.status(200).json({
-				user: {
-				  id: updatedUser.id,
-				  name: updatedUser.name,
-				  email: updatedUser.email,
-				  otp_validated: updatedUser.otp_validated,
-				},
-			  });
-			} catch (error) {
-			  res.status(500).json({
-				status: "error",
-				message: error.message,
-			  });
-			}
-		  };
+	try {
+	const { userName, token} = req.body;
+	const user = await this.prisma.user.findUnique({ where: { name : userName.userName} });
+	const message = "Token is invalid or user doesn't exist";
+	if (!user) {
+		return res.status(401).json(
+		{
+			status: "fail",
+			message,
+		});
+	  }
+	  console.log("user found");
+	  const secret = user.otp_base32;
+	  const validToken = speakeasy.totp.verify(
+		{
+			secret: secret,
+			encoding: "base32",
+			token: token,
+			window:516
+		});
+	console.log("==>My token(6 numbers) is:", token);
+	console.log("==>My secret is:", user.otp_base32);
+	console.log("==>Token is valid ?", validToken);
+	var tokentotp = speakeasy.totp({secret, encoding: 'base32', window: 6});
+	console.log("==>the token value from TOTP is", tokentotp)
+	if (!validToken) 
+	{
+		return res.status(401).json(
+		{
+			status: "fail",
+			message,
+		});
+	}
+		const updatedUser = await this.prisma.user.update({
+		where: { name : userName.userName },
+		data: {
+			otp_validated : true,
+		},
+	  });
+	  console.log("==> prisma 2FA updated tout est good");
+	  res.status(200).json({
+		user: {
+		  id: updatedUser.id,
+		  name: updatedUser.name,
+		  email: updatedUser.email,
+		  otp_validated: updatedUser.otp_validated,
+		},
+			
+	  });
+	} catch (error) {
+	  res.status(500).json({
+		status: "error",
+		message: error.message,
+		 });
+	}
+	 };
 	
 	async DisableOTP(req: Request, res: Response){
 	try {

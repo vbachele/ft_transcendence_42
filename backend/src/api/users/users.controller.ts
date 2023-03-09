@@ -14,10 +14,6 @@ export class UserController {
     private userService: UserService,
     private cloudinaryService: CloudinaryService
   ) {}
-  @Get(":token")
-  async getUserByToken(@Req() req: Request) {
-    return this.userService.getUserByToken(req);
-  }
   @Get(":name")
   async getUserByName(@Req() req: Request) {
     return this.userService.getUserByName(req.params.name);

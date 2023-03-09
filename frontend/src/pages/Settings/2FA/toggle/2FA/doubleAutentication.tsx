@@ -90,6 +90,12 @@ const DoubleAutentication: React.FC<Props> = (props) => {
       </S.Overlay__Container>
     );
   }
+
+
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    props.onClose
+  };
+
   // BUTTONS OF THE POPUP
   function Buttons() {
     return (
@@ -97,7 +103,7 @@ const DoubleAutentication: React.FC<Props> = (props) => {
         <PopupButton
           className="ActivateDoubleAuth"
           backgroundColor={"#DC4F19"}
-          onClick={props.onClose}
+          onClick={handleClick}
         >
          <Text weight="500"> Confirm </Text>
         </PopupButton>

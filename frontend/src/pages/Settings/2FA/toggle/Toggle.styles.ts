@@ -47,9 +47,14 @@ export const ToggleCheckbox = styled.input`
 
   &:checked + ${ToggleSwitch} {
     background: #dc4f19;
-  }
+  } 
 
   &:checked + ${ToggleSwitch}:before {
     left: 30px;
   }
 `;
+
+export const Button2Fa = styled.div `
+
+`
+

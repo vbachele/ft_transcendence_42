@@ -6,8 +6,8 @@ import { PopupButton } from 'styles/buttons.styles';
 import { H2, Text } from 'styles/font.styles';
 
 interface Props {
-	click: boolean;
-	onClose: React.MouseEventHandler<HTMLButtonElement>;
+	click?: boolean;
+	onClose?: React.MouseEventHandler<HTMLButtonElement>;
   }
 
 const Disable2FA: React.FC<Props> = (props) =>{

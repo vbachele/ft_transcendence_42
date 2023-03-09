@@ -50,7 +50,6 @@ export class AuthService {
   }
 
   async createCookies(@Res() res: Response, token: any) {
-    console.log(token.access_token);
     res.cookie("token", token.access_token,
       {
         expires: new Date(new Date().getTime() + 60 * 24 * 7 * 1000), // expires in 7 days
@@ -59,13 +58,17 @@ export class AuthService {
   }
 
   async updateCookies(@Res() res: Response, token: any, userInfos: any) {
-    console.log(userInfos.name);
+    try {
     const name = userInfos.name;
     const user = await this.prisma.user.update({where: {name: name,},
       data: {  accessToken: token.access_token, },
     });
     return user;
-      };
+  }catch(error){
+    console.log(error)
+;  }
+    };
+
 
   async deleteCookies(@Res() res: Response) {
     res.clearCookie("token").end();
@@ -85,4 +88,22 @@ export class AuthService {
       path: request.url,
     });
   }
+  
+  async getUserByToken(req: Request) {
+    const accessToken = req.cookies.token;
+    console.log(accessToken);
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          accessToken: accessToken,
+        },
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
+
+

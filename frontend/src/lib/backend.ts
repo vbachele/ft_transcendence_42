@@ -35,7 +35,7 @@ export const backend = {
     return await response.json();
   },
   async getUserByToken(): Promise<any> {
-    const response = await api.get("/users/token");
+    const response = await api.get("/auth/getuserbytoken");
     return await response.json();
   },
   async checkToken(): Promise<any> {

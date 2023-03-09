@@ -40,16 +40,6 @@ const PrivateRoute: FC<{ children: React.ReactElement }> = ({ children }) => {
   useEffect(() => {
     checkUserToken();
     check2FAEnabled();
-    // const userInfos = getInfosFromDB();
-    // console.log("USERINFOS", userInfos);
-    // userInfos.then((res) => {
-    //   setUserName({ userName: res.name });
-    //   setImage({ image: res.image });
-    //   setAchievements({ achievements: res.achievements });
-    //   setCoalition({ coalition: res.coalition });
-    //   setDoubleAuth({doubleAuth : res.otp_enabled});
-    //   setVerified2FA({verified2FA : res.otp_validated});
-
   }, []);
 
   if (tokenExists && userName.userName) {
