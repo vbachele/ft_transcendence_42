@@ -13,6 +13,49 @@ interface IProps {
     onClick: (isClicked: boolean) => void;
 }
 
+export const displayText: React.FC<IProps> = (props) => {
+    const theme = useContext(ThemeContext);
+
+    if (theme.name === 'dark')
+        return (
+            <S.ContainerSubMessages>
+                <F.Text style={{fontWeight: 600}}> {props.data.name} </F.Text>
+                {/* <F.Text 
+                style={{fontSize: '14px', fontWeight: 400, color: '#a6a8ae', whiteSpace: 'nowrap', 
+                overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                    {props.data.message} 
+                </F.Text> */}
+            </S.ContainerSubMessages>
+        );
+        else
+            return (
+                <S.ContainerSubMessages>
+                    <F.Text style={{fontWeight: 600}}> {props.data.name} </F.Text>
+                    {/* <F.Text 
+                    className='subText'
+                    style={{fontSize: '14px', fontWeight: 400, color: '#707991', whiteSpace: 'nowrap', 
+                    overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                        {props.data.message} 
+                    </F.Text> */}
+                </S.ContainerSubMessages>
+            );
+}
+
+export const displayPastille = (params: IUser) => {
+    if (params.status == "online")
+        return (
+            <S.PastillePic style={{background: '#2FE837'}} />
+        );
+    else if (params.status == "offline")
+        return (
+            <S.PastillePic style={{background: '#9CA3AF'}} />
+        );
+    else
+        return (
+            <S.PastillePic style={{background: '#EB5757'}} />
+        );
+};
+
 const Messages: React.FC<IProps> = (props) => {
 
     // const { dataMessages, isClicked } = useContext(MessagesContext);
@@ -37,20 +80,6 @@ const Messages: React.FC<IProps> = (props) => {
 
     //   {handleData}
 
-	const displayPastille = (params: IUser) => {
-        if (params.status == "online")
-            return (
-                <S.PastillePic style={{background: '#2FE837'}} />
-            );
-        else if (params.status == "offline")
-            return (
-                <S.PastillePic style={{background: '#9CA3AF'}} />
-            );
-        else
-            return (
-                <S.PastillePic style={{background: '#EB5757'}} />
-            );
-	};
 
     // const displayMissedMessages = (params: IMessages) => {
     //     const theme = useContext(ThemeContext);
@@ -91,33 +120,6 @@ const Messages: React.FC<IProps> = (props) => {
     //             );
     // }
 
-    const displayText = () => {
-        const theme = useContext(ThemeContext);
-
-        if (theme.name === 'dark')
-            return (
-                <S.ContainerSubMessages>
-                    <F.Text style={{fontWeight: 600}}> {props.data.name} </F.Text>
-                    {/* <F.Text 
-                    style={{fontSize: '14px', fontWeight: 400, color: '#a6a8ae', whiteSpace: 'nowrap', 
-                    overflow: 'hidden', textOverflow: 'ellipsis'}}>
-                        {props.data.message} 
-                    </F.Text> */}
-                </S.ContainerSubMessages>
-            );
-            else
-                return (
-                    <S.ContainerSubMessages>
-                        <F.Text style={{fontWeight: 600}}> {props.data.name} </F.Text>
-                        {/* <F.Text 
-                        className='subText'
-                        style={{fontSize: '14px', fontWeight: 400, color: '#707991', whiteSpace: 'nowrap', 
-                        overflow: 'hidden', textOverflow: 'ellipsis'}}>
-                            {props.data.message} 
-                        </F.Text> */}
-                    </S.ContainerSubMessages>
-                );
-    }
 
 	return (
 		<S.ContainerMessage onClick={handleClick}>
@@ -127,7 +129,7 @@ const Messages: React.FC<IProps> = (props) => {
                     {displayPastille(props.data)}
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', gap: '2px', padding: '6px 0 0 8px'}}>
-                    {displayText()}
+                    {displayText(props)}
                 </div>
             </div>
             {/* {displayMissedMessages(props.data)} */}
