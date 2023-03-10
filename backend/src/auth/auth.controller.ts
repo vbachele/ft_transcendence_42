@@ -12,6 +12,10 @@ export class AuthController {
     private userService: UserService
   ) {}
   /***  Create the user in database from the page registration ***/
+  @Get("getuserbytoken")
+  async getUserByToken(@Req() req: Request) {
+    return this.authService.getUserByToken(req);
+  }
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response) {
     const token: string = req.cookies.token;
@@ -39,6 +43,7 @@ export class AuthController {
     );
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);
+    this.authService.updateCookies(res, token, userExists);
     this.authService.RedirectConnectingUser(res, userExists?.email);
   }
 
