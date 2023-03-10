@@ -65,12 +65,12 @@ function Friend({friend}: IProps) {
 				</S.FriendDetails>
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
-					<ViewProfile id={1} />
+					<ViewProfile user={friend.name} />
 					<Invite id={friend.name} />
-					<Message id={1} />
-					<AddFriend id={1} />
+					<Message user={friend.name} />
+					<AddFriend user={friend.name} />
 					<RemoveFriend id={1} />
-					<BlockUser user="nobody" />
+					<BlockUser user={friend.name} />
 					<Mute id={1} />
 					<Ban id={1} />
 				</S.FriendOptions>

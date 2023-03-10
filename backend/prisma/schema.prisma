@@ -28,6 +28,9 @@ model User {
   refreshToken String? @default("noRefreshToken")
   isRegistered Boolean @default(false)
   ownedLobbies Lobby[] @relation("owned")
+
+	friends	User[] @relation("friend")
+	friendsOf	User[] @relation("friend")
 }
 
 model Lobby {
