@@ -1,16 +1,16 @@
 import {useState} from 'react';
+import {Link} from 'react-router-dom';
 import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
+import Popup from 'components/Popup';
 import logo from 'assets/logo-text.svg';
 import logo_ai from 'assets/logo_ai.png';
-import Popup from 'components/Popup';
-import {Link} from 'react-router-dom';
 import * as S from './Home.styles';
 
 const Homepage = () => {
+	const {userName, achievements} = useUserInfos();
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
-	const {userName, achievements} = useUserInfos();
 
 	const handlePlay = () => {
 		setPopup({toggle: !popup.toggle});
@@ -58,10 +58,10 @@ const Homepage = () => {
 				</S.PopupButton>
 			</S.LinksContainer>
 			<S.UserInfo>
-				<S.heroName>{userName?.userName}</S.heroName>
-				<S.heroUnlocks>
-					{achievements?.achievements.length} / 16 ACHIEVEMENTS
-				</S.heroUnlocks>
+				<S.UserName>{userName?.userName}</S.UserName>
+				<S.UserAchievements>
+					{achievements && achievements.achievements.length} / 16 ACHIEVEMENTS
+				</S.UserAchievements>
 			</S.UserInfo>
 		</S.Container>
 	);

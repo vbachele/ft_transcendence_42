@@ -5,11 +5,13 @@ export const Container = styled.div`
 `;
 
 export const Background = styled.video`
-	position: absolute;
 	z-index: -1;
-	top: 50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	transform: translateX(calc((100% - 100vw) / 2));
 `;
 
 export const Image = styled.img`
@@ -23,11 +25,11 @@ export const Image = styled.img`
 `;
 
 export const LinksContainer = styled.div`
-	padding-left: 32px;
-	/* width: fit-content; */
+	padding-left: 48px;
+	width: fit-content;
 	button,
 	a {
-		/* border: 2px solid crimson; */
+		/* border: 2px solid crimson; */ //TODO chelou
 		text-decoration: none;
 		cursor: pointer;
 		width: max-content;
@@ -75,27 +77,19 @@ export const PopupButton = styled.button`
 export const UserInfo = styled.div`
 	position: fixed;
 	bottom: 20%;
-	right: 56px;
+	right: 48px;
 	text-align: right;
 `;
 
-export const heroName = styled(UserInfo)`
+export const UserName = styled.p`
 	font-size: clamp(24px, 4vw, 50px);
 	font-weight: 550;
 	color: #fff;
-	line-height: 2.5;
 	text-shadow: 0px 0px 3px #fff;
-
-	@media only screen and (max-width: 768px) {
-		line-height: 3;
-	}
 `;
 
-export const heroUnlocks = styled.div`
+export const UserAchievements = styled.div`
+	color: rgba(255, 255, 255, 0.75);
 	font-size: clamp(16px, 3vw, 22px);
-	color: rgba(255, 255, 255, 0.85);
 	text-shadow: 0 0 2px rgb(0, 0, 0);
-	&span {
-		color: #fff;
-	}
 `;
