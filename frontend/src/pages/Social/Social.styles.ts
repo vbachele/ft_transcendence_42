@@ -16,7 +16,7 @@ export const UserContainer = styled.div`
 	padding: 16px;
 	width: 60%;
 	max-height: 512px;
-	overflow-y: scroll;
+	overflow-y: auto;
 	/* overflow-x: hidden; */
 
 	@media screen and (max-width: 1300px) {
@@ -108,15 +108,16 @@ export const FriendOptions = styled.div`
 		text-decoration: none;
 		color: ${(p) => p.theme.colors.secondary};
 
-		transition: transform 0.2s linear;
+		transition: transform 0.1s linear;
 		:hover {
 			transform: translateX(5px);
-			text-decoration: underline;
+			/* text-decoration: underline; */
 		}
 	}
 `;
 
 export const Blocked = styled.div`
+	cursor: not-allowed;
 	padding: 8px;
 	display: flex;
 	justify-content: space-between;
@@ -139,14 +140,22 @@ export const Blocked = styled.div`
 		filter: grayscale(1);
 	}
 
-	svg {
+	button {
 		cursor: pointer;
-		width: 48px;
-		height: 24px;
-		fill: #dc4f19;
+		margin-right: 24px;
+		margin-top: 3px;
+		transition: all 0.1s linear;
 
 		:hover {
 			transform: scale(1.1);
+		}
+		:active {
+			transform: scale(1);
+		}
+		svg {
+			width: 24px;
+			height: 24px;
+			fill: #dc4f19;
 		}
 	}
 `;

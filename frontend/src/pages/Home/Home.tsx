@@ -4,15 +4,15 @@ import {usePopup} from 'contexts/Popup/Popup';
 import logo from 'assets/logo-text.svg';
 import logo_ai from 'assets/logo_ai.png';
 import Popup from 'components/Popup';
+import {Link} from 'react-router-dom';
 import * as S from './Home.styles';
+import * as F from 'styles/.styles';
 
-/* Main Functions */
 const Homepage = () => {
-	/* Set up variables */
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
-	const {userName, setUserName, achievements} = useUserInfos();
-	/* handle buttons */
+	const {userName, achievements} = useUserInfos();
+
 	const handlePlay = () => {
 		setPopup({toggle: !popup.toggle});
 	};
@@ -20,63 +20,50 @@ const Homepage = () => {
 		setLogout(!logout);
 	};
 
-	/* RETURN BODY */
 	return (
 		<S.Container>
-			<S.bgvid id="bgvid" autoPlay loop muted playsInline>
+			<S.Background autoPlay loop muted playsInline>
 				<source
 					src="https://cdn.discordapp.com/attachments/1067488107827576916/1067743308367020092/background.mp4"
 					type="video/mp4"
 				/>
-			</S.bgvid>
-			<S.main id="main">
-				<S.left id="left">
-					<S.logo id="logo">
-						<S.img src={logo_ai} alt="" />
-					</S.logo>
-					<S.menus id="menus">
-						<S.menuHighlight id="menu-highlight" />
-						<S.logoutButton onClick={handlePlay}>
-							<S.italicHighlight className="italic highlight">
-								PLAY
-							</S.italicHighlight>
-						</S.logoutButton>
-						<S.link to="/leaderboard">
-							<S.italic className="italic">LEADERBOARD</S.italic>
-						</S.link>
-						<S.link to={`/dashboard/${userName.userName}`}>
-							<S.italic className="italic">CAREER</S.italic>
-						</S.link>
-						<S.link to="/chat">
-							<S.italic className="italic">CHAT</S.italic>
-						</S.link>
-						<S.link to="/social">
-							<S.normal className="normal">SOCIAL</S.normal>
-						</S.link>
-						<S.link to="/settings">
-							<S.normal className="normal">SETTINGS</S.normal>
-						</S.link>
-						<S.logoutButton
-							className="navbar__subMenu-linkButton"
-							onClick={toggleLogout}
-						>
-							{logout && (
-								<Popup.LogoutPopup
-									click={logout}
-									onClose={() => setLogout(false)}
-								></Popup.LogoutPopup>
-							)}
-							<S.normal className="normal">LOGOUT</S.normal>
-						</S.logoutButton>
-					</S.menus>
-				</S.left>
-				<S.hero id="hero">
-					<S.heroName id="hero-name">{userName?.userName}</S.heroName>
-					<S.heroUnlocks id="hero-unlocks">
-						{achievements?.achievements.length} / 16 ACHIEVEMENTS
-					</S.heroUnlocks>
-				</S.hero>
-			</S.main>
+			</S.Background>
+			<S.Image src={logo_ai} />
+			<S.LinksContainer>
+				<S.PopupButton onClick={handlePlay}>
+					<S.BoldYellow>PLAY</S.BoldYellow>
+				</S.PopupButton>
+				<Link to="/leaderboard">
+					<S.Bold>LEADERBOARD</S.Bold>
+				</Link>
+				<Link to={`/dashboard/${userName.userName}`}>
+					<S.Bold>CAREER</S.Bold>
+				</Link>
+				<Link to="/chat">
+					<S.Bold>CHAT</S.Bold>
+				</Link>
+				<Link to="/social">
+					<S.Regular>SOCIAL</S.Regular>
+				</Link>
+				<Link to="/settings">
+					<S.Regular>SETTINGS</S.Regular>
+				</Link>
+				<S.PopupButton onClick={toggleLogout}>
+					{logout && (
+						<Popup.LogoutPopup
+							click={logout}
+							onClose={() => setLogout(false)}
+						/>
+					)}
+					<S.Regular>LOG OUT</S.Regular>
+				</S.PopupButton>
+			</S.LinksContainer>
+			<S.UserInfo>
+				<S.heroName>{userName?.userName}</S.heroName>
+				<S.heroUnlocks>
+					{achievements?.achievements.length} / 16 ACHIEVEMENTS
+				</S.heroUnlocks>
+			</S.UserInfo>
 		</S.Container>
 	);
 };

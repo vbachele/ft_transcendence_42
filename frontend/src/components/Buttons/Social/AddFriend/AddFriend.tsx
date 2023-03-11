@@ -2,6 +2,7 @@ import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
 import {ReactComponent as Icon} from './add.svg';
 import * as F from 'styles/font.styles';
+import {backend} from 'lib/backend';
 
 interface IProps {
 	user: string;
@@ -11,7 +12,8 @@ function AddFriend({user}: IProps) {
 	const {userName} = useUserInfos();
 
 	const handleClick = () => {
-		console.log(userName.userName, 'wants to add', user); //TODO add user to friend list
+		backend.unblockUser(userName.userName, user);
+		backend.addFriend(userName.userName, user);
 		unlockAchievement('ADD', userName.userName);
 	};
 

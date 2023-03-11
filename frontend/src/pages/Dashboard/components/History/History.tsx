@@ -26,7 +26,7 @@ const History = () => {
 			</F.Subtitle>
 			<S.History>
 				{matches.map((match: IMatch) => (
-					<Card match={match} />
+					<Card match={match} key={match.id} />
 				))}
 			</S.History>
 		</S.Container>

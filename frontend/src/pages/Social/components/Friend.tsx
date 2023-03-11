@@ -69,7 +69,7 @@ function Friend({friend}: IProps) {
 					<Invite id={friend.name} />
 					<Message user={friend.name} />
 					<AddFriend user={friend.name} />
-					<RemoveFriend id={1} />
+					<RemoveFriend user={friend.name} />
 					<BlockUser user={friend.name} />
 					<Mute id={1} />
 					<Ban id={1} />

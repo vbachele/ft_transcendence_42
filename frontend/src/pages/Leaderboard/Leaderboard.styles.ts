@@ -60,7 +60,7 @@ export const SearchCoalition = styled.select`
 	align-self: center;
 	/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
 	cursor: pointer;
-	transition: border-color 0.2s linear;
+	transition: border-color 0.1s linear;
 
 	:hover {
 		border-color: #dc4f19;

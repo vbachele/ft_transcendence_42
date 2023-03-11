@@ -29,8 +29,11 @@ model User {
   isRegistered Boolean @default(false)
   ownedLobbies Lobby[] @relation("owned")
 
-	friends	User[] @relation("friend")
-	friendsOf	User[] @relation("friend")
+	friends	User[] @relation("friend_relations")
+	friendsOf	User[] @relation("friend_relations")
+
+	blocked	User[] @relation("block_relations")
+	blockedOf	User[] @relation("block_relations")
 }
 
 model Lobby {

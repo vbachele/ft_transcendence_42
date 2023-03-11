@@ -15,6 +15,8 @@ import {LobbyModule} from './lobby/lobby.module';
 import {DashboardController} from './dashboard/dashboard.controller';
 import {DashboardModule} from './dashboard/dashboard.module';
 import {DashboardService} from './dashboard/dashboard.service';
+import {FriendModule} from './api/friends/friends.module';
+import {BlockedModule} from './api/blocked/blocked.module';
 
 @Module({
 	imports: [
@@ -23,6 +25,8 @@ import {DashboardService} from './dashboard/dashboard.service';
 		LobbyModule,
 		AuthModule,
 		UserModule,
+		FriendModule,
+		BlockedModule,
 		DashboardModule,
 		PrismaModule,
 		CloudinaryModule,
