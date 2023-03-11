@@ -60,7 +60,7 @@ export const Regular = styled.div`
 	left: 0;
 	font-size: 24px;
 	color: #fff;
-	/* line-height: 1.7; */
+	line-height: 1.5;
 	text-shadow: 0 0 2px #336cec;
 	transition: all 0.1s ease-in;
 
@@ -83,7 +83,7 @@ export const UserInfo = styled.div`
 
 export const UserName = styled.p`
 	font-size: clamp(24px, 4vw, 50px);
-	font-weight: 550;
+	font-weight: 600;
 	color: #fff;
 	text-shadow: 0px 0px 3px #fff;
 `;

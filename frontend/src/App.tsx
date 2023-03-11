@@ -4,24 +4,23 @@ import {Route, Routes, useRoutes} from 'react-router-dom';
 import Defeat from 'components/EditName/Defeat';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import Victory from 'components/Victory';
+import FakeLogin from 'mocks/Login/FakeLogin';
+import {UserMocks} from './mocks/Users/UserMocks';
 import {MessagesContextProvider} from 'contexts/Chat/MessagesContext';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
 import SocketContextComponent from 'contexts/Socket/Component';
 import {UserContextProvider} from 'contexts/User/userContent';
-import FakeLogin from 'mocks/Login/FakeLogin';
 import Pages from 'pages';
 import DoubleAuthentication from 'pages/2FA';
 import Game from 'pages/Game/Game';
 import Homepage from 'pages/Home';
-import LandingPage from 'pages/Landing/Landingpage';
-import Registration from 'pages/Registration/Registration';
+import Landing from 'pages/Landing';
+import Registration from 'pages/Registration';
 import Social from 'pages/Social';
+import Popup from './components/Popup';
 import {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
-import './App.css';
-import Popup from './components/Popup';
-import {UserMocks} from './mocks/Users/UserMocks';
 import {ConfigProvider} from 'antd';
 
 function App() {
@@ -55,7 +54,7 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			element: <LandingPage />,
+			element: <Landing />,
 		},
 		{
 			path: '/',
