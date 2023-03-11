@@ -6,6 +6,7 @@ import {Request} from 'express';
 @Injectable({})
 export class UserService {
 	constructor(private prisma: PrismaService) {}
+
 	async getAllUsers() {
 		try {
 			const users = await this.prisma.user.findMany({});
@@ -14,6 +15,35 @@ export class UserService {
 			throw error;
 		}
 	}
+
+	//TODO remove
+	// async getOneUser(req: Request) {
+	// 	try {
+	// 		const {id} = req.params;
+	// 		const user = await this.prisma.user.findUnique({
+	// 			where: {
+	// 				id: Number(id),
+	// 			},
+	// 		});
+	// 		return user;
+	// 	} catch (error) {
+	// 		throw error;
+	// 	}
+	// }
+
+	async getUserByName(name: string) {
+		try {
+			const user = await this.prisma.user.findFirst({
+				where: {
+					name,
+				},
+			});
+			return user;
+		} catch (error) {
+			throw error;
+		}
+	}
+
 	async updateUser(req: Request) {
 		try {
 			const {name} = req.params;
@@ -28,6 +58,7 @@ export class UserService {
 			throw error;
 		}
 	}
+
 	async deleteAllUsers() {
 		try {
 			const user = await this.prisma.user.deleteMany({});
@@ -36,24 +67,12 @@ export class UserService {
 			throw error;
 		}
 	}
+
 	async getUserByEmail(email: string) {
 		try {
 			const user = await this.prisma.user.findFirst({
 				where: {
 					email: email,
-				},
-			});
-			return user;
-		} catch (error) {
-			throw error;
-		}
-	}
-	async getUserByToken(req: Request) {
-		const accessToken: string = req.cookies.token;
-		try {
-			const user = await this.prisma.user.findFirst({
-				where: {
-					accessToken: accessToken,
 				},
 			});
 			return user;

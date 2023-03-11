@@ -53,3 +53,5 @@ export const ToggleCheckbox = styled.input`
 		left: 30px;
 	}
 `;
+
+export const Button2Fa = styled.div``;

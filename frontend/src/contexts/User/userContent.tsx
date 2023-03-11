@@ -1,8 +1,19 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import getInfosFromDB from './GetuserFromDB';
+import {createContext, useContext, useEffect, useState} from 'react';
+import getInfosFromDB from './GetuserFromDB';
+import {Achievements} from 'pages/Dashboard/components/Achievements/Achievements.styles';
 
 type UserContextProviderProps = {
 	children: React.ReactNode;
+};
+
+export type DoubleAuthVerified = {
+	verified2FA: boolean;
+};
+
+export type DoubleAuth = {
+	doubleAuth: boolean;
 };
 
 export type Coalition = {
@@ -38,7 +49,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 	const [userName, setUserName] = useState<UserName>({userName: ''});
 	const [image, setImage] = useState<AuthImage>({image: ''});
 	const [achievements, setAchievements] = useState<Achievements>({
-		achievements: [],
+		achievements: 0,
 	});
 	const [coalition, setCoalition] = useState<Coalition>({coalition: ''});
 	useEffect(() => {

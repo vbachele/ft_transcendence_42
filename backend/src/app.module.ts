@@ -17,6 +17,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
 import {DashboardService} from './dashboard/dashboard.service';
 import {FriendModule} from './api/friends/friends.module';
 import {BlockedModule} from './api/blocked/blocked.module';
+import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
 
 @Module({
 	imports: [
@@ -31,6 +32,7 @@ import {BlockedModule} from './api/blocked/blocked.module';
 		PrismaModule,
 		CloudinaryModule,
 		WebsocketModule,
+		DoubleAuthModule,
 	],
 	controllers: [AppController, DatabaseController, DashboardController],
 	providers: [AppService, DatabaseService, DashboardService],

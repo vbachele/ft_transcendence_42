@@ -81,6 +81,7 @@ interface Iprops {
 	backgroundColor?: string;
 	border?: string;
 	width?: string;
+	height?: string;
 }
 
 export const PopupButton = styled(Button)<Iprops>`
@@ -89,6 +90,23 @@ export const PopupButton = styled(Button)<Iprops>`
 	border: ${(p) => p.border || 'none'};
 	margin: auto;
 	width: ${(p) => p.width || ' clamp(50px, 35vw, 10rem)'};
+	&,
+	a {
+		color: white;
+	}
+	:hover {
+		transform: scaleY(1.08);
+		border: 1.5px solid #e5e7eb;
+	}
+`;
+
+export const DoubleAuthButton = styled.button<Iprops>`
+	background-color: ${(p) => p.backgroundColor || '#DC4F19'};
+	height: 30px;
+	border: ${(p) => p.border || 'none'};
+	margin: 0;
+	border-radius: 20px;
+	width: ${(p) => p.width || ' 10px'};
 	&,
 	a {
 		color: white;
