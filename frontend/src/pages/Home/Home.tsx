@@ -6,7 +6,6 @@ import logo_ai from 'assets/logo_ai.png';
 import Popup from 'components/Popup';
 import {Link} from 'react-router-dom';
 import * as S from './Home.styles';
-import * as F from 'styles/.styles';
 
 const Homepage = () => {
 	const [logout, setLogout] = useState(false);
