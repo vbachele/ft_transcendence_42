@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -24,19 +25,20 @@ export const Image = styled.img`
 	}
 `;
 
+// prettier-ignore
 export const LinksContainer = styled.div`
-	padding-left: 48px;
-	width: fit-content;
-	button,
-	a {
-		/* border: 2px solid crimson; */ //TODO chelou
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-left: 48px;
+
+	a, button {
 		text-decoration: none;
 		cursor: pointer;
-		width: max-content;
 	}
 `;
 
-export const Bold = styled.div`
+export const BoldLink = styled(Link)`
 	position: relative;
 	color: #fff;
 	left: 0;
@@ -50,12 +52,7 @@ export const Bold = styled.div`
 	}
 `;
 
-export const BoldYellow = styled(Bold)`
-	color: #f3c026;
-	text-shadow: 0px 0px 5px #bb7e29;
-`;
-
-export const Regular = styled.div`
+export const RegularLink = styled(Link)`
 	position: relative;
 	left: 0;
 	font-size: 24px;
@@ -69,9 +66,37 @@ export const Regular = styled.div`
 	}
 `;
 
-export const PopupButton = styled.button`
+export const BoldYellowButton = styled.button`
 	border: none;
 	background: transparent;
+
+	position: relative;
+	color: #f3c026;
+	left: 0;
+	font-weight: 600;
+	font-size: clamp(32px, 4vw, 64px);
+	text-shadow: 0px 0px 5px #bb7e29;
+	transition: all 0.1s ease-in;
+
+	:hover {
+		left: 16px;
+	}
+`;
+
+export const RegularButton = styled.button`
+	position: relative;
+	left: 0;
+	font-size: 24px;
+	color: #fff;
+	line-height: 1.5;
+	text-shadow: 0 0 2px #336cec;
+	border: none;
+	background: none;
+	transition: all 0.1s ease-in;
+
+	:hover {
+		left: 8px;
+	}
 `;
 
 export const UserInfo = styled.div`

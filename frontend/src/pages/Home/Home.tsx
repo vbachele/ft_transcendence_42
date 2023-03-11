@@ -32,33 +32,21 @@ const Homepage = () => {
 			</S.Background>
 			<S.Image src={logo_ai} />
 			<S.LinksContainer>
-				<S.PopupButton onClick={handlePlay}>
-					<S.BoldYellow>PLAY</S.BoldYellow>
-				</S.PopupButton>
-				<Link to="/leaderboard">
-					<S.Bold>LEADERBOARD</S.Bold>
-				</Link>
-				<Link to={`/dashboard/${userName.userName}`}>
-					<S.Bold>CAREER</S.Bold>
-				</Link>
-				<Link to="/chat">
-					<S.Bold>CHAT</S.Bold>
-				</Link>
-				<Link to="/social">
-					<S.Regular>SOCIAL</S.Regular>
-				</Link>
-				<Link to="/settings">
-					<S.Regular>SETTINGS</S.Regular>
-				</Link>
-				<S.PopupButton onClick={toggleLogout}>
+				<S.BoldYellowButton onClick={handlePlay}>PLAY</S.BoldYellowButton>
+				<S.BoldLink to="/leaderboard">LEADERBOARD</S.BoldLink>
+				<S.BoldLink to={`/dashboard/${userName.userName}`}>CAREER</S.BoldLink>
+				<S.BoldLink to="/chat">CHAT</S.BoldLink>
+				<S.RegularLink to="/social">SOCIAL</S.RegularLink>
+				<S.RegularLink to="/settings">SETTINGS</S.RegularLink>
+				<S.RegularButton onClick={toggleLogout}>
 					{logout && (
 						<Popup.LogoutPopup
 							click={logout}
 							onClose={() => setLogout(false)}
 						/>
 					)}
-					<S.Regular>LOG OUT</S.Regular>
-				</S.PopupButton>
+					LOG OUT
+				</S.RegularButton>
 			</S.LinksContainer>
 			<S.UserInfo>
 				<S.UserName>{userName?.userName}</S.UserName>
