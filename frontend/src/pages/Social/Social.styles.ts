@@ -84,10 +84,9 @@ export const FriendDetails = styled.div`
 `;
 
 export const FriendOptions = styled.div`
-	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 2em;
+	gap: 32px;
 
 	svg {
 		fill: ${(p) => p.theme.colors.secondary};
@@ -95,23 +94,20 @@ export const FriendOptions = styled.div`
 		height: 24px;
 	}
 
-	button {
-		cursor: pointer;
-		border: none;
-		background: none;
-	}
-
 	a,
 	button {
+		width: fit-content;
+		cursor: pointer;
+		text-decoration: none;
+		background: none;
+		border: none;
 		display: flex;
 		gap: 1em;
-		text-decoration: none;
 		color: ${(p) => p.theme.colors.secondary};
-
 		transition: transform 0.1s linear;
+
 		:hover {
-			transform: translateX(5px);
-			/* text-decoration: underline; */
+			transform: translateX(8px);
 		}
 	}
 `;

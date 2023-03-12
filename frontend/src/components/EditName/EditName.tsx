@@ -5,6 +5,7 @@ import * as UI from 'styles/buttons.styles';
 import {useNavigate} from 'react-router-dom';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface Props {
 	visible?: boolean;
@@ -68,6 +69,7 @@ const EditName = (props: Props) => {
 			setUserName({userName: value});
 			setUploadApproved(true);
 			setLoading(false);
+			unlockAchievement('RENAME', newuserName.name);
 		}
 	}
 
@@ -106,10 +108,10 @@ const EditName = (props: Props) => {
 					{props.page === 'registration' && 'Continue'}
 				</UI.SecondaryButton>
 				{loading && (
-					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif"></S.loadingimg>
+					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif" />
 				)}
 				{uploadApproved && (
-					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png"></S.loadingimg>
+					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png" />
 				)}
 			</S.ConfirmContainer>
 		</S.FormContainer>

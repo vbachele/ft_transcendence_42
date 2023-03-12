@@ -45,17 +45,14 @@ const Toggle: React.FC<Props> = (props) => {
 			'input[type="checkbox"]'
 		);
 		toggleCheckbox.checked = true;
-		console.log('vincent', enabled);
 		setTimeout(() => {
 			if (doubleAuth.doubleAuth === true) {
 				const toggleCheckbox: any = document.querySelector(
 					'input[type="checkbox"]'
 				);
 				toggleCheckbox.checked = true;
-				console.log('vincent', enabled);
 			}
 		}, 1000);
-		console.log('vincent', enabled);
 	}, []);
 
 	//return part

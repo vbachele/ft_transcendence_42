@@ -14,11 +14,11 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 	const {userName} = useUserInfos();
 
 	const handleClick = () => {
-		backend.removeFriend(userName.userName, user.name).then(() => {
-			if (onRemove) {
-				onRemove(user);
-			}
-		});
+		backend.removeFriend(userName.userName, user.name);
+
+		if (onRemove) {
+			onRemove(user);
+		}
 
 		if (hideDrawer) {
 			hideDrawer();

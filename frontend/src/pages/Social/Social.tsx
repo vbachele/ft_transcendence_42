@@ -11,6 +11,7 @@ import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import {useUserInfos} from 'contexts/User/userContent';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import {backend} from 'lib/backend';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 const {Search} = Input;
 
@@ -78,7 +79,7 @@ function Social() {
 						.map((friend: IUser) => (
 							<Friend
 								friend={friend}
-								key={friend.id}
+								key={friend.name}
 								onBlock={handleBlock}
 								onRemove={handleRemove}
 							/>
@@ -96,7 +97,7 @@ function Social() {
 					blockedUsers
 						.filter((user) => filterByName(user, search))
 						.map((user: IUser) => (
-							<Blocked user={user} key={user.id} onUnblock={handleUnblock} />
+							<Blocked user={user} key={user.name} onUnblock={handleUnblock} />
 						))}
 			</S.UserContainer>
 		</S.Container>

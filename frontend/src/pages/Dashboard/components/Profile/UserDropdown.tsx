@@ -1,7 +1,7 @@
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 import {useUserInfos} from 'contexts/User/userContent';
-import {Dropdown, Space} from 'antd';
+import {Dropdown} from 'antd';
 import type {MenuProps} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
 import BlockUser from 'components/Buttons/Social/BlockUser';
@@ -21,7 +21,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<S.OptionButton>
-					<AddFriend user={user.name} />
+					<AddFriend user={user} />
 				</S.OptionButton>
 			),
 			key: '0',
@@ -48,10 +48,10 @@ const UserDropdown = ({user}: IProps) => {
 		<>
 			{!myself && (
 				<Dropdown trigger={['click']} menu={{items}} placement="bottomLeft">
-					<Space className="antd-space" size={8}>
+					<div className="antd-space">
 						<F.Text weight="500">Options</F.Text>
-						<DownOutlined />
-					</Space>
+						<DownOutlined className="dropdown-arrow" />
+					</div>
 				</Dropdown>
 			)}
 		</>

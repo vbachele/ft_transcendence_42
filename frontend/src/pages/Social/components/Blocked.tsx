@@ -4,6 +4,7 @@ import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
+import {notification} from 'antd';
 
 interface IProps {
 	user: IUser;
@@ -14,8 +15,11 @@ function Blocked({user, onUnblock}: IProps) {
 	const {userName} = useUserInfos();
 
 	const handleClick = () => {
-		backend.unblockUser(userName.userName, user.name).then(() => {
-			onUnblock(user);
+		backend.unblockUser(userName.userName, user.name);
+		onUnblock(user);
+		notification.info({
+			message: `${user.name} has been unblocked`,
+			placement: 'bottom',
 		});
 	};
 

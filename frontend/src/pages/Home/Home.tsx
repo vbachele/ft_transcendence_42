@@ -19,9 +19,6 @@ const Homepage = () => {
 		setLogout(!logout);
 	};
 
-	console.log('userName: ', userName.userName);
-	console.log('achievements: ', achievements.achievements.length);
-
 	return (
 		<S.Container>
 			<S.Background autoPlay loop muted playsInline>

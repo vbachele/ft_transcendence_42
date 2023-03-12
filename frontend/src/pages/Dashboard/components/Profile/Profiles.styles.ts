@@ -28,9 +28,25 @@ export const Profile = styled.div<IProfile>`
 	}
 
 	.antd-space {
+		user-select: none;
+		display: flex;
+		gap: 8px;
 		width: fit-content;
 		cursor: pointer;
 		margin-top: 16px;
+
+		:active {
+			.dropdown-arrow {
+				transform: translateY(4px);
+			}
+		}
+
+		.dropdown-arrow {
+			position: relative;
+			top: 2px;
+
+			transition: transform 0.1s linear;
+		}
 	}
 
 	@media screen and (max-width: 1600px) {
