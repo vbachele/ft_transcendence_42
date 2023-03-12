@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { v2 } from "cloudinary";
 import { Request } from "express";
 import { PrismaService } from "src/database/prisma.service";
@@ -25,10 +25,10 @@ export class CloudinaryService {
       });
       return user;
     } catch (error) {
-      throw new BadRequestException("Invalidfile", {
-        cause: new Error(),
-        description: error,
-      });
+      throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: "Invalid File"},
+         HttpStatus.BAD_REQUEST);
     }
   }
 }
