@@ -7,20 +7,21 @@ import {DownOutlined} from '@ant-design/icons';
 import BlockUser from 'components/Buttons/Social/BlockUser';
 import AddFriend from 'components/Buttons/Social/AddFriend';
 import Message from 'components/Buttons/Social/Message';
+import {IUser} from 'types/models';
 
 interface IProps {
-	user: string;
+	user: IUser;
 }
 
 const UserDropdown = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	const myself: Boolean = userName.userName === user;
+	const myself: Boolean = userName.userName === user.name;
 
 	const items: MenuProps['items'] = [
 		{
 			label: (
 				<S.OptionButton>
-					<AddFriend user={user} />
+					<AddFriend user={user.name} />
 				</S.OptionButton>
 			),
 			key: '0',
@@ -28,7 +29,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<S.OptionButton>
-					<Message user={user} />
+					<Message user={user.name} />
 				</S.OptionButton>
 			),
 			key: '1',

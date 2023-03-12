@@ -7,12 +7,16 @@ import {useUserInfos} from 'contexts/User/userContent';
 
 interface IProps {
 	user: IUser;
+	onUnblock: (user: IUser) => void;
 }
 
-function Blocked({user}: IProps) {
+function Blocked({user, onUnblock}: IProps) {
 	const {userName} = useUserInfos();
+
 	const handleClick = () => {
-		backend.unblockUser(userName.userName, user.name);
+		backend.unblockUser(userName.userName, user.name).then(() => {
+			onUnblock(user);
+		});
 	};
 
 	return (

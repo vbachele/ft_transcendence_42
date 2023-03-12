@@ -12,9 +12,6 @@ import {CloudinaryModule} from './cloudinary/cloudinary.module';
 import {GameModule} from './game/game.module';
 import {WebsocketModule} from './websocket/websocket.module';
 import {LobbyModule} from './lobby/lobby.module';
-import {DashboardController} from './dashboard/dashboard.controller';
-import {DashboardModule} from './dashboard/dashboard.module';
-import {DashboardService} from './dashboard/dashboard.service';
 import {FriendModule} from './api/friends/friends.module';
 import {BlockedModule} from './api/blocked/blocked.module';
 import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
@@ -28,13 +25,12 @@ import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
 		UserModule,
 		FriendModule,
 		BlockedModule,
-		DashboardModule,
 		PrismaModule,
 		CloudinaryModule,
 		WebsocketModule,
 		DoubleAuthModule,
 	],
-	controllers: [AppController, DatabaseController, DashboardController],
-	providers: [AppService, DatabaseService, DashboardService],
+	controllers: [AppController, DatabaseController],
+	providers: [AppService, DatabaseService],
 })
 export class AppModule {}

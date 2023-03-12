@@ -8,7 +8,7 @@ export const backend = {
 		return await response.json();
 	},
 	async getUserByName(name: string): Promise<IUser> {
-		const response = await api.get('/dashboard/' + name);
+		const response = await api.get('/users/' + name);
 		return await response.json();
 	},
 	async getFriendsOf(name: string): Promise<IUser[]> {

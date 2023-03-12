@@ -99,11 +99,12 @@ export const RegularButton = styled.button`
 	}
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = styled(Link)`
 	position: fixed;
 	bottom: 20%;
 	right: 48px;
 	text-align: right;
+	text-decoration: none;
 `;
 
 export const UserName = styled.p`

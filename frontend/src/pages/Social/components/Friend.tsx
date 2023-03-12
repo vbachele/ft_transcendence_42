@@ -23,9 +23,11 @@ import UserInvitedToGame from '../../../components/Popup/UserInvitedToGame/UserI
 
 interface IProps {
 	friend: IUser;
+	onBlock: (user: IUser) => void;
+	onRemove: (user: IUser) => void;
 }
 
-function Friend({friend}: IProps) {
+function Friend({friend, onBlock, onRemove}: IProps) {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
 
@@ -33,7 +35,7 @@ function Friend({friend}: IProps) {
 		setOpen(true);
 	};
 
-	const onClose = () => {
+	const hideDrawer = () => {
 		setOpen(false);
 	};
 
@@ -52,12 +54,12 @@ function Friend({friend}: IProps) {
 				placement="right"
 				width={window.innerWidth <= 768 ? '100%' : 424}
 				closable={true}
-				onClose={onClose}
+				onClose={hideDrawer}
 				open={open}
 			>
 				<S.DrawerTitle>
 					<F.H3>{friend.name}</F.H3>
-					<Close onClick={onClose} />
+					<Close onClick={hideDrawer} />
 				</S.DrawerTitle>
 				<S.FriendDetails>
 					<img className="drawer__avatar" src={friend.image} />
@@ -66,13 +68,15 @@ function Friend({friend}: IProps) {
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
 					<ViewProfile user={friend.name} />
-					<Invite id={friend.name} />
+					{friend.status === 'online' && <Invite id={friend.name} />}
+					{friend.status === 'ingame' && <button>Watch game</button>}
 					<Message user={friend.name} />
-					<AddFriend user={friend.name} />
-					<RemoveFriend user={friend.name} />
-					<BlockUser user={friend.name} />
-					<Mute id={1} />
-					<Ban id={1} />
+					<RemoveFriend
+						user={friend}
+						hideDrawer={hideDrawer}
+						onRemove={onRemove}
+					/>
+					<BlockUser user={friend} hideDrawer={hideDrawer} onBlock={onBlock} />
 				</S.FriendOptions>
 				<UserInvitedToGame />
 			</Drawer>

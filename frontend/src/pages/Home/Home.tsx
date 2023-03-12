@@ -48,7 +48,7 @@ const Homepage = () => {
 					LOG OUT
 				</S.RegularButton>
 			</S.LinksContainer>
-			<S.UserInfo>
+			<S.UserInfo to={`/dashboard/${userName.userName}`}>
 				<S.UserName>{userName?.userName}</S.UserName>
 				<S.UserAchievements>
 					{achievements && achievements.achievements.length} / 16 ACHIEVEMENTS
