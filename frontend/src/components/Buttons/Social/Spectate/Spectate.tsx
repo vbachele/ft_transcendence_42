@@ -1,6 +1,6 @@
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './spectate.svg';
 
@@ -10,16 +10,20 @@ interface IProps {
 
 function Message({user}: IProps) {
 	const {userName} = useUserInfos();
+	const navigate = useNavigate();
 
 	const handleClick = () => {
 		console.log(userName.userName, 'wants to spectate', user); //TODO
+		navigate(`/specate/${user}`);
+
+		unlockAchievement('WATCH', userName.userName);
 	};
 
 	return (
-		<Link to={`/chat/${user}`} onClick={handleClick}>
+		<button onClick={handleClick}>
 			<Icon />
 			<F.Text>Spectate</F.Text>
-		</Link>
+		</button>
 	);
 }
 

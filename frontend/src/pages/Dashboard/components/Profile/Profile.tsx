@@ -8,6 +8,11 @@ import UserDropdown from './UserDropdown';
 import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import {useUserInfos} from 'contexts/User/userContent';
 import isUserIn from 'helpers/isUserIn';
+import {useEffect, useState} from 'react';
+import {backend} from 'lib/backend';
+
+import {ReactComponent as WinIcon} from '../../assets/win.svg';
+import {ReactComponent as LossIcon} from '../../assets/loss.svg';
 
 interface IProps {
 	user: IUser;
@@ -15,7 +20,8 @@ interface IProps {
 
 const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	const {data: friends} = useFetchFriendsOf(userName.userName);
+	// const {data: friends} = useFetchFriendsOf(userName.userName);
+	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 
@@ -23,11 +29,24 @@ const Profile = ({user}: IProps) => {
 		checkRanks = true;
 	}
 
+	useEffect(() => {
+		const fetchFriends = async () => {
+			const data = await backend.getFriendsOf(userName.userName);
+			if (data) {
+				setFriendUsers(data);
+			}
+		};
+		fetchFriends();
+	}, [friendUsers]);
+
 	return (
 		<S.Profile coalition={user.coalition}>
 			<S.Avatar src={user.image} />
-			<S.VDiv className="name">
-				<F.H1>{user.name}</F.H1>
+			<S.VDiv className="name" isFriend={isUserIn(friendUsers, user)}>
+				<S.HDiv style={{flexDirection: 'row'}}>
+					<F.H1>{user.name}</F.H1>
+					{isUserIn(friendUsers, user) && <WinIcon />}
+				</S.HDiv>
 				<ActivityStatus state={user.status} />
 				<UserDropdown user={user} />
 			</S.VDiv>

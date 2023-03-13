@@ -8,7 +8,7 @@ import {ReactComponent as Icon} from './remove.svg';
 interface IProps {
 	user: IUser;
 	hideDrawer?: () => void;
-	onRemove: (user: IUser) => void;
+	onRemove?: (user: IUser) => void;
 }
 
 function RemoveFriend({user, hideDrawer, onRemove}: IProps) {

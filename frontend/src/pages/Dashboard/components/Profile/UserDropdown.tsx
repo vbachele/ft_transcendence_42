@@ -12,6 +12,10 @@ import isUserIn from 'helpers/isUserIn';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 import {useEffect, useState} from 'react';
+import {backend} from 'lib/backend';
+import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
+import Spectate from 'components/Buttons/Social/Spectate';
+import Invite from 'components/Buttons/Social/Invite';
 
 interface IProps {
 	user: IUser;
@@ -19,34 +23,102 @@ interface IProps {
 
 const UserDropdown = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const myself: Boolean = userName.userName === user.name;
+	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
+	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const navigate = useNavigate();
+
+	const handleDropdownVisibleChange = (visible: boolean) => {
+		setDropdownVisible(visible);
+	};
 
 	const redirectToHome = () => {
 		navigate('/');
 	};
 
+	useEffect(() => {
+		const fetchFriends = async () => {
+			const data = await backend.getFriendsOf(userName.userName);
+			if (data) {
+				setFriendUsers(data);
+			}
+		};
+		fetchFriends();
+	}, [dropdownVisible]);
+
 	const items: MenuProps['items'] = [
 		{
 			label: (
 				<>
-					{!isUserIn(friends, user) && (
-						<S.OptionButton>
+					{!isUserIn(friendUsers, user) && (
+						<S.OptionButton
+							onClick={() => {
+								setDropdownVisible(false);
+							}}
+						>
 							<AddFriend user={user} />
 						</S.OptionButton>
 					)}
 				</>
 			),
-			key: '0',
+			key: 'ADD_USER',
 		},
+
 		{
 			label: (
 				<S.OptionButton>
 					<Message user={user.name} />
 				</S.OptionButton>
 			),
-			key: '1',
+			key: 'MESSAGE',
+		},
+		{
+			label: (
+				<>
+					{isUserIn(friendUsers, user) && user.status === 'online' && (
+						<S.OptionButton
+							onClick={() => {
+								setDropdownVisible(false);
+							}}
+						>
+							<Invite id={user.name} />
+						</S.OptionButton>
+					)}
+				</>
+			),
+			key: 'INVITE',
+		},
+		{
+			label: (
+				<>
+					{isUserIn(friendUsers, user) && user.status === 'ingame' && (
+						<S.OptionButton
+							onClick={() => {
+								setDropdownVisible(false);
+							}}
+						>
+							<Spectate user={user.name} />
+						</S.OptionButton>
+					)}
+				</>
+			),
+			key: 'SPECTATE',
+		},
+		{
+			label: (
+				<>
+					{isUserIn(friendUsers, user) && (
+						<S.OptionButton
+							onClick={() => {
+								setDropdownVisible(false);
+							}}
+						>
+							<RemoveFriend user={user} />
+						</S.OptionButton>
+					)}
+				</>
+			),
+			key: 'REMOVE_USER',
 		},
 		{
 			label: (
@@ -58,14 +130,20 @@ const UserDropdown = ({user}: IProps) => {
 					)}
 				</>
 			),
-			key: '2',
+			key: 'BLOCK_USER',
 		},
 	];
 
 	return (
 		<S.DropdownContainer>
 			{!myself && (
-				<Dropdown trigger={['click']} placement="bottomLeft" menu={{items}}>
+				<Dropdown
+					trigger={['click']}
+					placement="bottomLeft"
+					menu={{items}}
+					open={dropdownVisible}
+					onOpenChange={handleDropdownVisibleChange}
+				>
 					<div className="antd-space">
 						<F.Text weight="500">Options</F.Text>
 						<DownOutlined className="dropdown-arrow" />

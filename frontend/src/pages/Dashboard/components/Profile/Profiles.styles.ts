@@ -63,13 +63,31 @@ export const Avatar = styled.img`
 	}
 `;
 
-export const VDiv = styled.div`
+interface IDivProps {
+	isFriend?: boolean;
+}
+
+export const VDiv = styled.div<IDivProps>`
 	display: flex;
 	flex-direction: column;
 	word-break: break-all;
 
 	.rank {
 		color: #ffbf00;
+	}
+`;
+
+export const HDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+
+	svg {
+		width: 20px;
+		height: 20px;
+		min-width: 16px;
+		min-height: 16px;
 	}
 `;
 
