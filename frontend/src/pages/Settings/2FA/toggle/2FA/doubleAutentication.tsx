@@ -4,6 +4,7 @@ import {Text, H2, Subtitle} from 'styles/font.styles';
 import * as S from './doubleAutentication.styles';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface Props {
 	click: boolean;
@@ -105,6 +106,7 @@ const DoubleAutentication: React.FC<Props> = (props) => {
 
 	const handleClick: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
 		props.onClose;
+		unlockAchievement('2FA', userName.userName);
 	};
 
 	// BUTTONS OF THE POPUP
