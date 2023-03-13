@@ -4,6 +4,7 @@ import { AppModule } from "./app.module";
 import * as bodyParser from "body-parser";
 import * as session from 'express-session'
 import * as cookieParser from 'cookie-parser'
+import *  as passport from 'passport'
 
 const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
@@ -31,6 +32,8 @@ async function bootstrap() {
       cookie: {maxAge: oneWeek},
     })
   )
+  app.use(passport.initialize());
+  app.use(passport.session());
   await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
 bootstrap();

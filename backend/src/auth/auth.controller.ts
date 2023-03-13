@@ -1,10 +1,14 @@
-import { Body, Controller, Get, Post, Redirect, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Redirect, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
 import { Request, Response } from "express";
 import { UserService } from "src/api/users/users.service";
 import { Observable } from "rxjs";
 import { UserDto } from "./dto";
+import { GoogleAuthGuard } from "./google-auth/guards";
+import { User } from "@prisma/client";
+
+
 
 @Controller("auth")
 export class AuthController {
@@ -57,5 +61,21 @@ export class AuthController {
   @Get("token")
   async checkIfTokenValid(@Req() req: Request, @Res() res: Response) {
     return this.authService.checkIfTokenValid(req, res);
+  }
+
+  @Get("google/login")
+  @UseGuards(GoogleAuthGuard)
+  async handleGoogleAuth(@Req() req: Request, @Res() res: Response) {
+    console.log("JAIMEREAISRENTRERDEDENS");
+    return {msg: 'google auth'}
+  }
+
+  @Get("google/redirect")
+  @UseGuards(GoogleAuthGuard)
+  async handleGoogleRedirection(@Req() req: Request, @Res() res: Response) {
+    console.log("IN MY SESSSIONNNNNN", req.user);
+    if (req.user)
+      // res.redirect(301, `http://localhost:5173/settings`)
+    return {msg: 'google auth'}
   }
 }

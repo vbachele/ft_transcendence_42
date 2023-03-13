@@ -3,6 +3,7 @@ import { UserService } from "src/api/users/users.service";
 import { Request, Response, request } from "express";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
 import { PrismaService } from "src/database/prisma.service";
+import { UserDetails } from "./google-auth/types";
 
 @Injectable({})
 export class AuthService {
@@ -54,11 +55,13 @@ export class AuthService {
   }
 
   async createCookies(@Res() res: Response, token: any) {
-    res.cookie("token", token.access_token,
+    const cookies = res.cookie("token", token.access_token,
       {
         expires: new Date(new Date().getTime() + 60 * 24 * 7 * 1000), // expires in 7 days
         httpOnly: true, // for security
       });
+      console.log(cookies);
+      
   }
 
   async updateCookies(@Res() res: Response, token: any, userInfos: any) {
@@ -119,6 +122,22 @@ export class AuthService {
         };
   }
 
+  async createUserFromGoogle(details: UserDetails, token: string) {
+    const userExists = await this.userService.getUserByEmail(details.email);
+    if (userExists) return userExists;
+    const user = await this.prisma.user.create({
+      data: {
+        coalition: "federation",
+        achievements: [],
+        accessToken: token,
+        isRegistered: true,
+        name: details.userName,
+        user42Name: details.userName,
+        email: details.email,
+      },
+    });
+    return user;
+  }
 }
 
 
