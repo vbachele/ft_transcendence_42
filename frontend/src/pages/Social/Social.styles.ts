@@ -8,8 +8,12 @@ export const Container = styled.div`
 	gap: 25px;
 `;
 
-export const UserContainer = styled.div`
-	display: grid;
+interface IUserProps {
+	isEmpty: boolean;
+}
+
+export const UserContainer = styled.div<IUserProps>`
+	display: ${(p) => (p.isEmpty ? 'flex' : 'grid')};
 	grid-template-columns: 1fr 1fr 1fr;
 	justify-content: center;
 	gap: 2em;
@@ -17,7 +21,11 @@ export const UserContainer = styled.div`
 	width: 60%;
 	max-height: 512px;
 	overflow-y: auto;
-	/* overflow-x: hidden; */
+
+	.empty {
+		filter: ${(p) =>
+			p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+	}
 
 	@media screen and (max-width: 1300px) {
 		grid-template-columns: 1fr 1fr;

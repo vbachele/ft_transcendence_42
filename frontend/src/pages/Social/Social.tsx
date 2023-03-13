@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
-import {Divider, Input} from 'antd';
+import {Divider, Empty, Input} from 'antd';
 import Friend from './components/Friend';
 import * as S from './Social.styles';
 import * as F from 'styles/font.styles';
@@ -15,9 +15,13 @@ import unlockAchievement from 'helpers/unlockAchievement';
 
 const {Search} = Input;
 
+function isEmpty(users: IUser[]): boolean {
+	return !users || users.length === 0;
+}
+
 function Social() {
-	const [search, setSearch] = useState('');
 	const {userName} = useUserInfos();
+	const [search, setSearch] = useState('');
 	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
@@ -71,7 +75,7 @@ function Social() {
 				{friendUsers &&
 					friendUsers.filter((friend) => filterByName(friend, search)).length}
 			</F.H3>
-			<S.UserContainer>
+			<S.UserContainer isEmpty={isEmpty(friendUsers)}>
 				{friendUsers &&
 					friendUsers
 						.sort(compareStatus)
@@ -84,6 +88,10 @@ function Social() {
 								onRemove={handleRemove}
 							/>
 						))}
+
+				{isEmpty(friendUsers) && (
+					<Empty className="empty" description="No friends" />
+				)}
 			</S.UserContainer>
 			<Divider style={{visibility: 'hidden'}} />
 			<F.H3>
@@ -92,13 +100,16 @@ function Social() {
 					blockedUsers.filter((blocked) => filterByName(blocked, search))
 						.length}
 			</F.H3>
-			<S.UserContainer>
+			<S.UserContainer isEmpty={isEmpty(blockedUsers)}>
 				{blockedUsers &&
 					blockedUsers
 						.filter((user) => filterByName(user, search))
 						.map((user: IUser) => (
 							<Blocked user={user} key={user.name} onUnblock={handleUnblock} />
 						))}
+				{isEmpty(blockedUsers) && (
+					<Empty className="empty" description="No blocked users" />
+				)}
 			</S.UserContainer>
 		</S.Container>
 	);

@@ -27,28 +27,6 @@ export const Profile = styled.div<IProfile>`
 		gap: 48px;
 	}
 
-	.antd-space {
-		user-select: none;
-		display: flex;
-		gap: 8px;
-		width: fit-content;
-		cursor: pointer;
-		margin-top: 16px;
-
-		:active {
-			.dropdown-arrow {
-				transform: translateY(4px);
-			}
-		}
-
-		.dropdown-arrow {
-			position: relative;
-			top: 2px;
-
-			transition: transform 0.1s linear;
-		}
-	}
-
 	@media screen and (max-width: 1600px) {
 		.ranks-div {
 			display: flex;
@@ -60,6 +38,7 @@ export const Profile = styled.div<IProfile>`
 
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
+		padding: 16px 48px;
 		gap: 32px;
 
 		.name {
@@ -105,20 +84,52 @@ export const VDivLink = styled(Link)`
 	}
 `;
 
+// prettier-ignore
 export const OptionButton = styled.div`
-	button,
-	a {
+	button,	a {
+		width: 100%;
+		height: 100%;
+		text-align: left;
+
+		cursor: pointer;
+		border: none;
+		padding: 8px 12px;
+		background: none;
+
 		p {
 			color: black;
 			font-weight: 400;
 			font-size: 14px;
 		}
-		cursor: pointer;
-		border: none;
-		background: none;
 	}
 
 	svg {
 		display: none;
+	}
+`;
+
+export const DropdownContainer = styled.div`
+	width: fit-content;
+
+	.antd-space {
+		user-select: none;
+		display: flex;
+		gap: 8px;
+		width: fit-content;
+		cursor: pointer;
+		margin-top: 16px;
+
+		:active {
+			.dropdown-arrow {
+				transform: translateY(4px);
+			}
+		}
+
+		.dropdown-arrow {
+			position: relative;
+			top: 2px;
+
+			transition: transform 0.1s linear;
+		}
 	}
 `;

@@ -1,3 +1,4 @@
+import {notification} from 'antd';
 import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import * as F from 'styles/font.styles';
@@ -23,6 +24,14 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 		if (hideDrawer) {
 			hideDrawer();
 		}
+
+		notification.info({
+			message: (
+				<div style={{marginBottom: -8}}>{`${user.name} has been removed`}</div>
+			),
+			placement: 'bottom',
+			duration: 2.5,
+		});
 	};
 
 	return (

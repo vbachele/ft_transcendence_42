@@ -18,8 +18,13 @@ function Blocked({user, onUnblock}: IProps) {
 		backend.unblockUser(userName.userName, user.name);
 		onUnblock(user);
 		notification.info({
-			message: `${user.name} has been unblocked`,
+			message: (
+				<div
+					style={{marginBottom: -8}}
+				>{`${user.name} has been unblocked`}</div>
+			),
 			placement: 'bottom',
+			duration: 2.5,
 		});
 	};
 

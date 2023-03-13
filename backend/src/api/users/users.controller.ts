@@ -16,11 +16,12 @@ export class UserController {
 	) {}
 	@Get(':name')
 	async getUserByName(@Req() req: Request) {
-		return this.userService.getUserByName(req.params.name);
+		return this.userService.getUserByName(req.params.name, 'louis');
 	}
 	@Get()
 	async getUsers() {
-		return this.userService.getAllUsers();
+		// const currentUser = req.user; //TODO trouver comment recuperer le currentUser
+		return this.userService.getAllUsers('louis');
 	}
 	/***  Here we check it the request if an image to update otherwise we update the user ***/
 	@Patch(':name')

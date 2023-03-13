@@ -1,11 +1,11 @@
 import useFetch from 'hooks/useFetch';
 import RankList from './components/RankList';
-import Empty from './components/Empty';
 import {useLocation} from 'react-router-dom';
 import useFetchUsers from 'hooks/useFetchUsers';
 import * as S from './Leaderboard.styles';
 import * as F from 'styles/font.styles';
 import Loading from 'components/Loading';
+import {Empty} from 'antd';
 
 const Leaderboard = () => {
 	const {data, isLoading, error} = useFetchUsers();
@@ -19,7 +19,9 @@ const Leaderboard = () => {
 			{error && <div>Error</div>}
 			{isLoading && <Loading />}
 			{data && <RankList players={data} opt={option} />}
-			{!error && !isLoading && data!.length === 0 && <Empty />}
+			{!error && !isLoading && data!.length === 0 && (
+				<Empty className="empty" />
+			)}
 		</S.Container>
 	);
 };

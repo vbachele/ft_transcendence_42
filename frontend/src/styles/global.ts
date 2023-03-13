@@ -25,6 +25,10 @@ export const GlobalStyle = createGlobalStyle`
 					background-color: ${(p) => (p.theme.name === 'light' ? '#171717' : '#fff')};
 				}
 		}
+
+		.ant-dropdown-menu-item, .ant-dropdown-menu-item-only-child {
+			padding: 0 !important;
+		}
 	}
 
 	#root {

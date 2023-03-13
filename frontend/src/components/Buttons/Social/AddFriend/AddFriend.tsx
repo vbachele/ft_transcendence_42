@@ -6,36 +6,37 @@ import {backend} from 'lib/backend';
 import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import {notification} from 'antd';
 import {IUser} from 'types/models';
+import isUserIn from 'helpers/isUserIn';
 
 interface IProps {
 	user: IUser;
 }
 
-const isAdded = (blocked: IUser[] | null, user: IUser): boolean => {
-	return (
-		blocked?.some((blockedUser) => blockedUser.name === user.name) ?? false
-	);
-};
-
 function AddFriend({user}: IProps) {
 	const {userName} = useUserInfos();
 	const {data: friends} = useFetchFriendsOf(userName.userName);
+	let userAdded: boolean = false; //TODO normalement useless
 
 	const handleClick = () => {
-		if (isAdded(friends, user)) {
+		if (isUserIn(friends, user) || userAdded) {
 			return;
 		}
 
 		backend.unblockUser(userName.userName, user.name);
 		backend.addFriend(userName.userName, user.name);
+
 		unlockAchievement('ADD', userName.userName);
 		if (friends && friends.length + 1 >= 3) {
 			unlockAchievement('TEAM', userName.userName);
 		}
+		userAdded = true;
 
 		notification.info({
-			message: `${user.name} has been added`,
+			message: (
+				<div style={{marginBottom: -8}}>{`${user.name} has been added`}</div>
+			),
 			placement: 'bottom',
+			duration: 2.5,
 		});
 	};
 

@@ -6,6 +6,7 @@ import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import {notification} from 'antd';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
+import isUserIn from 'helpers/isUserIn';
 
 interface IProps {
 	user: IUser;
@@ -13,18 +14,13 @@ interface IProps {
 	onBlock?: (user: IUser) => void;
 }
 
-const isBlocked = (blocked: IUser[] | null, user: IUser): boolean => {
-	return (
-		blocked?.some((blockedUser) => blockedUser.name === user.name) ?? false
-	);
-};
-
 function BlockUser({user, hideDrawer, onBlock}: IProps) {
 	const {userName} = useUserInfos();
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
+	let userAdded: boolean = false; //TODO normalement useless
 
 	const handleClick = () => {
-		if (isBlocked(blocked, user)) {
+		if (isUserIn(blocked, user) || userAdded) {
 			return;
 		}
 
@@ -37,11 +33,16 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 		if (hideDrawer) {
 			hideDrawer();
 		}
+
 		unlockAchievement('BLOCK', userName.userName);
+		userAdded = true;
 
 		notification.info({
-			message: `${user.name} has been blocked`,
+			message: (
+				<div style={{marginBottom: -8}}>{`${user.name} has been blocked`}</div>
+			),
 			placement: 'bottom',
+			duration: 2.5,
 		});
 	};
 

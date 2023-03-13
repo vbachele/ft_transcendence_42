@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -5,16 +6,37 @@ export const Container = styled.div`
 	margin-top: 16px;
 `;
 
-export const History = styled.div`
+interface IHistoryProps {
+	empty: boolean;
+}
+
+export const History = styled.div<IHistoryProps>`
 	margin-top: 48px;
 	display: flex;
-	align-items: stretch;
-	justify-content: space-between;
+	justify-content: space-evenly;
+
+	.empty {
+		position: relative;
+		top: 48px;
+		filter: ${(p) =>
+			p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+	}
+
+	@media screen and (max-width: 1280px) {
+		.empty {
+			top: -24px;
+		}
+	}
 
 	@media screen and (max-width: 768px) {
+		justify-content: ${(p) => (p.empty ? 'space-evenly' : 'initial')};
 		overflow-x: auto;
-		gap: 24px;
+		gap: 48px;
 		padding: 24px 8px;
+
+		.empty {
+			justify-items: left;
+		}
 	}
 `;
 
@@ -43,27 +65,37 @@ interface ICardProps {
 	result: string;
 }
 
-export const Card = styled.div<ICardProps>`
+export const Card = styled(Link)<ICardProps>`
+	color: ${(p) => p.theme.colors.secondary};
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
 	box-shadow: ${(p) =>
 		p.result === 'win'
 			? 'rgba(75, 174, 79, 1) 0px 0px 8px'
 			: 'rgba(224, 79, 95, 1) 0px 0px 8px'};
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 32px 0;
-	gap: 24px;
+	text-align: center;
+	padding: 16px;
+	gap: 16px;
 	border-radius: 8px;
 	width: 192px;
 	height: 256px;
 	user-select: none;
+	text-decoration: none;
 
 	img {
 		border-radius: 50%;
-		width: 92px;
-		height: 92px;
+		width: 96px;
+		height: 96px;
+	}
+
+	transition: all 0.1s linear;
+
+	:hover {
+		transform: translateY(-8px);
 	}
 
 	@media screen and (max-width: 1600px) {

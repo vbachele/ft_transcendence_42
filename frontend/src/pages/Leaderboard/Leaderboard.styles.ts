@@ -4,9 +4,16 @@ import {Link} from 'react-router-dom';
 // Leaderboard Page
 export const Container = styled.div`
 	text-align: center;
+
 	h1 {
 		padding: 32px 0;
 	}
+
+	.empty {
+		filter: ${(p) =>
+			p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+	}
+
 	.Federation {
 		color: #4180db !important;
 	}

@@ -5,12 +5,17 @@ import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 
 import UserDropdown from './UserDropdown';
+import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
+import {useUserInfos} from 'contexts/User/userContent';
+import isUserIn from 'helpers/isUserIn';
 
 interface IProps {
 	user: IUser;
 }
 
 const Profile = ({user}: IProps) => {
+	const {userName} = useUserInfos();
+	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 

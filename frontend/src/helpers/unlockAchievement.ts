@@ -29,6 +29,7 @@ const unlockAchievement = async (achName: string, userName: string) => {
 	notification.success({
 		message: `${achievement?.name}`,
 		description: 'New achievement unlocked !',
+		duration: 3,
 	});
 };
 
