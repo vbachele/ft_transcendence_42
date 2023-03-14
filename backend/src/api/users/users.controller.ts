@@ -20,7 +20,7 @@ export class UserController {
 	}
 	@Get()
 	async getUsers() {
-		// const currentUser = req.user; //TODO trouver comment recuperer le currentUser
+		// const currentUser = req.user; //TODO passer le currentUser dans les param
 		return this.userService.getAllUsers('louis');
 	}
 	/***  Here we check it the request if an image to update otherwise we update the user ***/

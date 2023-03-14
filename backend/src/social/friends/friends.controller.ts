@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Patch, Req} from '@nestjs/common';
 import {FriendService} from './friends.service';
 import {Request} from 'express';
-import {UserService} from '../users/users.service';
+import {UserService} from 'src/api/users/users.service';
 
 @Controller('friends')
 export class FriendController {

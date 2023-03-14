@@ -18,7 +18,7 @@ interface IProps {
 
 function Pending({user, onAccept, onDeny}: IProps) {
 	const {userName} = useUserInfos();
-	const {data: friends} = useFetchFriendsOf(userName.userName); //TODO not fully working
+	const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
 
 	const handleAccept = () => {
 		backend.removePending(userName.userName, user.name);

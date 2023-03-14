@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Patch, Req} from '@nestjs/common';
 import {BlockedService} from './blocked.service';
 import {Request} from 'express';
-import {UserService} from '../users/users.service';
+import {UserService} from 'src/api/users/users.service';
 
 @Controller('blocked')
 export class BlockedController {

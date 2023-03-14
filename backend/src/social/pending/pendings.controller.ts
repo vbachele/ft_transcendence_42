@@ -1,7 +1,7 @@
-import {Body, Controller, Delete, Get, Param, Patch, Req} from '@nestjs/common';
+import {Controller, Delete, Get, Param, Patch, Req} from '@nestjs/common';
+import {UserService} from 'src/api/users/users.service';
 import {PendingService} from './pendings.service';
 import {Request} from 'express';
-import {UserService} from '../users/users.service';
 
 @Controller('pendings')
 export class PendingController {

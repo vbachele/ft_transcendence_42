@@ -2,7 +2,7 @@ import {ForbiddenException, Injectable, Post} from '@nestjs/common';
 import {PrismaService} from 'src/database/prisma.service';
 import {PrismaClientKnownRequestError} from '@prisma/client/runtime';
 import {Request} from 'express';
-import {BlockedService} from '../blocked/blocked.service';
+import {BlockedService} from 'src/social/blocked/blocked.service';
 
 @Injectable({})
 export class UserService {

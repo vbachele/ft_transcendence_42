@@ -48,17 +48,17 @@ export const StyledPanel = styled(Panel)<IPanelProps>`
 		justify-content: center;
 		gap: 2em;
 
+		.empty {
+			color: ${(p) => p.theme.colors.secondary};
+			filter: ${(p) =>
+				p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+		}
+
 		@media screen and (max-width: 1300px) {
 			grid-template-columns: 1fr 1fr;
 		}
 		@media screen and (max-width: 768px) {
 			grid-template-columns: 1fr;
-		}
-
-		.empty {
-			color: ${(p) => p.theme.colors.secondary};
-			filter: ${(p) =>
-				p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
 		}
 	}
 `;
@@ -92,16 +92,25 @@ export const Friend = styled.button`
 
 export const DrawerTitle = styled.div`
 	display: flex;
-	width: 100%;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 32px;
+	width: 100%;
 
 	svg {
 		cursor: pointer;
 		width: 24px;
 		height: 24px;
 		fill: ${(p) => p.theme.colors.secondary};
+
+		:hover {
+			transform: scale(1.2);
+		}
+
+		:active {
+			transform: scale(1);
+		}
 	}
 `;
 
@@ -174,15 +183,18 @@ export const Blocked = styled.div`
 	button {
 		cursor: pointer;
 		margin-right: 24px;
+		margin-left: 16px;
 		margin-top: 3px;
 		transition: all 0.1s linear;
 
 		:hover {
-			transform: scale(1.1);
+			transform: scale(1.2);
 		}
+
 		:active {
 			transform: scale(1);
 		}
+
 		svg {
 			width: 24px;
 			height: 24px;
@@ -201,12 +213,6 @@ export const Pending = styled.div`
 	background-color: ${(p) =>
 		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
-
-	:hover {
-		transform: scale(1.01);
-		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
-	}
 `;
 
 export const HDivLink = styled(Link)`
@@ -224,6 +230,9 @@ export const HDivLink = styled(Link)`
 
 	h5 {
 		color: ${(p) => p.theme.colors.secondary};
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 `;
 
