@@ -16,6 +16,9 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 
 	const handleClick = () => {
 		backend.removeFriend(userName.userName, user.name);
+		backend.removeFriend(user.name, userName.userName);
+		backend.removePending(userName.userName, user.name);
+		backend.removePending(user.name, userName.userName);
 
 		if (onRemove) {
 			onRemove(user);
@@ -25,7 +28,7 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 			hideDrawer();
 		}
 
-		notification.info({
+		notification.error({
 			message: (
 				<div style={{marginBottom: -8}}>{`${user.name} has been removed`}</div>
 			),
@@ -36,8 +39,8 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 
 	return (
 		<button onClick={handleClick}>
-			<Icon />
-			<F.Text>Remove friend</F.Text>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Remove friend</F.Text>
 		</button>
 	);
 }

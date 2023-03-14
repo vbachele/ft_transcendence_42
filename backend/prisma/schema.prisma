@@ -29,11 +29,14 @@ model User {
   isRegistered Boolean @default(false)
   ownedLobbies Lobby[] @relation("owned")
 
-	friends	User[] @relation("friend_relations")
-	friendsOf	User[] @relation("friend_relations")
+	friends	User[] @relation("friends")
+	friendsOf	User[] @relation("friends")
 
-	blocked	User[] @relation("block_relations")
-	blockedOf	User[] @relation("block_relations")
+	pendings	User[] @relation("pending")
+	pendingsOf	User[] @relation("pending")
+
+	blocked	User[] @relation("blocked")
+	blockedOf	User[] @relation("blocked")
 
   otp_enabled  Boolean? @default(false)
   otp_verified Boolean? @default(false)

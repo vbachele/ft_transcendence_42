@@ -42,10 +42,10 @@ const Profile = ({user}: IProps) => {
 	return (
 		<S.Profile coalition={user.coalition}>
 			<S.Avatar src={user.image} />
-			<S.VDiv className="name" isFriend={isUserIn(friendUsers, user)}>
+			<S.VDiv className="name" isFriend={isUserIn(friendUsers, user.name)}>
 				<S.HDiv style={{flexDirection: 'row'}}>
 					<F.H1>{user.name}</F.H1>
-					{isUserIn(friendUsers, user) && <WinIcon />}
+					{isUserIn(friendUsers, user.name) && <WinIcon />}
 				</S.HDiv>
 				<ActivityStatus state={user.status} />
 				<UserDropdown user={user} />

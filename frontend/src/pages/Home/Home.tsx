@@ -6,9 +6,11 @@ import Popup from 'components/Popup';
 import logo from 'assets/logo-text.svg';
 import logo_ai from 'assets/logo_ai.png';
 import * as S from './Home.styles';
+import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
 
 const Homepage = () => {
 	const {userName, achievements} = useUserInfos();
+	const {data: pendings} = useFetchPendingsOf(userName.userName);
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
 

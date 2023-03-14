@@ -17,7 +17,7 @@ function Blocked({user, onUnblock}: IProps) {
 	const handleClick = () => {
 		backend.unblockUser(userName.userName, user.name);
 		onUnblock(user);
-		notification.info({
+		notification.success({
 			message: (
 				<div
 					style={{marginBottom: -8}}

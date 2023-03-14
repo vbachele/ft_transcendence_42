@@ -116,7 +116,7 @@ export const OptionButton = styled.div`
 
 		p {
 			color: black;
-			font-weight: 400;
+			font-weight: 500;
 			font-size: 14px;
 		}
 	}

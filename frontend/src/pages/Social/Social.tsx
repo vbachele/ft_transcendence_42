@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
-import {Divider, Empty, Input} from 'antd';
+import {Collapse, Divider, Empty, Input} from 'antd';
 import Friend from './components/Friend';
 import * as S from './Social.styles';
 import * as F from 'styles/font.styles';
@@ -12,11 +12,16 @@ import {useUserInfos} from 'contexts/User/userContent';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import {backend} from 'lib/backend';
 import unlockAchievement from 'helpers/unlockAchievement';
+import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
+import Pending from './components/Pending';
 
 const {Search} = Input;
 
-function isEmpty(users: IUser[]): boolean {
-	return !users || users.length === 0;
+function isEmpty(users: IUser[]): string {
+	if (!users || users.length === 0) {
+		return 'true';
+	}
+	return 'false';
 }
 
 function Social() {
@@ -24,8 +29,10 @@ function Social() {
 	const [search, setSearch] = useState('');
 	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
+	const {data: pendings} = useFetchPendingsOf(userName.userName);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
 	const [blockedUsers, setBlockedUsers] = useState<IUser[]>([]);
+	const [pendingUsers, setPendingUsers] = useState<IUser[]>([]);
 
 	const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value);
@@ -50,6 +57,19 @@ function Social() {
 		);
 	};
 
+	const handleAccept = (user: IUser) => {
+		setFriendUsers((prevFriendUsers) => [...prevFriendUsers, user]);
+		setPendingUsers((prevPendings) =>
+			prevPendings.filter((pending) => pending.name !== user.name)
+		);
+	};
+
+	const handleDeny = (user: IUser) => {
+		setPendingUsers((prevPendings) =>
+			prevPendings.filter((pending) => pending.name !== user.name)
+		);
+	};
+
 	useEffect(() => {
 		if (blocked) {
 			setBlockedUsers(blocked);
@@ -57,7 +77,10 @@ function Social() {
 		if (friends) {
 			setFriendUsers(friends);
 		}
-	}, [blocked, friends]);
+		if (pendings) {
+			setPendingUsers(pendings);
+		}
+	}, [blocked, friends, pendings]);
 
 	return (
 		<S.Container>
@@ -70,47 +93,81 @@ function Social() {
 				}}
 				enterButton
 			/>
-			<F.H3>
-				Friends -{' '}
-				{friendUsers &&
-					friendUsers.filter((friend) => filterByName(friend, search)).length}
-			</F.H3>
-			<S.UserContainer isEmpty={isEmpty(friendUsers)}>
-				{friendUsers &&
-					friendUsers
-						.sort(compareStatus)
-						.filter((friend) => filterByName(friend, search))
-						.map((friend: IUser) => (
-							<Friend
-								friend={friend}
-								key={friend.name}
-								onBlock={handleBlock}
-								onRemove={handleRemove}
-							/>
-						))}
-
-				{isEmpty(friendUsers) && (
-					<Empty className="empty" description="No friends" />
-				)}
-			</S.UserContainer>
-			<Divider style={{visibility: 'hidden'}} />
-			<F.H3>
-				Blocked -{' '}
-				{blockedUsers &&
-					blockedUsers.filter((blocked) => filterByName(blocked, search))
-						.length}
-			</F.H3>
-			<S.UserContainer isEmpty={isEmpty(blockedUsers)}>
-				{blockedUsers &&
-					blockedUsers
-						.filter((user) => filterByName(user, search))
-						.map((user: IUser) => (
-							<Blocked user={user} key={user.name} onUnblock={handleUnblock} />
-						))}
-				{isEmpty(blockedUsers) && (
-					<Empty className="empty" description="No blocked users" />
-				)}
-			</S.UserContainer>
+			<S.StyledCollapse
+				ghost={true}
+				defaultActiveKey={['FRIENDS', 'PENDING', 'BLOCKED']}
+			>
+				<S.StyledPanel
+					header={`Friends - ${
+						friendUsers &&
+						friendUsers.filter((user) => filterByName(user, search)).length
+					}`}
+					key="FRIENDS"
+					empty={isEmpty(friendUsers)}
+				>
+					{friendUsers &&
+						friendUsers
+							.sort(compareStatus)
+							.filter((user) => filterByName(user, search))
+							.map((user: IUser) => (
+								<Friend
+									friend={user}
+									key={user.name}
+									onBlock={handleBlock}
+									onRemove={handleRemove}
+								/>
+							))}
+					{isEmpty(friendUsers) === 'true' && (
+						<Empty className="empty" description="No friends" />
+					)}
+				</S.StyledPanel>
+				<S.StyledPanel
+					header={`Pending - ${
+						pendingUsers &&
+						pendingUsers.filter((user) => filterByName(user, search)).length
+					}`}
+					key="PENDING"
+					empty={isEmpty(pendingUsers)}
+				>
+					{pendingUsers &&
+						pendingUsers
+							.sort(compareStatus)
+							.filter((user) => filterByName(user, search))
+							.map((user: IUser) => (
+								<Pending
+									user={user}
+									key={user.name}
+									onAccept={handleAccept}
+									onDeny={handleDeny}
+								/>
+							))}
+					{isEmpty(pendingUsers) === 'true' && (
+						<Empty className="empty" description="No pending invites" />
+					)}
+				</S.StyledPanel>
+				<S.StyledPanel
+					header={`Blocked - ${
+						blockedUsers &&
+						blockedUsers.filter((user) => filterByName(user, search)).length
+					}`}
+					key="BLOCKED"
+					empty={isEmpty(blockedUsers)}
+				>
+					{blockedUsers &&
+						blockedUsers
+							.filter((user) => filterByName(user, search))
+							.map((user: IUser) => (
+								<Blocked
+									user={user}
+									key={user.name}
+									onUnblock={handleUnblock}
+								/>
+							))}
+					{isEmpty(blockedUsers) === 'true' && (
+						<Empty className="empty" description="No blocked users" />
+					)}
+				</S.StyledPanel>
+			</S.StyledCollapse>
 		</S.Container>
 	);
 }

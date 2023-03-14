@@ -50,7 +50,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<>
-					{!isUserIn(friendUsers, user) && (
+					{!isUserIn(friendUsers, user.name) && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
@@ -61,7 +61,7 @@ const UserDropdown = ({user}: IProps) => {
 					)}
 				</>
 			),
-			key: 'ADD_USER',
+			key: 'ADD',
 		},
 
 		{
@@ -75,7 +75,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user) && user.status === 'online' && (
+					{isUserIn(friendUsers, user.name) && user.status === 'online' && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
@@ -91,7 +91,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user) && user.status === 'ingame' && (
+					{isUserIn(friendUsers, user.name) && user.status === 'ingame' && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
@@ -107,7 +107,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user) && (
+					{isUserIn(friendUsers, user.name) && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
@@ -118,7 +118,7 @@ const UserDropdown = ({user}: IProps) => {
 					)}
 				</>
 			),
-			key: 'REMOVE_USER',
+			key: 'REMOVE',
 		},
 		{
 			label: (
@@ -130,7 +130,7 @@ const UserDropdown = ({user}: IProps) => {
 					)}
 				</>
 			),
-			key: 'BLOCK_USER',
+			key: 'BLOCK',
 		},
 	];
 

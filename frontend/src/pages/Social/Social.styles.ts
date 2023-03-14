@@ -1,38 +1,65 @@
+import {Collapse} from 'antd';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
+const {Panel} = Collapse;
+
 export const Container = styled.div`
-	margin-top: 50px;
+	margin-top: 64px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 25px;
+	gap: 64px;
 `;
 
-interface IUserProps {
-	isEmpty: boolean;
+export const StyledCollapse = styled(Collapse)`
+	user-select: none;
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
+	width: 60%;
+
+	.ant-collapse-header-text {
+		color: ${(p) => p.theme.colors.secondary};
+		font-size: 24px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.ant-collapse-expand-icon {
+		align-self: center;
+
+		svg {
+			fill: ${(p) => p.theme.colors.secondary};
+			width: 16px;
+			height: 16px;
+		}
+	}
+`;
+
+interface IPanelProps {
+	empty: string;
 }
 
-export const UserContainer = styled.div<IUserProps>`
-	display: ${(p) => (p.isEmpty ? 'flex' : 'grid')};
-	grid-template-columns: 1fr 1fr 1fr;
-	justify-content: center;
-	gap: 2em;
-	padding: 16px;
-	width: 60%;
-	max-height: 512px;
-	overflow-y: auto;
+export const StyledPanel = styled(Panel)<IPanelProps>`
+	.ant-collapse-content-box {
+		display: ${(p) => (p.empty === 'true' ? 'flex' : 'grid')};
+		grid-template-columns: 1fr 1fr 1fr;
+		justify-content: center;
+		gap: 2em;
 
-	.empty {
-		filter: ${(p) =>
-			p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
-	}
+		@media screen and (max-width: 1300px) {
+			grid-template-columns: 1fr 1fr;
+		}
+		@media screen and (max-width: 768px) {
+			grid-template-columns: 1fr;
+		}
 
-	@media screen and (max-width: 1300px) {
-		grid-template-columns: 1fr 1fr;
-		width: 75%;
-	}
-	@media screen and (max-width: 768px) {
-		grid-template-columns: 1fr;
+		.empty {
+			color: ${(p) => p.theme.colors.secondary};
+			filter: ${(p) =>
+				p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+		}
 	}
 `;
 
@@ -160,6 +187,76 @@ export const Blocked = styled.div`
 			width: 24px;
 			height: 24px;
 			fill: #dc4f19;
+		}
+	}
+`;
+
+export const Pending = styled.div`
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+	border: none;
+	border-radius: 8px;
+	align-items: center;
+	background-color: ${(p) =>
+		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+
+	:hover {
+		transform: scale(1.01);
+		background-color: ${(p) =>
+			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
+	}
+`;
+
+export const HDivLink = styled(Link)`
+	display: flex;
+	flex-direction: row;
+	text-decoration: none;
+	align-items: center;
+	gap: 8px;
+
+	.avatar {
+		border-radius: 50%;
+		width: 64px;
+		height: 64px;
+	}
+
+	h5 {
+		color: ${(p) => p.theme.colors.secondary};
+	}
+`;
+
+export const HDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 16px;
+	gap: 8px;
+
+	button {
+		cursor: pointer;
+		margin-right: 8px;
+		margin-top: 3px;
+		transition: all 0.1s linear;
+
+		.ignore-icon {
+			width: 20px;
+			height: 20px;
+			fill: #dc4f19;
+		}
+
+		.accept-icon {
+			width: 24px;
+			height: 24px;
+			fill: #4bae4f;
+		}
+
+		:hover {
+			transform: scale(1.2);
+		}
+		:active {
+			transform: scale(1);
 		}
 	}
 `;

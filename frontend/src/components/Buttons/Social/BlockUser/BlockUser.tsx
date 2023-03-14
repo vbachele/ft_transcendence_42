@@ -20,12 +20,15 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 	let userAdded: boolean = false; //TODO normalement useless
 
 	const handleClick = () => {
-		if (isUserIn(blocked, user) || userAdded) {
+		if (isUserIn(blocked, user.name) || userAdded) {
 			return;
 		}
 
 		backend.blockUser(userName.userName, user.name);
 		backend.removeFriend(userName.userName, user.name);
+		backend.removeFriend(user.name, userName.userName);
+		backend.removePending(userName.userName, user.name);
+		backend.removePending(user.name, userName.userName);
 
 		if (onBlock) {
 			onBlock(user);
@@ -37,7 +40,7 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 		unlockAchievement('BLOCK', userName.userName);
 		userAdded = true;
 
-		notification.info({
+		notification.error({
 			message: (
 				<div style={{marginBottom: -8}}>{`${user.name} has been blocked`}</div>
 			),
@@ -48,8 +51,8 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 
 	return (
 		<button onClick={handleClick}>
-			<Icon />
-			<F.Text>Block</F.Text>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Block</F.Text>
 		</button>
 	);
 }

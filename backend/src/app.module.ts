@@ -15,6 +15,7 @@ import {LobbyModule} from './lobby/lobby.module';
 import {FriendModule} from './api/friends/friends.module';
 import {BlockedModule} from './api/blocked/blocked.module';
 import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
+import {PendingModule} from './api/pending/pendings.module';
 
 @Module({
 	imports: [
@@ -24,6 +25,7 @@ import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
 		AuthModule,
 		UserModule,
 		FriendModule,
+		PendingModule,
 		BlockedModule,
 		PrismaModule,
 		CloudinaryModule,
