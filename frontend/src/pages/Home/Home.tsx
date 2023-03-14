@@ -10,7 +10,6 @@ import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
 
 const Homepage = () => {
 	const {userName, achievements} = useUserInfos();
-	const {data: pendings} = useFetchPendingsOf(userName.userName);
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
 

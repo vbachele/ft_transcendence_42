@@ -8,6 +8,7 @@ import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
 import unlockAchievement from 'helpers/unlockAchievement';
+import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 
 interface IProps {
 	user: IUser;
@@ -17,6 +18,7 @@ interface IProps {
 
 function Pending({user, onAccept, onDeny}: IProps) {
 	const {userName} = useUserInfos();
+	const {data: friends} = useFetchFriendsOf(userName.userName); //TODO not fully working
 
 	const handleAccept = () => {
 		backend.removePending(userName.userName, user.name);
@@ -34,6 +36,14 @@ function Pending({user, onAccept, onDeny}: IProps) {
 			placement: 'bottom',
 			duration: 2.5,
 		});
+
+		//TODO move this to backend
+		unlockAchievement('ADD', userName.userName);
+		unlockAchievement('ADD', user.name);
+		if (friends && friends.length + 1 >= 3) {
+			unlockAchievement('TEAM', user.name);
+			unlockAchievement('TEAM', userName.userName);
+		}
 	};
 
 	const handleDeny = () => {

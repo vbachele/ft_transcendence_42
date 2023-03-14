@@ -93,10 +93,7 @@ function Social() {
 				}}
 				enterButton
 			/>
-			<S.StyledCollapse
-				ghost={true}
-				defaultActiveKey={['FRIENDS', 'PENDING', 'BLOCKED']}
-			>
+			<S.StyledCollapse ghost={true}>
 				<S.StyledPanel
 					header={`Friends - ${
 						friendUsers &&

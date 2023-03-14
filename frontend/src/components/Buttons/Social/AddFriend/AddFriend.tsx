@@ -54,6 +54,14 @@ function AddFriend({user}: IProps) {
 			backend.addFriend(user.name, userName.userName);
 			backend.addFriend(userName.userName, user.name);
 
+			//TODO move this to backend
+			unlockAchievement('ADD', userName.userName);
+			unlockAchievement('ADD', user.name);
+			if (friends && friends.length + 1 >= 3) {
+				unlockAchievement('TEAM', user.name);
+				unlockAchievement('TEAM', userName.userName);
+			}
+
 			notification.success({
 				message: (
 					<div style={{marginBottom: -8}}>{`${user.name} has been added`}</div>
@@ -66,12 +74,6 @@ function AddFriend({user}: IProps) {
 		}
 
 		backend.addPending(user.name, userName.userName);
-
-		//TODO move this to backend
-		unlockAchievement('ADD', userName.userName);
-		if (friends && friends.length + 1 >= 3) {
-			unlockAchievement('TEAM', userName.userName);
-		}
 
 		notification.info({
 			message: (
