@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Req, Res } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable, Req, Res } from "@nestjs/common";
 import { UserService } from "src/api/users/users.service";
 import { Request, Response, request } from "express";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
@@ -32,8 +32,12 @@ export class AuthService {
       });
       return user;
     } catch (error) {
-      throw error;
-    }
+      throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: "Error to create the user to the database"
+      }, HttpStatus.BAD_REQUEST); 
+      };
   }
 
   async checkIfUserExists(email: any) {
@@ -59,16 +63,23 @@ export class AuthService {
 
   async updateCookies(@Res() res: Response, token: any, userInfos: any) {
     try {
-    const name = userInfos.name;
-    const user = await this.prisma.user.update({where: {name: name,},
-      data: {  accessToken: token.access_token, },
-    });
-    return user;
-  }catch(error){
-    console.log(error)
-;  }
-    };
-
+      if (userInfos)
+      { const name = userInfos.name;
+        const user = await this.prisma.user.update({where: {name: name,},
+        data: {  accessToken: token.access_token,},
+        });
+        return user;
+      }
+      else 
+        return (null);
+    } catch (error)
+    {
+        throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: "Error to update the cookes"},
+        HttpStatus.BAD_REQUEST); 
+    }   
+    }
 
   async deleteCookies(@Res() res: Response) {
     res.clearCookie("token").end();
@@ -100,8 +111,12 @@ export class AuthService {
       });
       return user;
     } catch (error) {
-      throw error;
-    }
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: "Error to get the user by token"},
+         HttpStatus.BAD_REQUEST); 
+        };
   }
 
 }

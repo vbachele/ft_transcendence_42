@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Patch, Req, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Req, Res } from "@nestjs/common";
 import { UserService } from "./users.service";
 import { Request, Response } from "express";
 import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { FindOneParams, UserDto } from "src/auth/dto";
+
 const express = require("express");
 const app = express();
 
@@ -14,8 +16,9 @@ export class UserController {
     private userService: UserService,
     private cloudinaryService: CloudinaryService
   ) {}
+  
   @Get(":name")
-  async getUserByName(@Req() req: Request) {
+  async getUserByName(@Req() req: Request, @Param() params: FindOneParams)  {
     return this.userService.getUserByName(req.params.name);
   }
   @Get()
@@ -24,12 +27,13 @@ export class UserController {
   }
   /***  Here we check it the request if an image to update otherwise we update the user ***/
   @Patch(":name")
-  async PatchUser(@Req() req: Request) {
+  async PatchUser(@Req() req: Request, @Param() params: FindOneParams) {
+    console.log(req.params.name);
+    
     if (req.body.image) {
       const user = this.cloudinaryService.uploadImage(req);
       return user;
     }
-
     return this.userService.updateUser(req);
   }
 
