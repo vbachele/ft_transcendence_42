@@ -45,10 +45,10 @@ export const UserMocks = () => {
 			<style>{CSS}</style>
 			<h1>Dev tools to populate database</h1>
 			<div className="button_container">
-				<Link to="/users?type=generate">
+				<Link to="/login?type=generate">
 					<PrimaryButton>Generate</PrimaryButton>
 				</Link>
-				<Link to="/users?type=clear">
+				<Link to="/login?type=clear">
 					<PrimaryButton onClick={clear}>Clear</PrimaryButton>
 				</Link>
 			</div>

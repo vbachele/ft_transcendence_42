@@ -62,7 +62,7 @@ export const backend = {
 		return await response.json();
 	},
 	async addPending(user1: string, user2: string): Promise<IUser> {
-		const response = await api.patchURL('/pendings/' + user1 + '/add/' + user2); //? inverser ici ?
+		const response = await api.patchURL('/pendings/' + user1 + '/add/' + user2);
 		return await response.json();
 	},
 	async removePending(user1: string, user2: string): Promise<IUser> {

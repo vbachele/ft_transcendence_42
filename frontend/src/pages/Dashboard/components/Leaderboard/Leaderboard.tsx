@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Leaderboard = ({user}: IProps) => {
-	let {data, isLoading, error} = useFetchUsers();
+	let {data, isLoading, error} = useFetchUsers(); //TODO ajouter userName.userName
 	if (data) {
 		data.sort(compareScore);
 	}

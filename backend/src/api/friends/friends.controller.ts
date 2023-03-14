@@ -3,13 +3,6 @@ import {FriendService} from './friends.service';
 import {Request} from 'express';
 import {UserService} from '../users/users.service';
 
-//? a quoi ca sert, necessaire ou pas?
-const express = require('express');
-const app = express();
-
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb', extended: true}));
-
 @Controller('friends')
 export class FriendController {
 	userService: UserService;

@@ -41,7 +41,7 @@ function App() {
 					<Route path="/settings" element={<Pages.Settings />} />
 					<Route path="/headings" element={<Pages.Headings />} />
 					<Route path="/social" element={<Social />} />
-					<Route path="/users" element={<UserMocks />} />
+					<Route path="/users" element={<UserMocks />} />,
 					<Route path="/game" element={<Game />} />
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
@@ -54,7 +54,8 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			element: <Landing />,
+			element: <UserMocks />,
+			// element: <Landing />,
 		},
 		{
 			path: '/',

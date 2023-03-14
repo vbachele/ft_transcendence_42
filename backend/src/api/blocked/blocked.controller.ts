@@ -3,12 +3,6 @@ import {BlockedService} from './blocked.service';
 import {Request} from 'express';
 import {UserService} from '../users/users.service';
 
-const express = require('express');
-const app = express();
-
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb', extended: true}));
-
 @Controller('blocked')
 export class BlockedController {
 	userService: UserService;
