@@ -1,55 +1,36 @@
 import * as S from './Chat.styles';
-import LateralBar from './components/containers/LateralBar';
-import MainField from './components/containers/MainFieldDirectMessages';
-import RightBarDirectMessages from './components/messages/RightBarDirectMessages';
-import React, {useLayoutEffect, useState} from 'react';
-import MessagesContext from '../../contexts/Chat/MessagesContext';
+import LateralBar from './containers/LateralBar';
+import MainField from './containers/MainField';
+import UserPanel from './containers/UserPanel';
+import React, {useContext, useState} from 'react';
 import {useJoinLobby} from '../../hooks/chat/useJoinLobby';
+import ChatContext from '../../contexts/Chat/chat.context';
+import {useResponsiveLayout} from '../../hooks/chat/useResponsiveLayout';
 
 function Chat() {
-	const {joinLobby, lobbyId} = useJoinLobby();
-	const [openUserPanel, setOpenUserPanel] = useState(false);
-	const [openLateralBar, setOpenLateralBar] = useState(false);
-	const {dataMessages} = React.useContext(MessagesContext);
-	const [responsive, setResponsive] = useState(true);
+	const {joinLobby} = useJoinLobby();
+	const {activeLobby} = useContext(ChatContext).ChatState;
+	const [activeUserPanel, setActiveUserPanel] = useState(false);
+	const {responsive} = useResponsiveLayout();
 
-	useLayoutEffect(() => {
-		function updateSize() {
-			if (window.innerWidth < 768) {
-				setResponsive(true);
-			} else {
-				setResponsive(false);
-			}
-		}
-		window.addEventListener('resize', updateSize);
-		updateSize();
-		return () => window.removeEventListener('resize', updateSize);
-	}, []);
-
-	if (responsive) return (
-		<S.default style={{display: 'flex', flexDirection: 'row', flexGrow: '1'}}>
-			{!lobbyId && <LateralBar joinLobby={joinLobby}/>}
-			{lobbyId && !openUserPanel && <MainField lobbyId={lobbyId} setOpenUserPanel={setOpenUserPanel} />}
-			{openUserPanel && (
-				<RightBarDirectMessages
-					data={dataMessages}
-					setOpenUserPanel={setOpenUserPanel}
-				/>
-			)}
-		</S.default>
-	)
+	if (responsive) {
+		return (
+			<S.Chat>
+				{!activeLobby && <LateralBar joinLobby={joinLobby} />}
+				{!activeUserPanel && activeLobby && (
+					<MainField setOpenUserPanel={setActiveUserPanel} />
+				)}
+				{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+			</S.Chat>
+		);
+	}
 
 	return (
-		<S.default style={{display: 'flex', flexDirection: 'row', flexGrow: '1'}}>
+		<S.Chat>
 			<LateralBar joinLobby={joinLobby} />
-			<MainField lobbyId={lobbyId} setOpenUserPanel={setOpenUserPanel} />
-			{openUserPanel && (
-				<RightBarDirectMessages
-					data={dataMessages}
-					setOpenUserPanel={setOpenUserPanel}
-				/>
-			)}
-		</S.default>
+			<MainField setOpenUserPanel={setActiveUserPanel} />
+			{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+		</S.Chat>
 	);
 }
 

@@ -1,7 +1,7 @@
-import {PropsWithChildren, useEffect, useReducer, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
 import {useSocket} from '../../hooks/useSocket';
 import {
-	defaultSocketContextState, SocketContextConsumer,
+	defaultSocketContextState,
 	SocketContextProvider,
 	SocketReducer,
 } from './Context';
@@ -20,6 +20,7 @@ const SocketContextComponent: React.FunctionComponent<
 	const [loading, setLoading] = useState(true);
 	const name = localStorage.getItem('name');
 	const socket = useSocket('/', {
+
 		reconnectionAttempts: 5,
 		reconnectionDelay: 5000,
 		autoConnect: false,

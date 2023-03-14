@@ -1,7 +1,7 @@
 import React, { FormEventHandler, useState } from 'react';
 import { Input } from 'antd';
 import type { SelectProps } from 'antd/es/select';
-import '../style.css'
+import '../components/style.css'
 
 interface ISearch {
   value: string;

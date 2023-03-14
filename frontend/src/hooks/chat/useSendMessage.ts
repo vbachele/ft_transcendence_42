@@ -15,7 +15,6 @@ export function useSendMessage(lobbyId: string) {
 		});
 		setMessage('');
 		(event.target as HTMLFormElement).reset();
-
 	};
 
 	return {message, setMessage, sendMessage};

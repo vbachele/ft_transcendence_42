@@ -11,6 +11,7 @@ import {
 import { WebsocketService } from "../websocket/websocket.service";
 import { AuthenticatedSocket } from "./types/lobby.type";
 import { ConnectedSocket } from "@nestjs/websockets";
+import {ServerEvents} from "./events/lobby.events";
 
 export class ChatLobbyDto {
   id?: string;
@@ -23,6 +24,9 @@ export class ChatLobbyDto {
   privacy: string;
   @IsBooleanString()
   init: boolean;
+  @IsString()
+  @IsIn(['channel', 'direct_message'])
+  type: string;
 }
 
 export interface Lobby {
@@ -54,7 +58,7 @@ export class ChatLobby extends ALobby {
         id: this.id,
         createdAt: this.createdAt,
         maxClients: this.maxClients,
-        type: "chat",
+        type: data.type,
         privacy: data.privacy,
       };
       this.prismaLobbyService.pushLobby(lobby, data.owner).catch((e) => {
@@ -63,7 +67,7 @@ export class ChatLobby extends ALobby {
     }
   }
 
-  addClient(@ConnectedSocket() client: AuthenticatedSocket): ALobby {
+  async addClient(@ConnectedSocket() client: AuthenticatedSocket): Promise<ALobby> {
     setTimeout(() => {
       super.addClient(client);
       this.prismaLobbyService
@@ -71,7 +75,9 @@ export class ChatLobby extends ALobby {
         .catch((e) => {
           throw e;
         });
-    }, 1_000);
+    }, 500);
+    const lobby = await this.prismaLobbyService.fetchLobbyFromId(this.id);
+    this.server.to(client.id).emit(ServerEvents.AddedToLobby, {lobby: lobby})
     return this;
   }
 }

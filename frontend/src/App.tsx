@@ -19,9 +19,9 @@ import Social from 'pages/Social';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
 import Popup from './components/Popup';
 import FakeLogin from 'mocks/Login/FakeLogin';
-import {MessagesContextProvider} from './contexts/Chat/MessagesContext';
 import {ConfigProvider} from 'antd';
 import {ChatTest} from 'pages/ChatTest/ChatTest';
+import ChatContextComponent from './contexts/Chat/ChatContext';
 
 function App() {
 	// const userPref =
@@ -54,7 +54,14 @@ function App() {
 					<Route path="game" element={<Pages.Game />} />
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
-					<Route path="/chat" element={<Pages.Chat />} />
+					<Route
+						path="/chat"
+						element={
+							<ChatContextComponent>
+								<Pages.Chat />{' '}
+							</ChatContextComponent>
+						}
+					/>
 					<Route path="/chatTest" element={<ChatTest />} />
 				</Routes>
 			</>
@@ -63,9 +70,8 @@ function App() {
 
 	return (
 		<UserContextProvider>
-			<MessagesContextProvider>
-				<SocketContextComponent>
-					<PopupContextProvider>
+			<SocketContextComponent>
+				<PopupContextProvider>
 						<ThemeProvider theme={theme === 'light' ? light : dark}>
 							<ConfigProvider
 								theme={{
@@ -85,9 +91,8 @@ function App() {
 								</Routes>
 							</ConfigProvider>
 						</ThemeProvider>
-					</PopupContextProvider>
-				</SocketContextComponent>
-			</MessagesContextProvider>
+				</PopupContextProvider>
+			</SocketContextComponent>
 		</UserContextProvider>
 	);
 }

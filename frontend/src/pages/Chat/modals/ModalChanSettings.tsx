@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import InputBox from './InputBox';
 import * as F from 'styles/font.styles';
-import * as S from '../../Chat.styles';
-import '../style.css';
+import * as S from '../Chat.styles';
+import '../components/style.css';
 
 
 const ModalChanSettings: React.FC = () => {

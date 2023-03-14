@@ -41,7 +41,7 @@ export class LobbyService {
       };
       this.lobbies.set(
         lobby.id,
-        this.lobbyCreator.create({ type: lobby.type, data: data })
+        this.lobbyCreator.create({ type: 'chat', data: data })
       );
       console.info(`Loaded lobby - [${lobby.id}]`);
     });

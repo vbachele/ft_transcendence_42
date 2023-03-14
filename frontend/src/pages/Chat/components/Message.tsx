@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { IMessages } from '../../data';
+import { IMessages } from '../data';
 import * as F from 'styles/font.styles';
-import * as S from '../../Chat.styles';
+import * as S from '../Chat.styles';
 import { ThemeContext } from 'styled-components';
-import RightBar from './RightBarDirectMessages';
-import { MessagesContext } from 'contexts/Chat/MessagesContext';
+import RightBar from '../containers/UserPanel';
 
 interface IProps {
 	data: IMessages;
@@ -13,27 +12,10 @@ interface IProps {
 
 const Messages: React.FC<IProps> = (props) => {
 
-    // const { dataMessages, isClicked } = useContext(MessagesContext);
-    // console.log(dataMessages, isClicked)
-
-    // const [dataMessages, setDataMessages] = useState<IMessages>({
-	// 	name: "",
-	// 	id: -1,
-	// 	avatar: "",
-	// 	time: "",
-	// 	missedMessages: -1,
-	// 	message: "",
-	// 	pastille: -1 });
-
     const handleClick = () => {
         props.onClick(true);
       };
 
-    //   const handleData = () => {
-    //     setDataMessages(props.data);
-    //   };
-
-    //   {handleData}
 
 	const displayPastille = (params: IMessages) => {
         if (params.pastille == 1)

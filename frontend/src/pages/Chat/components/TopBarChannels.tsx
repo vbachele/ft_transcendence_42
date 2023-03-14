@@ -1,11 +1,11 @@
-import MessagesContext from 'contexts/Chat/MessagesContext';
+import MessagesContext from 'contexts/Chat/ChatContext';
 import { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import * as F from 'styles/font.styles';
-import * as S from '../../Chat.styles';
-import { IMessages, IChannels } from '../../data';
+import * as S from '../Chat.styles';
+import { IMessages, IChannels } from '../data';
 import LateralBar from '../containers/LateralBar';
-import { DisplayProfile } from '../messages/TopBarDirectMessages';
+import { DisplayProfile } from './TopBarDirectMessages';
 
 interface IProps {
 	data: IChannels;
@@ -38,19 +38,10 @@ export const QuitChannel = ({fill}: {fill: string}) =>{
 
 function TopBarDirectMessages({data} : IProps) {
     const theme = useContext(ThemeContext);
-    const { dataChannels, isMobileClicked, setIsClickedChannel, setIsRightBarOpenChannel, setIsRightBarClosedChannel, setIsClickedDM, setIsMobileClicked } = useContext(MessagesContext);
-
-    const handleClickBurgerMenu = () => {
-        setIsMobileClicked(true);
-        setIsRightBarOpenChannel(false);
-        // setIsClickedDM(false);
-        setIsRightBarClosedChannel(false);
-        setIsClickedChannel(false);
-	};
 
     return (
        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', height: '56px', padding: '8px 16px', gap: '8px', borderLeft: 0, borderRight: 0, borderTop: theme.name === 'light' ? '0' : "0.2px solid rgb(100, 100, 100)", borderBottom: theme.name === 'light' ? '1px solid #DDDDCC' : "0.2px solid rgb(100, 100, 100)"}}>
-            <button className='hiddenDesktop' onClick={handleClickBurgerMenu} style={{cursor: "pointer", border: 'none', backgroundColor: 'transparent'}}> 
+            <button className='hiddenDesktop'  style={{cursor: "pointer", border: 'none', backgroundColor: 'transparent'}}>
                 <BurgerMenu fill={theme.name === "light" ? "black" : "white"}/> 
             </button>
             <F.Text weight='700'> #{data.name} </F.Text>

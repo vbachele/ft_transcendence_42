@@ -1,47 +1,14 @@
 import styled from 'styled-components';
 
-interface IProps {
-    open: boolean;
-  }
-
-export default styled.div`
-    .buttonTitles:hover {
-        cursor: pointer;
-        transform: scale(1.4);
-        background-color: ${(p) =>
-            p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
-    }
-    .hiddenDesktop {
-        @media only screen and (min-width: 769px) {
-            display: none;
-        }
-    }
-    .hiddenMobile {
-        @media only screen and (max-width: 768px) {
-            display: none;
-        }
-    }
+export const Chat = styled.div`
     display: flex;
     flex: 1 1 0;
     min-height: 0;
 `;
 
-export const LateralBarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  @media only screen and (min-width: 768px) {
-    border-right: lightgray 1px solid;
-    width: 380px;
 
-  }
-`;
 
-export const MiddleDiv = styled.div<IProps>`
-    @media only screen and (max-width: 768px) {
-        display: ${({open}) => open ? '': 'none'};
-    }
+export const MiddleDiv = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -49,39 +16,6 @@ export const MiddleDiv = styled.div<IProps>`
     justify-content: space-between;
 `;
 
-export const ContainerTitles = styled.div`
-    display: flex;
-    padding: 8px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    .buttons {
-        transition: all 0.3s linear;
-        
-        :hover {
-        transform: scale(1.1);
-        background-color: ${(p) =>
-            p.theme.name === 'light' ? '#e5e7eb' : '#bfc1c4'};
-        }
-    }
-`;
-
-export const ContainerChannels = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: auto;
-    gap: 8px;
-    li {
-        padding : 8px 16px;
-    }
-    li:hover {
-        cursor: pointer;
-        transform: scale(1.01);
-        background-color: ${(p) =>
-           p.theme.name === 'light' ? '#e5e7eb' : '#242526'};
-    }
-    `;
 
 export const ContainerChannel = styled.div`
     transition: all 0.2s linear;
@@ -105,13 +39,6 @@ export const ContainerMessage = styled.div`
     }
 `;
 
-export const ContainerMessages = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: auto;
-    gap: 8px;
-`;
 
 export const ContainerSubMessages = styled.div`
     width: 190px;
@@ -130,23 +57,9 @@ export const PastillePic = styled.div`
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
 `;
 
-export const Pastille = styled.div`
-    width: 12px;
-    height:12px;
-    border-radius: 50%;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
-`;
 
 export const ProfilePic = styled.img`
     width: 48px;
-    border-radius: 50%;
-`;
-
-export const ProfilePicRightBar = styled.img`
-    @media only screen and (max-width: 768px) {
-        width: 30%;
-    }
-    width: 70%;
     border-radius: 50%;
 `;
 
@@ -158,6 +71,7 @@ export const ChatBarInput = styled.input`
     border: 1px solid #E6E6E6; 
     border-radius: 12px;
     padding: 8px 16px; 
+    font-size: 1.2em;
 `;
 
 export const Input = styled.input`

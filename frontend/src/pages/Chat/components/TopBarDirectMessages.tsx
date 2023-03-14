@@ -1,19 +1,14 @@
-import React, {
-	Dispatch,
-	SetStateAction,
-	useContext,
-	useLayoutEffect,
-} from 'react';
+import React, {Dispatch, SetStateAction, useContext} from 'react';
 import styled, {ThemeContext} from 'styled-components';
 import * as F from 'styles/font.styles';
-import * as S from '../../Chat.styles';
-import {IMessages} from '../../data';
+import * as S from '../Chat.styles';
 import User from 'mocks/Users/players.json';
 import BurgerMenu from 'assets/burger_menu.svg';
+import ChatContext from '../../../contexts/Chat/chat.context';
+import {useResponsiveLayout} from '../../../hooks/chat/useResponsiveLayout';
 
 interface IProps {
 	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
-	lobbyId: string;
 }
 
 export const DisplayProfile = ({fill}: {fill: string}) => {
@@ -70,29 +65,16 @@ const StyledUser = styled.div`
 
 const user = Array.from(User.players)[0];
 
-function TopBarDirectMessages({setOpenUserPanel, lobbyId}: IProps) {
+function TopBarDirectMessages({setOpenUserPanel}: IProps) {
 	const theme = useContext(ThemeContext);
-	const [responsive, setResponsive] = React.useState(false);
-
-	useLayoutEffect(() => {
-		function updateSize() {
-			if (window.innerWidth < 768) {
-				setResponsive(true);
-			} else {
-				setResponsive(false);
-			}
-		}
-
-		window.addEventListener('resize', updateSize);
-		updateSize();
-		return () => window.removeEventListener('resize', updateSize);
-	}, []);
+	const {responsive} = useResponsiveLayout();
+	const updateActiveLobby = useContext(ChatContext).ChatDispatch
 
 	return (
 		<StyledTopBar>
 			<StyledUser>
 				{responsive && (
-					<button onClick={() => {lobbyId = ''}}/>
+					<button onClick={() => {updateActiveLobby({type: 'update_active_lobby', payload: undefined})}}/>
 				)}
 				<S.ProfilePic src={user.image} />
 				<F.Text weight="700"> {user.name} </F.Text>

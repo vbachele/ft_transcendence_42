@@ -113,6 +113,14 @@ export class PrismaLobbyService {
     return this.prismaService.lobby.findMany();
   }
 
+  async fetchLobbyFromId(lobbyId: string): Promise<LobbyModel | null> {
+    return this.prismaService.lobby.findUnique({
+        where: {
+            id: lobbyId,
+        }
+    });
+  }
+
   deleteLobby(id: string): Promise<LobbyModel> {
     return this.prismaService.lobby.delete({
       where: {

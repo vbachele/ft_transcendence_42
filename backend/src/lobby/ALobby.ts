@@ -31,7 +31,7 @@ export abstract class ALobby {
     AuthenticatedSocket
   > = new Map<Socket["id"], AuthenticatedSocket>();
 
-  public addClient(client: AuthenticatedSocket): ALobby {
+  public addClient(client: AuthenticatedSocket): ALobby | Promise<ALobby> {
     if (this.clients.size >= this.maxClients)
       throw new Error(`Max clients reached for this lobby`)
     this.clients.set(client.data.name, client);

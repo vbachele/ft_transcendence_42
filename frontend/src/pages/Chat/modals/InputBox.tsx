@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import '../style.css'
+import '../components/style.css'
 import * as F from 'styles/font.styles';
-import * as S from '../../Chat.styles';
+import * as S from '../Chat.styles';
 
 interface IProps {
     placeHolder: string;
