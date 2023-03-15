@@ -8,7 +8,6 @@ import {
 import Defeat from "components/EditName/Defeat";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 import Victory from "components/Victory";
-import { MessagesContextProvider } from "contexts/Chat/MessagesContext";
 import { PopupContextProvider } from "contexts/Popup/Popup";
 import SocketContextComponent from "contexts/Socket/Component";
 import { UserContextProvider } from "contexts/User/userContent";
@@ -27,6 +26,7 @@ import "./App.css";
 import Popup from "./components/Popup";
 import { UserMocks } from "./mocks/Users/UserMocks";
 import {ConfigProvider, theme as antdTheme} from 'antd';
+import ChatContextComponent from "contexts/Chat/ChatContext";
 
 
 function App() {
@@ -122,7 +122,6 @@ function App() {
 
   return (
     <UserContextProvider>
-      <MessagesContextProvider>
         <SocketContextComponent>
             <PopupContextProvider>
               <ThemeProvider theme={theme === "light" ? light : dark}>
@@ -146,7 +145,6 @@ function App() {
               </ThemeProvider>
             </PopupContextProvider>
         </SocketContextComponent>
-      </MessagesContextProvider>
     </UserContextProvider>
   );
 }
