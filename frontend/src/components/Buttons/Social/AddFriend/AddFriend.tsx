@@ -54,13 +54,13 @@ function AddFriend({user}: IProps) {
 			backend.addFriend(user.name, userName.userName);
 			backend.addFriend(userName.userName, user.name);
 
-			//TODO move this to backend
-			unlockAchievement('ADD', userName.userName);
-			unlockAchievement('ADD', user.name);
-			if (friends && friends.length + 1 >= 3) {
-				unlockAchievement('TEAM', user.name);
-				unlockAchievement('TEAM', userName.userName);
-			}
+			//TODO move this to backend + change user token
+			// unlockAchievement('ADD', userName.userName);
+			// unlockAchievement('ADD', user.name);
+			// if (friends && friends.length + 1 >= 3) {
+			// 	unlockAchievement('TEAM', user.name);
+			// 	unlockAchievement('TEAM', userName.userName);
+			// }
 
 			notification.success({
 				message: (

@@ -80,7 +80,7 @@ function Social() {
 		if (pendings) {
 			setPendingUsers(pendings);
 		}
-	}, [blocked, friends, pendings]);
+	}, [blocked, pendings, friends]);
 
 	return (
 		<S.Container>

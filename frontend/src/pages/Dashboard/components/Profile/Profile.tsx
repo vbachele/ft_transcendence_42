@@ -20,8 +20,7 @@ interface IProps {
 
 const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	// const {data: friends} = useFetchFriendsOf(userName.userName);
-	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
+	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 
@@ -29,23 +28,13 @@ const Profile = ({user}: IProps) => {
 		checkRanks = true;
 	}
 
-	useEffect(() => {
-		const fetchFriends = async () => {
-			const data = await backend.getFriendsOf(userName.userName);
-			if (data) {
-				setFriendUsers(data);
-			}
-		};
-		fetchFriends();
-	}, [friendUsers]);
-
 	return (
 		<S.Profile coalition={user.coalition}>
 			<S.Avatar src={user.image} />
-			<S.VDiv className="name" isFriend={isUserIn(friendUsers, user.name)}>
+			<S.VDiv className="name" isFriend={isUserIn(friends, user.name)}>
 				<S.HDiv style={{flexDirection: 'row'}}>
 					<F.H1>{user.name}</F.H1>
-					{isUserIn(friendUsers, user.name) && <WinIcon />}
+					{isUserIn(friends, user.name) && <WinIcon />}
 				</S.HDiv>
 				<ActivityStatus state={user.status} />
 				<UserDropdown user={user} />
