@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import {BadRequestException, HttpException, Injectable} from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import { Lobby as LobbyModel, Prisma } from "@prisma/client";
 import { Lobby } from "../../lobby/chatLobby";
@@ -40,9 +40,9 @@ export class PrismaLobbyService {
         where: {
           id: lobbyId,
         },
-        include: { Users: true },
+        include: { users: true },
         data: {
-          Users: {
+          users: {
             connect: {
               id: user?.id,
             },
@@ -54,18 +54,21 @@ export class PrismaLobbyService {
     }
   }
 
-  async pushMessage(lobbyId: string, message: string): Promise<LobbyModel> {
+  async pushMessage(lobbyId: string, message: string, username: string): Promise<{messages: MessageModel[]}> {
     try {
       return this.prismaService.lobby.update({
         where: {
           id: lobbyId,
         },
         data: {
-          Messages: {
+          messages: {
             createMany: {
-                data: [{ content: message }],
+                data: [{ content: message, authorName: username}],
             }
           }
+        },
+        select: {
+            messages: true,
         }
       });
     } catch (e) {
@@ -75,14 +78,14 @@ export class PrismaLobbyService {
 
   async lobbiesFromUserName(
     name: string
-  ): Promise<{ Lobbies: LobbyModel[] } | null> {
+  ): Promise<{ lobbies: LobbyModel[] } | null> {
     try {
       return await this.prismaService.user.findUnique({
         where: {
           name: name,
         },
         select: {
-          Lobbies: true,
+          lobbies: true,
         },
       });
     } catch (error) {
@@ -95,6 +98,9 @@ export class PrismaLobbyService {
       where: {
         privacy: "public",
       },
+      include: {
+        messages: true,
+      }
     });
   }
 
@@ -102,10 +108,13 @@ export class PrismaLobbyService {
     return this.prismaService.lobby.findMany({
       where: {
         privacy: "private",
-        Users: {
+        users: {
           some: { name: username },
         },
       },
+      include: {
+        messages: true,
+      }
     });
   }
 
@@ -117,6 +126,9 @@ export class PrismaLobbyService {
     return this.prismaService.lobby.findUnique({
         where: {
             id: lobbyId,
+        },
+        include: {
+            messages: true,
         }
     });
   }

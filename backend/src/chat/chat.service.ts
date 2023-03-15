@@ -13,10 +13,10 @@ export class ChatService {
     private readonly lobbyService: LobbyService
   ) {}
 
-  async sendMessage(message: string, lobbyId: string) {
+  async sendMessage(content: string, lobbyId: string, username: string) {
     const lobby = this.lobbyService.getLobby(lobbyId);
-    await this.prismaLobbyService.pushMessage(lobbyId, message);
-    lobby.dispatchToLobby(ServerChatEvents.IncomingMessage, {message: message, lobbyId: lobbyId});
+    const message = await this.prismaLobbyService.pushMessage(lobbyId, content, username);
+    lobby.dispatchToLobby(ServerChatEvents.IncomingMessage, {message: message.messages[message.messages.length - 1]});
     console.info(`Message sent - [${message}] - to lobby [${lobbyId}]`);
   }
 
@@ -24,7 +24,7 @@ export class ChatService {
     const lobbies = await this.prismaLobbyService.lobbiesFromUserName(
       client.data.name
     );
-    lobbies?.Lobbies.forEach((lobbyModel) => {
+    lobbies?.lobbies.forEach((lobbyModel) => {
       const lobby = this.lobbyService.getLobby(lobbyModel.id);
       lobby.addClient(client);
       console.log(

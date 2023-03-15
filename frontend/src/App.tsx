@@ -19,8 +19,7 @@ import Social from 'pages/Social';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
 import Popup from './components/Popup';
 import FakeLogin from 'mocks/Login/FakeLogin';
-import {ConfigProvider} from 'antd';
-import {ChatTest} from 'pages/ChatTest/ChatTest';
+import {ConfigProvider, theme as antdTheme} from 'antd';
 import ChatContextComponent from './contexts/Chat/ChatContext';
 
 function App() {
@@ -62,7 +61,6 @@ function App() {
 							</ChatContextComponent>
 						}
 					/>
-					<Route path="/chatTest" element={<ChatTest />} />
 				</Routes>
 			</>
 		);
@@ -72,25 +70,29 @@ function App() {
 		<UserContextProvider>
 			<SocketContextComponent>
 				<PopupContextProvider>
-						<ThemeProvider theme={theme === 'light' ? light : dark}>
-							<ConfigProvider
-								theme={{
-									token: {
-										colorPrimary: '#e04f5f',
-										colorSuccess: '#4bae4f',
-									},
-								}}
-							>
-								<GlobalStyle />
-								<Popup.GameInvite />
-								<Popup.SearchPlayer />
-								<Routes>
-									<Route path="/" element={<LandingPage />} />
-									<Route path="/login" element={<Testpage />} />
-									<Route path="/*" element={<WithNavbar />} />
-								</Routes>
-							</ConfigProvider>
-						</ThemeProvider>
+					<ThemeProvider theme={theme === 'light' ? light : dark}>
+						<ConfigProvider
+							theme={{
+								token: {
+									colorPrimary: '#dc4f19',
+									colorSuccess: '#4bae4f',
+								},
+								algorithm:
+									theme === 'light'
+										? antdTheme.defaultAlgorithm
+										: antdTheme.darkAlgorithm,
+							}}
+						>
+							<GlobalStyle />
+							<Popup.GameInvite />
+							<Popup.SearchPlayer />
+							<Routes>
+								<Route path="/" element={<LandingPage />} />
+								<Route path="/login" element={<Testpage />} />
+								<Route path="/*" element={<WithNavbar />} />
+							</Routes>
+						</ConfigProvider>
+					</ThemeProvider>
 				</PopupContextProvider>
 			</SocketContextComponent>
 		</UserContextProvider>

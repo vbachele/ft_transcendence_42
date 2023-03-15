@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
-import InputBox from './InputBox';
 import * as F from 'styles/font.styles';
-import * as S from '../Chat.styles';
+import * as S from '../components/components.styles';
 import '../components/style.css';
 
 

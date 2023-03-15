@@ -25,7 +25,7 @@ export class ChatGateway implements OnGatewayConnection {
     @ConnectedSocket() client: AuthenticatedSocket,
     @MessageBody(new ValidationPipe()) payload: SendMessageDto
   ) {
-    this.chatService.sendMessage(payload.message, payload.lobbyId).catch((e) => {throw e});
+    this.chatService.sendMessage(payload.message, payload.lobbyId, client.data.name).catch((e) => {throw e});
   }
 
   @SubscribeMessage(ClientChatEvents.FetchLobbies)

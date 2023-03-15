@@ -15,6 +15,10 @@ import {ServerEvents} from "./events/lobby.events";
 
 export class ChatLobbyDto {
   id?: string;
+  @IsString()
+  name: string;
+  @IsString()
+  description?: string;
   @IsNumber()
   maxClients: number;
   @IsString()
@@ -31,6 +35,8 @@ export class ChatLobbyDto {
 
 export interface Lobby {
   id: string;
+  name: string;
+  description?: string;
   createdAt: Date;
   maxClients: number;
   type: string;
@@ -56,6 +62,8 @@ export class ChatLobby extends ALobby {
       console.log(`push to database`);
       const lobby: Lobby = {
         id: this.id,
+        name: data.name,
+        description: data.description,
         createdAt: this.createdAt,
         maxClients: this.maxClients,
         type: data.type,

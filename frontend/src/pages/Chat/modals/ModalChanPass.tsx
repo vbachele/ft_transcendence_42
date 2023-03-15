@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
-import InputBox from './InputBox';
 import * as F from 'styles/font.styles';
 
 const ModalChanPass: React.FC = () => {
@@ -36,7 +35,7 @@ const ModalChanPass: React.FC = () => {
         ]}>
             <p style={{marginBottom: '24px', marginTop: '16px'}}> This channel is protected by a password.</p>
             <F.H5 style={{fontWeight: 500, marginBottom: '8px'}}> Password </F.H5>
-            <InputBox placeHolder=''/>                 
+            {/*<InputBox placeHolder=''/>                 */}
       </Modal>
     </>
   );

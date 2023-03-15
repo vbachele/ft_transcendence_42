@@ -1,12 +1,15 @@
 import React, {createContext} from 'react';
 
 export interface ILobby {
+	name: string;
+	description: string;
 	adminId: number;
 	createdAt: string;
 	id: string;
 	maxClients: number;
 	privacy: string;
 	type: string;
+	messages: any[];
 }
 
 export interface IChatContextState {

@@ -2,11 +2,11 @@ import {PropsWithChildren, useContext, useEffect, useReducer} from 'react';
 import {
 	ChatContextProvider,
 	ChatReducer,
-	defaultChatContextState, ILobby,
+	defaultChatContextState,
 } from './chat.context';
 import SocketContext from '../Socket/Context';
 import {ServerEvents} from '../../events/socket.events';
-import {ServerChatEvents} from "../../events/chat.events";
+import {useFetchLobbies} from 'hooks/chat/useFetchLobbies';
 
 export interface IChatContextComponentProps extends PropsWithChildren {}
 
@@ -17,6 +17,11 @@ function ChatContextComponent(props: IChatContextComponentProps) {
 		defaultChatContextState
 	);
 	const {socket} = useContext(SocketContext).SocketState;
+	const lobbies = useFetchLobbies();
+
+	useEffect(() => {
+		ChatDispatch({type: 'update_lobby_list', payload: lobbies});
+	}, [lobbies]);
 
 	useEffect(() => {
 		socket?.on(ServerEvents.AddedToLobby, (data: any) => {
