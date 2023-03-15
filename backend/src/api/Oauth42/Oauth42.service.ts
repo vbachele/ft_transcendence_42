@@ -1,4 +1,4 @@
-import { Body, ForbiddenException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Body, ForbiddenException, Injectable } from "@nestjs/common";
 import { response } from "express";
 
 @Injectable()
@@ -11,25 +11,11 @@ export class Oauth42Service {
         body: `grant_type=authorization_code&client_id=${process.env.API42_ID}&client_secret=${process.env.API42_SECRET}&code=${req}&redirect_uri=${process.env.API42_URI}`,
       });
       const data = await response.json();
-      
-      if (!data)
-      {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error: "the user token is empty"
-          },
-           HttpStatus.BAD_REQUEST); 
-        };
       return data;
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: "Error to get the user by token"},
-         HttpStatus.BAD_REQUEST); 
-        };
+      throw error;
     }
+  }
 
   async access42UserInformation(accessToken: string) {
     try {
@@ -38,17 +24,14 @@ export class Oauth42Service {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       if (!response.ok) {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error: "User 42 infos json is empty"
-          },
-           HttpStatus.BAD_REQUEST); 
+        throw new Error(
+          `Failed to fetch user information: ${response.statusText}`
+        );
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      throw new ForbiddenException("Token is invalid");
+      if (!accessToken) throw new ForbiddenException("Token is invalid");
     }
   }
 }
