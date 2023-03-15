@@ -1,7 +1,18 @@
-import {Body, Controller, Delete, Get, Patch, Req, Res} from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Req,
+	Res,
+} from '@nestjs/common';
 import {UserService} from './users.service';
 import {Request, Response} from 'express';
 import {CloudinaryService} from 'src/cloudinary/cloudinary.service';
+import {FindOneParams, UserDto} from 'src/auth/dto';
+
 const express = require('express');
 const app = express();
 

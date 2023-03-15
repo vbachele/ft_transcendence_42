@@ -13,9 +13,11 @@ import {GameModule} from './game/game.module';
 import {WebsocketModule} from './websocket/websocket.module';
 import {LobbyModule} from './lobby/lobby.module';
 import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
+import {APP_FILTER} from '@nestjs/core';
+import {AllExceptionsFilter} from './errors/all-exceptions.filter';
 import {FriendModule} from './social/friends/friends.module';
-import {BlockedModule} from './social/blocked/blocked.module';
 import {PendingModule} from './social/pending/pendings.module';
+import {BlockedModule} from './social/blocked/blocked.module';
 
 @Module({
 	imports: [
@@ -33,6 +35,13 @@ import {PendingModule} from './social/pending/pendings.module';
 		DoubleAuthModule,
 	],
 	controllers: [AppController, DatabaseController],
-	providers: [AppService, DatabaseService],
+	providers: [
+		AppService,
+		DatabaseService,
+		{
+			provide: APP_FILTER,
+			useClass: AllExceptionsFilter,
+		},
+	],
 })
 export class AppModule {}

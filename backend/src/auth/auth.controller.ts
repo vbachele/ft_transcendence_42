@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Redirect, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Redirect, Req, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Oauth42Service } from "src/api/Oauth42/Oauth42.service";
 import { Request, Response } from "express";
 import { UserService } from "src/api/users/users.service";
+import { Observable } from "rxjs";
+import { UserDto } from "./dto";
 
 @Controller("auth")
 export class AuthController {
@@ -17,7 +19,7 @@ export class AuthController {
     return this.authService.getUserByToken(req);
   }
   @Post("Oauth")
-  async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response) {
+  async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
     const token: string = req.cookies.token;
     const user42infos = await this.Oauth42.access42UserInformation(token);
     const finalUser = await this.authService.createDataBaseUser(
@@ -26,8 +28,8 @@ export class AuthController {
       token,
       req.body.name,
       req.body.isRegistered
-    );
-    return res.status(200).json({
+      );
+      return res.status(200).json({
       statusCode: 200,
       path: finalUser,
     });

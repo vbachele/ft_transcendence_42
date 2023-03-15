@@ -1,4 +1,10 @@
-import {ForbiddenException, Injectable, Post} from '@nestjs/common';
+import {
+	ForbiddenException,
+	HttpException,
+	HttpStatus,
+	Injectable,
+	Post,
+} from '@nestjs/common';
 import {PrismaService} from 'src/database/prisma.service';
 import {PrismaClientKnownRequestError} from '@prisma/client/runtime';
 import {Request} from 'express';
@@ -25,7 +31,13 @@ export class UserService {
 					: true
 			);
 		} catch (error) {
-			throw error;
+			throw new HttpException(
+				{
+					status: HttpStatus.BAD_REQUEST,
+					error: 'Error To catch users',
+				},
+				HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 
@@ -35,7 +47,13 @@ export class UserService {
 			const user = users.find((u) => u.name === name);
 			return user;
 		} catch (error) {
-			throw error;
+			throw new HttpException(
+				{
+					status: HttpStatus.BAD_REQUEST,
+					error: 'Error to find user by name',
+				},
+				HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 
@@ -48,9 +66,24 @@ export class UserService {
 				},
 				data: req.body,
 			});
+			if (!user) {
+				throw new HttpException(
+					{
+						status: HttpStatus.BAD_REQUEST,
+						error: 'Error to update the user',
+					},
+					HttpStatus.BAD_REQUEST
+				);
+			}
 			return user;
 		} catch (error) {
-			throw error;
+			throw new HttpException(
+				{
+					status: HttpStatus.BAD_REQUEST,
+					error: 'Error to update the user',
+				},
+				HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 
@@ -59,7 +92,13 @@ export class UserService {
 			const user = await this.prisma.user.deleteMany({});
 			return user;
 		} catch (error) {
-			throw error;
+			throw new HttpException(
+				{
+					status: HttpStatus.BAD_REQUEST,
+					error: 'Error to delete all user',
+				},
+				HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 
@@ -72,7 +111,13 @@ export class UserService {
 			});
 			return user;
 		} catch (error) {
-			throw error;
+			throw new HttpException(
+				{
+					status: HttpStatus.INTERNAL_SERVER_ERROR,
+					error: `Failed to retrieve user with email ${email}.`,
+				},
+				HttpStatus.INTERNAL_SERVER_ERROR
+			);
 		}
 	}
 }
