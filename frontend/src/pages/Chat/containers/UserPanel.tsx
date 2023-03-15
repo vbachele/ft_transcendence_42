@@ -14,12 +14,13 @@ import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles'
+import {IUser} from '../../../types/models';
 
 interface IProps {
 	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
 }
 
-const user = Array.from(User.players)[0];
+const user = Array.from(User.players)[0] as IUser;
 
 function UserPanel({setOpenUserPanel}: IProps) {
 	return (
@@ -34,12 +35,12 @@ function UserPanel({setOpenUserPanel}: IProps) {
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<ViewProfile id={1} />
+				<ViewProfile user={user.name} />
 				<Invite id={user.name} />
-				<Message id={1} />
-				<AddFriend id={1} />
-				<RemoveFriend id={1} />
-				<BlockUser id={1} />
+				<Message user={user.name} />
+				<AddFriend user={user} />
+				<RemoveFriend user={user} />
+				<BlockUser user={user} />
 				<Mute id={1} />
 				<Ban id={1} />
 			</S.FriendOptions>
