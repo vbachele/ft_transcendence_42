@@ -63,7 +63,6 @@ const UserDropdown = ({user}: IProps) => {
 			),
 			key: 'ADD',
 		},
-
 		{
 			label: (
 				<S.OptionButton>

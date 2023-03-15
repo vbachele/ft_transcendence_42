@@ -1,3 +1,4 @@
+import Loading from 'components/Loading';
 import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
 import {useSocket} from '../../hooks/useSocket';
 import {
@@ -20,7 +21,6 @@ const SocketContextComponent: React.FunctionComponent<
 	const [loading, setLoading] = useState(true);
 	const name = localStorage.getItem('name');
 	const socket = useSocket('/', {
-
 		reconnectionAttempts: 5,
 		reconnectionDelay: 5000,
 		autoConnect: false,
@@ -51,7 +51,7 @@ const SocketContextComponent: React.FunctionComponent<
 		});
 		socket.io.on('error', (error) => {
 			console.error(`Socket error: `, error);
-		})
+		});
 	};
 	const SendHandshake = () => {
 		console.info(`Sending handshake to server...`);
@@ -91,7 +91,7 @@ const SocketContextComponent: React.FunctionComponent<
 			socket.off('disconnect');
 			socket.off('user_disconnected');
 			socket.off('error');
-		}
+		};
 	}, []);
 
 	if (loading) return <p>Loading socket IO...</p>;

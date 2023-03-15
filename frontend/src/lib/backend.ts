@@ -3,12 +3,12 @@ import {api} from './api';
 
 export const backend = {
 	// User
-	async getAllUsers(): Promise<any> {
-		const response = await api.get('/users');
+	async getAllUsers(blockedOf: string): Promise<IUser[]> {
+		const response = await api.getFilterBlocked('/users', blockedOf);
 		return await response.json();
 	},
-	async getUserByName(name: string): Promise<IUser> {
-		const response = await api.get('/users/' + name);
+	async getUserByName(name: string, blockedOf: string): Promise<IUser> {
+		const response = await api.getFilterBlocked('/users/' + name, blockedOf);
 		return await response.json();
 	},
 	async patchUser(name: string, updateUser: unknown): Promise<any> {

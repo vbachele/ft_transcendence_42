@@ -95,7 +95,7 @@ function Social() {
 			/>
 			<S.StyledCollapse
 				ghost={true}
-				defaultActiveKey={['FRIENDS', 'PENDING', 'BLOCKED']}
+				// defaultActiveKey={['FRIENDS', 'PENDING', 'BLOCKED']}
 			>
 				<S.StyledPanel
 					header={`Friends - ${
