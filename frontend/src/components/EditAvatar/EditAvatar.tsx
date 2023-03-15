@@ -1,49 +1,81 @@
-import { SelectFile } from "./components/SelectFile";
-import Default from "assets/default-avatar.png";
-import * as F from "styles/font.styles";
-import * as S from "./EditAvatar.styles";
-import { backend } from "lib/backend";
-import { useEffect, useState } from "react";
+import {SelectFile} from './components/SelectFile';
+import Default from 'assets/default-avatar.png';
+import * as F from 'styles/font.styles';
+import * as S from './EditAvatar.styles';
+import {backend} from 'lib/backend';
+import {useEffect, useState} from 'react';
+import {IUser} from 'types/models';
+import {useUserInfos} from 'contexts/User/userContent';
+import unlockAchievement from 'helpers/unlockAchievement';
 
-async function getUserImage(id: string) {
-  const user = await backend.getOneUser("6");
-  return user.image;
+interface Props {
+	page: string;
 }
 
-async function getUser42login(id: string) {
-  const user = await backend.getOneUser(id);
-  // return user.user42Name;
-  return user.name;
-}
+/* MAIN FUNCTION */
+export const EditAvatar = (props: Props) => {
+	const {userName, image, setImage, coalition} = useUserInfos();
+	const [loading, setLoading] = useState(false);
+	const [uploadApproved, setUploadApproved] = useState(false);
 
-async function getUser42coalition(id: string) {
-  const user = await backend.getOneUser(id);
-  return user.coalition;
-}
+	/* in first render add the default image */
+	useEffect(() => {
+		if (!image.image)
+			setImage({
+				image:
+					'https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png',
+			});
+	}, []);
 
-export function EditAvatar() {
-  const [image, setImage] = useState("");
-  const [coalition, setCoalition] = useState("");
-  const [user42Login, setUser42Login] = useState("");
+	const setLoadingTrue = () => {
+		setLoading(true);
+	};
 
-  useEffect(() => {
-    getUserImage("3").then((image) => setImage(image));
-    getUser42login("3").then((login) => setCoalition(login));
-    getUser42coalition("3").then((coalition) => setUser42Login(coalition));
-    // remplacer ici par le useContext
-  }, []);
-  return (
-    <S.Container>
-      <S.AvatarContainer>
-        <S.Avatar src={image} />
-        <SelectFile />
-      </S.AvatarContainer>
-      <S.NameContainer>
-        <F.Text weight="700">{user42Login}</F.Text>
-        <F.Subtitle>{coalition}</F.Subtitle>
-      </S.NameContainer>
-    </S.Container>
-  );
-}
+	const setLoadingFalse = () => {
+		setLoading(false);
+	};
 
+	const setUploadedimg = () => {
+		setUploadApproved(true);
+		unlockAchievement('AVATAR', userName.userName);
+	};
+
+	const setUploadedimgFalse = () => {
+		setUploadApproved(false);
+	};
+
+	return (
+		<S.Container>
+			<S.AvatarContainer>
+				<S.Avatar src={image.image} />
+				<SelectFile
+					page={props.page}
+					setLoadingTrue={setLoadingTrue}
+					setUploadedimg={setUploadedimg}
+					setLoadingFalse={setLoadingFalse}
+					setUploadedimgFalse={setUploadedimgFalse}
+				/>
+			</S.AvatarContainer>
+			<S.NameContainer>
+				<F.Text weight="700">
+					{props.page === 'registration' && 'New adventurer'}
+					{props.page === 'settings' && userName.userName}
+					{loading && (
+						<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif" />
+					)}
+					{uploadApproved && (
+						<S.loadingimg
+							src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png"
+							style={{width: '24px', height: '24px'}}
+						/>
+					)}
+				</F.Text>
+				<F.Subtitle>
+					{props.page === 'registration' && 'Ready for your mission'}
+					{props.page === 'settings' && coalition.coalition}
+				</F.Subtitle>
+			</S.NameContainer>
+		</S.Container>
+	);
+};
 export default EditAvatar;

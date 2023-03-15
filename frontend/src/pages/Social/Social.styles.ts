@@ -1,30 +1,65 @@
+import {Collapse} from 'antd';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
+const {Panel} = Collapse;
+
 export const Container = styled.div`
-	margin-top: 50px;
+	margin-top: 64px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 25px;
+	gap: 64px;
 `;
 
-export const UserContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	justify-content: center;
-	gap: 2em;
-	padding: 16px;
+export const StyledCollapse = styled(Collapse)`
+	user-select: none;
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
 	width: 60%;
-	max-height: 512px;
-	overflow-y: scroll;
-	/* overflow-x: hidden; */
 
-	@media screen and (max-width: 1300px) {
-		grid-template-columns: 1fr 1fr;
-		width: 75%;
+	.ant-collapse-header-text {
+		color: ${(p) => p.theme.colors.secondary};
+		font-size: 24px;
+		font-weight: bold;
+		text-align: center;
 	}
-	@media screen and (max-width: 768px) {
-		grid-template-columns: 1fr;
+
+	.ant-collapse-expand-icon {
+		align-self: center;
+
+		svg {
+			fill: ${(p) => p.theme.colors.secondary};
+			width: 16px;
+			height: 16px;
+		}
+	}
+`;
+
+interface IPanelProps {
+	empty: string;
+}
+
+export const StyledPanel = styled(Panel)<IPanelProps>`
+	.ant-collapse-content-box {
+		display: ${(p) => (p.empty === 'true' ? 'flex' : 'grid')};
+		grid-template-columns: 1fr 1fr 1fr;
+		justify-content: center;
+		gap: 2em;
+
+		.empty {
+			color: ${(p) => p.theme.colors.secondary};
+			filter: ${(p) =>
+				p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+		}
+
+		@media screen and (max-width: 1300px) {
+			grid-template-columns: 1fr 1fr;
+		}
+		@media screen and (max-width: 768px) {
+			grid-template-columns: 1fr;
+		}
 	}
 `;
 
@@ -57,16 +92,25 @@ export const Friend = styled.button`
 
 export const DrawerTitle = styled.div`
 	display: flex;
-	width: 100%;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 32px;
+	width: 100%;
 
 	svg {
 		cursor: pointer;
 		width: 24px;
 		height: 24px;
 		fill: ${(p) => p.theme.colors.secondary};
+
+		:hover {
+			transform: scale(1.2);
+		}
+
+		:active {
+			transform: scale(1);
+		}
 	}
 `;
 
@@ -84,10 +128,9 @@ export const FriendDetails = styled.div`
 `;
 
 export const FriendOptions = styled.div`
-	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 2em;
+	gap: 32px;
 
 	svg {
 		fill: ${(p) => p.theme.colors.secondary};
@@ -95,28 +138,26 @@ export const FriendOptions = styled.div`
 		height: 24px;
 	}
 
-	button {
-		cursor: pointer;
-		border: none;
-		background: none;
-	}
-
 	a,
 	button {
+		width: fit-content;
+		cursor: pointer;
+		text-decoration: none;
+		background: none;
+		border: none;
 		display: flex;
 		gap: 1em;
-		text-decoration: none;
 		color: ${(p) => p.theme.colors.secondary};
+		transition: transform 0.1s linear;
 
-		transition: transform 0.2s linear;
 		:hover {
-			transform: translateX(5px);
-			text-decoration: underline;
+			transform: translateX(8px);
 		}
 	}
 `;
 
 export const Blocked = styled.div`
+	cursor: not-allowed;
 	padding: 8px;
 	display: flex;
 	justify-content: space-between;
@@ -139,14 +180,92 @@ export const Blocked = styled.div`
 		filter: grayscale(1);
 	}
 
-	svg {
+	button {
 		cursor: pointer;
-		width: 48px;
-		height: 24px;
-		fill: #e04f5f;
+		margin-right: 24px;
+		margin-left: 16px;
+		margin-top: 3px;
+		transition: all 0.1s linear;
 
 		:hover {
-			transform: scale(1.1);
+			transform: scale(1.2);
+		}
+
+		:active {
+			transform: scale(1);
+		}
+
+		svg {
+			width: 24px;
+			height: 24px;
+			fill: #dc4f19;
+		}
+	}
+`;
+
+export const Pending = styled.div`
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+	border: none;
+	border-radius: 8px;
+	align-items: center;
+	background-color: ${(p) =>
+		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+`;
+
+export const HDivLink = styled(Link)`
+	display: flex;
+	flex-direction: row;
+	text-decoration: none;
+	align-items: center;
+	gap: 8px;
+
+	.avatar {
+		border-radius: 50%;
+		width: 64px;
+		height: 64px;
+	}
+
+	h5 {
+		color: ${(p) => p.theme.colors.secondary};
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+`;
+
+export const HDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 16px;
+	gap: 8px;
+
+	button {
+		cursor: pointer;
+		margin-right: 8px;
+		margin-top: 3px;
+		transition: all 0.1s linear;
+
+		.ignore-icon {
+			width: 20px;
+			height: 20px;
+			fill: #dc4f19;
+		}
+
+		.accept-icon {
+			width: 24px;
+			height: 24px;
+			fill: #4bae4f;
+		}
+
+		:hover {
+			transform: scale(1.2);
+		}
+		:active {
+			transform: scale(1);
 		}
 	}
 `;

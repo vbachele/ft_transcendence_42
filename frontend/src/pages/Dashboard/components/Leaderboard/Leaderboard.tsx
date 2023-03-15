@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Leaderboard = ({user}: IProps) => {
-	let {data, isLoading, error} = useFetchUsers();
+	let {data, isLoading, error} = useFetchUsers(); //TODO ajouter userName.userName
 	if (data) {
 		data.sort(compareScore);
 	}
@@ -22,6 +22,8 @@ const Leaderboard = ({user}: IProps) => {
 				Leaderboard
 			</F.Subtitle>
 			<div className="subcontainer">
+				{isLoading && <F.Text>Loading ...</F.Text>}
+				{error && <F.Text>Error</F.Text>}
 				{data && (
 					<S.FirstPlayer to={`/dashboard/${data[0].name}`}>
 						<F.H4>Best Player</F.H4>
@@ -32,10 +34,10 @@ const Leaderboard = ({user}: IProps) => {
 				)}
 				{data && (
 					<S.TopFive>
-						<MiniRank user={data[1]} rank="2nd" />
-						<MiniRank user={data[2]} rank="3rd" />
-						<MiniRank user={data[3]} rank="4th" />
-						<MiniRank user={data[4]} rank="5th" />
+						{data[1] && <MiniRank user={data[1]} rank="2nd" />}
+						{data[2] && <MiniRank user={data[2]} rank="3rd" />}
+						{data[3] && <MiniRank user={data[3]} rank="4th" />}
+						{data[4] && <MiniRank user={data[4]} rank="5th" />}
 					</S.TopFive>
 				)}
 			</div>

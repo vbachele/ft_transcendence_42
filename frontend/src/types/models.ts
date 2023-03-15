@@ -8,7 +8,6 @@ export interface IUser {
 	wins: number;
 	ratio: number;
 	achievements: string[];
-	id: number;
 }
 
 export interface IAchievement {
@@ -22,6 +21,6 @@ export interface IAchievement {
 export type TCallback = ({}) => void;
 
 export interface ILobbyData {
-  id: string;
-  type: string;
+	id: string;
+	type: string;
 }

@@ -12,20 +12,38 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  name         String?   @unique
-  user42Name   String    @default("No42userName")
-  image        String?   @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
-  coalition    String?   @default("Federation")
-  status       String?   @default("offline")
-  games        Int?      @default(0)
-  wins         Int?      @default(0)
-  ratio        Float?    @default(0)
+  id           Int      @id @default(autoincrement())
+  name         String?  @unique @default("")
+  user42Name   String?
+  email        String?  @default("")
+  image        String?  @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
+  coalition    String?  @default("Federation")
+  status       String?  @default("offline")
+  games        Int?     @default(0)
+  wins         Int?     @default(0)
+  ratio        Float?   @default(0)
   achievements String[]
-  score        Int?      @default(0)
-  accessToken  String    @default("noToken")
-  refreshToken String    @default("noRefreshToken")
-  isRegistered Boolean   @default(false)
+  score        Int?     @default(0)
+  accessToken  String   @default("noToken")
+  refreshToken String?  @default("noRefreshToken")
+  isRegistered Boolean  @default(false)
+
+  friends   User[] @relation("friends")
+  friendsOf User[] @relation("friends")
+
+  pendings   User[] @relation("pending")
+  pendingsOf User[] @relation("pending")
+
+  blocked   User[] @relation("blocked")
+  blockedOf User[] @relation("blocked")
+
+  otp_enabled   Boolean?  @default(false)
+  otp_verified  Boolean?  @default(false)
+  otp_validated Boolean?  @default(false)
+  otp_ascii     String?   @default("")
+  otp_hex       String?   @default("")
+  otp_base32    String?   @default("")
+  otp_auth_url  String?   @default("")
   messages     Message[] @relation("author")
   lobbies      Lobby[]   @relation("joined")
   lobbyOwner   Lobby[]   @relation("owned")
@@ -43,6 +61,19 @@ model Lobby {
   privacy     String
   maxClients  Int
   messages    Message[]
+}
+
+model Match {
+  id Int @id
+
+  createAt   DateTime
+  finishedAt DateTime
+
+  userOneId     Int
+  userOnePoints Int
+
+  userTwoId     Int
+  userTwoPoints Int
 }
 
 model Message {

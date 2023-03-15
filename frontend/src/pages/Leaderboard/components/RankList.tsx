@@ -67,7 +67,7 @@ const RankList = ({players, opt}: IProps) => {
 					<Rank
 						player={player}
 						rank={players.filter(filterCoalition).indexOf(player) + 1}
-						key={player.id}
+						key={player.name}
 					/>
 				))}
 		</>

@@ -1,15 +1,58 @@
-import * as F from 'styles/font.styles';
+import {useUserInfos} from 'contexts/User/userContent';
+import unlockAchievement from 'helpers/unlockAchievement';
 import {ReactComponent as Icon} from './block.svg';
+import * as F from 'styles/font.styles';
+import {backend} from 'lib/backend';
+import {IUser} from 'types/models';
+import {notification} from 'antd';
+import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
+import isUserIn from 'helpers/isUserIn';
 
 interface IProps {
-	id: number;
+	user: IUser;
+	hideDrawer?: () => void;
+	onBlock?: (user: IUser) => void;
 }
 
-function BlockUser({id}: IProps) {
+function BlockUser({user, hideDrawer, onBlock}: IProps) {
+	const {userName} = useUserInfos();
+	const {data: blocked} = useFetchBlockedOf(userName.userName);
+	let userAdded: boolean = false; //TODO normalement useless
+
+	const handleClick = () => {
+		if (isUserIn(blocked, user.name) || userAdded) {
+			return;
+		}
+
+		backend.blockUser(userName.userName, user.name);
+		backend.removeFriend(userName.userName, user.name);
+		backend.removeFriend(user.name, userName.userName);
+		backend.removePending(userName.userName, user.name);
+		backend.removePending(user.name, userName.userName);
+
+		if (onBlock) {
+			onBlock(user);
+		}
+		if (hideDrawer) {
+			hideDrawer();
+		}
+
+		unlockAchievement('BLOCK', userName.userName);
+		userAdded = true;
+
+		notification.error({
+			message: (
+				<div style={{marginBottom: -8}}>{`${user.name} has been blocked`}</div>
+			),
+			placement: 'bottom',
+			duration: 2.5,
+		});
+	};
+
 	return (
-		<button>
-			<Icon />
-			<F.Text>Block</F.Text>
+		<button onClick={handleClick}>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Block</F.Text>
 		</button>
 	);
 }

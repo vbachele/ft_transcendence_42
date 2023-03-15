@@ -15,6 +15,7 @@ export const NameContainer = styled.div``;
 
 export const Avatar = styled.img`
   width: 80px;
+  height: 80px;
   display: block;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -38,3 +39,17 @@ export const SelectFileIcon = styled.div`
     fill: ${(p) => p.theme.colors.main};
   }
 `;
+
+export const ConfirmContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 16px;
+margin: 16px;
+`
+
+export const loadingimg = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-left: 16px;
+`

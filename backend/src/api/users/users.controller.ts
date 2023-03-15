@@ -1,34 +1,53 @@
-import { Body, Controller, Delete, Get, Patch, Req } from "@nestjs/common";
-import { UserService } from "./users.service";
-import { Request } from "express";
-const express = require("express");
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Req,
+	Res,
+} from '@nestjs/common';
+import {UserService} from './users.service';
+import {Request, Response} from 'express';
+import {CloudinaryService} from 'src/cloudinary/cloudinary.service';
+import {FindOneParams, UserDto} from 'src/auth/dto';
+
+const express = require('express');
 const app = express();
 
-app.use(express.json({ limit: "500mb" }));
-app.use(express.urlencoded({ limit: "500mb", extended: true }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true}));
 
-@Controller("users")
+@Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
-  @Get()
-  async getUsers() {
-    return this.userService.getAllUsers();
-  }
-  @Get(":id")
-  async getOneUser(@Req() req: Request) {
-    const { id } = req.params;
-    return this.userService.getOneUser(req);
-  }
-  @Get(":name")
-  async getUserByName(@Req() req: Request) {
-    return this.userService.getUserByName(req.params.name);
-  }
-  @Patch(":id")
-  async PatchUser(@Req() req: Request) {
-    return this.userService.updateUser(req);
-  }
-  @Delete("deleteall")
-  async DeleteAllUsers() {
-    return this.userService.deleteAllUsers();
-  }
+	constructor(
+		private userService: UserService,
+		private cloudinaryService: CloudinaryService
+	) {}
+
+	@Get(':name')
+	async getUserByName(@Req() req: Request) {
+		return this.userService.getUserByName(req.params.name, 'louis');
+	}
+
+	@Get()
+	async getUsers() {
+		// const currentUser = req.user; //TODO passer le currentUser dans les param
+		return this.userService.getAllUsers('louis');
+	}
+
+	@Patch(':name')
+	async PatchUser(@Req() req: Request) {
+		if (req.body.image) {
+			const user = this.cloudinaryService.uploadImage(req);
+			return user;
+		}
+		return this.userService.updateUser(req);
+	}
+
+	@Delete('deleteall')
+	async DeleteAllUsers() {
+		return this.userService.deleteAllUsers();
+	}
 }

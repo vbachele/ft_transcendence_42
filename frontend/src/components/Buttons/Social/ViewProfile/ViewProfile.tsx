@@ -3,12 +3,12 @@ import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './profile.svg';
 
 interface IProps {
-	id: number;
+	user: string;
 }
 
-function ViewProfile({id}: IProps) {
+function ViewProfile({user}: IProps) {
 	return (
-		<Link to={`/dashboard/${id}`}>
+		<Link to={`/dashboard/${user}`}>
 			<Icon />
 			<F.Text>View Profile</F.Text>
 		</Link>

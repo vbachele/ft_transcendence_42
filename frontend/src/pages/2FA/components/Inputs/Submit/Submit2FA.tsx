@@ -3,6 +3,11 @@ import * as I from "../Input/Single.styles";
 import * as UI from "styles/buttons.styles";
 import * as S from "./Submit2FA.styles";
 import { useNavigate } from "react-router-dom";
+import { useUserInfos } from "contexts/User/userContent";
+import { backend } from "lib/backend";
+import { Subtitle } from "styles/font.styles";
+
+
 
 const Submit2FA = () => {
   const navigate = useNavigate();
@@ -14,6 +19,8 @@ const Submit2FA = () => {
     input5: "",
     input6: "",
   });
+  const {userName} = useUserInfos();
+  const [error, setError] = useState(false);
 
   const inputRefs: React.MutableRefObject<any>[] = [
     useRef(null),
@@ -42,7 +49,6 @@ const Submit2FA = () => {
       e.currentTarget.value === "" &&
       index > 1
     ) {
-      console.log("inside");
       setTimeout(() => {
         inputRefs[index - 1].current.value = "";
         inputRefs[index - 2].current.focus();
@@ -73,13 +79,31 @@ const Submit2FA = () => {
     }
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+
+  async function handleCode(number :string) {
+    let user = {
+      userName,
+      token : number,
+    }
+    const response = await backend.validate2FA(user);
+    if (response.status === "fail" || response.status === "error")
+    {
+      console.error(response.message);
+      setError(true);
+      return;
+    }
+    navigate("/");
+  }
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    navigate("/login");
+    const number = code.input1 + code.input2 + code.input3 + code.input4 + code.input5 + code.input6;
+    handleCode(number);
   };
 
   return (
     <S.Container__Form onSubmit={handleSubmit}>
+    <S.Container__input__error>
       <S.Container__Input>
         <I.Input
           name="input1"
@@ -142,6 +166,8 @@ const Submit2FA = () => {
           ref={inputRefs[5]}
         ></I.Input>
       </S.Container__Input>
+      {error && <Subtitle style={{color:'#E04F5F'}}>Code invalid try again!</Subtitle>}
+      </S.Container__input__error>
       <UI.SecondaryButton>Continue</UI.SecondaryButton>
     </S.Container__Form>
   );

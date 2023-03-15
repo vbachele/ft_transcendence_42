@@ -21,6 +21,7 @@ function getRanks(player: IUser) {
 				.filter((p) => player.coalition === p.coalition)
 				.findIndex((p) => isEqual(p, player)) + 1;
 	}
+
 	return {global, coalition};
 }
 
