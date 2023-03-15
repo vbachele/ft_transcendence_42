@@ -2,34 +2,34 @@ import {notification} from 'antd';
 import {backend} from 'lib/backend';
 import AchievementList from 'assets/achievements.json';
 import {IAchievement} from 'types/models';
-import {SmileOutlined} from '@ant-design/icons';
 
-const unlockAchievement = async (achName: string) => {
-	// get user, //TODO use context
-	const data = await backend.getUserByName('Barson');
+const unlockAchievement = async (achName: string, userName: string) => {
+	// get user
+	const data = await backend.getUserByName(userName);
 
 	// get achievement
 	let achievement: IAchievement | undefined = AchievementList.achievements.find(
 		(achievement: IAchievement) => achievement.api === achName
 	);
 
-	// check if already has achievement
+	// check if user already has achievement
 	if (data?.achievements.includes(achievement!.api)) return;
 
-	// add new achievement to the list
-	let userAchList = data?.achievements;
+	// add new achievement to the list of user achievements
+	let userAchList = data.achievements;
 	userAchList?.push(achievement!.api);
 
 	// patch user
 	const patch = {
 		achievements: userAchList,
 	};
-	backend.patchUser('36', patch); //TODO: use context
+	backend.patchUser(userName, patch);
 
 	// show notification
 	notification.success({
 		message: `${achievement?.name}`,
 		description: 'New achievement unlocked !',
+		duration: 3,
 	});
 };
 

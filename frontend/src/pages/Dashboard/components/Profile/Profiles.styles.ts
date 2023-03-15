@@ -27,7 +27,6 @@ export const Profile = styled.div<IProfile>`
 		gap: 48px;
 	}
 
-
 	@media screen and (max-width: 1600px) {
 		.ranks-div {
 			display: flex;
@@ -39,6 +38,7 @@ export const Profile = styled.div<IProfile>`
 
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
+		padding: 16px 48px;
 		gap: 32px;
 
 		.name {
@@ -63,13 +63,31 @@ export const Avatar = styled.img`
 	}
 `;
 
-export const VDiv = styled.div`
+interface IDivProps {
+	isFriend?: boolean;
+}
+
+export const VDiv = styled.div<IDivProps>`
 	display: flex;
 	flex-direction: column;
 	word-break: break-all;
 
 	.rank {
 		color: #ffbf00;
+	}
+`;
+
+export const HDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+
+	svg {
+		width: 20px;
+		height: 20px;
+		min-width: 16px;
+		min-height: 16px;
 	}
 `;
 
@@ -84,10 +102,52 @@ export const VDivLink = styled(Link)`
 	}
 `;
 
-export const OptionButton = styled.button`
-	border: none;
-	background: none;
-	width: 100%;
-	text-align: left;
-	cursor: pointer;
+// prettier-ignore
+export const OptionButton = styled.div`
+	button,	a {
+		width: 100%;
+		height: 100%;
+		text-align: left;
+
+		cursor: pointer;
+		border: none;
+		padding: 8px 12px;
+		background: none;
+
+		p {
+			color: black;
+			font-weight: 500;
+			font-size: 14px;
+		}
+	}
+
+	svg {
+		display: none;
+	}
+`;
+
+export const DropdownContainer = styled.div`
+	width: fit-content;
+
+	.antd-space {
+		user-select: none;
+		display: flex;
+		gap: 8px;
+		width: fit-content;
+		cursor: pointer;
+		margin-top: 16px;
+
+		:active {
+			.dropdown-arrow {
+				transform: translateY(4px);
+			}
+		}
+
+		.dropdown-arrow {
+			position: relative;
+			top: 2px;
+
+			transition: transform 0.1s linear;
+		}
+	}
 `;

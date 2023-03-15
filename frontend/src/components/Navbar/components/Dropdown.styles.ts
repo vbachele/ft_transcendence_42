@@ -24,7 +24,7 @@ export const Container = styled.div`
 export const DropdownContainer = styled(motion.div)`
 	display: flex;
 	flex-direction: column;
-	background-color: #e04f5f;
+	background-color: #dc4f19;
 	position: fixed;
 	z-index: 90;
 	right: 24px;
@@ -104,14 +104,16 @@ export const LinksContainer = styled.div`
 	align-items: left;
 	gap: 16px;
 
-	a {
+	a,
+	button {
+		cursor: pointer;
 		width: 100%;
 		color: white;
 		display: flex;
 		gap: 1em;
 		align-items: center;
 
-		transition: all 0.2s linear;
+		transition: all 0.1s linear;
 
 		:hover {
 			p {
@@ -132,7 +134,8 @@ export const LinksContainer = styled.div`
 		gap: 1.5em;
 
 		a,
-		p {
+		p,
+		button {
 			font-weight: 600;
 			font-size: 24px;
 			justify-content: center;
@@ -144,37 +147,6 @@ export const LinksContainer = styled.div`
 `;
 
 export const PopupButton = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: left;
-  gap: 16px;
-  color: white;
-
-  background-color: transparent !important;
-  border: none !important;
-  transition: all 0.2s linear;
-  :hover {
-    p {
-      font-weight: 600;
-    }
-    transform: translateX(8px);
-  }
-  svg {
-    fill: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 0;
-  }
-  @media only screen and (max-width: 768px) {
-    gap: 1.5em;
-
-    a,
-      font-weight: 600;
-      font-size: 24px;
-      justify-content: center;
-      align-items: center;
-    svg {
-      display: none;
-    }
-  }
+	background-color: transparent;
+	border: none;
 `;

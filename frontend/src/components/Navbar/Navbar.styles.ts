@@ -71,10 +71,10 @@ export const StyledToggleTheme = styled.label`
 	svg {
 		width: 24px;
 		height: 24px;
-		transition: fill 0.2s linear;
+		transition: fill 0.1s linear;
 	}
 
 	svg:hover {
-		fill: #e04f5f;
+		fill: #dc4f19;
 	}
 `;

@@ -1,9 +1,5 @@
-import { useState } from "react";
-import {
-  Route,
-  Routes,
-  useRoutes
-} from "react-router-dom";
+import {useState} from 'react';
+import {Route, Routes, useRoutes} from 'react-router-dom';
 
 import Defeat from "components/EditName/Defeat";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
@@ -30,16 +26,11 @@ import ChatContextComponent from "contexts/Chat/ChatContext";
 
 
 function App() {
-  // const userPref =
-  //   window.matchMedia &&
-  //   window.matchMedia("(prefers-color-scheme: dark)").matches;
-  // const defaultTheme = userPref ? 'light' : 'dark';
-  const defaultTheme = "dark";
+	const defaultTheme = 'dark';
 
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || defaultTheme
-  );
-
+	const [theme, setTheme] = useState(
+		localStorage.getItem('theme') || defaultTheme
+	);
 
   function WithNavbar() {
     return (
@@ -69,56 +60,57 @@ function App() {
     );
   }
 
-  const routes = useRoutes([
-    {
-      path: "/login",
-      element: <LandingPage />,
-    },
-    {
-      path: "/",
-      element: (
-        <PrivateRoute>
-          <Homepage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/registration",
-      element: <Registration />,
-    },
-    {
-      path: "/2FA",
-      element: (
-        <PrivateRoute>
-          <DoubleAuthentication />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/Victory",
-      element: (
-        <PrivateRoute>
-          <Victory />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/Defeat",
-      element: (
-        <PrivateRoute>
-          <Defeat />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/*",
-      element: (
-        <PrivateRoute>
-          <WithNavbar />
-        </PrivateRoute>
-      ),
-    },
-  ]);
+	const routes = useRoutes([
+		{
+			path: '/login',
+			element: <UserMocks />,
+			// element: <Landing />,
+		},
+		{
+			path: '/',
+			element: (
+				<PrivateRoute>
+					<Homepage />
+				</PrivateRoute>
+			),
+		},
+		{
+			path: '/registration',
+			element: <Registration />,
+		},
+		{
+			path: '/2FA',
+			element: (
+				<PrivateRoute>
+					<DoubleAuthentication />
+				</PrivateRoute>
+			),
+		},
+		{
+			path: '/Victory',
+			element: (
+				<PrivateRoute>
+					<Victory />
+				</PrivateRoute>
+			),
+		},
+		{
+			path: '/Defeat',
+			element: (
+				<PrivateRoute>
+					<Defeat />
+				</PrivateRoute>
+			),
+		},
+		{
+			path: '/*',
+			element: (
+				<PrivateRoute>
+					<WithNavbar />
+				</PrivateRoute>
+			),
+		},
+	]);
 
   return (
     <UserContextProvider>

@@ -70,7 +70,7 @@ const GameInvite = () => {
 				pathname: '/game',
 				search: createSearchParams({
 					lobbyId: lobby!.id,
-				}).toString()
+				}).toString(),
 			});
 		}, 4_000);
 	}
@@ -96,7 +96,7 @@ const GameInvite = () => {
 			<PopupButton border="1px solid #e5e7eb" onClick={onCancel}>
 				<Text weight="500">Cancel</Text>
 			</PopupButton>
-			<PopupButton backgroundColor={'#DC4F19'} onClick={onJoin}>
+			<PopupButton backgroundColor={'#dc4f19'} onClick={onJoin}>
 				<Text weight="500"> JOIN </Text>
 			</PopupButton>
 			{showComponent ? <GameFound /> : ''}
