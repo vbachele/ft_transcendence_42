@@ -18,6 +18,8 @@ import {AllExceptionsFilter} from './errors/all-exceptions.filter';
 import {FriendModule} from './social/friends/friends.module';
 import {PendingModule} from './social/pending/pendings.module';
 import {BlockedModule} from './social/blocked/blocked.module';
+import {ChatModule} from "./chat/chat.module";
+
 
 @Module({
 	imports: [
@@ -33,6 +35,7 @@ import {BlockedModule} from './social/blocked/blocked.module';
 		CloudinaryModule,
 		WebsocketModule,
 		DoubleAuthModule,
+    ChatModule,
 	],
 	controllers: [AppController, DatabaseController],
 	providers: [

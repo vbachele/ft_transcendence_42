@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {IsIn, IsNotEmpty, IsNumber, IsString} from "class-validator";
 
 export class GameInviteDto {
 	@IsString()
@@ -8,12 +8,18 @@ export class GameInviteDto {
 	invitedClientName: string;
 }
 
+export class FetchSetupDto {
+	@IsString()
+	lobbyId: string;
+}
+
+const Direction = ["up", "down"];
+
 export class MovePaddleDto {
 	@IsString()
 	lobbyId: string;
 
-	@IsNumber()
-	x: number;
-	@IsNumber()
-	y: number;
+	@IsString()
+	// @IsIn(Direction)
+	direction: string;
 }

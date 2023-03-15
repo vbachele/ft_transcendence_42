@@ -27,7 +27,6 @@ model User {
   accessToken  String   @default("noToken")
   refreshToken String?  @default("noRefreshToken")
   isRegistered Boolean  @default(false)
-  ownedLobbies Lobby[]  @relation("owned")
 
   friends   User[] @relation("friends")
   friendsOf User[] @relation("friends")
@@ -38,33 +37,51 @@ model User {
   blocked   User[] @relation("blocked")
   blockedOf User[] @relation("blocked")
 
-  otp_enabled   Boolean? @default(false)
-  otp_verified  Boolean? @default(false)
-  otp_validated Boolean? @default(false)
-  otp_ascii     String?  @default("")
-  otp_hex       String?  @default("")
-  otp_base32    String?  @default("")
-  otp_auth_url  String?  @default("")
+  otp_enabled   Boolean?  @default(false)
+  otp_verified  Boolean?  @default(false)
+  otp_validated Boolean?  @default(false)
+  otp_ascii     String?   @default("")
+  otp_hex       String?   @default("")
+  otp_base32    String?   @default("")
+  otp_auth_url  String?   @default("")
+  messages     Message[] @relation("author")
+  lobbies      Lobby[]   @relation("joined")
+  lobbyOwner   Lobby[]   @relation("owned")
 }
 
 model Lobby {
-  id         String   @id
-  admin      User?    @relation(name: "owned", fields: [adminId], references: [id])
-  adminId    Int?
-  createdAt  DateTime
-  type       String
-  maxClients Int?
+  id          String    @id
+  name        String    @unique
+  description String?
+  admin       User      @relation(name: "owned", fields: [adminId], references: [id])
+  adminId     Int
+  users       User[]    @relation("joined")
+  createdAt   DateTime
+  type        String
+  privacy     String
+  maxClients  Int
+  messages    Message[]
 }
 
 model Match {
-  id            Int      @id
+  id Int @id
 
-  createAt      DateTime
-  finishedAt    DateTime
+  createAt   DateTime
+  finishedAt DateTime
 
   userOneId     Int
   userOnePoints Int
 
   userTwoId     Int
   userTwoPoints Int
+}
+
+model Message {
+  id         Int       @id @default(autoincrement())
+  content    String
+  createdAt  DateTime? @default(now())
+  author     User      @relation("author", fields: [authorName], references: [name])
+  authorName String
+  lobby      Lobby     @relation(fields: [lobbyId], references: [id])
+  lobbyId    String
 }
