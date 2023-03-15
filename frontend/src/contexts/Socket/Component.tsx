@@ -1,7 +1,7 @@
-import {PropsWithChildren, useEffect, useReducer, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
 import {useSocket} from '../../hooks/useSocket';
 import {
-	defaultSocketContextState, SocketContextConsumer,
+	defaultSocketContextState,
 	SocketContextProvider,
 	SocketReducer,
 } from './Context';
@@ -20,6 +20,7 @@ const SocketContextComponent: React.FunctionComponent<
 	const [loading, setLoading] = useState(true);
 	const name = localStorage.getItem('name');
 	const socket = useSocket('/', {
+
 		reconnectionAttempts: 5,
 		reconnectionDelay: 5000,
 		autoConnect: false,
@@ -48,6 +49,9 @@ const SocketContextComponent: React.FunctionComponent<
 		socket.io.on('reconnect_failed', () => {
 			alert(`We are unable to connect you to the websocket.`);
 		});
+		socket.io.on('error', (error) => {
+			console.error(`Socket error: `, error);
+		})
 	};
 	const SendHandshake = () => {
 		console.info(`Sending handshake to server...`);
@@ -78,11 +82,15 @@ const SocketContextComponent: React.FunctionComponent<
 			console.log(`A user has disconnected`);
 			SocketDispatch({type: 'update_users', payload: users});
 		});
+		socket.on('exception', (error: string) => {
+			console.error(`Socket error: `, error);
+		});
 
 		return () => {
 			socket.off('user_connected');
 			socket.off('disconnect');
 			socket.off('user_disconnected');
+			socket.off('error');
 		}
 	}, []);
 

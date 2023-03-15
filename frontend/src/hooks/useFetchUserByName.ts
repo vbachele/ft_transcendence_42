@@ -1,6 +1,7 @@
 import {backend} from 'lib/backend';
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
+import useFetchUsers from './useFetchUsers';
 
 async function fetchUser(name: string) {
 	try {
@@ -19,6 +20,7 @@ function useFetchUserByName(name: string) {
 	useEffect(() => {
 		async function fetchData() {
 			const {data, error} = await fetchUser(name);
+
 			setData(data);
 			setError(error);
 			setIsLoading(false);

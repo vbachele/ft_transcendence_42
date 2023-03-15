@@ -4,9 +4,16 @@ import {Link} from 'react-router-dom';
 // Leaderboard Page
 export const Container = styled.div`
 	text-align: center;
+
 	h1 {
 		padding: 32px 0;
 	}
+
+	.empty {
+		filter: ${(p) =>
+			p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
+	}
+
 	.Federation {
 		color: #4180db !important;
 	}
@@ -60,10 +67,10 @@ export const SearchCoalition = styled.select`
 	align-self: center;
 	/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
 	cursor: pointer;
-	transition: border-color 0.2s linear;
+	transition: border-color 0.1s linear;
 
 	:hover {
-		border-color: #e04f5f;
+		border-color: #dc4f19;
 	}
 `;
 

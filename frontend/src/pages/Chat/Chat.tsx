@@ -1,33 +1,35 @@
-import * as F from 'styles/font.styles';
-import * as S from './Chat.styles';
-import LateralBar from './components/containers/LateralBar';
-import MainFieldDirectMessages from './components/containers/MainFieldDirectMessages';
-import RightBarDirectMessages from './components/messages/RightBarDirectMessages';
-import useContext from 'react';
-import MessagesContext from '../../contexts/Chat/MessagesContext';
-import React from 'react';
-import MainFieldChannel from './components/containers/MainFieldChannel';
-import EmptyChat from './components/messages/EmptyChat';
-import ModalChanSettings from './components/modals/ModalChanSettings';
-import ModalChanPass from './components/modals/ModalChanPass';
-import ModalChanCreate from './components/modals/ModalChanCreate';
+import * as C from './containers/containers.styles';
+import ChannelBar from './containers/ChannelBar';
+import MainField from './containers/MainField';
+import UserPanel from './containers/UserPanel';
+import React, {useContext, useState} from 'react';
+import ChatContext from 'contexts/Chat/chat.context';
+import {useResponsiveLayout} from 'hooks/chat/useResponsiveLayout';
 
 function Chat() {
+	const {activeLobby} = useContext(ChatContext).ChatState;
+	const [activeUserPanel, setActiveUserPanel] = useState(false);
+	const {responsive} = useResponsiveLayout();
 
-    const {isClickedDM, isRightBarClosedDM, isClickedChannel, dataMessages, isRightBarOpenDM} = React.useContext(MessagesContext);
-    return (
-        <S.default>
-            <LateralBar />
-            {!isClickedDM && !isRightBarOpenDM && !isClickedChannel && <EmptyChat />}
-            {isClickedChannel && <MainFieldChannel />}
-            {isClickedDM && <MainFieldDirectMessages />}
-            {(isRightBarOpenDM || (!isRightBarClosedDM && isClickedDM)) && <RightBarDirectMessages data={dataMessages}/>}
-        </S.default>
+	if (responsive) {
+		return (
+			<C.Chat>
+				{!activeLobby && <ChannelBar />}
+				{!activeUserPanel && activeLobby && (
+					<MainField setOpenUserPanel={setActiveUserPanel} />
+				)}
+				{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+			</C.Chat>
+		);
+	}
 
-        // <ModalChanSettings />
-        // <ModalChanPass />
-        // <ModalChanCreate />
-    );
+	return (
+		<C.Chat>
+			<ChannelBar />
+			<MainField setOpenUserPanel={setActiveUserPanel} />
+			{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+		</C.Chat>
+	);
 }
 
 export default Chat;

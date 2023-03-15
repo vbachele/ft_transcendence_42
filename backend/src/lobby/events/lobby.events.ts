@@ -21,4 +21,5 @@ export enum ServerEvents {
   InvitedToLobby = "server.invitedToLobby",
   InvitationDeclined = "server.invitationDeclined",
   InvitationResponse = "server.invitationResponse",
+  AddedToLobby = "server.addedToLobby",
 }

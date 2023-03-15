@@ -6,20 +6,18 @@ import {
   WebSocketServer,
   WsResponse,
 } from "@nestjs/websockets";
-import {ClientEvents, ServerEvents} from "../lobby/events/lobby.events";
+import { ClientEvents, ServerEvents } from "../lobby/events/lobby.events";
 import { AuthenticatedSocket, ServerPayloads } from "../lobby/types/lobby.type";
 import { Server } from "socket.io";
-import {GameInviteDto, MovePaddleDto} from "./dto/game.dto";
+import { FetchSetupDto, GameInviteDto, MovePaddleDto } from "./dto/game.dto";
 import { ClientGameEvents } from "./events/game.events";
 import { GameService } from "./game.service";
 import { ValidationPipe } from "@nestjs/common";
-import {LobbyService} from "../lobby/lobby.service";
+import { LobbyService } from "../lobby/lobby.service";
 
 @WebSocketGateway()
 export class GameGateway {
-  constructor(
-    private readonly gameService: GameService,
-  ) {}
+  constructor(private readonly gameService: GameService) {}
 
   @SubscribeMessage(ClientGameEvents.Invite)
   onInviteToLobby(
@@ -52,18 +50,39 @@ export class GameGateway {
     };
   }
 
-  @SubscribeMessage(ClientGameEvents.Ready)
-  onReady(
-      @ConnectedSocket() client: AuthenticatedSocket
+  @SubscribeMessage(ClientGameEvents.FetchSetup)
+  onFetchSetup(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody(new ValidationPipe()) data: FetchSetupDto
   ) {
-    console.info(`Client [${client.data.name}] ready`)
+    console.log(data);
+    this.gameService.gameSetup(client, data.lobbyId);
+  }
+
+  @SubscribeMessage(ClientGameEvents.Ready)
+  onReady(@ConnectedSocket() client: AuthenticatedSocket,
+          @MessageBody() data: any) {
+    console.info(`Client [${client.data.name}] ready`);
+    this.gameService.runGame(data.lobbyId);
   }
 
   @SubscribeMessage(ClientGameEvents.MovePaddle)
   onMovePaddle(
-      @ConnectedSocket() client: AuthenticatedSocket,
-      @MessageBody(new ValidationPipe()) data: MovePaddleDto,
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody(new ValidationPipe()) data: MovePaddleDto
   ) {
     this.gameService.movePaddle(client, data);
   }
+
+  // @SubscribeMessage(ClientGameEvents.MoveBall)
+  // onMoveBall(
+  //   @ConnectedSocket() client: AuthenticatedSocket,
+  //   @MessageBody(new ValidationPipe()) data: MovePaddleDto
+  // ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
+  //   this.gameService.moveBall(client, data);
+  //   return {
+  //     event: ServerEvents.LobbyMessage,
+  //     data: { message: `Ball moved` },
+  //   };
+  // }
 }
