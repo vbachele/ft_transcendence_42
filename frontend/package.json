@@ -10,6 +10,7 @@
 		"test": "vitest"
 	},
 	"dependencies": {
+		"@lottiefiles/react-lottie-player": "^3.5.2",
 		"@types/react-router-dom": "^5.3.3",
 		"antd": "^5.1.5",
 		"dotenv": "^16.0.3",

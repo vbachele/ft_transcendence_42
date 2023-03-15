@@ -18,19 +18,22 @@ import { WebsocketGateway } from "../websocket/websocket.gateway";
 @Injectable()
 export abstract class ALobby {
   protected constructor(
-    public readonly server: Server,
-    public readonly id: string = v4(),
-    public readonly createdAt = new Date()
-  ) {}
+    protected readonly server: Server,
+    protected readonly maxClients = 128,
+
+    public id: string = v4(),
+    public readonly createdAt = new Date(),
+  ) {
+  }
 
   public readonly clients: Map<
     AuthenticatedSocket["data"]["name"],
     AuthenticatedSocket
   > = new Map<Socket["id"], AuthenticatedSocket>();
 
-  public abstract afterInit(): void;
-
-  public addClient(client: AuthenticatedSocket): ALobby {
+  public addClient(client: AuthenticatedSocket): ALobby | Promise<ALobby> {
+    if (this.clients.size >= this.maxClients)
+      throw new Error(`Max clients reached for this lobby`)
     this.clients.set(client.data.name, client);
     client.join(this.id);
     this.dispatchLobbyState();

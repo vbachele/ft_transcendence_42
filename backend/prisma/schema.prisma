@@ -22,12 +22,11 @@ model User {
   games Int? @default(0)
   wins Int? @default(0)
   ratio Float? @default(0)
-  achievements String[] 
+  achievements String[]
   score Int? @default(0)
   accessToken String @default("noToken")
   refreshToken String? @default("noRefreshToken")
   isRegistered Boolean @default(false)
-  ownedLobbies Lobby[] @relation("owned")
   otp_enabled  Boolean? @default(false)
   otp_verified Boolean? @default(false)
   otp_validated   Boolean? @default(false)
@@ -35,21 +34,31 @@ model User {
   otp_hex      String? @default("")
   otp_base32   String? @default("")
   otp_auth_url String? @default("")
+  messages     Message[] @relation("author")
+  lobbies      Lobby[]   @relation("joined")
+  lobbyOwner   Lobby[]   @relation("owned")
 }
 
 model Lobby {
-  id String @id
-  admin User? @relation(name: "owned", fields: [adminId], references: [id])
-  adminId Int?
-  createdAt DateTime
-  type String
-  maxClients Int?
+  id          String    @id
+  name        String    @unique
+  description String?
+  admin       User      @relation(name: "owned", fields: [adminId], references: [id])
+  adminId     Int
+  users       User[]    @relation("joined")
+  createdAt   DateTime
+  type        String
+  privacy     String
+  maxClients  Int
+  messages    Message[]
 }
 
-model Achievement {
-  id Int @id @default(autoincrement())
-	api String @unique
-  name String
-  image String
-  description String
+model Message {
+  id         Int       @id @default(autoincrement())
+  content    String
+  createdAt  DateTime? @default(now())
+  author     User      @relation("author", fields: [authorName], references: [name])
+  authorName String
+  lobby      Lobby     @relation(fields: [lobbyId], references: [id])
+  lobbyId    String
 }

@@ -13,6 +13,8 @@ import { GameModule } from "./game/game.module";
 import { WebsocketModule } from "./websocket/websocket.module";
 import {LobbyModule} from "./lobby/lobby.module";
 import { DoubleAuthModule } from "./doubleAuth/doubleAuth.module";
+import { ChatGateway } from './chat/chat.gateway';
+import {ChatModule} from "./chat/chat.module";
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { DoubleAuthModule } from "./doubleAuth/doubleAuth.module";
     CloudinaryModule,
     WebsocketModule,
     DoubleAuthModule,
+      ChatModule
   ],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],

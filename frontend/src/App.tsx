@@ -26,6 +26,8 @@ import { dark, light } from "styles/theme";
 import "./App.css";
 import Popup from "./components/Popup";
 import { UserMocks } from "./mocks/Users/UserMocks";
+import {ConfigProvider, theme as antdTheme} from 'antd';
+
 
 function App() {
   // const userPref =
@@ -54,7 +56,14 @@ function App() {
           <Route path="/game" element={<Game/>} />
           <Route path="*" element={<Pages.NotFound />} />
           <Route path="/fake_login" element={<FakeLogin />} />
-          <Route path="/chat" element={<Pages.Chat />} />
+					<Route
+						path="/chat"
+						element={
+							<ChatContextComponent>
+								<Pages.Chat />{' '}
+							</ChatContextComponent>
+						}
+					/>
         </Routes>
       </>
     );
@@ -117,19 +126,23 @@ function App() {
         <SocketContextComponent>
             <PopupContextProvider>
               <ThemeProvider theme={theme === "light" ? light : dark}>
-                {/*<ConfigProvider*/}
-                {/*	theme={{*/}
-                {/*		token: {*/}
-                {/*			colorPrimary: '#e04f5f',*/}
-                {/*			colorSuccess: '#4bae4f',*/}
-                {/*		},*/}
-                {/*	}}*/}
-                {/*>*/}
+                <ConfigProvider
+                	theme={{
+                		token: {
+                			colorPrimary: '#e04f5f',
+                			colorSuccess: '#4bae4f',
+                		},
+										algorithm:
+											theme === 'light'
+												? antdTheme.defaultAlgorithm
+												: antdTheme.darkAlgorithm,
+                	}}
+                >
                 <GlobalStyle />
                 <Popup.GameInvite />
                 <Popup.SearchPlayer />
                 {routes}
-                {/*</ConfigProvider>*/}
+                </ConfigProvider>
               </ThemeProvider>
             </PopupContextProvider>
         </SocketContextComponent>

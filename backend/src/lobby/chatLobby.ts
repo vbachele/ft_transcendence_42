@@ -1,47 +1,91 @@
 import { ALobby } from "./ALobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
-import { Lobby } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
-import { IsNumber } from "class-validator";
-import {WebsocketService} from "../websocket/websocket.service";
+import {
+  IsBoolean,
+  IsBooleanString,
+  IsIn,
+  IsNumber,
+  IsString,
+} from "class-validator";
+import { WebsocketService } from "../websocket/websocket.service";
+import { AuthenticatedSocket } from "./types/lobby.type";
+import { ConnectedSocket } from "@nestjs/websockets";
+import {ServerEvents} from "./events/lobby.events";
 
 export class ChatLobbyDto {
+  id?: string;
+  @IsString()
+  name: string;
+  @IsString()
+  description?: string;
   @IsNumber()
   maxClients: number;
+  @IsString()
   owner: string;
+  @IsString()
+  @IsIn(["public", "private"])
+  privacy: string;
+  @IsBooleanString()
+  init: boolean;
+  @IsString()
+  @IsIn(['channel', 'direct_message'])
+  type: string;
 }
 
+export interface Lobby {
+  id: string;
+  name: string;
+  description?: string;
+  createdAt: Date;
+  maxClients: number;
+  type: string;
+  privacy: string;
+}
 
 @Injectable()
 export class ChatLobby extends ALobby {
-  maxClients: number;
-
   constructor(
-  data: ChatLobbyDto,
+    data: ChatLobbyDto,
     private readonly prismaLobbyService: PrismaLobbyService,
-    private readonly websocketService: WebsocketService,
+    private readonly websocketService: WebsocketService
   ) {
-    super(websocketService.server);
-    this.maxClients = data.maxClients;
-    this.afterInit();
-  }
-
-  afterInit() {
-    const lobby: Lobby = {
-      id: this.id,
-      adminId: 23,
-      createdAt: this.createdAt,
-      maxClients: this.maxClients,
-      type: 'game',
+    super(websocketService.server, data.maxClients);
+    if (data.id) {
+      this.id = data.id;
     }
-    this.prismaLobbyService
-      .pushLobby(lobby)
-      .catch((e) => {
-        console.error(e);
-      });
+    this.afterInit(data);
   }
 
-  public someRandomFunc() {
-    console.log(`I'm in chat lobby!`);
+  afterInit(data: ChatLobbyDto) {
+    if (data.init) {
+      console.log(`push to database`);
+      const lobby: Lobby = {
+        id: this.id,
+        name: data.name,
+        description: data.description,
+        createdAt: this.createdAt,
+        maxClients: this.maxClients,
+        type: data.type,
+        privacy: data.privacy,
+      };
+      this.prismaLobbyService.pushLobby(lobby, data.owner).catch((e) => {
+        throw new Error(e);
+      });
+    }
+  }
+
+  async addClient(@ConnectedSocket() client: AuthenticatedSocket): Promise<ALobby> {
+    setTimeout(() => {
+      super.addClient(client);
+      this.prismaLobbyService
+        .pushUserToLobby(client.data.name, this.id)
+        .catch((e) => {
+          throw e;
+        });
+    }, 500);
+    const lobby = await this.prismaLobbyService.fetchLobbyFromId(this.id);
+    this.server.to(client.id).emit(ServerEvents.AddedToLobby, {lobby: lobby})
+    return this;
   }
 }

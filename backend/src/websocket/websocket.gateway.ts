@@ -5,10 +5,11 @@ import {
   OnGatewayDisconnect, OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
+  WebSocketServer, WsException,
 } from "@nestjs/websockets";
 
 import { Server, Socket } from "socket.io";
+import { PrismaLobbyService } from "src/database/lobby/prismaLobby.service";
 import { AuthenticatedSocket } from "src/lobby/types/lobby.type";
 import {WebsocketService} from "./websocket.service";
 
@@ -19,7 +20,8 @@ export class WebsocketGateway
   @WebSocketServer() server: Server;
   public users: Map<string, AuthenticatedSocket> = new Map<string, AuthenticatedSocket>();
 
-  constructor(private websocketService: WebsocketService) {
+  constructor(private websocketService: WebsocketService,
+              private readonly prismaLobbyService: PrismaLobbyService) {
   }
 
   afterInit(server: Server) {
@@ -80,7 +82,7 @@ export class WebsocketGateway
 
   public getClient(username: string): AuthenticatedSocket {
     const client = this.users.get(username);
-    if (!client) throw new Error(`Client [${username}] doesn't exist`);
+    if (!client) throw new WsException(`Client [${username}] doesn't exist`);
     return client;
   }
 
