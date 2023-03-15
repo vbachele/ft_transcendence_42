@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
 }
 
@@ -12,46 +12,59 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String? @unique  @default("")
-  user42Name String?
-  email String? @default("")
-  image String? @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
-  coalition String? @default("Federation")
-  status String? @default("offline")
-  games Int? @default(0)
-  wins Int? @default(0)
-  ratio Float? @default(0)
+  id           Int      @id @default(autoincrement())
+  name         String?  @unique @default("")
+  user42Name   String?
+  email        String?  @default("")
+  image        String?  @default("https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png")
+  coalition    String?  @default("Federation")
+  status       String?  @default("offline")
+  games        Int?     @default(0)
+  wins         Int?     @default(0)
+  ratio        Float?   @default(0)
   achievements String[]
-  score Int? @default(0)
-  accessToken String @default("noToken")
-  refreshToken String? @default("noRefreshToken")
-  isRegistered Boolean @default(false)
-  ownedLobbies Lobby[] @relation("owned")
+  score        Int?     @default(0)
+  accessToken  String   @default("noToken")
+  refreshToken String?  @default("noRefreshToken")
+  isRegistered Boolean  @default(false)
+  ownedLobbies Lobby[]  @relation("owned")
 
-	friends	User[] @relation("friends")
-	friendsOf	User[] @relation("friends")
+  friends   User[] @relation("friends")
+  friendsOf User[] @relation("friends")
 
-	pendings	User[] @relation("pending")
-	pendingsOf	User[] @relation("pending")
+  pendings   User[] @relation("pending")
+  pendingsOf User[] @relation("pending")
 
-	blocked	User[] @relation("blocked")
-	blockedOf	User[] @relation("blocked")
+  blocked   User[] @relation("blocked")
+  blockedOf User[] @relation("blocked")
 
-  otp_enabled  Boolean? @default(false)
-  otp_verified Boolean? @default(false)
-  otp_validated   Boolean? @default(false)
-  otp_ascii    String? @default("")
-  otp_hex      String? @default("")
-  otp_base32   String? @default("")
-  otp_auth_url String? @default("")
+  otp_enabled   Boolean? @default(false)
+  otp_verified  Boolean? @default(false)
+  otp_validated Boolean? @default(false)
+  otp_ascii     String?  @default("")
+  otp_hex       String?  @default("")
+  otp_base32    String?  @default("")
+  otp_auth_url  String?  @default("")
 }
 
 model Lobby {
-  id String @id
-  admin User? @relation(name: "owned", fields: [adminId], references: [id])
-  adminId Int?
-  createdAt DateTime
-  type String
+  id         String   @id
+  admin      User?    @relation(name: "owned", fields: [adminId], references: [id])
+  adminId    Int?
+  createdAt  DateTime
+  type       String
   maxClients Int?
+}
+
+model Match {
+  id            Int      @id
+
+  createAt      DateTime
+  finishedAt    DateTime
+
+  userOneId     Int
+  userOnePoints Int
+
+  userTwoId     Int
+  userTwoPoints Int
 }

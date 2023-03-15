@@ -1,5 +1,5 @@
-import { api } from "lib/api"
+import {api} from 'lib/api';
 
 export const clearUsers = () => {
-    api.delete('/users/clear');
-}
+	api.delete('/users/clear');
+};

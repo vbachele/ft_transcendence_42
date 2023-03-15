@@ -110,14 +110,6 @@ export class UserService {
 				},
 			});
 			return user;
-		} catch (error) {
-			throw new HttpException(
-				{
-					status: HttpStatus.INTERNAL_SERVER_ERROR,
-					error: `Failed to retrieve user with email ${email}.`,
-				},
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
-		}
+		} catch (error) {}
 	}
 }

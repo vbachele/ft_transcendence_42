@@ -30,7 +30,6 @@ export const api = {
 			body: JSON.stringify(data) || '{}',
 		});
 	},
-	//? pas besoin de data pour update les amis et bloques
 	async patchURL(url: string) {
 		return await fetch('/api' + url, {...requestConfig, method: 'PATCH'});
 	},
