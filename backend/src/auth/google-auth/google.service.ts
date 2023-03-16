@@ -17,31 +17,44 @@ export class GoogleService {
 /* CREATE USER FROM GOOGLE IN DATABASE */  
 
 async handleGoogleUserCreation(@Res() res: Response, @Req() req: Request) { 
-  const userGoogleInfos = await this.getUserFromGoogleByCookies(req)
-  if (userGoogleInfos) {
-    const finalUser = await this.createDataBaseUserFromGoogle
-  (
-    userGoogleInfos,
-    req.body.name,
-    req.body.isRegistered
-  );
-  return res.status(200).json(
-  {
-    statusCode: 200,
-    path: finalUser,
-  });
-}
+  
+  try {
+    const userGoogleInfos = await this.getUserFromGoogleByCookies(req)
+    if (userGoogleInfos) {
+      const finalUser = await this.createDataBaseUserFromGoogle
+    (
+      res,
+      userGoogleInfos,
+      req.body.name,
+      req.body.isRegistered
+    )
+      return res.status(200).json(
+      {
+        statusCode: 200,
+        path: finalUser,
+      });
+  }} catch (error) {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: "Error to create the user to the database"
+      }, HttpStatus.BAD_REQUEST); 
+    };
 }
 
+
 async createDataBaseUserFromGoogle(
+    @Res() res: Response,
     userGoogle: any,
     name: string,
     isRegistered: boolean
+
   ) {
     try {
+      const coalition = this.chooseRandomString();
       const user = await this.prisma.user.create({
         data: {
-          coalition: "Federation",
+          coalition: coalition,
           achievements: [],
           accessToken: userGoogle.access_token,
           isRegistered: isRegistered,
@@ -61,6 +74,7 @@ async createDataBaseUserFromGoogle(
 }
 
 /* GET FUNCTIONS  */ 
+
   async getOauth2ClientGoogle() {
     const oauth2Client = new google.auth.OAuth2(
       '28591145240-gpha0h1g8rkbldlvvc5dfc59gkaf4n7s.apps.googleusercontent.com',
@@ -93,19 +107,20 @@ async createDataBaseUserFromGoogle(
   }
 
   async getUserFromGoogle(tokens: any) {
-
-    console.log(`TOKEN IS`, tokens.access_token);
-    
+    try {
     const oauth2Client = await this.getOauth2ClientGoogle();
     await oauth2Client.setCredentials(tokens);
     const { data } = await google.oauth2('v2').userinfo.get({ auth: oauth2Client });
-    console.log("INSIDE AFTER");
-
     let userInfos = {
 			email: data.email,
       access_token: tokens.access_token,
 		}
     return userInfos;
+  }
+  catch(error) {
+    console.log("Fetch google user doesnt work, next step is testing with 42api")
+  }
+    return null;
   }
 
   async getUserFromGoogleByCookies(@Req() req: Request) {
@@ -114,4 +129,9 @@ async createDataBaseUserFromGoogle(
     return data;
   }
 
+  chooseRandomString() {
+    const strings = ["Federation", "Order", "Assembly", "Alliance"];
+    const randomIndex = Math.floor(Math.random() * strings.length);
+    return strings[randomIndex];
+  }
 }

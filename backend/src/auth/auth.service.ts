@@ -3,8 +3,6 @@ import { UserService } from "src/api/users/users.service";
 import { Request, Response, request } from "express";
 import { Oauth42Service } from "src/auth/auth42/Oauth42.service";
 import { PrismaService } from "src/database/prisma.service";
-import { UserDetails } from "./google-auth/types";
-import {google} from 'googleapis'
 import { GoogleService } from "./google-auth/google.service";
 import { UserDto } from "./dto";
 
@@ -18,19 +16,52 @@ export class AuthService {
   ) {}
 
 /* DATABASE Creation function */ 
+async createDataBase42User(
+  user42: any,
+  token: string,
+  username: string,
+  isRegistered: boolean
+) {
+  try {
+    const user = await this.prisma.user.create({
+      data: {
+        coalition: user42.coalition,
+        achievements: [],
+        accessToken: token,
+        isRegistered: isRegistered,
+        user42Name: user42.login,
+        name: username,
+        email: user42.email,
+      },
+    });
+    
+    return user;
+  } catch (error) {
+    throw new HttpException(
+    {
+      status: HttpStatus.BAD_REQUEST,
+      error: "Error to create the user to the database"
+    }, HttpStatus.BAD_REQUEST); 
+    };
+}
 
   async handleDataBaseCreation(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
     const token: string = req.cookies.token;
     const user42infos = await this.Oauth42.access42UserInformation(token);
     if (user42infos)
       { 
-        const finalUser = this.Oauth42.handle42UserCreation(res,user42infos, token, req);
+        const finalUser = await this.Oauth42.createDataBase42User(    user42infos,
+        token,
+        req.body.name,
+        req.body.isRegistered);
+        console.log("INSIDE THE WRONG FUNCTION 42 USER");
+        
         return res.status(200).json({
         statusCode: 200,
         path: finalUser,
       });
     }
-      this.googleService.handleGoogleUserCreation(res, req); 
+    await this.googleService.handleGoogleUserCreation(res, req); 
   }
 
   async RedirectConnectingUser(

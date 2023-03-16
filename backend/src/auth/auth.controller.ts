@@ -22,7 +22,7 @@ export class AuthController {
   }
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
-    await this.authService.handleDataBaseCreation(req, res, UserDto);
+   await this.authService.handleDataBaseCreation(req, res, UserDto);
   }
 
   /***  After the user said yes to connect to 42 API, we attribute the token and we check if he exists in the database ***/

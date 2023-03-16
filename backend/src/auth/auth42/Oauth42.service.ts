@@ -80,16 +80,4 @@ export class Oauth42Service {
       }, HttpStatus.BAD_REQUEST); 
       };
   }
-
-  /* User creation from 42 in DATABASE */
-  async handle42UserCreation(@Res() res: Response, user42infos: any, token: string, @Req() req: Request) {    
-      const finalUser = await this.createDataBase42User(
-        user42infos,
-        token,
-        req.body.name,
-        req.body.isRegistered
-      )
-      return finalUser;
-    }
-
 }
