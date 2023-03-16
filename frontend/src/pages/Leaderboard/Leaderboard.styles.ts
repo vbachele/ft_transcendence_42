@@ -35,7 +35,7 @@ export const Container = styled.div`
 export const FiltersContainer = styled.div`
 	display: flex;
 	justify-content: center;
-	gap: 5%;
+	gap: 64px;
 	margin-bottom: 32px;
 
 	.player-count {
@@ -43,34 +43,13 @@ export const FiltersContainer = styled.div`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		font-size: 16px;
 	}
 
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
 		gap: 24px;
 		margin: 0 20%;
-	}
-`;
-
-export const SearchPlayer = styled.input`
-	border-radius: 20px;
-	padding: 12px 18px;
-	border: 1px solid #f6f6f7;
-	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-`;
-
-export const SearchCoalition = styled.select`
-	border-radius: 8px;
-	padding: 12px 18px;
-	border: 1px solid #d9d9d9;
-	width: 150px;
-	align-self: center;
-	/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
-	cursor: pointer;
-	transition: border-color 0.1s linear;
-
-	:hover {
-		border-color: #dc4f19;
 	}
 `;
 

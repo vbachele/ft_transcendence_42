@@ -1,10 +1,10 @@
-import {IUser} from 'types/models';
 import {ReactComponent as Unblock} from '../assets/block.svg';
+import {useUserInfos} from 'contexts/User/userContent';
+import {backend} from 'lib/backend';
+import {IUser} from 'types/models';
+import {notification} from 'antd';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
-import {backend} from 'lib/backend';
-import {useUserInfos} from 'contexts/User/userContent';
-import {notification} from 'antd';
 
 interface IProps {
 	user: IUser;

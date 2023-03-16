@@ -1,10 +1,8 @@
-import Loading from 'components/Loading';
-import getInfosFromDB from 'contexts/User/GetuserFromDB';
-import {useUserInfos} from 'contexts/User/userContent';
-import {backend} from 'lib/backend';
-import LandingPage from 'pages/Landing';
-import React, {FC, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
+import React, {FC, useEffect, useState} from 'react';
+import {useUserInfos} from 'contexts/User/userContent';
+import LandingPage from 'pages/Landing/Landing';
+import Loading from 'components/Loading';
 
 const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	const navigate = useNavigate();

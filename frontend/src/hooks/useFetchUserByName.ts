@@ -2,7 +2,6 @@ import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
-import useFetchUsers from './useFetchUsers';
 
 async function fetchUser(name: string, blockedOf: string) {
 	try {

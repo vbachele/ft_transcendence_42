@@ -1,21 +1,15 @@
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useUserInfos} from 'contexts/User/userContent';
 import {DownOutlined} from '@ant-design/icons';
-import {Menu, MenuProps} from 'antd';
+import {MenuProps} from 'antd';
 import {Dropdown} from 'antd';
 import {IUser} from 'types/models';
-import BlockUser from 'components/Buttons/Social/BlockUser';
-import AddFriend from 'components/Buttons/Social/AddFriend';
-import Message from 'components/Buttons/Social/Message';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
+import {backend} from 'lib/backend';
+import {useUserInfos} from 'contexts/User/userContent';
 import isUserIn from 'helpers/isUserIn';
+import Buttons from 'components/Buttons';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
-import {useEffect, useState} from 'react';
-import {backend} from 'lib/backend';
-import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
-import Spectate from 'components/Buttons/Social/Spectate';
-import Invite from 'components/Buttons/Social/Invite';
 
 interface IProps {
 	user: IUser;
@@ -56,7 +50,7 @@ const UserDropdown = ({user}: IProps) => {
 								setDropdownVisible(false);
 							}}
 						>
-							<AddFriend user={user} />
+							<Buttons.AddFriend user={user} />
 						</S.OptionButton>
 					)}
 				</>
@@ -66,7 +60,7 @@ const UserDropdown = ({user}: IProps) => {
 		{
 			label: (
 				<S.OptionButton>
-					<Message user={user.name} />
+					<Buttons.Message user={user.name} />
 				</S.OptionButton>
 			),
 			key: 'MESSAGE',
@@ -80,7 +74,7 @@ const UserDropdown = ({user}: IProps) => {
 								setDropdownVisible(false);
 							}}
 						>
-							<Invite id={user.name} />
+							<Buttons.Invite id={user.name} />
 						</S.OptionButton>
 					)}
 				</>
@@ -96,7 +90,7 @@ const UserDropdown = ({user}: IProps) => {
 								setDropdownVisible(false);
 							}}
 						>
-							<Spectate user={user.name} />
+							<Buttons.Spectate user={user.name} />
 						</S.OptionButton>
 					)}
 				</>
@@ -112,7 +106,7 @@ const UserDropdown = ({user}: IProps) => {
 								setDropdownVisible(false);
 							}}
 						>
-							<RemoveFriend user={user} />
+							<Buttons.RemoveFriend user={user} />
 						</S.OptionButton>
 					)}
 				</>
@@ -124,7 +118,7 @@ const UserDropdown = ({user}: IProps) => {
 				<>
 					{true && (
 						<S.OptionButton onClick={redirectToHome}>
-							<BlockUser user={user} />
+							<Buttons.BlockUser user={user} />
 						</S.OptionButton>
 					)}
 				</>

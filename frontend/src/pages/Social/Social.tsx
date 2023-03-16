@@ -1,19 +1,16 @@
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
-import {Collapse, Divider, Empty, Input} from 'antd';
-import Friend from './components/Friend';
-import * as S from './Social.styles';
-import * as F from 'styles/font.styles';
+import {Empty, Input} from 'antd';
 import compareStatus from 'helpers/compareStatus';
-import Blocked from './components/Blocked';
 import filterByName from 'helpers/filterByName';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import {useUserInfos} from 'contexts/User/userContent';
+import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
-import {backend} from 'lib/backend';
-import unlockAchievement from 'helpers/unlockAchievement';
 import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
+import Friend from './components/Friend';
 import Pending from './components/Pending';
+import Blocked from './components/Blocked';
+import * as S from './Social.styles';
 
 const {Search} = Input;
 
@@ -93,10 +90,7 @@ function Social() {
 				}}
 				enterButton
 			/>
-			<S.StyledCollapse
-				ghost={true}
-				// defaultActiveKey={['FRIENDS', 'PENDING', 'BLOCKED']}
-			>
+			<S.StyledCollapse ghost={true}>
 				<S.StyledPanel
 					header={`Friends - ${
 						friendUsers &&
