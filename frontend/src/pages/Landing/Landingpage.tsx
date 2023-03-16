@@ -3,19 +3,20 @@ import logo from "assets/logo-text.svg";
 import * as S from "./Landingpage.styles";
 import { Subtitle } from "styles/font.styles";
 import { backend } from "lib/backend";
+import Popup from "components/Popup";
 
 const LandingPage = () => {
   const [click, setClick] = useState(false);
+
   const Oauth42 = () => {
     setClick(!click);
-    let url = `${import.meta.env.VITE_AUTH42_URL}`;
-    window.open(url, "_self");
+    // let url = `${import.meta.env.VITE_AUTH42_URL}`;
+    // window.open(url, "_self");
   };
-  const OauthGoogle = async () => {
+  const handleClick = () => {
     setClick(!click);
-    let url = `${import.meta.env.VITE_GOOGLE_URL}`;
-    window.open(url, "_self")
-    const response = await backend.AuthWithGoogle();
+    // let url = `${import.meta.env.VITE_GOOGLE_URL}`;
+    // window.open(url, "_self")
   };
 
   return (
@@ -34,19 +35,14 @@ const LandingPage = () => {
           </S.logo>
           <S.menus id="menus">
             <S.menuHighlight id="menu-highlight" />
-            <S.link onClick={Oauth42}>
+            <S.link onClick={handleClick}>
               <S.italicHighlight className="italic highlight">
                 JOIN THE BATTLE
               </S.italicHighlight>
+            {click && (<Popup.AuthPopup click={click}
+                  onClose={() => setClick(false)}></Popup.AuthPopup>)}
             </S.link>
-              <br/>
-              <br/>
               <S.menuHighlight id="menu-highlight" />
-            <S.link onClick={OauthGoogle}>
-              <S.italicHighlight className="italic highlight">
-                JOIN THE BATTLE (with google)
-              </S.italicHighlight>
-            </S.link>
           </S.menus>
         </S.left>
       </S.main>
