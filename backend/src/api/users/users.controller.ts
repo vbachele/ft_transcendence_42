@@ -27,9 +27,7 @@ export class UserController {
   }
   /***  Here we check it the request if an image to update otherwise we update the user ***/
   @Patch(":name")
-  async PatchUser(@Req() req: Request, @Param() params: FindOneParams) {
-    console.log(req.params.name);
-    
+  async PatchUser(@Req() req: Request, @Param() params: FindOneParams) {    
     if (req.body.image) {
       const user = this.cloudinaryService.uploadImage(req);
       return user;

@@ -67,7 +67,6 @@ export class DoubleAuthService {
 				  otp_verified: true,
 				},
 			  });
-			  console.log("2FA enabled in settings");
 			  
 			  res.status(200).json({
 				otp_verified: true,

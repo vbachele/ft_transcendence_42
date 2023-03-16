@@ -43,6 +43,12 @@ export const backend = {
     return await response.json();
   },
 
+  // auth with google
+  async AuthWithGoogle() : Promise<any> {
+    const response = await api.get("/auth/google");
+    return await response.json();
+  },
+
   //doubleauth(2FA) PART 
   async generate2FA(user : unknown): Promise<any> {
     const response = await api.post("/2FA/generate", user);

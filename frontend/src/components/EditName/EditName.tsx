@@ -16,8 +16,11 @@ interface Props {
 const EditName = (props: Props) => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const [loading, setLoading] = useState(false)
-  const [uploadApproved, setUploadApproved] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [uploadApproved, setUploadApproved] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorImage, setErrorImage] = useState(false);
+
 
   const {
     userName,
@@ -48,13 +51,23 @@ const EditName = (props: Props) => {
       };
       const user = await backend.createUser(UserCreation);
       const upload = await backend.patchUser(value, image);
+      if (user.statusCode === 400) {
+        setError(true);
+        setUploadApproved(false);
+        setLoading(false);
+      }
+      if (upload.statusCode === 400) {
+        setErrorImage(true);
+        setUploadApproved(false);
+        setLoading(false);
+      }
       setUserInfosContext(value);
   }
 
   /* Registration of the user in database in the page /registration*/
   async function userRegistrationPage() {
     if (props.page === "registration") {
-      const user = await createUser(value);
+      const response = await createUser(value);
     }
   }
 
@@ -65,6 +78,13 @@ const EditName = (props: Props) => {
         name: value,
       };
       const response = await backend.patchUser(userName.userName, newuserName);
+      if (response.statusCode === 400) {
+        setError(true);
+        setUploadApproved(false);
+        setLoading(false);
+        return;
+      }
+      setError(false);
       setUserName({ userName: value });
       setUploadApproved(true);
       setLoading(false);
@@ -85,6 +105,7 @@ const EditName = (props: Props) => {
 
   return (
     <S.FormContainer onSubmit={handleSubmit}>
+      <S.errorDisplay>
       <S.InputContainer>
         <F.Text weight="600">
           {props.page === "settings" && "Change your nickname"}
@@ -99,7 +120,10 @@ const EditName = (props: Props) => {
           minLength={2}
           required
         />
+        {error && <F.Subtitle style={{color:'#E04F5F',  textAlign: "left" }} weight={"350"} fontSize="1rem">Nickname is already taken</F.Subtitle>}
+        {errorImage && <F.Subtitle style={{color:'#E04F5F',  textAlign: "left" }} weight={"350"} fontSize="1rem">Impossible to load file</F.Subtitle>}
       </S.InputContainer>
+      </S.errorDisplay>
       <S.ConfirmContainer>
       <UI.SecondaryButton type="submit">
         {props.page === "settings" && "Confirm"}

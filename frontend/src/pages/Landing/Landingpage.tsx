@@ -1,6 +1,8 @@
 import { useState } from "react";
 import logo from "assets/logo-text.svg";
 import * as S from "./Landingpage.styles";
+import { Subtitle } from "styles/font.styles";
+import { backend } from "lib/backend";
 
 const LandingPage = () => {
   const [click, setClick] = useState(false);
@@ -8,6 +10,12 @@ const LandingPage = () => {
     setClick(!click);
     let url = `${import.meta.env.VITE_AUTH42_URL}`;
     window.open(url, "_self");
+  };
+  const OauthGoogle = async () => {
+    setClick(!click);
+    let url = `${import.meta.env.VITE_GOOGLE_URL}`;
+    window.open(url, "_self")
+    const response = await backend.AuthWithGoogle();
   };
 
   return (
@@ -29,6 +37,14 @@ const LandingPage = () => {
             <S.link onClick={Oauth42}>
               <S.italicHighlight className="italic highlight">
                 JOIN THE BATTLE
+              </S.italicHighlight>
+            </S.link>
+              <br/>
+              <br/>
+              <S.menuHighlight id="menu-highlight" />
+            <S.link onClick={OauthGoogle}>
+              <S.italicHighlight className="italic highlight">
+                JOIN THE BATTLE (with google)
               </S.italicHighlight>
             </S.link>
           </S.menus>
