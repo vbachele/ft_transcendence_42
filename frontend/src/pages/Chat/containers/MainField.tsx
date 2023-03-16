@@ -13,10 +13,10 @@ interface MainFieldProps {
 
 function MainField({setOpenUserPanel}: MainFieldProps) {
 	const {activeLobby} = useContext(ChatContext).ChatState;
+	const messages = useReceiveMessage();
 
 	if (!activeLobby) return <EmptyChat />;
 
-	const messages = useReceiveMessage();
 
 	return (
 		<C.MainFieldLayout>
@@ -25,6 +25,7 @@ function MainField({setOpenUserPanel}: MainFieldProps) {
 				<C.MessageList>
 					{messages.map((message, index) => (
 						<Message
+							key={index}
 							authorName={message.authorName}
 							content={message.content}
 							date={message.createdAt}

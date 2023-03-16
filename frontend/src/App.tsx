@@ -35,13 +35,12 @@ function App() {
 			<>
 				<Pages.Navbar setTheme={setTheme} />
 				<Routes>
-					<Route path='/chat' element={<Pages.Chat />} />
 					<Route path='/leaderboard' element={<Pages.Leaderboard />} />
 					<Route path='/dashboard/:name' element={<Pages.Dashboard />} />
 					<Route path='/settings' element={<Pages.Settings />} />
 					<Route path='/headings' element={<Pages.Headings />} />
 					<Route path='/social' element={<Social />} />
-					<Route path='/users' element={<UserMocks />} />,
+					{/*<Route path='/users' element={<UserMocks />} />,*/}
 					<Route path='/game' element={<Game />} />
 					<Route path='*' element={<Pages.NotFound />} />
 					<Route path='/fake_login' element={<FakeLogin />} />
