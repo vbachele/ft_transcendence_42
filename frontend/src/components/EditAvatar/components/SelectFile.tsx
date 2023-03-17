@@ -102,7 +102,7 @@ export const SelectFile = (props: Props) => {
         id="file-input"
         value={fileInputState}
         onChange={handleFileInputChange}
-        accept="image/*"
+        accept=".png,.jpg,.jpeg"
         style={{ display: "none" }}
       />
     </label>

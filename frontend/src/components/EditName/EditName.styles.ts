@@ -60,3 +60,10 @@ export const loadingimg = styled.img`
   width: 32px;
   height: 32px;
 `
+
+export const errorDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+` 
