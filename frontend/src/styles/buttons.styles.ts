@@ -39,7 +39,7 @@ export const PrimaryButton = styled(Button)`
 	&:hover {
 		background-color: #a53b13;
 	}
-	`;
+`;
 
 // prettier-ignore
 export const SecondaryButton = styled(Button)`
@@ -77,14 +77,14 @@ export const SecondaryButtonSmall = styled(Button)`
 	}
 `;
 
-interface Iprops {
+interface IButtonProps {
 	backgroundColor?: string;
 	border?: string;
 	width?: string;
 	height?: string;
 }
 
-export const PopupButton = styled(Button)<Iprops>`
+export const PopupButton = styled(Button)<IButtonProps>`
 	background-color: ${(p) => p.backgroundColor || 'transparent'};
 	height: 50px;
 	border: ${(p) => p.border || 'none'};
@@ -100,7 +100,7 @@ export const PopupButton = styled(Button)<Iprops>`
 	}
 `;
 
-export const DoubleAuthButton = styled.button<Iprops>`
+export const DoubleAuthButton = styled.button<IButtonProps>`
 	background-color: ${(p) => p.backgroundColor || '#DC4F19'};
 	height: 30px;
 	border: ${(p) => p.border || 'none'};

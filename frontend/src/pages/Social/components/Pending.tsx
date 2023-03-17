@@ -33,7 +33,7 @@ function Pending({user, onAccept, onDeny}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name}'s request has been accepted`}</div>
 			),
-			placement: 'bottom',
+			placement: 'top',
 			duration: 2.5,
 		});
 
@@ -56,7 +56,7 @@ function Pending({user, onAccept, onDeny}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name}'s request has been denied`}</div>
 			),
-			placement: 'bottom',
+			placement: 'top',
 			duration: 2.5,
 		});
 	};

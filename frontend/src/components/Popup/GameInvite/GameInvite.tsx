@@ -88,7 +88,7 @@ const GameInvite = () => {
 	return (
 		<Popup
 			title="Join game?"
-			subtitle="Bartholomeow has just invited you"
+			subtitle="Username has just invited you"
 			loadingBar={<LoadingBar />}
 			stopPropagation={true}
 			overlay={true}

@@ -13,32 +13,28 @@ import * as F from 'styles/font.styles';
 
 interface IProps {
 	user: IUser;
+	friendUsers: IUser[];
+	dropdownVisible: boolean;
+	setDropdownVisible: (value: React.SetStateAction<boolean>) => void;
 }
 
-const UserDropdown = ({user}: IProps) => {
+const UserDropdown = ({
+	user,
+	friendUsers,
+	dropdownVisible,
+	setDropdownVisible,
+}: IProps) => {
 	const {userName} = useUserInfos();
 	const myself: Boolean = userName.userName === user.name;
-	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
-	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const navigate = useNavigate();
-
-	const handleDropdownVisibleChange = (visible: boolean) => {
-		setDropdownVisible(visible);
-	};
 
 	const redirectToHome = () => {
 		navigate('/');
 	};
 
-	useEffect(() => {
-		const fetchFriends = async () => {
-			const data = await backend.getFriendsOf(userName.userName);
-			if (data) {
-				setFriendUsers(data);
-			}
-		};
-		fetchFriends();
-	}, [dropdownVisible]);
+	const handleDropdownVisibleChange = (visible: boolean) => {
+		setDropdownVisible(visible);
+	};
 
 	const items: MenuProps['items'] = [
 		{

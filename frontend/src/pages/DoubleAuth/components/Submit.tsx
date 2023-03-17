@@ -169,8 +169,8 @@ const Submit2FA = () => {
 					></I.Input>
 				</S.Container__Input>
 				{error && (
-					<Subtitle style={{color: '#E04F5F'}}>
-						Code invalid try again!
+					<Subtitle style={{color: '#ff4d4f'}}>
+						Invalid code, please try again
 					</Subtitle>
 				)}
 			</S.Container__input__error>

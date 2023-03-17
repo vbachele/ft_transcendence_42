@@ -42,7 +42,7 @@ function AddFriend({user}: IProps) {
 				message: (
 					<div style={{marginBottom: -8}}>{`${user.name} can't be added`}</div>
 				),
-				placement: 'bottom',
+				placement: 'top',
 				duration: 2.5,
 			});
 			return;
@@ -54,7 +54,8 @@ function AddFriend({user}: IProps) {
 			backend.addFriend(user.name, userName.userName);
 			backend.addFriend(userName.userName, user.name);
 
-			//TODO move this to backend + change user token
+			//TODO move this to backend
+			//TODO socket on
 			// unlockAchievement('ADD', userName.userName);
 			// unlockAchievement('ADD', user.name);
 			// if (friends && friends.length + 1 >= 3) {
@@ -66,7 +67,7 @@ function AddFriend({user}: IProps) {
 				message: (
 					<div style={{marginBottom: -8}}>{`${user.name} has been added`}</div>
 				),
-				placement: 'bottom',
+				placement: 'top',
 				duration: 2.5,
 			});
 
@@ -81,7 +82,7 @@ function AddFriend({user}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name} has been requested`}</div>
 			),
-			placement: 'bottom',
+			placement: 'top',
 			duration: 2.5,
 		});
 	};

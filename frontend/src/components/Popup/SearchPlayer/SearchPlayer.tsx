@@ -21,8 +21,7 @@ function SearchPlayer({}) {
 			headerImage={<FireGif />}
 			loadingBar={<Timer />}
 			style={{
-				position: 'absolute',
-				zIndex: '100',
+				cursor: 'move',
 			}}
 			draggable={true}
 		>

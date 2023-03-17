@@ -10,7 +10,6 @@ export const api = {
 		return await fetch('/api' + url, {...requestConfig, method: 'GET'});
 	},
 	async getFilterBlocked(url: string, blockedOf: string) {
-		console.log('BLOCKED OF: ', blockedOf);
 		return await fetch('/api' + url + '?blockedOf=' + blockedOf, {
 			...requestConfig,
 			method: 'GET',

@@ -123,6 +123,7 @@ function App() {
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
+							{/* <Notif.Achievement /> //TODO */}
 							{routes}
 						</ConfigProvider>
 					</ThemeProvider>

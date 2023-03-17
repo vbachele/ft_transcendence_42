@@ -32,7 +32,7 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 			message: (
 				<div style={{marginBottom: -8}}>{`${user.name} has been removed`}</div>
 			),
-			placement: 'bottom',
+			placement: 'top',
 			duration: 2.5,
 		});
 	};

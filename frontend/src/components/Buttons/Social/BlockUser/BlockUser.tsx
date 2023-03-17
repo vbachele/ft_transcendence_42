@@ -44,7 +44,7 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 			message: (
 				<div style={{marginBottom: -8}}>{`${user.name} has been blocked`}</div>
 			),
-			placement: 'bottom',
+			placement: 'top',
 			duration: 2.5,
 		});
 	};

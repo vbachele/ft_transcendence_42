@@ -84,10 +84,9 @@ export const HDiv = styled.div`
 	gap: 8px;
 
 	svg {
-		width: 20px;
-		height: 20px;
-		min-width: 16px;
-		min-height: 16px;
+		fill: white;
+		width: 24px;
+		height: 24px;
 	}
 `;
 
