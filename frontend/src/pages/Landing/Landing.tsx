@@ -1,14 +1,13 @@
 import {useState} from 'react';
 import logo from 'assets/logo-text.svg';
 import * as S from './Landing.styles';
+import Popup from 'components/Popup';
 
 const Landing = () => {
 	const [click, setClick] = useState(false);
-	const Oauth42 = () => {
+	const handleClick = () => {
 		setClick(!click);
-		let url = `${import.meta.env.VITE_AUTH42_URL}`;
-		window.open(url, '_self');
-	};
+	  };
 
 	return (
 		<S.Container>
@@ -22,8 +21,10 @@ const Landing = () => {
 				<S.Logo src={logo} />
 				<S.Slogan>Two sides, one victory</S.Slogan>
 			</S.BrandContainer>
-			<S.JoinButton onClick={Oauth42}>
+			<S.JoinButton onClick={handleClick}>
 				<S.BoldYellow>JOIN THE BATTLE</S.BoldYellow>
+				{click && (<Popup.AuthPopup click={click}
+                  onClose={() => setClick(false)}></Popup.AuthPopup>)}
 			</S.JoinButton>
 		</S.Container>
 	);
