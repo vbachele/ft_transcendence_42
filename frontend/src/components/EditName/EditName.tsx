@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
+import {Input} from 'antd';
 
 interface Props {
 	visible?: boolean;
@@ -92,9 +93,10 @@ const EditName = (props: Props) => {
 					{props.page === 'settings' && 'Change your nickname'}
 					{props.page === 'registration' && 'Choose a nickname*'}
 				</F.Text>
-				<S.Input
+				<Input
 					type="text"
 					value={value}
+					size="large"
 					onChange={handleChange}
 					placeholder="Enter your nickname"
 					maxLength={8}

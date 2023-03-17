@@ -14,6 +14,7 @@ export const Container = styled.div`
 	width: clamp(80px, 80%, 375px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	background-color: ${(p) => (p.theme.name === 'dark' ? '#000' : '#fff')};
+	z-index: 100;
 `;
 
 export const DisableContainer = styled.div`
@@ -29,6 +30,7 @@ export const DisableContainer = styled.div`
 	width: clamp(80px, 80%, 375px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	background-color: ${(p) => (p.theme.name === 'dark' ? '#000' : '#fff')};
+	z-index: 100;
 `;
 
 export const Title = styled.div`
