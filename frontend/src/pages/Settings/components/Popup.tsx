@@ -4,6 +4,7 @@ import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
 import * as S from './Popup.styles';
 import * as F from 'styles/font.styles';
+import * as UI from 'styles/buttons.styles';
 import {Button, Form, Input, notification} from 'antd';
 
 interface IProps {
@@ -106,18 +107,7 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 				)}
 				<div style={{display: 'flex', gap: '32px', justifyContent: 'center'}}>
 					<Form.Item>
-						<S.PopupButton
-							onClick={() => {
-								setIsOpen(false);
-							}}
-						>
-							Cancel
-						</S.PopupButton>
-					</Form.Item>
-					<Form.Item>
-						<S.PopupButton type="primary" htmlType="submit">
-							Submit
-						</S.PopupButton>
+						<UI.PrimaryButton>Confirm</UI.PrimaryButton>
 					</Form.Item>
 				</div>
 			</Form>

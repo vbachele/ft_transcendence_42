@@ -14,8 +14,6 @@ export const Container = styled.div`
 	position: fixed;
 	top: calc(50% - 150px);
 	right: calc(50% - 150px);
-	width: 300px;
-	height: 300px;
 
 	display: flex;
 	flex-direction: column;

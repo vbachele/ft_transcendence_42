@@ -40,7 +40,7 @@ const Homepage = () => {
 							onClose={() => setLogout(false)}
 						/>
 					)}
-					LOG OUT
+					LOGOUT
 				</S.RegularButton>
 			</S.LinksContainer>
 			<S.UserInfo to={`/dashboard/${userName.userName}`}>

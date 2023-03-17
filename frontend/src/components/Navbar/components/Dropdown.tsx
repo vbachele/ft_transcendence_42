@@ -132,7 +132,7 @@ const Dropdown = () => {
 					{/* LOGOUT */}
 					<S.PopupButton onClick={handleLogout}>
 						<Logout />
-						<F.Text weight="400">Log Out</F.Text>
+						<F.Text weight="400">Logout</F.Text>
 					</S.PopupButton>
 				</S.LinksContainer>
 			</S.DropdownContainer>

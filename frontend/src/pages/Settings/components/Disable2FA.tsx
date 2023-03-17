@@ -1,6 +1,7 @@
 import {notification} from 'antd';
 import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
+import * as UI from 'styles/buttons.styles';
 import * as F from 'styles/font.styles';
 import * as S from './Popup.styles';
 
@@ -33,9 +34,9 @@ const Disable2FA = ({setIsOpen}: IProps) => {
 				<F.H2>Disable 2FA</F.H2>
 				<F.Subtitle>Are you sure ?</F.Subtitle>
 			</div>
-			<S.PopupButton type="primary" size="large" onClick={handleClick}>
-				Confirm
-			</S.PopupButton>
+			<UI.PopupButton backgroundColor={'#DC4F19'} onClick={handleClick}>
+				Disable 2FA
+			</UI.PopupButton>
 		</S.DisableContainer>
 	);
 };
