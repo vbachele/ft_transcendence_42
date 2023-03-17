@@ -16,7 +16,7 @@ interface IProps {
 	onDeny: (user: IUser) => void;
 }
 
-function Pending({user, onAccept, onDeny}: IProps) {
+function PendingReceived({user, onAccept, onDeny}: IProps) {
 	const {userName} = useUserInfos();
 	const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
 
@@ -87,4 +87,4 @@ function Pending({user, onAccept, onDeny}: IProps) {
 	);
 }
 
-export default Pending;
+export default PendingReceived;

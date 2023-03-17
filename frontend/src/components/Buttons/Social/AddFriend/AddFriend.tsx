@@ -20,10 +20,18 @@ function AddFriend({user}: IProps) {
 		const data = await backend.getFriendsOf(user.name);
 		return data;
 	};
-	const fetchPendings = async (): Promise<IUser[]> => {
+
+	const fetchPendings = async (): Promise<{
+		sentPendings: IUser[];
+		receivedPendings: IUser[];
+	}> => {
 		const data = await backend.getPendingsOf(userName.userName);
-		return data;
+		return {
+			sentPendings: data.sentPendings || [],
+			receivedPendings: data.receivedPendings || [],
+		};
 	};
+
 	const fetchBlocked = async (): Promise<IUser[]> => {
 		const data = await backend.getBlockedOf(user.name);
 		return data;
@@ -31,7 +39,7 @@ function AddFriend({user}: IProps) {
 
 	const handleClick = async () => {
 		const friends = await fetchFriends();
-		const pendings = await fetchPendings();
+		const {sentPendings, receivedPendings} = await fetchPendings();
 		const blocked = await fetchBlocked();
 
 		if (
@@ -48,7 +56,7 @@ function AddFriend({user}: IProps) {
 			return;
 		}
 
-		if (isUserIn(pendings, user.name)) {
+		if (isUserIn(receivedPendings, user.name)) {
 			backend.removePending(user.name, userName.userName);
 			backend.removePending(userName.userName, user.name);
 			backend.addFriend(user.name, userName.userName);

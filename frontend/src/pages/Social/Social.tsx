@@ -8,28 +8,28 @@ import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
 import Friend from './components/Friend';
-import Pending from './components/Pending';
+import PendingSent from './components/PendingSent';
+import PendingReceived from './components/PendingReceived';
 import Blocked from './components/Blocked';
 import * as S from './Social.styles';
 
 const {Search} = Input;
 
-function isEmpty(users: IUser[]): string {
-	if (!users || users.length === 0) {
-		return 'true';
-	}
-	return 'false';
-}
+const isEmpty = (users: IUser[]): boolean => !users || users.length === 0;
 
 function Social() {
 	const {userName} = useUserInfos();
 	const [search, setSearch] = useState('');
+
 	const {data: friends} = useFetchFriendsOf(userName.userName);
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
-	const {data: pendings} = useFetchPendingsOf(userName.userName);
+	const {sentPendings, receivedPendings} = useFetchPendingsOf(
+		userName.userName
+	);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
 	const [blockedUsers, setBlockedUsers] = useState<IUser[]>([]);
-	const [pendingUsers, setPendingUsers] = useState<IUser[]>([]);
+	const [pendingsSent, setPendingsSent] = useState<IUser[]>([]);
+	const [pendingsReceived, setPendingsReceived] = useState<IUser[]>([]);
 
 	const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value);
@@ -52,17 +52,23 @@ function Social() {
 		setFriendUsers((prevFriends) =>
 			prevFriends.filter((friend) => friend.name !== user.name)
 		);
+		setPendingsSent((prevPendings) =>
+			prevPendings.filter((pending) => pending.name !== user.name)
+		);
 	};
 
 	const handleAccept = (user: IUser) => {
 		setFriendUsers((prevFriendUsers) => [...prevFriendUsers, user]);
-		setPendingUsers((prevPendings) =>
+		setPendingsReceived((prevPendings) =>
 			prevPendings.filter((pending) => pending.name !== user.name)
 		);
 	};
 
 	const handleDeny = (user: IUser) => {
-		setPendingUsers((prevPendings) =>
+		setPendingsReceived((prevPendings) =>
+			prevPendings.filter((pending) => pending.name !== user.name)
+		);
+		setPendingsSent((prevPendings) =>
 			prevPendings.filter((pending) => pending.name !== user.name)
 		);
 	};
@@ -74,10 +80,13 @@ function Social() {
 		if (friends) {
 			setFriendUsers(friends);
 		}
-		if (pendings) {
-			setPendingUsers(pendings);
+		if (sentPendings) {
+			setPendingsSent(sentPendings);
 		}
-	}, [blocked, pendings, friends]);
+		if (receivedPendings) {
+			setPendingsReceived(receivedPendings);
+		}
+	}, [blocked, sentPendings, receivedPendings, friends]);
 
 	return (
 		<S.Container>
@@ -111,31 +120,41 @@ function Social() {
 									onRemove={handleRemove}
 								/>
 							))}
-					{isEmpty(friendUsers) === 'true' && (
+					{isEmpty(friendUsers) && (
 						<Empty className="empty" description="No friends" />
 					)}
 				</S.StyledPanel>
+
 				<S.StyledPanel
 					header={`Pending - ${
-						pendingUsers &&
-						pendingUsers.filter((user) => filterByName(user, search)).length
+						pendingsSent.filter((user) => filterByName(user, search)).length +
+						pendingsReceived.filter((user) => filterByName(user, search)).length
 					}`}
 					key="PENDING"
-					empty={isEmpty(pendingUsers)}
+					empty={isEmpty(pendingsSent) && isEmpty(pendingsReceived)}
 				>
-					{pendingUsers &&
-						pendingUsers
-							.sort(compareStatus)
+					{pendingsSent &&
+						pendingsSent
 							.filter((user) => filterByName(user, search))
 							.map((user: IUser) => (
-								<Pending
+								<PendingSent
+									user={user}
+									key={user.name}
+									onRemove={handleDeny}
+								/>
+							))}
+					{pendingsReceived &&
+						pendingsReceived
+							.filter((user) => filterByName(user, search))
+							.map((user: IUser) => (
+								<PendingReceived
 									user={user}
 									key={user.name}
 									onAccept={handleAccept}
 									onDeny={handleDeny}
 								/>
 							))}
-					{isEmpty(pendingUsers) === 'true' && (
+					{isEmpty(pendingsReceived) && isEmpty(pendingsSent) && (
 						<Empty className="empty" description="No pending invites" />
 					)}
 				</S.StyledPanel>
@@ -157,7 +176,7 @@ function Social() {
 									onUnblock={handleUnblock}
 								/>
 							))}
-					{isEmpty(blockedUsers) === 'true' && (
+					{isEmpty(blockedUsers) && (
 						<Empty className="empty" description="No blocked users" />
 					)}
 				</S.StyledPanel>

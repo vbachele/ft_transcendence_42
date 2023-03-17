@@ -38,12 +38,12 @@ export const StyledCollapse = styled(Collapse)`
 `;
 
 interface IPanelProps {
-	empty: string;
+	empty: boolean;
 }
 
 export const StyledPanel = styled(Panel)<IPanelProps>`
 	.ant-collapse-content-box {
-		display: ${(p) => (p.empty === 'true' ? 'flex' : 'grid')};
+		display: ${(p) => (p.empty === true ? 'flex' : 'grid')};
 		grid-template-columns: 1fr 1fr 1fr;
 		justify-content: center;
 		gap: 2em;

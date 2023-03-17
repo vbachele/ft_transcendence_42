@@ -2,32 +2,53 @@ import {backend} from 'lib/backend';
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
 
-async function fetchUser(name: string) {
+interface IPendings {
+	sentPendings: IUser[];
+	receivedPendings: IUser[];
+}
+
+async function fetchPendings(name: string) {
 	try {
 		const data = await backend.getPendingsOf(name);
-		return {data, error: null};
+		return {
+			sentPendings: data.sentPendings || [],
+			receivedPendings: data.receivedPendings || [],
+			error: null,
+		};
 	} catch (err) {
-		return {data: null, error: 'Could not fetch the data'};
+		return {
+			sentPendings: [],
+			receivedPendings: [],
+			error: 'Could not fetch the data',
+		};
 	}
 }
 
 function useFetchPendingsOf(name: string) {
-	const [data, setData] = useState<IUser[] | null>(null);
+	const [sentPendings, setSentPendings] = useState<IUser[]>([]);
+	const [receivedPendings, setReceivedPendings] = useState<IUser[]>([]);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		async function fetchData() {
-			const {data, error} = await fetchUser(name);
-
-			setData(data);
-			setError(error);
-			setIsLoading(false);
+			try {
+				const {sentPendings, receivedPendings, error} = await fetchPendings(
+					name
+				);
+				setSentPendings(sentPendings || []);
+				setReceivedPendings(receivedPendings || []);
+				setError(error);
+			} catch (err) {
+				setError('Could not fetch the data');
+			} finally {
+				setIsLoading(false);
+			}
 		}
 		fetchData();
 	}, [name]);
 
-	return {data, isLoading, error};
+	return {sentPendings, receivedPendings, isLoading, error};
 }
 
 export default useFetchPendingsOf;

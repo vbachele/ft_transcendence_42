@@ -57,7 +57,10 @@ export const backend = {
 	},
 
 	// Pending
-	async getPendingsOf(name: string): Promise<IUser[]> {
+	async getPendingsOf(name: string): Promise<{
+		sentPendings: IUser[];
+		receivedPendings: IUser[];
+	}> {
 		const response = await api.get('/pendings/' + name);
 		return await response.json();
 	},
