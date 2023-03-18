@@ -9,6 +9,8 @@ import * as F from 'styles/font.styles';
 import {Link} from 'react-router-dom';
 import unlockAchievement from 'helpers/unlockAchievement';
 import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
+import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
+import isUserIn from 'helpers/isUserIn';
 
 interface IProps {
 	user: IUser;
@@ -18,13 +20,39 @@ interface IProps {
 
 function PendingReceived({user, onAccept, onDeny}: IProps) {
 	const {userName} = useUserInfos();
-	const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
+	// const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
 
-	const handleAccept = () => {
+	const fetchPendings = async (): Promise<{
+		sentPendings: IUser[];
+		receivedPendings: IUser[];
+	}> => {
+		const data = await backend.getPendingsOf(userName.userName);
+		return {
+			sentPendings: data.sentPendings || [],
+			receivedPendings: data.receivedPendings || [],
+		};
+	};
+
+	const handleAccept = async () => {
+		const {receivedPendings} = await fetchPendings();
+
+		if (!isUserIn(receivedPendings, user.name)) {
+			notification.warning({
+				message: (
+					<div style={{marginBottom: -8}}>{`${user.name} can't be added`}</div>
+				),
+				placement: 'bottom',
+				duration: 2.5,
+			});
+			onDeny(user);
+			return;
+		}
+
 		backend.removePending(userName.userName, user.name);
 		backend.removePending(user.name, userName.userName);
 		backend.addFriend(user.name, userName.userName);
 		backend.addFriend(userName.userName, user.name);
+
 		onAccept(user);
 
 		notification.success({
@@ -33,17 +61,17 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name}'s request has been accepted`}</div>
 			),
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 
 		//TODO move this to backend
-		unlockAchievement('ADD', userName.userName);
-		unlockAchievement('ADD', user.name);
-		if (friends && friends.length + 1 >= 3) {
-			unlockAchievement('TEAM', user.name);
-			unlockAchievement('TEAM', userName.userName);
-		}
+		// unlockAchievement('ADD', userName.userName);
+		// unlockAchievement('ADD', user.name);
+		// if (friends && friends.length + 1 >= 3) {
+		// 	unlockAchievement('TEAM', user.name);
+		// 	unlockAchievement('TEAM', userName.userName);
+		// }
 	};
 
 	const handleDeny = () => {
@@ -56,7 +84,7 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name}'s request has been denied`}</div>
 			),
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 	};

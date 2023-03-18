@@ -50,7 +50,7 @@ function AddFriend({user}: IProps) {
 				message: (
 					<div style={{marginBottom: -8}}>{`${user.name} can't be added`}</div>
 				),
-				placement: 'top',
+				placement: 'bottom',
 				duration: 2.5,
 			});
 			return;
@@ -75,7 +75,7 @@ function AddFriend({user}: IProps) {
 				message: (
 					<div style={{marginBottom: -8}}>{`${user.name} has been added`}</div>
 				),
-				placement: 'top',
+				placement: 'bottom',
 				duration: 2.5,
 			});
 
@@ -88,9 +88,9 @@ function AddFriend({user}: IProps) {
 			message: (
 				<div
 					style={{marginBottom: -8}}
-				>{`${user.name} has been requested`}</div>
+				>{`Friend request sent to ${user.name}`}</div>
 			),
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 	};

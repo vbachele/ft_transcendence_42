@@ -23,7 +23,7 @@ const Disable2FA = ({setIsOpen}: IProps) => {
 
 		notification.warning({
 			message: <div style={{marginBottom: -8}}>2FA disabled</div>,
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 	}

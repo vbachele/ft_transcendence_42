@@ -23,7 +23,7 @@ function Blocked({user, onUnblock}: IProps) {
 					style={{marginBottom: -8}}
 				>{`${user.name} has been unblocked`}</div>
 			),
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 	};

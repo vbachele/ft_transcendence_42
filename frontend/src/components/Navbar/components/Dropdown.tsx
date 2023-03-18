@@ -68,7 +68,10 @@ const Dropdown = () => {
 	return (
 		<S.Container ref={dropRef}>
 			<ToggleDrop toggle={toggleDrop} isOpen={isOpen} />
-			<img className="avatar" src={image.image} onClick={toggleDrop} />
+			<div style={{cursor: 'pointer'}} onClick={toggleDrop}>
+				<img className="avatar" src={image.image} />
+				<S.NotifCounter>16</S.NotifCounter>
+			</div>
 			<S.DropdownContainer
 				initial={false}
 				animate={isOpen ? 'open' : 'closed'}
@@ -90,7 +93,7 @@ const Dropdown = () => {
 								state={{selectedOption: 'Federation', rank: 5}}
 								onClick={toggleDrop}
 							>
-								<F.Text weight="400">{coalition.coalition}</F.Text>
+								<F.Text weight="500">{coalition.coalition}</F.Text>
 							</Link>
 						</S.User__Infos>
 					</>
@@ -100,26 +103,32 @@ const Dropdown = () => {
 					{/* PLAY */}
 					<S.PopupButton onClick={handlePlay}>
 						<Play />
-						<F.Text weight="400">Play</F.Text>
+						<F.Text weight="500">Play</F.Text>
 					</S.PopupButton>
 					{/* CHAT */}
-					<Link to="/chat" onClick={toggleDrop}>
+					<Link to="/chat" onClick={toggleDrop} style={{position: 'relative'}}>
 						<Chat />
-						<F.Text weight="400">Chat</F.Text>
+						<F.Text weight="500">Chat</F.Text>
+						<S.NotifCounter>5</S.NotifCounter>
 					</Link>
 					{/* LEADERBOARD */}
 					<Link to="/leaderboard" onClick={toggleDrop}>
 						<Leaderboard />
-						<F.Text weight="400">Leaderboard</F.Text>
+						<F.Text weight="500">Leaderboard</F.Text>
 					</Link>
 					{/* DASHBOARD */}
 					<Link to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
 						<Dashboard />
-						<F.Text weight="400">Career</F.Text>
+						<F.Text weight="500">Career</F.Text>
 					</Link>
-					<Link to={`/social`} onClick={toggleDrop}>
+					<Link
+						to={`/social`}
+						onClick={toggleDrop}
+						style={{position: 'relative'}}
+					>
 						<Friends />
-						<F.Text weight="400">Social</F.Text>
+						<F.Text weight="500">Social</F.Text>
+						<S.NotifCounter>5</S.NotifCounter>
 					</Link>
 				</S.LinksContainer>
 				<hr className="second-hr" />
@@ -127,12 +136,12 @@ const Dropdown = () => {
 					{/* SETTINGS */}
 					<Link to="/settings" onClick={toggleDrop}>
 						<Settings />
-						<F.Text weight="400">Settings</F.Text>
+						<F.Text weight="500">Settings</F.Text>
 					</Link>
 					{/* LOGOUT */}
 					<S.PopupButton onClick={handleLogout}>
 						<Logout />
-						<F.Text weight="400">Logout</F.Text>
+						<F.Text weight="500">Logout</F.Text>
 					</S.PopupButton>
 				</S.LinksContainer>
 			</S.DropdownContainer>

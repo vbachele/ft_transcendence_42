@@ -39,7 +39,7 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 
 		notification.success({
 			message: <div style={{marginBottom: -8}}>2FA enabled</div>,
-			placement: 'top',
+			placement: 'bottom',
 			duration: 2.5,
 		});
 	}
@@ -48,9 +48,7 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 		navigator.clipboard.writeText(secretKey);
 
 		notification.success({
-			message: (
-				<div style={{marginBottom: -8}}>{`Key copied to clipboard`}</div>
-			),
+			message: <div style={{marginBottom: -8}}>Key copied to clipboard</div>,
 			placement: 'bottomRight',
 			duration: 2.5,
 		});

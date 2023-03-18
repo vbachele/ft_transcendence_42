@@ -10,7 +10,7 @@ interface IProps {
 const Button = styled.div`
 	cursor: pointer;
 	position: relative;
-	z-index: 99;
+	z-index: 60;
 	svg {
 		border-radius: 0;
 	}

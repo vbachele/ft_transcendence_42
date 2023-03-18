@@ -24,7 +24,10 @@ export const Container = styled.div`
 export const DropdownContainer = styled(motion.div)`
 	display: flex;
 	flex-direction: column;
+	background-color: #aaa;
 	background-color: #dc4f19;
+	background-color: rgb(0, 0, 0, 0.9);
+	backdrop-filter: blur(16px);
 	position: fixed;
 	z-index: 90;
 	right: 24px;
@@ -91,21 +94,21 @@ export const User = styled.div`
 	}
 `;
 
+// prettier-ignore
 export const User__Infos = styled.div`
-	a,
-	p {
+	a, p {
 		color: white;
 	}
 `;
 
+// prettier-ignore
 export const LinksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: left;
 	gap: 16px;
 
-	a,
-	button {
+
+	a, button {
 		cursor: pointer;
 		width: 100%;
 		color: white;
@@ -125,21 +128,24 @@ export const LinksContainer = styled.div`
 
 	svg {
 		fill: white;
-		width: 24px;
-		height: 24px;
+		width: 28px;
+		height: 28px;
 		border-radius: 0;
 	}
 
 	@media only screen and (max-width: 768px) {
 		gap: 1.5em;
 
-		a,
-		p,
-		button {
+		p {
 			font-weight: 600;
 			font-size: 24px;
-			justify-content: center;
 		}
+
+		a, button {
+			width: fit-content;
+			margin: auto;
+		}
+
 		svg {
 			display: none;
 		}
@@ -149,4 +155,26 @@ export const LinksContainer = styled.div`
 export const PopupButton = styled.button`
 	background-color: transparent;
 	border: none;
+`;
+
+export const NotifCounter = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	padding: 10px;
+	border-radius: 50%;
+	font-size: 16px;
+	font-weight: 500;
+	color: white;
+	z-index: 70;
+
+	@media screen and (max-width: 768px) {
+		top: -4px;
+	}
 `;
