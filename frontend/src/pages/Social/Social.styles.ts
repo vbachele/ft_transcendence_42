@@ -269,3 +269,25 @@ export const HDiv = styled.div`
 		}
 	}
 `;
+
+export const NotifCounter = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	padding: 10px;
+	border-radius: 50%;
+	font-size: 16px;
+	font-weight: 500;
+	color: white;
+	z-index: 70;
+
+	@media screen and (max-width: 768px) {
+		top: -4px;
+	}
+`;

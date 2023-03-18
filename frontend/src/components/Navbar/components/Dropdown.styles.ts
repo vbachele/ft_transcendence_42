@@ -1,6 +1,7 @@
 import {motion} from 'framer-motion';
 import styled from 'styled-components';
 
+// prettier-ignore
 export const Container = styled.div`
 	position: relative;
 	user-select: none;
@@ -9,11 +10,12 @@ export const Container = styled.div`
 		cursor: pointer;
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	}
-	a,
-	p {
+
+	a, p {
 		text-decoration: none;
 		word-break: break-all;
 	}
+
 	@media only screen and (max-width: 768px) {
 		.avatar {
 			display: none;
@@ -24,10 +26,11 @@ export const Container = styled.div`
 export const DropdownContainer = styled(motion.div)`
 	display: flex;
 	flex-direction: column;
-	background-color: #aaa;
+
 	background-color: #dc4f19;
-	background-color: rgb(0, 0, 0, 0.9);
-	backdrop-filter: blur(16px);
+	background-color: rgb(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+
 	position: fixed;
 	z-index: 90;
 	right: 24px;

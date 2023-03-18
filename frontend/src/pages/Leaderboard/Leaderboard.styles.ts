@@ -61,7 +61,7 @@ export const Slot = styled(Link)`
 	color: ${(p) => p.theme.colors.secondary};
 	margin: 24px 10%;
 	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+		p.theme.name === 'light' ? '#f6f6f7' : '#303030'};
 	border-radius: 8px;
 	padding: 10px 5%;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
@@ -70,7 +70,7 @@ export const Slot = styled(Link)`
 	:hover {
 		transform: scale(1.01);
 		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
+			p.theme.name === 'light' ? '#e9e9eb' : '#282828'};
 	}
 
 	@media screen and (max-width: 1200px) {

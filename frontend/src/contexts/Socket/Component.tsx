@@ -1,6 +1,5 @@
-import Loading from 'components/Loading';
 import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
-import {useSocket} from '../../hooks/useSocket';
+import {useSocket} from 'hooks/useSocket';
 import {
 	defaultSocketContextState,
 	SocketContextProvider,

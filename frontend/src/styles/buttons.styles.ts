@@ -99,20 +99,3 @@ export const PopupButton = styled(Button)<IButtonProps>`
 		border: 1.5px solid #e5e7eb;
 	}
 `;
-
-export const DoubleAuthButton = styled.button<IButtonProps>`
-	background-color: ${(p) => p.backgroundColor || '#DC4F19'};
-	height: 30px;
-	border: ${(p) => p.border || 'none'};
-	margin: 0;
-	border-radius: 20px;
-	width: ${(p) => p.width || ' 10px'};
-	&,
-	a {
-		color: white;
-	}
-	:hover {
-		transform: scaleY(1.08);
-		border: 1.5px solid #e5e7eb;
-	}
-`;
