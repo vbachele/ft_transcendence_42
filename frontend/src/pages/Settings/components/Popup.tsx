@@ -1,11 +1,11 @@
 import {ChangeEventHandler, useState} from 'react';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
-import unlockAchievement from 'helpers/unlockAchievement';
+import {Form, Input} from 'antd';
+import {openNotification} from 'helpers/notification';
 import * as S from './Popup.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
-import {Button, Form, Input, notification} from 'antd';
 
 interface IProps {
 	QRcode: string;
@@ -37,21 +37,12 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 		setDoubleAuth({doubleAuth: true});
 		setIsOpen(false);
 
-		notification.success({
-			message: <div style={{marginBottom: -8}}>2FA enabled</div>,
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('success', '2FA enabled');
 	}
 
 	function copyToClipboard() {
 		navigator.clipboard.writeText(secretKey);
-
-		notification.success({
-			message: <div style={{marginBottom: -8}}>Key copied to clipboard</div>,
-			placement: 'bottomRight',
-			duration: 2.5,
-		});
+		openNotification('success', 'Key copied to clipboard');
 	}
 
 	return (

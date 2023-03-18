@@ -1,13 +1,10 @@
 import {useUserInfos} from 'contexts/User/userContent';
-import unlockAchievement from 'helpers/unlockAchievement';
 import {ReactComponent as Icon} from './add.svg';
-import * as F from 'styles/font.styles';
 import {backend} from 'lib/backend';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
-import {notification} from 'antd';
 import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
-import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
+import {openNotification} from 'helpers/notification';
+import * as F from 'styles/font.styles';
 
 interface IProps {
 	user: IUser;
@@ -37,22 +34,16 @@ function AddFriend({user}: IProps) {
 		return data;
 	};
 
-	const handleClick = async () => {
+	const handleAdd = async () => {
+		const {receivedPendings} = await fetchPendings();
 		const friends = await fetchFriends();
-		const {sentPendings, receivedPendings} = await fetchPendings();
 		const blocked = await fetchBlocked();
 
 		if (
 			isUserIn(friends, userName.userName) ||
 			isUserIn(blocked, userName.userName)
 		) {
-			notification.warning({
-				message: (
-					<div style={{marginBottom: -8}}>{`${user.name} can't be added`}</div>
-				),
-				placement: 'bottom',
-				duration: 2.5,
-			});
+			openNotification('warning', `${user.name} can't be added`);
 			return;
 		}
 
@@ -71,32 +62,18 @@ function AddFriend({user}: IProps) {
 			// 	unlockAchievement('TEAM', userName.userName);
 			// }
 
-			notification.success({
-				message: (
-					<div style={{marginBottom: -8}}>{`${user.name} has been added`}</div>
-				),
-				placement: 'bottom',
-				duration: 2.5,
-			});
+			openNotification('success', `${user.name} has been added`);
 
 			return;
 		}
 
 		backend.addPending(user.name, userName.userName);
 
-		notification.info({
-			message: (
-				<div
-					style={{marginBottom: -8}}
-				>{`Friend request sent to ${user.name}`}</div>
-			),
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('info', `Friend request sent to ${user.name}`);
 	};
 
 	return (
-		<button onClick={handleClick}>
+		<button onClick={handleAdd}>
 			<Icon />
 			<F.Text>Add friend</F.Text>
 		</button>

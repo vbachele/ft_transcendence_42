@@ -2,9 +2,9 @@ import {ReactComponent as Unblock} from '../assets/block.svg';
 import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
-import {notification} from 'antd';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
+import {openNotification} from 'helpers/notification';
 
 interface IProps {
 	user: IUser;
@@ -17,15 +17,7 @@ function Blocked({user, onUnblock}: IProps) {
 	const handleClick = () => {
 		backend.unblockUser(userName.userName, user.name);
 		onUnblock(user);
-		notification.success({
-			message: (
-				<div
-					style={{marginBottom: -8}}
-				>{`${user.name} has been unblocked`}</div>
-			),
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('success', `${user.name} has been unblocked`);
 	};
 
 	return (

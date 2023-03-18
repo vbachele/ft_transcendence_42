@@ -57,6 +57,7 @@ export const StyledPanel = styled(Panel)<IPanelProps>`
 		@media screen and (max-width: 1300px) {
 			grid-template-columns: 1fr 1fr;
 		}
+
 		@media screen and (max-width: 768px) {
 			grid-template-columns: 1fr;
 		}

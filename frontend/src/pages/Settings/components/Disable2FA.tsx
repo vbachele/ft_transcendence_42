@@ -1,5 +1,5 @@
-import {notification} from 'antd';
 import {useUserInfos} from 'contexts/User/userContent';
+import {openNotification} from 'helpers/notification';
 import {backend} from 'lib/backend';
 import * as UI from 'styles/buttons.styles';
 import * as F from 'styles/font.styles';
@@ -21,11 +21,7 @@ const Disable2FA = ({setIsOpen}: IProps) => {
 		setDoubleAuth({doubleAuth: false});
 		setIsOpen(false);
 
-		notification.warning({
-			message: <div style={{marginBottom: -8}}>2FA disabled</div>,
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('warning', '2FA disabled');
 	}
 
 	return (

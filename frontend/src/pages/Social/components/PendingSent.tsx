@@ -1,10 +1,10 @@
 import {ReactComponent as Deny} from '../assets/deny.svg';
 import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
-import {notification} from 'antd';
 import {IUser} from 'types/models';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
+import {openNotification} from 'helpers/notification';
 
 interface IProps {
 	user: IUser;
@@ -19,15 +19,7 @@ function PendingSent({user, onRemove}: IProps) {
 		backend.removePending(user.name, userName.userName);
 
 		onRemove(user);
-		notification.error({
-			message: (
-				<div
-					style={{marginBottom: -8}}
-				>{`Friend request to ${user.name} canceled`}</div>
-			),
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('error', `Friend request to ${user.name} canceled`);
 	};
 
 	return (

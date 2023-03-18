@@ -2,7 +2,7 @@ import useComponentVisible from 'hooks/useComponentVisible';
 import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import {useState} from 'react';
-import {notification, Switch} from 'antd';
+import {Switch} from 'antd';
 import QRCode from 'qrcode';
 import Disable2FA from './Disable2FA';
 import Popup from './Popup';
