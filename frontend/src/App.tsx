@@ -55,7 +55,7 @@ function App() {
 		{
 			path: '/login',
 			// element: <UserMocks />,
-			element: <Landing />,
+			element: <Pages.Landing />,
 		},
 		{
 			path: '/',
