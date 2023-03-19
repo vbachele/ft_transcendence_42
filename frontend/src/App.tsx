@@ -27,7 +27,7 @@ function App() {
 	const defaultTheme = 'dark';
 
 	const [theme, setTheme] = useState(
-		localStorage.getItem('theme') || defaultTheme,
+		localStorage.getItem('theme') || defaultTheme
 	);
 
 	function WithNavbar() {
@@ -35,20 +35,23 @@ function App() {
 			<>
 				<Pages.Navbar setTheme={setTheme} />
 				<Routes>
-					<Route path='/leaderboard' element={<Pages.Leaderboard />} />
-					<Route path='/dashboard/:name' element={<Pages.Dashboard />} />
-					<Route path='/settings' element={<Pages.Settings />} />
-					<Route path='/headings' element={<Pages.Headings />} />
-					<Route path='/social' element={<Social />} />
+					<Route path="/leaderboard" element={<Pages.Leaderboard />} />
+					<Route path="/dashboard/:name" element={<Pages.Dashboard />} />
+					<Route path="/settings" element={<Pages.Settings />} />
+					<Route path="/headings" element={<Pages.Headings />} />
+					<Route path="/social" element={<Social />} />
 					{/*<Route path='/users' element={<UserMocks />} />,*/}
-					<Route path='/game' element={<Game />} />
-					<Route path='*' element={<Pages.NotFound />} />
-					<Route path='/fake_login' element={<FakeLogin />} />
-					<Route path='/chat' element={
-						<ChatContextComponent>
-							<Pages.Chat />
-						</ChatContextComponent>
-					} />
+					<Route path="/game" element={<Game />} />
+					<Route path="*" element={<Pages.NotFound />} />
+					<Route path="/fake_login" element={<FakeLogin />} />
+					<Route
+						path="/chat"
+						element={
+							<ChatContextComponent>
+								<Pages.Chat />
+							</ChatContextComponent>
+						}
+					/>
 				</Routes>
 			</>
 		);
@@ -108,26 +111,29 @@ function App() {
 
 	return (
 		<UserContextProvider>
-			<SocketContextComponent>
-				<PopupContextProvider>
-					<ThemeProvider theme={theme === 'light' ? light : dark}>
-						<ConfigProvider
-							theme={{
-								token: {
-									colorPrimary: '#dc4f19',
-									colorSuccess: '#4bae4f',
-								},
-								algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm,
-							}}
-						>
+			<PopupContextProvider>
+				<ThemeProvider theme={theme === 'light' ? light : dark}>
+					<ConfigProvider
+						theme={{
+							token: {
+								colorPrimary: '#dc4f19',
+								colorSuccess: '#4bae4f',
+							},
+							algorithm:
+								theme === 'light'
+									? antdTheme.defaultAlgorithm
+									: antdTheme.darkAlgorithm,
+						}}
+					>
+						<SocketContextComponent>
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							{routes}
-						</ConfigProvider>
-					</ThemeProvider>
-				</PopupContextProvider>
-			</SocketContextComponent>
+						</SocketContextComponent>
+					</ConfigProvider>
+				</ThemeProvider>
+			</PopupContextProvider>
 		</UserContextProvider>
 	);
 }

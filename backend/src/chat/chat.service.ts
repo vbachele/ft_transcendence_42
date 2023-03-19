@@ -27,9 +27,6 @@ export class ChatService {
     lobbies?.lobbies.forEach((lobbyModel) => {
       const lobby = this.lobbyService.getLobby(lobbyModel.id);
       lobby.addClient(client);
-      console.log(
-        `Client [${client.data.name}] joined lobby [${lobbyModel.id}]`
-      );
     });
   }
 

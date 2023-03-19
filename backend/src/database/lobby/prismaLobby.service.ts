@@ -1,7 +1,7 @@
 import {BadRequestException, HttpException, Injectable} from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import { Lobby as LobbyModel, Prisma } from "@prisma/client";
-import { Lobby } from "../../lobby/chatLobby";
+import { Lobby } from "../../chat/chatLobby";
 import { Message as MessageModel } from "@prisma/client";
 
 @Injectable()

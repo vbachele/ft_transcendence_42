@@ -42,7 +42,7 @@ export class LobbyGateway implements OnGatewayInit {
     @MessageBody(new LobbyValidationPipe()) body: LobbyDto,
   ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
     const lobby = this.lobbyService.create(body.type, body.data);
-    if (!lobby) throw new Error("Lobby creation error");
+    if (!lobby) throw new WsException("Lobby creation error");
     else this.lobbyService.join(lobby.id, client);
 
     console.info(

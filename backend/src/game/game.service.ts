@@ -1,17 +1,17 @@
-import { WebsocketGateway } from "../websocket/websocket.gateway";
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { AuthenticatedSocket } from "../lobby/types/lobby.type";
 import { LobbyService } from "../lobby/lobby.service";
 import { ServerGameEvents } from "./events/game.events";
 import { ServerEvents } from "../lobby/events/lobby.events";
 import { MovePaddleDto } from "./dto/game.dto";
-import { GameLobby } from "../lobby/gameLobby";
-import { ConnectedSocket } from "@nestjs/websockets";
+import { GameLobby } from "./gameLobby";
+import { ConnectedSocket, WsException } from "@nestjs/websockets";
+import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable()
 export class GameService {
   constructor(
-    private readonly websocketGateway: WebsocketGateway,
+    private readonly websocketService: WebsocketService,
     private readonly lobbyService: LobbyService
   ) {}
 
@@ -20,9 +20,12 @@ export class GameService {
     invitedClientName: string,
     lobbyId: string
   ) {
-    const invitedClient = this.websocketGateway.getClient(invitedClientName);
-    console.log(`invited client socket id`, invitedClient.id);
-    this.websocketGateway.server
+    const invitedClient = this.websocketService.getClient(invitedClientName);
+    if (!invitedClient) {
+      throw new WsException(`User [${invitedClientName}] not found`);
+    }
+    console.log(`Invited client [${invitedClientName}]`);
+    this.websocketService.server
       .to(invitedClient.id)
       .emit(ServerGameEvents.Invitation, {
         lobby: { id: lobbyId, type: "game" },
@@ -30,7 +33,6 @@ export class GameService {
   }
 
   public dispatchInvitationResponse(client: AuthenticatedSocket, data: any) {
-    console.log(`IN dispatch `, data);
     const lobby = this.lobbyService.getLobby(data.lobby.id);
     lobby.dispatchToLobby(ServerEvents.InvitationResponse, {
       response: data.status,
@@ -74,9 +76,7 @@ export class GameService {
     lobby.validateClient(client);
     const isInLobby = lobby.clients.get(client.data.name);
     if (!isInLobby)
-      throw new ForbiddenException(
-        `You're not authorized to access this lobby`
-      );
+      throw new WsException(`You're not authorized to access this lobby`);
     lobby.dispatchToOpponent(client, ServerGameEvents.MoveBall, {
       x: data.x,
       y: data.y,

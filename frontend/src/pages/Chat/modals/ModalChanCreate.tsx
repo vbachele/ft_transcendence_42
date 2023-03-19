@@ -5,6 +5,7 @@ import Lock from '../assets/Lock';
 import {ClientEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/Context';
 import TextArea from 'antd/es/input/TextArea';
+import {useUserInfos} from '../../../contexts/User/userContent';
 
 const StyledTogglePrivate = styled.div`
 	display: flex;
@@ -73,6 +74,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	const [isPrivate, setIsPrivate] = useState(false);
 	const [form] = Form.useForm();
 	const {socket} = useContext(SocketContext).SocketState;
+	const name = useUserInfos().userName.userName;
 
 	const handleCancel = (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -80,12 +82,11 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	};
 
 	function handleSubmit(data: any) {
-		const owner = localStorage.getItem('name');
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
 				maxClients: 1024,
-				owner: owner,
+				owner: name,
 				privacy: data.password ? 'private' : 'public',
 				init: 'true',
 				type: 'channel',

@@ -19,6 +19,7 @@ export function useReceiveMessage() {
 
 	useEffect(() => {
 		setMessages([]);
+		if (!activeLobby?.messages) return;
 		activeLobby?.messages.forEach((message) => {
 			setMessages((prevMessages) => [...prevMessages, message]);
 		});

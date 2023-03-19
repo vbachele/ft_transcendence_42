@@ -31,7 +31,6 @@ export class ChatGateway implements OnGatewayConnection {
   @SubscribeMessage(ClientChatEvents.FetchLobbies)
   async onFetchLobbies(@ConnectedSocket() client: AuthenticatedSocket) {
     const lobbies = await this.chatService.fetchLobbies(client.data.name);
-    console.log(lobbies);
     return {
       event: ServerChatEvents.LobbyList,
       data: lobbies,

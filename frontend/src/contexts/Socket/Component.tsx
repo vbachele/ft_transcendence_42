@@ -5,6 +5,7 @@ import {
 	SocketContextProvider,
 	SocketReducer,
 } from './Context';
+import {useUserInfos} from '../User/userContent';
 
 export interface ISocketContextComponentProps extends PropsWithChildren {}
 
@@ -18,7 +19,7 @@ const SocketContextComponent: React.FunctionComponent<
 		defaultSocketContextState
 	);
 	const [loading, setLoading] = useState(true);
-	const name = localStorage.getItem('name');
+	const name = useUserInfos().userName.userName;
 	const socket = useSocket('/', {
 
 		reconnectionAttempts: 5,
@@ -30,11 +31,13 @@ const SocketContextComponent: React.FunctionComponent<
 	});
 
 	useEffect(() => {
+		if (!name) return;
+		socket.io.opts.query!.name = name;
 		socket.connect();
 		SocketDispatch({type: 'update_socket', payload: socket});
 		StartListeners();
 		SendHandshake();
-	}, []);
+	}, [name]);
 
 	const StartListeners = () => {
 		socket.io.on('reconnect', (attempt) => {
