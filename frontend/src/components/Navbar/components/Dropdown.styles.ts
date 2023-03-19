@@ -29,7 +29,7 @@ export const DropdownContainer = styled(motion.div)`
 
 	background-color: #dc4f19;
 	background-color: rgb(0, 0, 0, 0.5);
-	backdrop-filter: blur(4px);
+	backdrop-filter: blur(8px);
 
 	position: fixed;
 	z-index: 90;

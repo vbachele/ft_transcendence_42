@@ -5,12 +5,15 @@ import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/notification';
 import * as F from 'styles/font.styles';
+import SocketContext from 'contexts/Socket/Context';
+import {useContext} from 'react';
 
 interface IProps {
 	user: IUser;
 }
 
 function AddFriend({user}: IProps) {
+	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
 
 	const fetchFriends = async (): Promise<IUser[]> => {
@@ -34,7 +37,7 @@ function AddFriend({user}: IProps) {
 		return data;
 	};
 
-	const handleAdd = async () => {
+	const onAdd = async () => {
 		const {receivedPendings} = await fetchPendings();
 		const friends = await fetchFriends();
 		const blocked = await fetchBlocked();
@@ -67,13 +70,17 @@ function AddFriend({user}: IProps) {
 			return;
 		}
 
-		backend.addPending(user.name, userName.userName);
+		socket?.emit('sendNotification', {
+			senderName: userName.userName,
+			receiverName: user.name,
+		});
 
+		backend.addPending(user.name, userName.userName);
 		openNotification('info', `Friend request sent to ${user.name}`);
 	};
 
 	return (
-		<button onClick={handleAdd}>
+		<button onClick={onAdd}>
 			<Icon />
 			<F.Text>Add friend</F.Text>
 		</button>

@@ -1,8 +1,6 @@
+import {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import Avatar from 'assets/default-avatar.png';
-
 import {ReactComponent as Play} from '../assets/play.svg';
-import {ReactComponent as Watch} from '../assets/watch.svg';
 import {ReactComponent as Chat} from '../assets/chat.svg';
 import {ReactComponent as Leaderboard} from '../assets/leaderboard.svg';
 import {ReactComponent as Dashboard} from '../assets/dashboard.svg';
@@ -10,14 +8,14 @@ import {ReactComponent as Friends} from '../assets/social.svg';
 import {ReactComponent as Settings} from '../assets/settings.svg';
 import {ReactComponent as Logout} from '../assets/logout.svg';
 import useComponentVisible from 'hooks/useComponentVisible';
-import * as S from './Dropdown.styles';
-import * as F from 'styles/font.styles';
-
-import UserContext, {useUserInfos} from 'contexts/User/userContent';
+import {useUserInfos} from 'contexts/User/userContent';
 import {ToggleDrop} from './ToggleDrop';
-import {useState} from 'react';
 import LogoutPopup from 'components/Popup/Logout/LogoutPopup';
 import {usePopup} from 'contexts/Popup/Popup';
+import * as S from './Dropdown.styles';
+import * as F from 'styles/font.styles';
+import {Socket} from 'socket.io-client';
+import SocketContext from 'contexts/Socket/Context';
 
 const menuVariants = {
 	open: {
@@ -35,9 +33,18 @@ const menuTransition = {
 };
 
 const Dropdown = () => {
+	const {socket} = useContext(SocketContext).SocketState;
+	const [notifications, setNotifications] = useState(0);
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
 	const {image, userName, coalition} = useUserInfos();
+
+	useEffect(() => {
+		socket?.on('getNotif', (data) => {
+			console.log('NOTIF', data);
+			setNotifications(notifications + 1);
+		});
+	}, [socket]);
 
 	const {
 		ref: dropRef,
@@ -70,7 +77,7 @@ const Dropdown = () => {
 			<ToggleDrop toggle={toggleDrop} isOpen={isOpen} />
 			<div style={{cursor: 'pointer'}} onClick={toggleDrop}>
 				<img className="avatar" src={image.image} />
-				<S.NotifCounter>16</S.NotifCounter>
+				{notifications > 0 && <S.NotifCounter>{notifications}</S.NotifCounter>}
 			</div>
 			<S.DropdownContainer
 				initial={false}

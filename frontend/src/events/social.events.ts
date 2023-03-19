@@ -1,9 +1,7 @@
 export enum ClientSocialEvents {
-	FetchLobbies = 'client.social.fetchLobbies',
-	SendMessage = 'client.social.sendMessage',
+	SendReq = 'client.social.sendReq',
 }
 
 export enum ServerSocialEvents {
-	LobbyList = 'server.social.lobbyList',
-	IncomingMessage = 'server.social.incomingMessage',
+	ReceiveReq = 'server.social.receiveReq',
 }
