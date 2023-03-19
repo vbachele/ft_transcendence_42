@@ -1,11 +1,13 @@
-import React, {useContext} from "react";
-import SocketContext from "../../../contexts/Socket/Context";
-import {ClientEvents} from "../../../events/socket.events";
-import * as S from "../components/components.styles";
-import * as F from "../../../styles/font.styles";
-import {displayStatus} from "../modals/ModalUserSearch";
-import {IUser} from "../../../types/models";
-import {StyledUser} from "./components.styles";
+import React, {useContext} from 'react';
+import SocketContext from '../../../contexts/Socket/Context';
+import {ClientEvents} from '../../../events/socket.events';
+import * as S from '../components/components.styles';
+import * as F from '../../../styles/font.styles';
+import {displayStatus} from '../modals/ModalUserSearch';
+import {IUser} from '../../../types/models';
+import {StyledUser} from './components.styles';
+import {useUserInfos} from '../../../contexts/User/userContent';
+import ChatContext from '../../../contexts/Chat/chat.context';
 
 interface IProps {
 	user: IUser;
@@ -14,21 +16,33 @@ interface IProps {
 
 function User({user, setIsModalOpen}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
+	const {lobbyList} = useContext(ChatContext).ChatState;
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
+	const name = useUserInfos().userName.userName;
+
 	function onClick(event: React.MouseEvent) {
 		event.stopPropagation();
-		const owner = localStorage.getItem('name');
-		socket?.emit(ClientEvents.CreateLobby, {
-			type: 'chat',
-			data: {
-				maxClients: 2,
-				owner: owner,
-				privacy: 'private',
-				init: 'true',
-				type: 'direct_message',
-				name: user.name,
-				description: `direct_message between ${owner} and ${user.name}`,
-			},
-		})
+		const lobbyName = [user.name + '+' + name, name + '+' + user.name]
+		if ([...lobbyList].find((lobby) => lobbyName.includes(lobby.name))) {
+			console.log(`lobby found`);
+			ChatDispatch({
+				type: 'update_active_lobby',
+				payload: [...lobbyList].find((lobby) => lobbyName.includes(lobby.name)),
+			});
+		} else {
+			socket?.emit(ClientEvents.CreateLobby, {
+				type: 'chat',
+				data: {
+					maxClients: 2,
+					owner: name,
+					privacy: 'private',
+					init: 'true',
+					type: 'direct_message',
+					name: user.name + '+' + name,
+					description: user.name,
+				},
+			});
+		}
 		setIsModalOpen(false);
 	}
 

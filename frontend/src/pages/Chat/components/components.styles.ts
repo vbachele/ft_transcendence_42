@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Arrow from '../../../assets/send_message_arrow.svg';
 import {Input as AntdInput} from 'antd';
 
@@ -12,9 +12,10 @@ export const StyledUser = styled.button`
 	background-color: transparent;
 	gap: 32px;
 	border: none;
-  	color: ${(p) => (p.theme.name === 'light' ? '#000' : '#fff')};
+	color: ${(p) => (p.theme.name === 'light' ? '#000' : '#fff')};
 	border-bottom: 1px dotted;
-  	border-bottom-color: ${(p) => (p.theme.name === 'light' ? '#e5e7eb' : '#403F40')};
+	border-bottom-color: ${(p) =>
+		p.theme.name === 'light' ? '#e5e7eb' : '#403F40'};
 
 	:hover {
 		transform: translateX(10px);
@@ -42,13 +43,13 @@ export const Form = styled.form`
 `;
 
 export const ChatBarInput = styled.input`
-    width: 100%;
-    background: #F9F9F9;
-    box-sizing:border-box;
-    border: 1px solid #E6E6E6; 
-    border-radius: 12px;
-    padding: 8px 16px; 
-    font-size: 1.2em;
+	width: 100%;
+	background: #f9f9f9;
+	box-sizing: border-box;
+	border: 1px solid #e6e6e6;
+	border-radius: 12px;
+	padding: 8px 16px;
+	font-size: 1.2em;
 `;
 
 export const Channel = styled.button`
@@ -66,26 +67,24 @@ export const Channel = styled.button`
 
 	&:hover {
 		background-color: ${(props) =>
-	props.theme.name === 'light' ? 'lightgray' : 'gray'};
+			props.theme.name === 'light' ? 'lightgray' : 'gray'};
 	}
 `;
 
 export const PastillePic = styled.div`
-    width: 12px;
-    height:12px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border-radius: 50%;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-radius: 50%;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16);
 `;
-
 
 export const ProfilePic = styled.img`
-    width: 48px;
-    border-radius: 50%;
+	width: 48px;
+	border-radius: 50%;
 `;
-
 
 export const InputSearch = styled(AntdInput.Search)`
 	padding: 16px 8px;
@@ -128,5 +127,20 @@ export const NewDiscussion = styled.button`
 
 	&:hover {
 		transform: scale(1.1);
+	}
+`;
+
+export const UserList = styled.button`
+	display: flex;
+	align-items: center;
+	padding: 8px 16px;
+	border: solid 1px lightgray;
+	border-radius: 8px;
+	gap: 8px;
+	color: ${(props) => props.theme.colors.secondary};
+	background-color: ${(props) =>
+		props.theme.name === 'light' ? 'white' : '#1F1F1F'};
+	&:hover {
+		background-color: ${(props) => props.theme.name === 'light' ? 'lightgray' : 'gray'};
 	}
 `;

@@ -1,34 +1,25 @@
 import {
-	ConnectedSocket,
-	MessageBody,
-	OnGatewayConnection,
-	OnGatewayDisconnect,
-	OnGatewayInit,
-	SubscribeMessage,
-	WebSocketGateway,
-	WebSocketServer,
-	WsException,
-} from '@nestjs/websockets';
+  ConnectedSocket,
+  MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from "@nestjs/websockets";
 
-import {Server, Socket} from 'socket.io';
-import {PrismaLobbyService} from 'src/database/lobby/prismaLobby.service';
-import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
-import {WebsocketService} from './websocket.service';
+import { Server } from "socket.io";
+import { AuthenticatedSocket } from "src/lobby/types/lobby.type";
+import { WebsocketService } from "./websocket.service";
 
 @WebSocketGateway()
 export class WebsocketGateway
 	implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
-	@WebSocketServer() server: Server;
-	public users: Map<string, AuthenticatedSocket> = new Map<
-		string,
-		AuthenticatedSocket
-	>();
+  @WebSocketServer() server: Server;
 
-	constructor(
-		private websocketService: WebsocketService,
-		private readonly prismaLobbyService: PrismaLobbyService
-	) {}
+  constructor(private websocketService: WebsocketService) {}
 
 	afterInit(server: Server) {
 		this.websocketService.server = this.server;
@@ -45,17 +36,10 @@ export class WebsocketGateway
 	async handleDisconnect(@ConnectedSocket() client: AuthenticatedSocket) {
 		console.info(`Disconnected - Client ID [${client.data.name}]`);
 
-		const name = this.GetNameFromSocketId(client.id);
-		if (name) {
-			this.users.delete(name);
-			const users = Object.keys(this.users);
-			this.SendMessage(
-				'user_disconnected',
-				users.filter((name) => name !== client.data.name),
-				users
-			);
-		}
-	}
+    this.websocketService.removeUser(client);
+    const users = Object.keys(this.websocketService.clients);
+    this.websocketService.sendMessage(client, "user_disconnected", users);
+  }
 
 	@SubscribeMessage('handshake')
 	handleHandshake(
@@ -64,46 +48,18 @@ export class WebsocketGateway
 	) {
 		console.info(`Handshake received from [${client.data.name}]`);
 
-		const reconnected = Object.keys(this.users).includes(client.data.name);
+    const reconnected = this.websocketService.getClient(client.data.name);
 
-		if (reconnected) {
-			console.info(`User [${client.data.name}] has reconnected`);
-			const name = this.GetNameFromSocketId(client.id);
-			if (name) {
-				return;
-			}
-		}
+    if (reconnected) {
+      console.info(`User [${client.data.name}] has reconnected`);
+      return;
+    }
 
-		this.users.set(client.data.name, client);
-		const users = Object.keys(this.users);
+    this.websocketService.addUser(client);
+    const users = Object.keys(this.websocketService.clients);
 
-		console.info('Sending callback for handshake...');
-		this.server.to(client.id).emit('handshake', client.data.name, users);
-		this.SendMessage(
-			'user_connected',
-			users.filter((name) => name !== client.data.name),
-			users
-		);
-	}
-
-	public getClient(username: string): AuthenticatedSocket {
-		const client = this.users.get(username);
-		if (!client) throw new WsException(`Client [${username}] doesn't exist`);
-		return client;
-	}
-
-	GetNameFromSocketId = (id: string) => {
-		return [...this.users.keys()].find((key) => key.includes(id));
-	};
-
-	SendMessage = (name: string, users: string[], payload?: Object) => {
-		console.info(`Emitting event: ` + name + ` to `, users);
-		users.forEach((username) =>
-			payload
-				? this.server
-						.to(this.users.get(username)?.id as string)
-						.emit(name, payload)
-				: this.server.to(this.users.get(username)?.id as string).emit(name)
-		);
-	};
+    console.info("Sending callback for handshake...");
+    this.server.to(client.id).emit("handshake", client.data.name, users);
+    this.websocketService.sendMessage(client, "user_connected", users);
+  }
 }

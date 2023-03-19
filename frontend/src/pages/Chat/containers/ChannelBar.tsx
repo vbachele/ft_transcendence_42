@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useState} from 'react';
+import React, {FormEvent, useContext, useEffect, useState} from 'react';
 import * as F from 'styles/font.styles';
 import * as C from './containers.styles';
 import * as S from '../components/components.styles';
@@ -6,16 +6,18 @@ import {Input} from 'antd';
 import {useJoinLobby} from '../../../hooks/chat/useJoinLobby';
 import ChatContext from 'contexts/Chat/chat.context';
 import NewDiscussion from '../components/NewDiscussion';
-import styled from "styled-components";
+import styled from 'styled-components';
+import {useUserInfos} from '../../../contexts/User/userContent';
 
 const StyledInputSearch = styled(Input.Search)`
-  padding: 0 8px;
-`
+	padding: 0 8px;
+`;
 
 function ChannelBar() {
 	const [search, setSearch] = useState<string>('');
 	const {joinLobby} = useJoinLobby();
 	const {lobbyList} = useContext(ChatContext).ChatState;
+	const name = useUserInfos().userName.userName;
 
 	const searchFilter = (value: any): boolean => {
 		return value
@@ -26,6 +28,12 @@ function ChannelBar() {
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
+	}
+
+	function directMessageName(lobbyName: string) {
+		const displayedName = lobbyName.split('+');
+		if (displayedName[0] === name) return displayedName[1];
+		else return displayedName[0];
 	}
 
 	return (
@@ -42,7 +50,7 @@ function ChannelBar() {
 				<NewDiscussion type={'channel'} />
 			</C.Header>
 			<C.ChannelList>
-				{lobbyList
+				{[...lobbyList]
 					.filter((lobby) => lobby.type === 'channel')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
@@ -56,12 +64,12 @@ function ChannelBar() {
 				<NewDiscussion type={'direct_message'} />
 			</C.Header>
 			<C.ChannelList>
-				{lobbyList
+				{[...lobbyList]
 					.filter((lobby) => lobby.type === 'direct_message')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
 						<S.Channel key={index} onClick={joinLobby}>
-							{lobby.name}
+							{directMessageName(lobby.name)}
 						</S.Channel>
 					))}
 			</C.ChannelList>

@@ -1,11 +1,11 @@
-import { ALobby } from "./ALobby";
+import { ALobby } from "../lobby/ALobby";
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { IsString } from "class-validator";
-import { AuthenticatedSocket } from "./types/lobby.type";
+import { AuthenticatedSocket } from "../lobby/types/lobby.type";
 import { WebsocketService } from "../websocket/websocket.service";
-import { ConnectedSocket } from "@nestjs/websockets";
-import { ServerGameEvents } from "../game/events/game.events";
-import { Pong } from "../game/pong";
+import {ConnectedSocket, WsException} from '@nestjs/websockets';
+import { ServerGameEvents } from "./events/game.events";
+import { Pong } from "./pong";
 import Matter = require("matter-js");
 import { Events } from "matter-js";
 import { serialize } from "class-transformer";
@@ -26,48 +26,11 @@ export class GameLobby extends ALobby {
   ) {
     super(websocketService.server, 2);
     this.data = data;
-    this.instance = new Pong();
+    this.instance = new Pong(this.dispatchToLobby.bind(this));
   }
 
   runGame() {
     this.instance.start();
-    Matter.Body.setVelocity(this.instance.ball, { x: 5, y: 5 });
-    let prevBallPos = { x: 0, y: 0 };
-    Events.on(this.instance.engine, "beforeUpdate", () => {
-      if (
-        prevBallPos.x !== this.instance.ball.position.x ||
-        prevBallPos.y !== this.instance.ball.position.y
-      ) {
-        this.dispatchToLobby(ServerGameEvents.MoveBall, {
-          id: this.instance.ball.id,
-          type: this.instance.ball.type,
-          position: this.instance.ball.position,
-          velocity: this.instance.ball.velocity,
-        });
-        prevBallPos = { ...this.instance.ball.position };
-      }
-    });
-    Events.on(this.instance.engine, "collisionStart", (event) => {
-      const pairs = event.pairs;
-      for (let i = 0; i < pairs.length; i++) {
-        const pair = pairs[i];
-        if (
-          pair.bodyA.label === "leftPaddle" ||
-          pair.bodyB.label === "leftPaddle"
-        ) {
-          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
-            position: this.instance.paddles[0].position,
-          });
-        } else if (
-          pair.bodyA.label === "rightPaddle" ||
-          pair.bodyB.label === "rightPaddle"
-        ) {
-          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
-            position: this.instance.paddles[1].position,
-          });
-        }
-      }
-    });
   }
 
   movePaddle(
@@ -121,7 +84,7 @@ export class GameLobby extends ALobby {
     client: AuthenticatedSocket
   ) {
     if (!this.clients.has(client.data.name))
-      throw new ForbiddenException(`The client doesn't belong to the lobby`);
+      throw new WsException(`Client [${client.data.name}] doesn't belong to the lobby`);
   }
 
   dispatchToOpponent<T>(

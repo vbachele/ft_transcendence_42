@@ -1,6 +1,6 @@
 import {IsIn, IsNotEmpty, IsString, ValidateNested} from "class-validator";
-import { GameLobbyDto } from "../gameLobby";
-import { ChatLobbyDto } from "../chatLobby";
+import { GameLobbyDto } from "../../game/gameLobby";
+import { ChatLobbyDto } from "../../chat/chatLobby";
 import {Injectable} from "@nestjs/common";
 import {Type} from "class-transformer";
 

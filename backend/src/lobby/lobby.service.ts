@@ -2,11 +2,9 @@ import { Inject, Injectable } from "@nestjs/common";
 import { AuthenticatedSocket } from "./types/lobby.type";
 import { ALobby } from "./ALobby";
 import { Server } from "socket.io";
-import { WebSocketServer } from "@nestjs/websockets";
+import {WebSocketServer, WsException} from '@nestjs/websockets';
 import { TLobbyDto } from "./dto/lobby.dto";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
-import { ChatLobbyDto } from "./chatLobby";
-import { WebsocketService } from "../websocket/websocket.service";
 
 /**
  * @brief This service manage all the lobby instances on the server
@@ -17,8 +15,7 @@ import { WebsocketService } from "../websocket/websocket.service";
 export class LobbyService {
   constructor(
     @Inject("LOBBY_FACTORY") private readonly lobbyCreator: any,
-    private readonly prismaLobbyService: PrismaLobbyService,
-    private readonly websocketService: WebsocketService
+    private readonly prismaLobbyService: PrismaLobbyService
   ) {}
 
   private readonly lobbies: Map<ALobby["id"], ALobby> = new Map<
@@ -41,7 +38,7 @@ export class LobbyService {
       };
       this.lobbies.set(
         lobby.id,
-        this.lobbyCreator.create({ type: 'chat', data: data })
+        this.lobbyCreator.create({ type: "chat", data: data })
       );
       console.info(`Loaded lobby - [${lobby.id}]`);
     });
@@ -49,7 +46,7 @@ export class LobbyService {
 
   public getLobby(lobbyId: string): ALobby {
     const lobby = this.lobbies.get(lobbyId);
-    if (!lobby) throw new Error(`Lobby [${lobbyId}] doesn't exist`);
+    if (!lobby) throw new WsException(`Lobby [${lobbyId}] doesn't exist`);
     return lobby;
   }
 

@@ -6,4 +6,5 @@ export enum ClientChatEvents {
 export enum ServerChatEvents {
 	LobbyList = 'server.chat.lobbyList',
 	IncomingMessage = 'server.chat.incomingMessage',
+	LobbyCreated = 'server.chat.lobbyCreated',
 }

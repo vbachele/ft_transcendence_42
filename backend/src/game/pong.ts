@@ -1,5 +1,6 @@
 import Matter = require("matter-js");
 import { Events } from "matter-js";
+import { ServerGameEvents } from "./events/game.events";
 
 const Engine = Matter.Engine,
   Render = Matter.Render,
@@ -32,8 +33,10 @@ export class Pong {
   public walls: Matter.Body[];
   public ball: Matter.Body;
   public paddles: Matter.Body[];
+  private dispatchToLobby: (event: string, data: any) => void;
 
-  constructor() {
+  constructor(dispatchToLobby: (event: string, data: any) => void) {
+    this.dispatchToLobby = dispatchToLobby;
     this.engine = Engine.create({ gravity: { scale: 0 } });
     this.world = this.engine.world;
     this.runner = Runner.create();
@@ -57,7 +60,7 @@ export class Pong {
         PLAYGROUND_SIZE.y / 2,
         WALL_THICKNESS,
         PLAYGROUND_SIZE.y,
-        { label: "rightWall" ,isStatic: true }
+        { label: "rightWall", isStatic: true }
       ),
       Bodies.rectangle(
         PLAYGROUND_SIZE.x / 2,
@@ -91,7 +94,7 @@ export class Pong {
         restitution: 1,
         render: {
           visible: true,
-        }
+        },
       }
     );
     World.add(this.world, this.ball);
@@ -104,7 +107,7 @@ export class Pong {
         PLAYGROUND_SIZE.y / 2,
         PADDLE_SIZE.x,
         PADDLE_SIZE.y,
-        { isStatic: true , label: "leftPaddle"}
+        { isStatic: true, label: "leftPaddle" }
       ),
       Bodies.rectangle(
         PLAYGROUND_SIZE.x - PADDLE_BORDER_SPACING,
@@ -117,10 +120,55 @@ export class Pong {
     World.add(this.world, this.paddles);
   }
 
-  start() {
+  private kickoff() {
+    Matter.Body.setVelocity(this.ball, { x: 5, y: 5 });
+    let prevBallPos = { x: 0, y: 0 };
+    Events.on(this.engine, "beforeUpdate", () => {
+      if (
+        prevBallPos.x !== this.ball.position.x ||
+        prevBallPos.y !== this.ball.position.y
+      ) {
+        this.dispatchToLobby(ServerGameEvents.MoveBall, {
+          id: this.ball.id,
+          type: this.ball.type,
+          position: this.ball.position,
+          velocity: this.ball.velocity,
+        });
+        prevBallPos = { ...this.ball.position };
+      }
+    });
+  }
+
+  private detectPaddleCollision() {
+    Events.on(this.engine, "collisionStart", (event) => {
+      const pairs = event.pairs;
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i];
+        if (
+          pair.bodyA.label === "leftPaddle" ||
+          pair.bodyB.label === "leftPaddle"
+        ) {
+          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
+            position: this.paddles[0].position,
+          });
+        } else if (
+          pair.bodyA.label === "rightPaddle" ||
+          pair.bodyB.label === "rightPaddle"
+        ) {
+          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
+            position: this.paddles[1].position,
+          });
+        }
+      }
+    });
+  }
+
+  public start() {
     Runner.run(this.engine);
     Events.on(this.runner, "afterUpdate", () => {
       console.log("afterUpdate");
     });
+    this.kickoff()
+    this.detectPaddleCollision();
   }
 }

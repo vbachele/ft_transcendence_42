@@ -4,6 +4,7 @@ import { Server, Socket } from "socket.io";
 import { v4 } from "uuid";
 import { Injectable } from "@nestjs/common";
 import { WebsocketGateway } from "../websocket/websocket.gateway";
+import {WsException} from '@nestjs/websockets';
 
 /**
  * @description This is the base Lobby class. It contains basic functions that are common to lobbies.
@@ -32,8 +33,8 @@ export abstract class ALobby {
   > = new Map<Socket["id"], AuthenticatedSocket>();
 
   public addClient(client: AuthenticatedSocket): ALobby | Promise<ALobby> {
-    if (this.clients.size >= this.maxClients)
-      throw new Error(`Max clients reached for this lobby`)
+    if (this.clients.size > this.maxClients)
+      throw new WsException(`Max clients reached for this lobby`)
     this.clients.set(client.data.name, client);
     client.join(this.id);
     this.dispatchLobbyState();
@@ -60,7 +61,7 @@ export abstract class ALobby {
   }
 
   public dispatchToLobby<T>(event: any, payload: T): void {
-    if (!this.server) throw new Error("Server is undefined");
+    if (!this.server) throw new WsException("Websocket Server is undefined");
     this.server.to(this.id).emit(event, payload);
   }
 }
