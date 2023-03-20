@@ -2,7 +2,7 @@ import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './invite.svg';
 import {ClientEvents, ServerEvents} from '../../../../events/socket.events';
 import {useContext, useRef} from 'react';
-import SocketContext from '../../../../contexts/Socket/Context';
+import SocketContext from '../../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../../events/game.events';
 import {usePopup} from '../../../../contexts/Popup/Popup';
 

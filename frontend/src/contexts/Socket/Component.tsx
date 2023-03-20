@@ -4,7 +4,7 @@ import {
 	defaultSocketContextState,
 	SocketContextProvider,
 	SocketReducer,
-} from './Context';
+} from './context';
 import {useUserInfos} from '../User/userContent';
 
 export interface ISocketContextComponentProps extends PropsWithChildren {}

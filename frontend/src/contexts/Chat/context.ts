@@ -10,6 +10,7 @@ export interface ILobby {
 	privacy: string;
 	type: string;
 	messages: any[];
+	users: any[];
 }
 
 export interface IChatContextState {
@@ -22,7 +23,10 @@ export const defaultChatContextState: IChatContextState = {
 	activeLobby: undefined,
 };
 
-export type TChatContextActions = 'update_lobby_list' | 'update_active_lobby' | 'add_lobby';
+export type TChatContextActions =
+	| 'update_lobby_list'
+	| 'update_active_lobby'
+	| 'add_lobby';
 
 export type TChatContextPayload = ILobby | Set<ILobby> | undefined;
 
@@ -46,7 +50,10 @@ export const ChatReducer = (
 		case 'update_active_lobby':
 			return {...state, activeLobby: action.payload as ILobby};
 		case 'add_lobby':
-			return {...state, lobbyList: new Set([...state.lobbyList, action.payload as ILobby])}
+			return {
+				...state,
+				lobbyList: new Set([...state.lobbyList, action.payload as ILobby]),
+			};
 		default:
 			return {...state};
 	}
@@ -62,7 +69,6 @@ const ChatContext = createContext<IChatContextProps>({
 	ChatDispatch: () => {},
 });
 
-export const ChatContextConsumer = ChatContext.Consumer;
 export const ChatContextProvider = ChatContext.Provider;
 
 export default ChatContext;

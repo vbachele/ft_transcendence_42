@@ -2,7 +2,7 @@ import Popup from '../components/Popup/Popup';
 import {useContext, useEffect, useState} from 'react';
 import FireGif from '../components/FireGif/FireGif';
 import {Text} from '../../../styles/font.styles';
-import SocketContext from '../../../contexts/Socket/Context';
+import SocketContext from '../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../events/game.events';
 import {useSearchParams} from "react-router-dom";
 

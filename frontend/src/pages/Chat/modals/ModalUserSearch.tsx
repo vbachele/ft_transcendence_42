@@ -16,10 +16,10 @@ export const displayStatus = (params: string) => {
 interface ModalUserSearchProps {
 	isModalOpen: boolean;
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	userList: IUser[];
 }
 
-function ModalUserSearch({isModalOpen, setIsModalOpen}: ModalUserSearchProps) {
-	const {data} = useFetchUsers();
+function ModalUserSearch({isModalOpen, setIsModalOpen, userList}: ModalUserSearchProps) {
 	const [search, setSearch] = useState<string>('');
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
@@ -48,7 +48,7 @@ function ModalUserSearch({isModalOpen, setIsModalOpen}: ModalUserSearchProps) {
 				onChange={handleChange}
 				size={'large'}
 			/>
-			{data
+			{userList
 				?.filter((message) => {
 					return filter.test(message.name);
 				})

@@ -26,6 +26,9 @@ export class LobbyService {
   @WebSocketServer()
   server: Server;
 
+  /**
+   * @brief Load all the lobbies from the database when the server starts
+   */
   async loadLobbies() {
     const lobbies = await this.prismaLobbyService.fetchLobbies();
     lobbies.forEach((lobby) => {

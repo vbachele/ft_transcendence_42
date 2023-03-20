@@ -21,7 +21,7 @@ import {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import {ConfigProvider, theme as antdTheme} from 'antd';
-import ChatContextComponent from './contexts/Chat/ChatContext';
+import ChatContextComponent from './contexts/Chat/Component';
 
 function App() {
 	const defaultTheme = 'dark';

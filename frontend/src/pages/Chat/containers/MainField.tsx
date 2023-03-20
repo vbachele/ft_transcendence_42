@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useContext} from 'react';
 import TopBar from '../components/TopBar';
 import ChatInputBar from '../components/ChatInputBar';
 import EmptyChat from '../components/EmptyChat';
-import ChatContext from 'contexts/Chat/chat.context';
+import ChatContext from 'contexts/Chat/context';
 import {useReceiveMessage} from 'hooks/chat/useReceiveMessage';
 import Message from '../components/Message';
 import * as C from './containers.styles';

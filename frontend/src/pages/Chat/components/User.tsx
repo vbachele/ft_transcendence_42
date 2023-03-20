@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import SocketContext from '../../../contexts/Socket/Context';
+import SocketContext from '../../../contexts/Socket/context';
 import {ClientEvents} from '../../../events/socket.events';
 import * as S from '../components/components.styles';
 import * as F from '../../../styles/font.styles';
@@ -7,7 +7,7 @@ import {displayStatus} from '../modals/ModalUserSearch';
 import {IUser} from '../../../types/models';
 import {StyledUser} from './components.styles';
 import {useUserInfos} from '../../../contexts/User/userContent';
-import ChatContext from '../../../contexts/Chat/chat.context';
+import ChatContext from '../../../contexts/Chat/context';
 
 interface IProps {
 	user: IUser;

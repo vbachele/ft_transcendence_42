@@ -4,7 +4,7 @@ import * as C from './containers.styles';
 import * as S from '../components/components.styles';
 import {Input} from 'antd';
 import {useJoinLobby} from '../../../hooks/chat/useJoinLobby';
-import ChatContext from 'contexts/Chat/chat.context';
+import ChatContext from 'contexts/Chat/context';
 import NewDiscussion from '../components/NewDiscussion';
 import styled from 'styled-components';
 import {useUserInfos} from '../../../contexts/User/userContent';

@@ -1,14 +1,15 @@
-import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from 'react';
 import * as F from 'styles/font.styles';
 import * as S from '../components/components.styles';
 import * as C from '../containers/containers.styles';
 import User from 'mocks/Users/players.json';
-import ChatContext from '../../../contexts/Chat/chat.context';
+import ChatContext from '../../../contexts/Chat/context';
 import {useResponsiveLayout} from '../../../hooks/chat/useResponsiveLayout';
 import Profile from '../assets/Profile';
 import BurgerMenu from '../assets/BurgerMenu';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
+import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
 
 interface IProps {
 	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ function TopBar({setOpenUserPanel}: IProps) {
 	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const name = useUserInfos().userName.userName;
+	const {userList} = useFetchLobbyUserList();
 
 	function directMessageName(lobbyName: string) {
 		const displayedName = lobbyName.split('+');
@@ -51,8 +53,9 @@ function TopBar({setOpenUserPanel}: IProps) {
 					<ModalUserSearch
 						isModalOpen={isModalOpen}
 						setIsModalOpen={setIsModalOpen}
+						userList={userList}
 					/>
-					<F.Text>76</F.Text>
+					<F.Text>{userList.length}</F.Text>
 					<Profile />
 				</S.UserList>
 			</C.TopBar>

@@ -49,7 +49,6 @@ const SocketContext = createContext<ISocketContextProps>({
     SocketDispatch: () => {},
 })
 
-export const SocketContextConsumer = SocketContext.Consumer;
 export const SocketContextProvider = SocketContext.Provider;
 
 export default SocketContext;
