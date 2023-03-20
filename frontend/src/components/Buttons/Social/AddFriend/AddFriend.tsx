@@ -7,6 +7,7 @@ import {openNotification} from 'helpers/notification';
 import * as F from 'styles/font.styles';
 import SocketContext from 'contexts/Socket/Context';
 import {useContext} from 'react';
+import {ClientSocialEvents} from 'events/social.events';
 
 interface IProps {
 	user: IUser;
@@ -70,7 +71,7 @@ function AddFriend({user}: IProps) {
 			return;
 		}
 
-		socket?.emit('sendNotification', {
+		socket?.emit(ClientSocialEvents.SendRequest, {
 			senderName: userName.userName,
 			receiverName: user.name,
 		});

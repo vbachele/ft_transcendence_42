@@ -116,7 +116,7 @@ const Dropdown = () => {
 					<Link to="/chat" onClick={toggleDrop} style={{position: 'relative'}}>
 						<Chat />
 						<F.Text weight="500">Chat</F.Text>
-						<S.NotifCounter>5</S.NotifCounter>
+						{/* <S.NotifCounter>5</S.NotifCounter> //todo */}
 					</Link>
 					{/* LEADERBOARD */}
 					<Link to="/leaderboard" onClick={toggleDrop}>
@@ -135,7 +135,7 @@ const Dropdown = () => {
 					>
 						<Friends />
 						<F.Text weight="500">Social</F.Text>
-						<S.NotifCounter>5</S.NotifCounter>
+						{/* <S.NotifCounter>5</S.NotifCounter> //todo */}
 					</Link>
 				</S.LinksContainer>
 				<hr className="second-hr" />

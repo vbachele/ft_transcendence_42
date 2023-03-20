@@ -14,6 +14,6 @@ export const dark: DefaultTheme = {
 
 	colors: {
 		main: '#202020',
-		secondary: '#ddd',
+		secondary: '#eee',
 	},
 };

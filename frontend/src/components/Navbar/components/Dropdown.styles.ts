@@ -5,6 +5,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	position: relative;
 	user-select: none;
+	width: 40px;
+	height: 40px;
 
 	.avatar {
 		cursor: pointer;
@@ -166,7 +168,7 @@ export const NotifCounter = styled.div`
 	justify-content: center;
 	width: 20px;
 	height: 20px;
-	background-color: red;
+	background-color: #d3222a;
 	position: absolute;
 	top: -8px;
 	left: -8px;

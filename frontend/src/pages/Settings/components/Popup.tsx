@@ -80,6 +80,10 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 						placeholder="6 digit code"
 						maxLength={10}
 						onChange={handleFormPhone}
+						style={{
+							background: 'rgba(249, 249, 249, 0.5)',
+							padding: '16px 8px',
+						}}
 					/>
 				</Form.Item>
 				{errorCode && (

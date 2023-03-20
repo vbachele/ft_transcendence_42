@@ -46,23 +46,22 @@ function TogglePrivate({isPrivate, setIsPrivate}: TogglePrivateProps) {
 const StyledPasswordInput = styled(Input.Password)`
 	padding: 16px;
 	font-size: 1.25em;
-  .ant-input {
-	background-color: transparent;
-  }
+	/* .ant-input {
+		background-color: transparent;
+	} */
 `;
 
 const StyledInput = styled(Input)`
 	padding: 16px;
 	font-size: 1.25em;
-	background-color: transparent;
-  .ant-input {
-    background-color: transparent;
-	
-  }
+	/* background-color: transparent;
+	.ant-input {
+		background-color: transparent;
+	} */
 `;
 
 const StyledTextArea = styled(TextArea)`
-    background-color: transparent;
+	/* background-color: transparent; */
 `;
 
 interface ModalChanCreateProps {
@@ -133,7 +132,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 						label={'Password'}
 						rules={[{required: true, message: 'Missing channel password'}]}
 					>
-						<StyledPasswordInput placeholder="Enter a password"  />
+						<StyledPasswordInput placeholder="Enter a password" />
 					</Form.Item>
 				)}
 			</Form>

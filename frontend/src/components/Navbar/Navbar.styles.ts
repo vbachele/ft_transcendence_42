@@ -36,10 +36,9 @@ export const Menu = styled.div`
 
 	svg {
 		border-radius: 50%;
-		/* width: 40px;
-		height: 40px; */
 		fill: ${(props) => props.theme.colors.secondary};
 	}
+
 	img {
 		border-radius: 50%;
 		width: 40px;
@@ -50,7 +49,16 @@ export const Menu = styled.div`
 		text-decoration: none;
 	}
 
-	@media screen and (max-width: 768px) {
+	.bell {
+		cursor: pointer;
+		border-radius: 0;
+		fill: ${(p) => p.theme.colors.secondary};
+		width: 24px;
+		height: 24px;
+
+		:hover {
+			fill: #dc4f19;
+		}
 	}
 `;
 
@@ -67,6 +75,8 @@ export const Divider = styled.div`
 
 export const StyledToggleTheme = styled.label`
 	cursor: pointer;
+	width: 24px;
+	height: 24px;
 
 	svg {
 		width: 24px;

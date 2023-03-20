@@ -15,6 +15,7 @@ import SocketContextComponent from 'contexts/Socket/Component';
 import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/ChatContext';
 import Pages from 'pages';
+import Notification from 'components/Notification/Notification';
 
 function App() {
 	const defaultTheme = 'dark';
@@ -122,7 +123,7 @@ function App() {
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
-							{/* <Notif.Achievement /> //TODO */}
+							<Notification />
 							{routes}
 						</SocketContextComponent>
 					</ConfigProvider>
