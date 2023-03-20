@@ -3,7 +3,7 @@ import {ReactComponent as Icon} from './add.svg';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 import * as F from 'styles/font.styles';
 import SocketContext from 'contexts/Socket/Context';
 import {useContext} from 'react';

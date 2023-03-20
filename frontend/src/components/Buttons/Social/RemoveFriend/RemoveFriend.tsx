@@ -1,5 +1,5 @@
 import {useUserInfos} from 'contexts/User/userContent';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 import {backend} from 'lib/backend';
 import * as F from 'styles/font.styles';
 import {IUser} from 'types/models';

@@ -16,6 +16,7 @@ import * as S from './Dropdown.styles';
 import * as F from 'styles/font.styles';
 import {Socket} from 'socket.io-client';
 import SocketContext from 'contexts/Socket/Context';
+import {ServerSocialEvents} from 'events/social.events';
 
 const menuVariants = {
 	open: {
@@ -40,10 +41,13 @@ const Dropdown = () => {
 	const {image, userName, coalition} = useUserInfos();
 
 	useEffect(() => {
-		socket?.on('getNotif', (data) => {
-			console.log('NOTIF', data);
+		socket?.on(ServerSocialEvents.IncomingRequest, (senderName: string) => {
 			setNotifications(notifications + 1);
 		});
+
+		// return () => {
+		// 	socket?.off(ServerSocialEvents.IncomingRequest);
+		// };
 	}, [socket]);
 
 	const {
@@ -116,7 +120,7 @@ const Dropdown = () => {
 					<Link to="/chat" onClick={toggleDrop} style={{position: 'relative'}}>
 						<Chat />
 						<F.Text weight="500">Chat</F.Text>
-						{/* <S.NotifCounter>5</S.NotifCounter> //todo */}
+						<S.NotifCounter>3</S.NotifCounter>
 					</Link>
 					{/* LEADERBOARD */}
 					<Link to="/leaderboard" onClick={toggleDrop}>
@@ -135,7 +139,7 @@ const Dropdown = () => {
 					>
 						<Friends />
 						<F.Text weight="500">Social</F.Text>
-						{/* <S.NotifCounter>5</S.NotifCounter> //todo */}
+						<S.NotifCounter>2</S.NotifCounter>
 					</Link>
 				</S.LinksContainer>
 				<hr className="second-hr" />

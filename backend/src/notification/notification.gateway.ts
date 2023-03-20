@@ -11,6 +11,7 @@ import {NotificationDto} from './dto/notification.dto';
 @WebSocketGateway()
 export class NotificationGateway {
 	constructor(private readonly websocketService: WebsocketService) {}
+	public test: number = 15;
 
 	@SubscribeMessage(ClientSocialEvents.SendRequest)
 	onSendRequest(@MessageBody(new ValidationPipe()) data: NotificationDto) {

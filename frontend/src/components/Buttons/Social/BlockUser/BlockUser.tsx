@@ -6,7 +6,7 @@ import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import isUserIn from 'helpers/isUserIn';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 
 interface IProps {
 	user: IUser;

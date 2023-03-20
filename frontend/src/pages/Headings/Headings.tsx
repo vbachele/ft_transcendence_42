@@ -1,4 +1,4 @@
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 import * as F from 'styles/font.styles';
 
 const Headings = () => {

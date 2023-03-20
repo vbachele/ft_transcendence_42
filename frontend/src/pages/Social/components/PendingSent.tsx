@@ -4,7 +4,7 @@ import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 
 interface IProps {
 	user: IUser;

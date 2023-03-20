@@ -1,6 +1,6 @@
 import {useContext, useEffect} from 'react';
 import SocketContext from 'contexts/Socket/Context';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 import {ServerSocialEvents} from 'events/social.events';
 
 const Notification = () => {

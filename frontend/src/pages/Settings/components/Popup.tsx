@@ -2,7 +2,7 @@ import {ChangeEventHandler, useState} from 'react';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import {Form, Input} from 'antd';
-import {openNotification} from 'helpers/notification';
+import {openNotification} from 'helpers/openNotification';
 import * as S from './Popup.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';

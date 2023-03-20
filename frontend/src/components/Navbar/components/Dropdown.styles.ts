@@ -169,6 +169,7 @@ export const NotifCounter = styled.div`
 	width: 20px;
 	height: 20px;
 	background-color: #d3222a;
+	background-color: #dc4f19;
 	position: absolute;
 	top: -8px;
 	left: -8px;
