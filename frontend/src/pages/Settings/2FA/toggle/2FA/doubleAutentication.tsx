@@ -9,8 +9,7 @@ import unlockAchievement from 'helpers/unlockAchievement';
 interface Props {
 	click: boolean;
 	onClose: React.MouseEventHandler<HTMLButtonElement>;
-	QRcode: string;
-	secretKey: string;
+	Email: string;
 }
 
 function stopPropagation(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -23,7 +22,6 @@ const DoubleAutentication: React.FC<Props> = (props) => {
 	const [errorCode, setErrorCode] = useState(false);
 
 	// set up variables
-	// if (!props.click) return null;
 
 	function Add2FA() {
 		const [verifyCode, setVerifyCode] = useState('');
@@ -61,22 +59,12 @@ const DoubleAutentication: React.FC<Props> = (props) => {
 						<S.GiFFire src="https://cdn.discordapp.com/attachments/1067488107827576916/1069217769515651132/Rectangle.gif" />
 						<H2>Enable 2FA</H2>
 					</S.TitleGif>
-					<Text style={{textAlign: 'center'}} weight={'350'} fontSize="1rem">
-						1. Go to your authenticator app and scan this QRcode
-					</Text>
-					<S.Qrcode src={props.QRcode} />
-					<S.divider></S.divider>
-					<Text style={{textAlign: 'center'}} weight={'350'} fontSize="1rem">
-						{' '}
-						1. Or enter this secret key in your app:
-					</Text>
-					<Text style={{textAlign: 'center'}} weight={'600'} fontSize="1rem">
-						{' '}
-						{props.secretKey}{' '}
+					<Text style={{textAlign: 'center'}} weight={'450'} fontSize="1rem">
+						An email with a code has been sent to {props.Email} 
 					</Text>
 					<S.divider></S.divider>
 					<Text style={{textAlign: 'center'}} weight={'500'} fontSize="1rem">
-						2. After step 1, enter the 6 digit code
+					 	Enter the 6 digit code
 					</Text>
 				</S.Text>
 				<S.FormNumber key="phone" onSubmit={handleSubmitCode}>

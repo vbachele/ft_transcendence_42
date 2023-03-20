@@ -25,16 +25,13 @@ const Toggle: React.FC<Props> = (props) => {
 	//initializer
 	const {value, toggleValue} = useToggle(false); // I call the Customized hook
 	const [enabled, setEnabled] = useState(false); // to modify by the backend
-	const [qrcodeUrl, setqrCodeUrl] = useState('');
-	const [display, setDisplay] = useState(false);
-	const [secretKey, setSecretKey] = useState('');
+	const [email, setEmail] = useState('');
 	const {userName, setDoubleAuth, doubleAuth} = useUserInfos();
 
 	const handleToggle = async () => {
 		if (value === false) {
 			const generate = await backend.generate2FA(userName);
-			QRCode.toDataURL(generate.otpauth_url).then(setqrCodeUrl);
-			setSecretKey(generate.base32);
+			setEmail(generate.email);
 		}
 		toggleValue();
 		setEnabled(!enabled);
@@ -66,8 +63,7 @@ const Toggle: React.FC<Props> = (props) => {
 						<DoubleAutentication
 							click={enabled}
 							onClose={() => setEnabled(false)}
-							QRcode={qrcodeUrl}
-							secretKey={secretKey}
+							Email={email}
 						/>
 					)}
 					{doubleAuth.doubleAuth && !value && (

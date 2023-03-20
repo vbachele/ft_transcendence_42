@@ -48,6 +48,5 @@ const {userName, setDoubleAuth, doubleAuth} = useUserInfos();
 	  );
 }
 
-// onClick={(e) => stopPropagation(e)}
 
 export default Disable2FA
