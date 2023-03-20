@@ -52,7 +52,7 @@ export const MiddleDiv = styled.div<IProps>`
     }
     display: flex;
     flex-direction: column;
-    text-align: center;
+    /* text-align: center; */
     flex: 1;
     justify-content: space-between;
 `;

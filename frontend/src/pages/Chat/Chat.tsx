@@ -20,7 +20,7 @@ function Chat() {
         <S.default>
             <LateralBar />
             {!isClickedDM && !isRightBarOpenDM && !isClickedChannel && <EmptyChat />}
-            {isPopupClicked && <ModalChanCreate/>}
+            {isPopupClicked && <ModalUserSearch/>}
             {isClickedChannel && <MainFieldChannel />}
             {isClickedDM && <MainFieldDirectMessages />}
             {(isRightBarOpenDM || (!isRightBarClosedDM && isClickedDM)) && <RightBarDirectMessages data={dataMessages}/>}
