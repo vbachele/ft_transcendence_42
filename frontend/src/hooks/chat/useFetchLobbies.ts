@@ -1,7 +1,7 @@
-import SocketContext from 'contexts/Socket/Context';
+import SocketContext from 'contexts/Socket/context';
 import {ClientChatEvents, ServerChatEvents} from 'events/chat.events';
 import {useContext, useEffect, useState} from 'react';
-import {ILobby} from '../../contexts/Chat/chat.context';
+import {ILobby} from '../../contexts/Chat/context';
 
 export function useFetchLobbies() {
 	const {socket} = useContext(SocketContext).SocketState;

@@ -3,14 +3,25 @@ import {
 	ChatContextProvider,
 	ChatReducer,
 	defaultChatContextState, ILobby,
-} from './chat.context';
-import SocketContext from '../Socket/Context';
+} from './context';
+import SocketContext from '../Socket/context';
 import {ServerEvents} from '../../events/socket.events';
 import {useFetchLobbies} from 'hooks/chat/useFetchLobbies';
 import {ServerChatEvents} from '../../events/chat.events';
 
 export interface IChatContextComponentProps extends PropsWithChildren {}
 
+/**
+ * ChatContextComponent
+ * @Description - This component is responsible for providing the ChatContext to the rest of the application.
+ * @member ChatState - The current state of the chat context.
+ * @member ChatDispatch - The dispatch function for the chat context.
+ * @details The chatContext is used to maintain the list of lobbies and the active lobby (the lobby the user is currently in).
+ * If you need to add a new property to the chat context, you will need to update {@link ChatContextProvider} and {@link ChatReducer}
+ * @consumer - This component can be consumed using the useContext hook {@example useContext(ChatContext).ChatState}.
+ * @param props
+ * @constructor
+ */
 function ChatContextComponent(props: IChatContextComponentProps) {
 	const {children} = props;
 	const [ChatState, ChatDispatch] = useReducer(

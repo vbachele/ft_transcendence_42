@@ -1,6 +1,6 @@
-import ChatContext from 'contexts/Chat/chat.context';
+import ChatContext from 'contexts/Chat/context';
 import React, {useContext, useEffect} from "react";
-import SocketContext from "../../contexts/Socket/Context";
+import SocketContext from "../../contexts/Socket/context";
 import {ClientEvents} from "../../events/socket.events";
 import {useUserInfos} from '../../contexts/User/userContent';
 

@@ -9,7 +9,7 @@ import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
 import {IUser} from '../../../types/models';
-import ChatContext from '../../../contexts/Chat/chat.context';
+import ChatContext from '../../../contexts/Chat/context';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import {backend} from '../../../lib/backend';
 import useFetchUserByName from '../../../hooks/useFetchUserByName';

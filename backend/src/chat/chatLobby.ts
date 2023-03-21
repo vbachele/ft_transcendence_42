@@ -52,6 +52,10 @@ export class ChatLobby extends ALobby {
     this.afterInit(data);
   }
 
+  /**
+   * @description Push the new lobby to the database and emit the lobby to the clients
+   * @param data Lobby data used to create the lobby
+   */
   async afterInit(data: ChatLobbyDto) {
     if (data.init) {
       const lobby = this.initLobby(data);
@@ -96,6 +100,10 @@ export class ChatLobby extends ALobby {
     await this.prismaLobbyService.pushUserToLobby(lobby.description!, this.id);
   }
 
+  /**
+   * @description Add a client to the lobby and push the user to the lobby in the database
+   * @param client The client to add to the lobby
+   */
   async addClient(
     @ConnectedSocket() client: AuthenticatedSocket
   ): Promise<ALobby> {

@@ -1,4 +1,4 @@
-import SocketContext from "contexts/Socket/Context";
+import SocketContext from "contexts/Socket/context";
 import useFetchUserByName from "hooks/useFetchUserByName";
 import { api } from "lib/api";
 import { backend } from "lib/backend";

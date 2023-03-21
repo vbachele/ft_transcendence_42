@@ -3,7 +3,7 @@ import {Form, Input, Modal, Switch} from 'antd';
 import styled from 'styled-components';
 import Lock from '../assets/Lock';
 import {ClientEvents} from '../../../events/socket.events';
-import SocketContext from '../../../contexts/Socket/Context';
+import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
 import {useUserInfos} from '../../../contexts/User/userContent';
 

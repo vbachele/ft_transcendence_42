@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import SocketContext from "../../contexts/Socket/Context";
+import SocketContext from "../../contexts/Socket/context";
 import {ClientChatEvents} from "../../events/chat.events";
 
 export function useSendMessage(lobbyId: string) {

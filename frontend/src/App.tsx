@@ -16,6 +16,18 @@ import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/ChatContext';
 import Pages from 'pages';
 import Notification from 'components/Notification/Notification';
+// import DoubleAuthentication from 'pages/2FA';
+// import Game from 'pages/Game/Game';
+// import Homepage from 'pages/Home';
+// import Landing from 'pages/Landing';
+// import Registration from 'pages/Registration';
+// import Social from 'pages/Social';
+import Popup from './components/Popup';
+import {ThemeProvider} from 'styled-components';
+import {GlobalStyle} from 'styles/global';
+import {dark, light} from 'styles/theme';
+import {ConfigProvider, theme as antdTheme} from 'antd';
+import ChatContextComponent from './contexts/Chat/Component';
 
 function App() {
 	const defaultTheme = 'dark';

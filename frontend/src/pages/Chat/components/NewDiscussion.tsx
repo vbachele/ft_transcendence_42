@@ -31,6 +31,7 @@ function NewDiscussion({type}: NewDiscussionProps) {
 					<ModalUserSearch
 						isModalOpen={displayModal}
 						setIsModalOpen={setDisplayModal}
+						userList={[]}
 					/>
 				))}
 		</S.NewDiscussion>

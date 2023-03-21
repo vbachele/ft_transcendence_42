@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {StyledCanvas, StyledGame} from './Game.styles';
-import SocketContext from '../../contexts/Socket/Context';
+import SocketContext from '../../contexts/Socket/context';
 import {Pong} from './Pong';
 import Countdown from '../../components/Popup/Countdown/Countdown';
 import {useParams, useSearchParams} from 'react-router-dom';
