@@ -58,8 +58,8 @@ export class NotificationGateway implements OnGatewayConnection {
 	@SubscribeMessage(ClientSocialEvents.ClearNotifs)
 	onClearNotifs(@MessageBody(new ValidationPipe()) data: NotificationDto) {
 		const client = this.websocketService.getClient(data.senderName);
-		const clientNotifs = this.notifs.get(data.senderName);
-		clientNotifs?.splice(0);
+		let clientNotifs = this.notifs.get(data.senderName);
+		clientNotifs = [];
 
 		if (client) {
 			this.websocketService.server

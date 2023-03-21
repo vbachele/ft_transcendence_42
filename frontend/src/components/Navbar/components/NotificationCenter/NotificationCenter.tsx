@@ -11,9 +11,12 @@ import * as UI from 'styles/buttons.styles';
 import useComponentVisible from 'hooks/useComponentVisible';
 import {INotification} from 'types/models';
 
-const NotificationCenter = () => {
+interface IProps {
+	notifications: INotification[];
+}
+
+const NotificationCenter = ({notifications}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
-	const [notifications, setNotifications] = useState<INotification[]>([]);
 	const {userName} = useUserInfos();
 	const {
 		ref: dropRef,
@@ -21,14 +24,12 @@ const NotificationCenter = () => {
 		setIsComponentVisible: setBellOpen,
 	} = useComponentVisible(false);
 
-	// socket?.emit(ClientSocialEvents.RequestNotifs, {
-	// 	senderName: userName.userName,
-	// });
+	console.log(notifications);
 
 	const onOpenNotifs = () => {
-		socket?.emit(ClientSocialEvents.RequestNotifs, {
-			senderName: userName.userName,
-		});
+		// socket?.emit(ClientSocialEvents.RequestNotifs, {
+		// 	senderName: userName.userName,
+		// });
 		setBellOpen(!bellOpen);
 	};
 
@@ -38,19 +39,6 @@ const NotificationCenter = () => {
 			senderName: userName.userName,
 		});
 	};
-
-	useEffect(() => {
-		socket?.on(
-			ServerSocialEvents.IncomingNotifsRequest,
-			(clientNotifs: INotification[]) => {
-				setNotifications(clientNotifs);
-			}
-		);
-
-		return () => {
-			socket?.off(ServerSocialEvents.IncomingNotifsRequest);
-		};
-	}, [socket]);
 
 	return (
 		<S.Container ref={dropRef}>

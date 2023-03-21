@@ -15,7 +15,7 @@ const Notif = ({notif}: IProps) => {
 	const formattedDate: string = formatDistanceToNow(test);
 
 	let link: string;
-	console.log('wrwrw');
+	// console.log('ssss');
 
 	if (true) {
 		link = '/social';

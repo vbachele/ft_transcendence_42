@@ -9,6 +9,7 @@ import {ClientSocialEvents, ServerSocialEvents} from 'events/social.events';
 import {useUserInfos} from 'contexts/User/userContent';
 import NotificationCenter from './components/NotificationCenter/NotificationCenter';
 import * as S from './Navbar.styles';
+import {INotification} from 'types/models';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +18,28 @@ interface IProps {
 const Navbar = ({setTheme}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
-	const [bellOpen, setBellOpen] = useState(false);
+	// const [bellOpen, setBellOpen] = useState(false);
+	const [notifications, setNotifications] = useState<INotification[]>([]);
+
+	useEffect(() => {
+		socket?.on(
+			ServerSocialEvents.IncomingNotifsRequest,
+			(clientNotifs: INotification[]) => {
+				setNotifications(clientNotifs);
+			}
+		);
+
+		return () => {
+			socket?.off(ServerSocialEvents.IncomingNotifsRequest);
+		};
+	}, [socket]);
+
+	useEffect(() => {
+		console.log('useeffect notif');
+		socket?.emit(ClientSocialEvents.RequestNotifs, {
+			senderName: userName.userName,
+		});
+	}, []);
 
 	return (
 		<S.StyledNav id="navbar">
@@ -30,7 +52,7 @@ const Navbar = ({setTheme}: IProps) => {
 			<S.Menu>
 				<ToggleTheme setTheme={setTheme} />
 				<S.Divider />
-				<NotificationCenter />
+				<NotificationCenter notifications={notifications} />
 				<S.Divider />
 				<Dropdown />
 			</S.Menu>
