@@ -15,6 +15,9 @@ export const Container = styled.div`
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	background-color: ${(p) => (p.theme.name === 'dark' ? '#000' : '#fff')};
 	z-index: 100;
+	.antd-input {
+  	font-family: 'Montserrat';
+	}
 `;
 
 export const DisableContainer = styled.div`
@@ -49,12 +52,6 @@ export const GIF = styled.img`
 `;
 
 export const PopupButton = styled(Button)``;
-
-export const QRCode = styled.img`
-	width: 128px;
-	height: 128px;
-	margin: auto;
-`;
 
 export const Divider = styled.hr`
 	border-bottom: 1px solid #ccc;
