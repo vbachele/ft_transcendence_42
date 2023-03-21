@@ -5,10 +5,10 @@ import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
 import * as F from 'styles/font.styles';
-import SocketContext from 'contexts/Socket/Context';
 import {useContext} from 'react';
 import {ClientSocialEvents} from 'events/social.events';
 import unlockAchievement from 'helpers/unlockAchievement';
+import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	user: IUser;

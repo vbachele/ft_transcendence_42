@@ -4,12 +4,12 @@ import {ReactComponent as Versus} from 'assets/versus.svg';
 import ToggleTheme from './components/ToggleTheme';
 import Dropdown from './components/Dropdown/Dropdown';
 import {useContext, useEffect, useState} from 'react';
-import SocketContext from 'contexts/Socket/Context';
 import {ClientSocialEvents, ServerSocialEvents} from 'events/social.events';
 import {useUserInfos} from 'contexts/User/userContent';
 import NotificationCenter from './components/NotificationCenter/NotificationCenter';
 import * as S from './Navbar.styles';
 import {INotification} from 'types/models';
+import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;

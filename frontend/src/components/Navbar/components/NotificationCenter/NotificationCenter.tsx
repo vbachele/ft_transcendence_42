@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import {ClientSocialEvents, ServerSocialEvents} from 'events/social.events';
 import {useUserInfos} from 'contexts/User/userContent';
-import SocketContext from 'contexts/Socket/Context';
 import {ReactComponent as BellOpened} from '../../assets/bell-opened.svg';
 import {ReactComponent as BellClosed} from '../../assets/bell-closed.svg';
 import Notif from './Notif';
@@ -10,6 +9,7 @@ import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
 import useComponentVisible from 'hooks/useComponentVisible';
 import {INotification} from 'types/models';
+import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	notifications: INotification[];

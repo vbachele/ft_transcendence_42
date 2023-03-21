@@ -4,6 +4,7 @@ import {Text} from '../../../styles/font.styles';
 import SocketContext from '../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../events/game.events';
 import {useSearchParams} from 'react-router-dom';
+import Popup from '../components/Popup/Popup';
 
 function Countdown() {
 	const [countdown, setCountdown] = useState(3);
