@@ -30,6 +30,10 @@ export type AuthImage = {
 	image: string;
 };
 
+export type Email = {
+	email: string;
+};
+
 type UserContextType = {
 	userName: UserName;
 	setUserName: React.Dispatch<React.SetStateAction<UserName>>;
@@ -43,6 +47,8 @@ type UserContextType = {
 	setDoubleAuth: React.Dispatch<React.SetStateAction<DoubleAuth>>;
 	verified2FA: DoubleAuthVerified;
 	setVerified2FA: React.Dispatch<React.SetStateAction<DoubleAuthVerified>>;
+	email: Email;
+	setEmail: React.Dispatch<React.SetStateAction<Email>>;
 };
 
 export const UserContext = createContext({} as UserContextType);
@@ -58,6 +64,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 	const [verified2FA, setVerified2FA] = useState<DoubleAuthVerified>({
 		verified2FA: false,
 	});
+	const [email, setEmail] = useState<Email>({email: ''});
 
 	useEffect(() => {
 		const userInfos = getInfosFromDB();
@@ -68,6 +75,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 			setCoalition({coalition: res.coalition});
 			setDoubleAuth({doubleAuth: res.otp_enabled});
 			setVerified2FA({verified2FA: res.otp_validated});
+			setEmail({email: res.email})
 		});
 	}, []);
 	return (
@@ -85,6 +93,8 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 				setDoubleAuth,
 				verified2FA,
 				setVerified2FA,
+				email,
+				setEmail
 			}}
 		>
 			{children}
