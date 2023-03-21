@@ -15,7 +15,29 @@ import * as S from './Social.styles';
 
 const {Search} = Input;
 
-const isEmpty = (users: IUser[]): boolean => !users || users.length === 0;
+const isEmptyStr = (users: IUser[]): string => {
+	if (!users || users.length === 0) {
+		return 'true';
+	} else {
+		return 'false';
+	}
+};
+
+const isEmptyBool = (users: IUser[]): boolean => {
+	if (!users || users.length === 0) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+const isEmptyPendings = (sent: IUser[], reiceved: IUser[]): string => {
+	if ((!sent || sent.length === 0) && (!reiceved || reiceved.length === 0)) {
+		return 'true';
+	} else {
+		return 'false';
+	}
+};
 
 function Social() {
 	const {userName} = useUserInfos();
@@ -106,7 +128,7 @@ function Social() {
 						friendUsers.filter((user) => filterByName(user, search)).length
 					}`}
 					key="FRIENDS"
-					empty={isEmpty(friendUsers)}
+					empty={isEmptyStr(friendUsers)}
 				>
 					{friendUsers &&
 						friendUsers
@@ -120,7 +142,7 @@ function Social() {
 									onRemove={handleRemove}
 								/>
 							))}
-					{isEmpty(friendUsers) && (
+					{isEmptyBool(friendUsers) && (
 						<Empty className="empty" description="No friends" />
 					)}
 				</S.StyledPanel>
@@ -131,7 +153,7 @@ function Social() {
 						pendingsReceived.filter((user) => filterByName(user, search)).length
 					}`}
 					key="PENDING"
-					empty={isEmpty(pendingsSent) && isEmpty(pendingsReceived)}
+					empty={isEmptyPendings(pendingsSent, pendingsReceived)}
 				>
 					{pendingsSent &&
 						pendingsSent
@@ -154,7 +176,7 @@ function Social() {
 									onDeny={handleDeny}
 								/>
 							))}
-					{isEmpty(pendingsReceived) && isEmpty(pendingsSent) && (
+					{isEmptyBool(pendingsReceived) && isEmptyBool(pendingsSent) && (
 						<Empty className="empty" description="No pending invites" />
 					)}
 				</S.StyledPanel>
@@ -164,7 +186,7 @@ function Social() {
 						blockedUsers.filter((user) => filterByName(user, search)).length
 					}`}
 					key="BLOCKED"
-					empty={isEmpty(blockedUsers)}
+					empty={isEmptyStr(blockedUsers)}
 				>
 					{blockedUsers &&
 						blockedUsers
@@ -176,7 +198,7 @@ function Social() {
 									onUnblock={handleUnblock}
 								/>
 							))}
-					{isEmpty(blockedUsers) && (
+					{isEmptyBool(blockedUsers) && (
 						<Empty className="empty" description="No blocked users" />
 					)}
 				</S.StyledPanel>

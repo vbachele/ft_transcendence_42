@@ -35,7 +35,7 @@ export const NotifCounter = styled.div`
 	font-size: 16px;
 	font-weight: 500;
 	color: white;
-	z-index: 70;
+	z-index: 50;
 
 	@media screen and (max-width: 768px) {
 		top: -4px;
@@ -43,7 +43,7 @@ export const NotifCounter = styled.div`
 `;
 
 export const PanelContainer = styled.div`
-	background-color: #888;
+	background-color: #000;
 	border-radius: 8px;
 	padding: 8px;
 	width: max-content;
@@ -53,13 +53,33 @@ export const PanelContainer = styled.div`
 
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
+	gap: 8px;
+
+	button {
+		margin: auto;
+	}
 `;
 
-export const NotifContainer = styled(Link)`
-	/* border: 1px solid crimson; */
-	/* a { */
-	text-decoration: none;
-	color: black;
-	/* } */
+export const NotifsContainer = styled.div`
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 8px;
+`;
+
+export const Notif = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	.sender {
+		display: flex;
+		gap: 8px;
+		font-weight: bold;
+	}
+`;
+
+export const NotifLink = styled(Link)`
+	color: ${(p) => p.theme.colors.secondary};
+	display: flex;
+	align-items: center;
 `;

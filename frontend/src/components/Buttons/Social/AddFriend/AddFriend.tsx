@@ -8,6 +8,7 @@ import * as F from 'styles/font.styles';
 import SocketContext from 'contexts/Socket/Context';
 import {useContext} from 'react';
 import {ClientSocialEvents} from 'events/social.events';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface IProps {
 	user: IUser;
@@ -59,12 +60,12 @@ function AddFriend({user}: IProps) {
 
 			//TODO move this to backend
 			//TODO socket on
-			// unlockAchievement('ADD', userName.userName);
-			// unlockAchievement('ADD', user.name);
-			// if (friends && friends.length + 1 >= 3) {
-			// 	unlockAchievement('TEAM', user.name);
-			// 	unlockAchievement('TEAM', userName.userName);
-			// }
+			unlockAchievement('ADD', userName.userName);
+			unlockAchievement('ADD', user.name);
+			if (friends && friends.length + 1 >= 3) {
+				unlockAchievement('TEAM', user.name);
+				unlockAchievement('TEAM', userName.userName);
+			}
 
 			openNotification('success', `${user.name} has been added`);
 
@@ -74,6 +75,7 @@ function AddFriend({user}: IProps) {
 		socket?.emit(ClientSocialEvents.SendFriendRequest, {
 			senderName: userName.userName,
 			receiverName: user.name,
+			type: 'FRIEND_REQUEST',
 		});
 
 		backend.addPending(user.name, userName.userName);

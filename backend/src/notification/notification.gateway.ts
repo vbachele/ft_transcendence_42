@@ -11,16 +11,34 @@ import {ClientSocialEvents, ServerSocialEvents} from './events/social.events';
 import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
+interface INotification {
+	id: number;
+	message: string;
+	sender: string;
+	createdAt: Date;
+	channel?: string;
+	type:
+		| 'ACHIEVEMENT'
+		| 'FRIEND_REQUEST'
+		| 'FRIEND_ACCEPT'
+		| 'FRIEND_DENY'
+		| 'BLOCKED'
+		| 'MESSAGE'
+		| 'BANNED'
+		| 'KICKED'
+		| 'ADMIN';
+}
+
 @WebSocketGateway()
 export class NotificationGateway implements OnGatewayConnection {
 	constructor(private readonly websocketService: WebsocketService) {}
-	private readonly notifs: Map<string, string[]> = new Map<string, string[]>();
+	private readonly notifs: Map<string, INotification[]> = new Map<
+		string,
+		INotification[]
+	>();
 
 	async handleConnection(@ConnectedSocket() client: AuthenticatedSocket) {
-		console.log('BACKEND', [...this.notifs.entries()]);
-		if (this.notifs.has(client.data.name)) {
-			// this.notifs.get(client.data.name);
-		} else {
+		if (!this.notifs.has(client.data.name)) {
 			this.notifs.set(client.data.name, []);
 		}
 	}
@@ -53,7 +71,15 @@ export class NotificationGateway implements OnGatewayConnection {
 	@SubscribeMessage(ClientSocialEvents.SendFriendRequest)
 	onSendRequest(@MessageBody(new ValidationPipe()) data: NotificationDto) {
 		const clientNotifs = this.notifs.get(data.receiverName);
-		clientNotifs?.push(`${data.senderName} sent you a friend request`);
+		const newNotif: INotification = {
+			id: Date.now(),
+			message: 'sent you a friend request',
+			sender: data.senderName,
+			createdAt: new Date(),
+			type: 'FRIEND_REQUEST',
+		};
+
+		clientNotifs?.push(newNotif);
 
 		const client = this.websocketService.getClient(data.receiverName);
 

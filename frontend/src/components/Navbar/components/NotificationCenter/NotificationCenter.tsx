@@ -7,14 +7,14 @@ import {ReactComponent as BellClosed} from '../../assets/bell-closed.svg';
 import Notif from './Notif';
 import * as S from './NotificationCenter.styles';
 import * as F from 'styles/font.styles';
+import * as UI from 'styles/buttons.styles';
 import useComponentVisible from 'hooks/useComponentVisible';
+import {INotification} from 'types/models';
 
 const NotificationCenter = () => {
 	const {socket} = useContext(SocketContext).SocketState;
-	const [notifications, setNotifications] = useState<string[]>([]);
+	const [notifications, setNotifications] = useState<INotification[]>([]);
 	const {userName} = useUserInfos();
-	// const [bellOpen, setBellOpen] = useState(false);
-
 	const {
 		ref: dropRef,
 		isComponentVisible: bellOpen,
@@ -23,33 +23,26 @@ const NotificationCenter = () => {
 
 	// socket?.emit(ClientSocialEvents.RequestNotifs, {
 	// 	senderName: userName.userName,
-	// 	receiverName: userName.userName,
 	// });
 
 	const onOpenNotifs = () => {
-		setBellOpen(!bellOpen);
 		socket?.emit(ClientSocialEvents.RequestNotifs, {
 			senderName: userName.userName,
-			receiverName: userName.userName,
 		});
+		setBellOpen(!bellOpen);
 	};
 
 	const onClearNotifs = () => {
 		setBellOpen(!bellOpen);
 		socket?.emit(ClientSocialEvents.ClearNotifs, {
 			senderName: userName.userName,
-			receiverName: userName.userName,
-		});
-		socket?.emit(ClientSocialEvents.RequestNotifs, {
-			senderName: userName.userName,
-			receiverName: userName.userName,
 		});
 	};
 
 	useEffect(() => {
 		socket?.on(
 			ServerSocialEvents.IncomingNotifsRequest,
-			(clientNotifs: string[]) => {
+			(clientNotifs: INotification[]) => {
 				setNotifications(clientNotifs);
 			}
 		);
@@ -73,10 +66,14 @@ const NotificationCenter = () => {
 				<S.PanelContainer>
 					<F.H4>Notifications</F.H4>
 					<hr />
-					{notifications.map((notif) => (
-						<Notif notif={notif} />
-					))}
-					<button onClick={onClearNotifs}>Mark as read</button>
+					<S.NotifsContainer>
+						{notifications.map((notif) => (
+							<Notif notif={notif} key={notif.id} />
+						))}
+					</S.NotifsContainer>
+					<UI.SecondaryButtonSmall onClick={onClearNotifs}>
+						Mark as read
+					</UI.SecondaryButtonSmall>
 				</S.PanelContainer>
 			)}
 		</S.Container>
