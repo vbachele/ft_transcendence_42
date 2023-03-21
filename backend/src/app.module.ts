@@ -12,13 +12,14 @@ import {CloudinaryModule} from './cloudinary/cloudinary.module';
 import {GameModule} from './game/game.module';
 import {WebsocketModule} from './websocket/websocket.module';
 import {LobbyModule} from './lobby/lobby.module';
-import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
+// import {DoubleAuthModule} from './doubleAuth/doubleAuth.module';
 import {APP_FILTER} from '@nestjs/core';
 import {AllExceptionsFilter} from './errors/all-exceptions.filter';
 import {FriendModule} from './social/friends/friends.module';
 import {PendingModule} from './social/pending/pendings.module';
 import {BlockedModule} from './social/blocked/blocked.module';
 import {ChatModule} from "./chat/chat.module";
+import { Mail2FaModule } from './doubleAuth/mail2FA/mail2Fa.module';
 
 
 @Module({
@@ -34,7 +35,8 @@ import {ChatModule} from "./chat/chat.module";
 		PrismaModule,
 		CloudinaryModule,
 		WebsocketModule,
-		DoubleAuthModule,
+		// DoubleAuthModule,
+		Mail2FaModule,
     ChatModule,
 	],
 	controllers: [AppController, DatabaseController],

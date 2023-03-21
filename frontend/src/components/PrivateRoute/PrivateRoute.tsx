@@ -27,6 +27,7 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 		const path = location.pathname;
 
 		if (verified2FA.verified2FA === false && doubleAuth.doubleAuth === true) {
+			await backend.generate2FA(userName);
 			navigate('/2FA');
 			return;
 		}

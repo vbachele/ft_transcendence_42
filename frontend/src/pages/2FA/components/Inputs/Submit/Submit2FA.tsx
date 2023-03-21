@@ -85,8 +85,8 @@ const Submit2FA = () => {
       userName,
       token : number,
     }
-    const response = await backend.validate2FA(user);
-    if (response.status === "fail" || response.status === "error")
+    const response = await backend.verify2FA(user);
+    if (response.statusCode === 400)
     {
       console.error(response.message);
       setError(true);

@@ -1,19 +1,27 @@
 import { Controller, Get, Post, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';import { Mail2FaGenerateService } from './Generate/mail2FAGenerate.service';
-import { Mail2FaValidateService } from './Validate/mail2FAValidate.service';
+import { Request, Response } from 'express';
+import { Mail2FaValidateService } from './validate/validate2FA.service';
+import { DisableService } from './disable/disable2Fa.service';
+import { Mail2FaGenerateService } from './generate/generate2FA.service';
 
-@Controller('mail2FA')
+@Controller('2FA')
 export class Mail2FaController {
 	constructor( private readonly generate2FA : Mail2FaGenerateService,
-			private readonly validate2FA: Mail2FaValidateService ) {}
+			private readonly validate2FA: Mail2FaValidateService,
+			private readonly disable2FA: DisableService ) {}
 
 	@Post('sendEmail')
-	async sendMail(@Req() req: Request, @Res() res: Response) : Promise<void> {
-		await this.generate2FA.send2FAActivationMail(req, res);
+	async SendMail(@Req() req: Request, @Res() res: Response) : Promise<void> {
+		await this.generate2FA.sendActivationMail(req, res);
 	}
 
-	@Post('Verify')
+	@Post('verify')
 	async VerifyMail(@Req() req: Request, @Res() res: Response) : Promise<void> {
-		await this.validate2FA.Validate2FA(req, res);
+		await this.validate2FA.validate2FA(req, res);
+	}
+
+	@Post('disable')
+	async Disable(@Req() req: Request, @Res() res: Response) : Promise<void> {
+		await this.disable2FA.disable2FA(req, res);
 	}
 }

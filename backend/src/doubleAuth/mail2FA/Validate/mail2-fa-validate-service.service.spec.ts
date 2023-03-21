@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Mail2FaValidateServiceService } from './mail2FAValidate.service';
+import { Mail2FaValidateServiceService } from './validate2FA.service';
 
 describe('Mail2FaValidateServiceService', () => {
   let service: Mail2FaValidateServiceService;

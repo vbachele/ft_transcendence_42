@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { Mail2FaGenerateService } from './Generate/mail2FAGenerate.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Mail2FaController } from './mail2FA.controller';
-import { Mail2FaValidateService } from './Validate/mail2FAValidate.service';
+import { Mail2FaValidateService } from './validate/validate2FA.service';
+import { DisableService } from './disable/disable2Fa.service';
+import { PrismaModule } from 'src/database/prisma.module';
+import { PrismaService } from 'src/database/prisma.service';
+import { Mail2FaGenerateService } from './generate/generate2FA.service';
 
 @Module({
   imports: [
@@ -16,8 +19,9 @@ import { Mail2FaValidateService } from './Validate/mail2FAValidate.service';
         }
       },
     }),
+    PrismaModule,
   ],
-  providers: [Mail2FaGenerateService, Mail2FaValidateService],
+  providers: [Mail2FaGenerateService, Mail2FaValidateService, DisableService,  PrismaService],
   controllers: [Mail2FaController],
   
 })

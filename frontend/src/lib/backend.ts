@@ -88,17 +88,17 @@ export const backend = {
 
 	// 2FA
 	async generate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/mail2FA/sendEmail', user);
+		const response = await api.post('/2FA/sendEmail', user);
 		return await response.json();
 	},
 	async verify2FA(user: unknown): Promise<any> {
-		const response = await api.post('/mail2FA/verify', user);
+		const response = await api.post('/2FA/verify', user);
 		return await response.json();
 	},
-	async validate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/2FA/validate', user);
-		return await response.json();
-	},
+	// async validate2FA(user: unknown): Promise<any> {
+	// 	const response = await api.post('/2FA/validate', user);
+	// 	return await response.json();
+	// },
 	async disable2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/disable', user);
 		return await response.json();

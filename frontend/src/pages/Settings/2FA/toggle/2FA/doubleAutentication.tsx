@@ -37,7 +37,8 @@ const DoubleAutentication: React.FC<Props> = (props) => {
 				token: verifyCode,
 			};
 			const response = await backend.verify2FA(userForm);
-			if (response.status === 'fail') {
+			console.log("STATUS CODE IS :", response.statusCode);
+			if (response.statusCode === 400) {				
 				console.error(response.message);
 				setErrorCode(true);
 				return;

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Req, Res } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { Request, Response } from 'express';
-// import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 
 
@@ -9,15 +9,14 @@ import { Request, Response } from 'express';
 export class Mail2FaValidateService {
 	constructor( private readonly prisma: PrismaService) {}
 
-	async Validate2FA(@Req() req: Request, @Res() res: Response)
+	async validate2FA(@Req() req: Request, @Res() res: Response)
 	{
 		try {
 
-			const { userName, token} = req.body;
+			const { userName} = req.body;
 			const user = await this.prisma.user.findUnique({ where: { name : userName.userName} }); // to change by the name or real ID
-			//  const {token_mail} = user.token_mail;
-			//  const isMatch = await bcrypt.compare(token, token);
-			 await this.updateUser(userName)
+			await this.handleErrorToken(req, user);
+			await this.updateUser(userName)
 			res.status(200).json({otp_verified: true,})
 		}catch(e) {
 			throw new HttpException({
@@ -36,6 +35,7 @@ export class Mail2FaValidateService {
 			data: {
 			  otp_enabled: true,
 			  otp_verified: true,
+			  otp_validated : true,
 			},
 		  });
 		}
@@ -45,5 +45,21 @@ export class Mail2FaValidateService {
 				error: "Impossible to update user in validate2FA"},
 				 HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	async handleErrorToken(@Req() req: Request, user: any){
+		const {token} = req.body;
+		const token_mail = user?.token_mail;
+		const isMatch = await bcrypt.compare(token, token_mail);
+		console.log("IS IT CORRECT", isMatch);
+		console.log("TOKEN IS", token);
+		
+		if (!isMatch)
+	   {
+			   throw new HttpException({
+			   status: HttpStatus.BAD_REQUEST,
+			   error: "errorCodeIsfalse"},
+				HttpStatus.BAD_REQUEST);
+	   }
 	}
 }

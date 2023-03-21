@@ -3,6 +3,8 @@ import { Catch, HttpException, HttpStatus, Injectable, Req, Res } from '@nestjs/
 import { Request, Response } from 'express';
 import { PrismaService } from 'src/database/prisma.service';
 import * as bcrypt from 'bcrypt';
+import * as fs from 'fs';
+const myHTML = fs.readFileSync('/usr/src/app/src/doubleAuth/mail2FA/generate/index2.html', 'utf8');
 
 
 @Injectable()
@@ -11,7 +13,7 @@ export class Mail2FaGenerateService {
 		private prisma: PrismaService) {}
 
 /* SEND 2FA ACTIVATION EMAIL in settings page */
-	async send2FAActivationMail(@Req() req: Request, @Res() res: Response)
+	async sendActivationMail(@Req() req: Request, @Res() res: Response)
 	{
 		try {
 			const email = await this.getUserEmail(req);
@@ -37,7 +39,6 @@ export class Mail2FaGenerateService {
 		try {
 			const { userName } = req.body;
 			const user = await this.prisma.user.findUnique({ where: { name : userName} }); // to change by the name or real ID
-			console.log("USER EMAIL IS", user?.email)
 			return user?.email!;
 
 		} catch (error) {
@@ -60,12 +61,16 @@ export class Mail2FaGenerateService {
 
 	sendEmailToUser(email: string, @Req() req: Request, code2FA: string) {
 		const {userName} = req.body;
+		let htmlWithCode = myHTML.replace('{{code2FA}}', code2FA);
+  		htmlWithCode = htmlWithCode.replace('{{userName}}', userName);
+
+		
 		this.mailerService.sendMail({
 			to: `${email}`,
 			from: 'versus.transcendence@gmail.com',
-			subject: 'Your confirmation code for transcendence app',
+			subject: 'Versus: Your confirmation code',
 			text:'Versus, two side one victory',
-			html: `<b>Bonjour ${userName}</b><p>Your confirmation code is: ${code2FA}</p>`,
+			html: htmlWithCode,
 		})
 	}
 
