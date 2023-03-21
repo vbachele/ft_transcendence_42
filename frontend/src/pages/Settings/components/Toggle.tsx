@@ -11,13 +11,11 @@ import * as S from '../Settings.styles';
 
 const Toggle = () => {
 	const {userName, doubleAuth} = useUserInfos();
-	const [QRCodeURL, setQRCodeURL] = useState('');
-	const [secretKey, setSecretKey] = useState('');
+	const [email, setEmail] = useState('');
 
 	const handleToggle = async () => {
 		const generate = await backend.generate2FA(userName);
-		QRCode.toDataURL(generate.otpauth_url).then(setQRCodeURL);
-		setSecretKey(generate.base32);
+		setEmail(generate.email);
 		setIsOpen(!isOpen);
 	};
 
@@ -31,7 +29,7 @@ const Toggle = () => {
 		<S.Toggle ref={popupRef}>
 			<Switch checked={doubleAuth.doubleAuth} onClick={handleToggle} />
 			{!doubleAuth.doubleAuth && isOpen && (
-				<Popup QRcode={QRCodeURL} secretKey={secretKey} setIsOpen={setIsOpen} />
+				<Popup email={email} setIsOpen={setIsOpen} />
 			)}
 			{doubleAuth.doubleAuth && isOpen && <Disable2FA setIsOpen={setIsOpen} />}
 			{!doubleAuth.doubleAuth && <F.Text>Enable 2FA</F.Text>}

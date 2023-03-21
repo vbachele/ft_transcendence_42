@@ -3,6 +3,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {useUserInfos} from 'contexts/User/userContent';
 import LandingPage from 'pages/Landing/Landing';
 import Loading from 'components/Loading';
+import {backend} from 'lib/backend';
 
 const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	const navigate = useNavigate();

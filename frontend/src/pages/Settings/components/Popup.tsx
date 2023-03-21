@@ -8,12 +8,11 @@ import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
 
 interface IProps {
-	QRcode: string;
-	secretKey: string;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	email: string;
 }
 
-const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
+const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 	const {userName, setDoubleAuth} = useUserInfos();
 	const [errorCode, setErrorCode] = useState(false);
 	const [verifyCode, setVerifyCode] = useState('');
@@ -40,31 +39,15 @@ const DoubleAuthPopup = ({QRcode, secretKey, setIsOpen}: IProps) => {
 		openNotification('success', '2FA enabled');
 	}
 
-	function copyToClipboard() {
-		navigator.clipboard.writeText(secretKey);
-		openNotification('success', 'Key copied to clipboard');
-	}
-
 	return (
 		<S.Container>
 			<S.Title>
 				<S.GIF src="https://cdn.discordapp.com/attachments/1067488107827576916/1069217769515651132/Rectangle.gif" />
 				<F.H2>Enable 2FA</F.H2>
 			</S.Title>
-			<F.Subtitle>1. Scan this QR code in your Google Authenticator</F.Subtitle>
-			<S.QRCode src={QRcode} />
+			<F.Subtitle>An email with a code has been sent to {email}</F.Subtitle>
 			<S.Divider />
-			<F.Subtitle>
-				1. Or enter this key in your application (click to copy)
-			</F.Subtitle>
-			<F.Text
-				style={{cursor: 'pointer', wordBreak: 'break-all', textAlign: 'center'}}
-				onClick={copyToClipboard}
-			>
-				{secretKey}
-			</F.Text>
-			<S.Divider />
-			<F.Subtitle>2. Enter the 6 digit code</F.Subtitle>
+			<F.Subtitle>Enter the 6 digit code</F.Subtitle>
 			<Form name="basic" onFinish={handleSubmitCode}>
 				<Form.Item
 					name="code"
