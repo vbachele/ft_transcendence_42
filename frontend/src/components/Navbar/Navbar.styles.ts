@@ -48,18 +48,6 @@ export const Menu = styled.div`
 	a {
 		text-decoration: none;
 	}
-
-	.bell {
-		cursor: pointer;
-		border-radius: 0;
-		fill: ${(p) => p.theme.colors.secondary};
-		width: 24px;
-		height: 24px;
-
-		:hover {
-			fill: #dc4f19;
-		}
-	}
 `;
 
 export const Divider = styled.div`

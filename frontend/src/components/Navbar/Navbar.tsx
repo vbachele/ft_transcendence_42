@@ -1,19 +1,22 @@
 import {Link} from 'react-router-dom';
 import {ReactComponent as Logo} from 'assets/logo.svg';
 import {ReactComponent as Versus} from 'assets/versus.svg';
-import {ReactComponent as BellOpened} from './assets/bell-opened.svg';
-import {ReactComponent as BellClosed} from './assets/bell-closed.svg';
 import ToggleTheme from './components/ToggleTheme';
-import Dropdown from './components/Dropdown';
+import Dropdown from './components/Dropdown/Dropdown';
+import {useContext, useEffect, useState} from 'react';
+import SocketContext from 'contexts/Socket/Context';
+import {ClientSocialEvents, ServerSocialEvents} from 'events/social.events';
+import {useUserInfos} from 'contexts/User/userContent';
+import NotificationCenter from './components/NotificationCenter/NotificationCenter';
 import * as S from './Navbar.styles';
-import * as S2 from './components/Dropdown.styles';
-import {useState} from 'react';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Navbar = ({setTheme}: IProps) => {
+	const {socket} = useContext(SocketContext).SocketState;
+	const {userName} = useUserInfos();
 	const [bellOpen, setBellOpen] = useState(false);
 
 	return (
@@ -26,23 +29,8 @@ const Navbar = ({setTheme}: IProps) => {
 			</Link>
 			<S.Menu>
 				<ToggleTheme setTheme={setTheme} />
-
-				{/* <S.Divider />
-				<div style={{position: 'relative', height: '24px'}}>
-					<S2.NotifCounter>15</S2.NotifCounter>
-					{bellOpen ? (
-						<BellOpened
-							className="bell"
-							onClick={() => setBellOpen(!bellOpen)}
-						/>
-					) : (
-						<BellClosed
-							className="bell"
-							onClick={() => setBellOpen(!bellOpen)}
-						/>
-					)}
-				</div> */}
-
+				<S.Divider />
+				<NotificationCenter />
 				<S.Divider />
 				<Dropdown />
 			</S.Menu>

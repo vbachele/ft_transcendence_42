@@ -1,4 +1,4 @@
-import {IsString} from 'class-validator';
+import {isArray, IsString} from 'class-validator';
 
 export class NotificationDto {
 	@IsString()

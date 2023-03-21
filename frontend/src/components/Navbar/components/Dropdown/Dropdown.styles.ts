@@ -161,26 +161,3 @@ export const PopupButton = styled.button`
 	background-color: transparent;
 	border: none;
 `;
-
-export const NotifCounter = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	background-color: #d3222a;
-	background-color: #dc4f19;
-	position: absolute;
-	top: -8px;
-	left: -8px;
-	padding: 10px;
-	border-radius: 50%;
-	font-size: 16px;
-	font-weight: 500;
-	color: white;
-	z-index: 70;
-
-	@media screen and (max-width: 768px) {
-		top: -4px;
-	}
-`;

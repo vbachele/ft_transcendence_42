@@ -71,7 +71,7 @@ function AddFriend({user}: IProps) {
 			return;
 		}
 
-		socket?.emit(ClientSocialEvents.SendRequest, {
+		socket?.emit(ClientSocialEvents.SendFriendRequest, {
 			senderName: userName.userName,
 			receiverName: user.name,
 		});

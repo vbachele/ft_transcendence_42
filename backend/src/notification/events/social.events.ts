@@ -1,7 +1,10 @@
 export enum ClientSocialEvents {
-	SendRequest = 'client.social.sendRequest',
+	RequestNotifs = 'client.social.requestNotifs',
+	ClearNotifs = 'client.social.clearNotifs',
+	SendFriendRequest = 'client.social.sendFriendRequest',
 }
 
 export enum ServerSocialEvents {
-	IncomingRequest = 'client.social.incomingRequest',
+	IncomingFriendRequest = 'client.social.incomingFriendRequest',
+	IncomingNotifsRequest = 'client.social.incomingNotifsRequest',
 }

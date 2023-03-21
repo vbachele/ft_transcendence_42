@@ -7,16 +7,19 @@ const Notification = () => {
 	const {socket} = useContext(SocketContext).SocketState;
 
 	useEffect(() => {
-		socket?.on(ServerSocialEvents.IncomingRequest, (senderName: string) => {
-			openNotification(
-				'info',
-				`${senderName} sent you a friend request`,
-				'topRight'
-			);
-		});
+		socket?.on(
+			ServerSocialEvents.IncomingFriendRequest,
+			(senderName: string) => {
+				openNotification(
+					'info',
+					`${senderName} sent you a friend request`,
+					'topRight'
+				);
+			}
+		);
 
 		return () => {
-			socket?.off(ServerSocialEvents.IncomingRequest);
+			socket?.off(ServerSocialEvents.IncomingFriendRequest);
 		};
 	}, [socket]);
 
