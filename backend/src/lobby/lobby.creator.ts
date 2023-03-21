@@ -1,5 +1,5 @@
-import { GameLobby, GameLobbyDto } from "./gameLobby";
-import { ChatLobby, ChatLobbyDto } from "./chatLobby";
+import { GameLobby, GameLobbyDto } from "../game/gameLobby";
+import { ChatLobby, ChatLobbyDto } from "../chat/chatLobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
 import { LobbyDto } from "./dto/lobby.dto";
 import { WebsocketService } from "../websocket/websocket.service";

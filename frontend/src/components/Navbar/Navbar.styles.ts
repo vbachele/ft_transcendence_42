@@ -36,10 +36,9 @@ export const Menu = styled.div`
 
 	svg {
 		border-radius: 50%;
-		/* width: 40px;
-		height: 40px; */
 		fill: ${(props) => props.theme.colors.secondary};
 	}
+
 	img {
 		border-radius: 50%;
 		width: 40px;
@@ -48,9 +47,6 @@ export const Menu = styled.div`
 
 	a {
 		text-decoration: none;
-	}
-
-	@media screen and (max-width: 768px) {
 	}
 `;
 
@@ -67,6 +63,8 @@ export const Divider = styled.div`
 
 export const StyledToggleTheme = styled.label`
 	cursor: pointer;
+	width: 24px;
+	height: 24px;
 
 	svg {
 		width: 24px;

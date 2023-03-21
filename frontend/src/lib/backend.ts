@@ -3,12 +3,12 @@ import {api} from './api';
 
 export const backend = {
 	// User
-	async getAllUsers(): Promise<any> {
-		const response = await api.get('/users');
+	async getAllUsers(blockedOf: string): Promise<IUser[]> {
+		const response = await api.getFilterBlocked('/users', blockedOf);
 		return await response.json();
 	},
-	async getUserByName(name: string): Promise<IUser> {
-		const response = await api.get('/users/' + name);
+	async getUserByName(name: string, blockedOf: string): Promise<IUser> {
+		const response = await api.getFilterBlocked('/users/' + name, blockedOf);
 		return await response.json();
 	},
 	async patchUser(name: string, updateUser: unknown): Promise<any> {
@@ -57,7 +57,10 @@ export const backend = {
 	},
 
 	// Pending
-	async getPendingsOf(name: string): Promise<IUser[]> {
+	async getPendingsOf(name: string): Promise<{
+		sentPendings: IUser[];
+		receivedPendings: IUser[];
+	}> {
 		const response = await api.get('/pendings/' + name);
 		return await response.json();
 	},
@@ -88,17 +91,17 @@ export const backend = {
 
 	// 2FA
 	async generate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/2FA/generate', user);
+		const response = await api.post('/2FA/sendEmail', user);
 		return await response.json();
 	},
 	async verify2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/verify', user);
 		return await response.json();
 	},
-	async validate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/2FA/validate', user);
-		return await response.json();
-	},
+	// async validate2FA(user: unknown): Promise<any> {
+	// 	const response = await api.post('/2FA/validate', user);
+	// 	return await response.json();
+	// },
 	async disable2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/disable', user);
 		return await response.json();

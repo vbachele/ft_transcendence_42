@@ -40,26 +40,28 @@ model User {
   otp_enabled   Boolean?  @default(false)
   otp_verified  Boolean?  @default(false)
   otp_validated Boolean?  @default(false)
-  otp_ascii     String?   @default("")
-  otp_hex       String?   @default("")
-  otp_base32    String?   @default("")
-  otp_auth_url  String?   @default("")
-  messages     Message[] @relation("author")
-  lobbies      Lobby[]   @relation("joined")
-  lobbyOwner   Lobby[]   @relation("owned")
+  messages      Message[] @relation("author")
+  lobbies       Lobby[]   @relation("joined")
+  lobbyOwner    Lobby[]   @relation("owned")
+  bannedFrom    Lobby[]   @relation("banned")
+  muteFrom      Lobby[]   @relation("muted")
+  token_mail    String?   @default("")
 }
 
 model Lobby {
   id          String    @id
   name        String    @unique
   description String?
-  admin       User      @relation(name: "owned", fields: [adminId], references: [id])
-  adminId     Int
-  users       User[]    @relation("joined")
   createdAt   DateTime
   type        String
   privacy     String
   maxClients  Int
+  password    String?
+  admin       User      @relation(name: "owned", fields: [adminName], references: [name])
+  adminName   String
+  users       User[]    @relation("joined")
+  banned      User[]    @relation("banned")
+  muted       User[]    @relation("muted")
   messages    Message[]
 }
 

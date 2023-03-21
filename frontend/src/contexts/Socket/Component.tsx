@@ -1,10 +1,11 @@
 import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
-import {useSocket} from '../../hooks/useSocket';
+import {useSocket} from 'hooks/useSocket';
 import {
 	defaultSocketContextState,
 	SocketContextProvider,
 	SocketReducer,
-} from './Context';
+} from './context';
+import {useUserInfos} from '../User/userContent';
 
 export interface ISocketContextComponentProps extends PropsWithChildren {}
 
@@ -18,9 +19,8 @@ const SocketContextComponent: React.FunctionComponent<
 		defaultSocketContextState
 	);
 	const [loading, setLoading] = useState(true);
-	const name = localStorage.getItem('name');
+	const name = useUserInfos().userName.userName;
 	const socket = useSocket('/', {
-
 		reconnectionAttempts: 5,
 		reconnectionDelay: 5000,
 		autoConnect: false,
@@ -30,11 +30,13 @@ const SocketContextComponent: React.FunctionComponent<
 	});
 
 	useEffect(() => {
+		if (!name) return;
+		socket.io.opts.query!.name = name;
 		socket.connect();
 		SocketDispatch({type: 'update_socket', payload: socket});
 		StartListeners();
 		SendHandshake();
-	}, []);
+	}, [name]);
 
 	const StartListeners = () => {
 		socket.io.on('reconnect', (attempt) => {
@@ -51,7 +53,7 @@ const SocketContextComponent: React.FunctionComponent<
 		});
 		socket.io.on('error', (error) => {
 			console.error(`Socket error: `, error);
-		})
+		});
 	};
 	const SendHandshake = () => {
 		console.info(`Sending handshake to server...`);
@@ -91,7 +93,7 @@ const SocketContextComponent: React.FunctionComponent<
 			socket.off('disconnect');
 			socket.off('user_disconnected');
 			socket.off('error');
-		}
+		};
 	}, []);
 
 	if (loading) return <p>Loading socket IO...</p>;

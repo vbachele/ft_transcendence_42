@@ -11,17 +11,18 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div`
+	position: fixed;
+	top: calc(50% - 150px);
+	right: calc(50% - 150px);
+
 	display: flex;
 	flex-direction: column;
-	background: rgba(0, 0, 0, 0.56);
 	border-radius: 8px;
-	backdrop-filter: blur(15px);
-	margin: auto;
 	padding: 24px;
-	gap: 24px;
-	width: 375px;
-	width: clamp(80, 80%, 375px);
-	user-select: none;
+	gap: 20px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(16px);
+	z-index: 100;
 `;
 
 export const Button = styled.div`
@@ -34,6 +35,7 @@ export const Text = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	text-align: center;
 	color: white;
 	gap: 8px;
 `;

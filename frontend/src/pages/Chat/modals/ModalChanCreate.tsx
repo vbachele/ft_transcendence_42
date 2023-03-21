@@ -3,8 +3,9 @@ import {Form, Input, Modal, Switch} from 'antd';
 import styled from 'styled-components';
 import Lock from '../assets/Lock';
 import {ClientEvents} from '../../../events/socket.events';
-import SocketContext from '../../../contexts/Socket/Context';
+import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
+import {useUserInfos} from '../../../contexts/User/userContent';
 
 const StyledTogglePrivate = styled.div`
 	display: flex;
@@ -45,23 +46,22 @@ function TogglePrivate({isPrivate, setIsPrivate}: TogglePrivateProps) {
 const StyledPasswordInput = styled(Input.Password)`
 	padding: 16px;
 	font-size: 1.25em;
-  .ant-input {
-	background-color: transparent;
-  }
+	/* .ant-input {
+		background-color: transparent;
+	} */
 `;
 
 const StyledInput = styled(Input)`
 	padding: 16px;
 	font-size: 1.25em;
-	background-color: transparent;
-  .ant-input {
-    background-color: transparent;
-	
-  }
+	/* background-color: transparent;
+	.ant-input {
+		background-color: transparent;
+	} */
 `;
 
 const StyledTextArea = styled(TextArea)`
-    background-color: transparent;
+	/* background-color: transparent; */
 `;
 
 interface ModalChanCreateProps {
@@ -73,6 +73,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	const [isPrivate, setIsPrivate] = useState(false);
 	const [form] = Form.useForm();
 	const {socket} = useContext(SocketContext).SocketState;
+	const name = useUserInfos().userName.userName;
 
 	const handleCancel = (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -80,12 +81,11 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	};
 
 	function handleSubmit(data: any) {
-		const owner = localStorage.getItem('name');
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
 				maxClients: 1024,
-				owner: owner,
+				owner: name,
 				privacy: data.password ? 'private' : 'public',
 				init: 'true',
 				type: 'channel',
@@ -132,7 +132,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 						label={'Password'}
 						rules={[{required: true, message: 'Missing channel password'}]}
 					>
-						<StyledPasswordInput placeholder="Enter a password"  />
+						<StyledPasswordInput placeholder="Enter a password" />
 					</Form.Item>
 				)}
 			</Form>

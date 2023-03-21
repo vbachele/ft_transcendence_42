@@ -1,29 +1,20 @@
-import {BadRequestException, HttpException, Injectable} from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
-import { Lobby as LobbyModel, Prisma } from "@prisma/client";
-import { Lobby } from "../../lobby/chatLobby";
-import { Message as MessageModel } from "@prisma/client";
+import { Lobby as LobbyModel, Message as MessageModel } from "@prisma/client";
+import { Lobby } from "../../chat/chatLobby";
 
 @Injectable()
 export class PrismaLobbyService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async pushLobby(lobby: Lobby, owner: string): Promise<LobbyModel> {
-    try {
-      const admin = await this.prismaService.user.findFirst({
-        where: {
-          name: owner,
-        },
-      });
-      return this.prismaService.lobby.create({
-        data: {
-          ...lobby,
-          adminId: admin!.id,
-        },
-      });
-    } catch (e) {
-      throw new Error(`Lobby database entry creation failed: ${e}`);
-    }
+    console.log(`owner is `, owner);
+    return this.prismaService.lobby.create({
+      data: {
+        ...lobby,
+        adminName: owner,
+      },
+    });
   }
 
   async pushUserToLobby(
@@ -54,7 +45,11 @@ export class PrismaLobbyService {
     }
   }
 
-  async pushMessage(lobbyId: string, message: string, username: string): Promise<{messages: MessageModel[]}> {
+  async pushMessage(
+    lobbyId: string,
+    message: string,
+    username: string
+  ): Promise<{ messages: MessageModel[] }> {
     try {
       return this.prismaService.lobby.update({
         where: {
@@ -63,13 +58,13 @@ export class PrismaLobbyService {
         data: {
           messages: {
             createMany: {
-                data: [{ content: message, authorName: username}],
-            }
-          }
+              data: [{ content: message, authorName: username }],
+            },
+          },
         },
         select: {
-            messages: true,
-        }
+          messages: true,
+        },
       });
     } catch (e) {
       throw new Error(`Lobby database entry creation failed ${e}`);
@@ -100,7 +95,7 @@ export class PrismaLobbyService {
       },
       include: {
         messages: true,
-      }
+      },
     });
   }
 
@@ -114,7 +109,7 @@ export class PrismaLobbyService {
       },
       include: {
         messages: true,
-      }
+      },
     });
   }
 
@@ -124,16 +119,55 @@ export class PrismaLobbyService {
 
   async fetchLobbyFromId(lobbyId: string): Promise<LobbyModel | null> {
     return this.prismaService.lobby.findUnique({
-        where: {
-            id: lobbyId,
-        },
-        include: {
-            messages: true,
-        }
+      where: {
+        id: lobbyId,
+      },
+      include: {
+        messages: true,
+      },
     });
   }
 
-  deleteLobby(id: string): Promise<LobbyModel> {
+  async fetchUsersInLobby(lobbyId: string) {
+    return this.prismaService.lobby.findUnique({
+      where: {
+        id: lobbyId,
+      },
+      select: {
+        users: true,
+      },
+    });
+  }
+
+  async fetchAdminInLobby(
+    lobbyId: string
+  ): Promise<{ adminName: string } | null> {
+    return this.prismaService.lobby.findUnique({
+      where: {
+        id: lobbyId,
+      },
+      select: {
+        adminName: true,
+      },
+    });
+  }
+
+  async addToBannedList(lobbyId: string, username: string) {
+    return this.prismaService.lobby.update({
+      where: {
+        id: lobbyId,
+      },
+      data: {
+        banned: {
+          connect: {
+            name: username,
+          },
+        },
+      },
+    });
+  }
+
+  async deleteLobby(id: string): Promise<LobbyModel> {
     return this.prismaService.lobby.delete({
       where: {
         id: id,

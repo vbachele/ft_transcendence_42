@@ -2,10 +2,14 @@ import {notification} from 'antd';
 import {backend} from 'lib/backend';
 import AchievementList from 'assets/achievements.json';
 import {IAchievement} from 'types/models';
+import useFetchUserByName from 'hooks/useFetchUserByName';
 
 const unlockAchievement = async (achName: string, userName: string) => {
 	// get user
-	const data = await backend.getUserByName(userName);
+	const {data} = useFetchUserByName(userName);
+	if (!data) {
+		return;
+	}
 
 	// get achievement
 	let achievement: IAchievement | undefined = AchievementList.achievements.find(
@@ -30,6 +34,7 @@ const unlockAchievement = async (achName: string, userName: string) => {
 		message: `${achievement?.name}`,
 		description: 'New achievement unlocked !',
 		duration: 3,
+		placement: 'topRight',
 	});
 };
 

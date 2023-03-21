@@ -4,7 +4,7 @@ import {PopupButton} from 'styles/buttons.styles';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
 import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
-import SocketContext from '../../../contexts/Socket/Context';
+import SocketContext from '../../../contexts/Socket/context';
 import {ClientEvents} from '../../../events/socket.events';
 import {usePopup} from '../../../contexts/Popup/Popup';
 import {ServerGameEvents} from '../../../events/game.events';
@@ -88,7 +88,7 @@ const GameInvite = () => {
 	return (
 		<Popup
 			title="Join game?"
-			subtitle="Bartholomeow has just invited you"
+			subtitle="Username has just invited you"
 			loadingBar={<LoadingBar />}
 			stopPropagation={true}
 			overlay={true}

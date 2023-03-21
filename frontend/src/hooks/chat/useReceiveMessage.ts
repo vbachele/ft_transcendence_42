@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
-import SocketContext from '../../contexts/Socket/Context';
+import SocketContext from '../../contexts/Socket/context';
 import {ServerChatEvents} from '../../events/chat.events';
-import ChatContext from '../../contexts/Chat/chat.context';
+import ChatContext from '../../contexts/Chat/context';
 import {act} from 'react-dom/test-utils';
 
 export interface IMessage {
@@ -19,6 +19,7 @@ export function useReceiveMessage() {
 
 	useEffect(() => {
 		setMessages([]);
+		if (!activeLobby?.messages) return;
 		activeLobby?.messages.forEach((message) => {
 			setMessages((prevMessages) => [...prevMessages, message]);
 		});

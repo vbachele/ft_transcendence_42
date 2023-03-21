@@ -4,9 +4,9 @@ import {ReactComponent as Icon} from './block.svg';
 import * as F from 'styles/font.styles';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
-import {notification} from 'antd';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import isUserIn from 'helpers/isUserIn';
+import {openNotification} from 'helpers/openNotification';
 
 interface IProps {
 	user: IUser;
@@ -40,13 +40,7 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 		unlockAchievement('BLOCK', userName.userName);
 		userAdded = true;
 
-		notification.error({
-			message: (
-				<div style={{marginBottom: -8}}>{`${user.name} has been blocked`}</div>
-			),
-			placement: 'bottom',
-			duration: 2.5,
-		});
+		openNotification('error', `${user.name} has been blocked`);
 	};
 
 	return (

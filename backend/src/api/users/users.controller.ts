@@ -44,15 +44,16 @@ export class UserController {
 //     return this.userService.updateUser(req);
 //   }
 
-	@Get(':name')
-	async getUserByName(@Req() req: Request) {
-		return this.userService.getUserByName(req.params.name, 'louis');
+	@Get()
+	async getUsers(@Req() req: Request) {
+		const blockedOf = req.query.blockedOf as string;
+		return this.userService.getAllUsers(blockedOf);
 	}
 
-	@Get()
-	async getUsers() {
-		// const currentUser = req.user; //TODO passer le currentUser dans les param
-		return this.userService.getAllUsers('louis');
+	@Get(':name')
+	async getUserByName(@Req() req: Request) {
+		const blockedOf = req.query.blockedOf as string;
+		return this.userService.getUserByName(req.params.name, blockedOf);
 	}
 
 	@Patch(':name')

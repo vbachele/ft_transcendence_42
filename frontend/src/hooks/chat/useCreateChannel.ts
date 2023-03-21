@@ -1,5 +1,5 @@
 import {useContext, useEffect} from "react";
-import SocketContext from "../../contexts/Socket/Context";
+import SocketContext from "../../contexts/Socket/context";
 import {ClientEvents} from "../../events/socket.events";
 
 interface ICreateChannel {

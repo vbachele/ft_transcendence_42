@@ -1,10 +1,11 @@
+import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
 
-async function fetchAllUsers() {
+async function fetchAllUsers(blockedOf: string) {
 	try {
-		const data = await backend.getAllUsers();
+		const data = await backend.getAllUsers(blockedOf);
 		return {data, error: null};
 	} catch (err) {
 		return {data: null, error: 'Could not fetch the data'};
@@ -12,13 +13,14 @@ async function fetchAllUsers() {
 }
 
 function useFetchUsers() {
+	const {userName} = useUserInfos();
 	const [data, setData] = useState<IUser[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		async function fetchData() {
-			const {data, error} = await fetchAllUsers();
+			const {data, error} = await fetchAllUsers(userName.userName);
 			setData(data);
 			setError(error);
 			setIsLoading(false);

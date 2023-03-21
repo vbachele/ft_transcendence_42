@@ -57,6 +57,7 @@ export const StyledPanel = styled(Panel)<IPanelProps>`
 		@media screen and (max-width: 1300px) {
 			grid-template-columns: 1fr 1fr;
 		}
+
 		@media screen and (max-width: 768px) {
 			grid-template-columns: 1fr;
 		}
@@ -267,5 +268,27 @@ export const HDiv = styled.div`
 		:active {
 			transform: scale(1);
 		}
+	}
+`;
+
+export const NotifCounter = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	padding: 10px;
+	border-radius: 50%;
+	font-size: 16px;
+	font-weight: 500;
+	color: white;
+	z-index: 70;
+
+	@media screen and (max-width: 768px) {
+		top: -4px;
 	}
 `;

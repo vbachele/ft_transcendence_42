@@ -1,21 +1,21 @@
 import EditAvatar from 'components/EditAvatar';
 import EditName from 'components/EditName';
+import Toggle from './components/Toggle';
 import * as F from 'styles/font.styles';
 import * as S from './Settings.styles';
-import Toggle from './2FA/toggle/Toggle';
 
 const Settings = () => {
 	return (
 		<S.Container>
-			<S.Container__Text>
+			<S.Title>
 				<F.H2>Settings</F.H2>
-				<F.Subtitle>Manage your information and security</F.Subtitle>
-			</S.Container__Text>
-			<S.Container__Infos>
+				<F.Subtitle>Manage your informations and security</F.Subtitle>
+			</S.Title>
+			<S.Infos>
 				<EditAvatar page="settings" />
-				<Toggle name="Enable 2FA" />
+				<Toggle />
 				<EditName linkTo={''} visible={false} page="settings" />
-			</S.Container__Infos>
+			</S.Infos>
 		</S.Container>
 	);
 };

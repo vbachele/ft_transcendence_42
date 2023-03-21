@@ -1,7 +1,7 @@
 import {useSendMessage} from '../../../hooks/chat/useSendMessage';
 import * as S from './components.styles';
 import {useContext} from 'react';
-import ChatContext from '../../../contexts/Chat/chat.context';
+import ChatContext from '../../../contexts/Chat/context';
 
 function ChatInputBar() {
 	const {activeLobby} = useContext(ChatContext).ChatState;

@@ -1,12 +1,9 @@
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
 import Popup from 'components/Popup';
 import logo from 'assets/logo-text.svg';
-import logo_ai from 'assets/logo_ai.png';
 import * as S from './Home.styles';
-import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
 
 const Homepage = () => {
 	const {userName, achievements} = useUserInfos();
@@ -28,7 +25,7 @@ const Homepage = () => {
 					type="video/mp4"
 				/>
 			</S.Background>
-			<S.Image src={logo_ai} />
+			<S.Image src={logo} />
 			<S.LinksContainer>
 				<S.BoldYellowButton onClick={handlePlay}>PLAY</S.BoldYellowButton>
 				<S.BoldLink to="/leaderboard">LEADERBOARD</S.BoldLink>
@@ -43,7 +40,7 @@ const Homepage = () => {
 							onClose={() => setLogout(false)}
 						/>
 					)}
-					LOG OUT
+					LOGOUT
 				</S.RegularButton>
 			</S.LinksContainer>
 			<S.UserInfo to={`/dashboard/${userName.userName}`}>

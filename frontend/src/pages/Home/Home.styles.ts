@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	user-select: none;
+	margin-left: min(5%, 48px);
 `;
 
 export const Background = styled.video`
@@ -16,13 +17,9 @@ export const Background = styled.video`
 `;
 
 export const Image = styled.img`
-	width: 256px;
-	height: 256px;
-
-	@media screen and (max-width: 768px) {
-		width: 192px;
-		height: 192px;
-	}
+	margin-top: 16px;
+	margin-bottom: min(30%, 128px);
+	width: clamp(300px, 50%, 512px);
 `;
 
 // prettier-ignore
@@ -30,7 +27,7 @@ export const LinksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	margin-left: 48px;
+
 
 	a, button {
 		text-decoration: none;
@@ -101,8 +98,8 @@ export const RegularButton = styled.button`
 
 export const UserInfo = styled(Link)`
 	position: fixed;
-	bottom: 20%;
-	right: 48px;
+	bottom: min(30%, 128px);
+	right: min(5%, 48px);
 	text-align: right;
 	text-decoration: none;
 `;

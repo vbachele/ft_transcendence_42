@@ -5,5 +5,9 @@ export class SendMessageDto {
   message: string;
   @IsString()
   lobbyId: string;
+}
 
+export class FetchUsersDto {
+  @IsString()
+  lobbyId: string;
 }
