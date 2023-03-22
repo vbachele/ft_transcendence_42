@@ -44,7 +44,11 @@ function TextWithBackgroundBox({content, authorName, date}: MessageProps) {
 					userName.userName === authorName ? 'flex-end' : 'flex-start',
 			}}
 		>
-			<ImgContainer src={data?.image} alt={data?.name + ' avatar'} />
+			<ImgContainer
+				src={data?.image}
+				alt={data?.name + ' avatar'}
+				title={data?.name + ' avatar'}
+			/>
 			<BoxContainer
 				style={{
 					background:
