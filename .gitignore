@@ -4,7 +4,7 @@ dist
 *.code-workspace
 .vscode
 .idea
-.prettierrc
+backend/.prettierrc
 .prettierignore
 .eslintrc.js
 .env

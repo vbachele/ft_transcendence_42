@@ -10,20 +10,18 @@ import BurgerMenu from '../assets/BurgerMenu';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
 import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
+import useFetchUserByName from '../../../hooks/useFetchUserByName';
+import {backend} from '../../../lib/backend';
 
-interface IProps {
-	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
-}
-
-const user = Array.from(User.players)[0];
-
-function TopBar({setOpenUserPanel}: IProps) {
+function TopBar() {
 	const {responsive} = useResponsiveLayout();
 	const updateActiveLobby = useContext(ChatContext).ChatDispatch;
 	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const name = useUserInfos().userName.userName;
 	const {userList} = useFetchLobbyUserList();
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
+	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
 
 	function directMessageName(lobbyName: string) {
 		const displayedName = lobbyName.split('+');
@@ -38,9 +36,17 @@ function TopBar({setOpenUserPanel}: IProps) {
 		});
 	}
 
+	async function openUserPanel() {
+		const user = await backend.getUserByName(directMessageName(activeLobby!.name), name);
+		ChatDispatch({type: 'active_user_in_panel', payload: user});
+		ChatDispatch({type: 'update_user_panel', payload: true});
+	}
+
 	if (activeLobby?.type === 'channel')
 		return (
 			<C.TopBar>
+
+
 				<S.ChannelName>
 					{responsive && (
 						<button onClick={clearActiveLobby}>
@@ -54,6 +60,7 @@ function TopBar({setOpenUserPanel}: IProps) {
 						isModalOpen={isModalOpen}
 						setIsModalOpen={setIsModalOpen}
 						userList={userList}
+						type={'openUserPanel'}
 					/>
 					<F.Text>{userList.length}</F.Text>
 					<Profile />
@@ -69,8 +76,8 @@ function TopBar({setOpenUserPanel}: IProps) {
 							<BurgerMenu />
 						</button>
 					)}
-					<S.ProfilePic src={user.image} />
-					<F.Text weight="700">{directMessageName(activeLobby.name)}</F.Text>
+					<S.ProfilePic src={data?.image} />
+					<F.Text weight="700">{data?.name}</F.Text>
 				</S.ChannelName>
 				<button
 					style={{
@@ -78,7 +85,7 @@ function TopBar({setOpenUserPanel}: IProps) {
 						border: 'none',
 						cursor: 'pointer',
 					}}
-					onClick={() => setOpenUserPanel(true)}
+					onClick={openUserPanel}
 				>
 					<Profile />
 				</button>

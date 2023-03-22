@@ -66,10 +66,6 @@ export class LobbyGateway implements OnGatewayInit {
   ): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
     this.lobbyService.join(data.lobbyId, client);
 
-    console.info(
-      `User - [${client.data.name}] - joined the lobby - [${data.lobbyId}]`
-    );
-
     return {
       event: ServerEvents.LobbyMessage,
       data: {

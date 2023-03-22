@@ -98,10 +98,6 @@ export const backend = {
 		const response = await api.post('/2FA/verify', user);
 		return await response.json();
 	},
-	// async validate2FA(user: unknown): Promise<any> {
-	// 	const response = await api.post('/2FA/validate', user);
-	// 	return await response.json();
-	// },
 	async disable2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/disable', user);
 		return await response.json();

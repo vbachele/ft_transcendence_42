@@ -1,58 +1,56 @@
-import {Dispatch, SetStateAction, useContext, useEffect, useRef} from 'react';
+import {useContext} from 'react';
 import * as F from 'styles/font.styles';
 
 import Buttons from 'components/Buttons';
 import * as S from '../../Social/Social.styles';
-import User from 'mocks/Users/players.json';
 import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
-import {IUser} from '../../../types/models';
 import ChatContext from '../../../contexts/Chat/context';
-import {useUserInfos} from '../../../contexts/User/userContent';
-import {backend} from '../../../lib/backend';
-import useFetchUserByName from '../../../hooks/useFetchUserByName';
+import Ban from 'components/Buttons/Channel/Ban/Ban';
+import Mute from 'components/Buttons/Channel/Mute/Mute';
+import AddFriend from 'components/Buttons/Social/AddFriend/AddFriend';
+import BlockUser from 'components/Buttons/Social/BlockUser/BlockUser';
+import Invite from 'components/Buttons/Social/Invite/Invite';
+import RemoveFriend from 'components/Buttons/Social/RemoveFriend/RemoveFriend';
+import ViewProfile from 'components/Buttons/Social/ViewProfile/ViewProfile';
+import Message from 'components/Buttons/Social/Message/Message';
 
-interface IProps {
-	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
-}
+function UserPanel() {
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
+	const {userInPanel} = useContext(ChatContext).ChatState;
 
-function UserPanel({setOpenUserPanel}: IProps) {
-	const {activeLobby} = useContext(ChatContext).ChatState;
-	const name = useUserInfos().userName.userName;
-	const {data, error} = useFetchUserByName(
-		directMessageName(activeLobby!.name)
-	);
-
-	function directMessageName(lobbyName: string) {
-		const displayedName = lobbyName.split('+');
-		if (displayedName[0] === name) return displayedName[1];
-		else return displayedName[0];
-	}
-
-	if (!data) return <div>{error}</div>;
+	if (!userInPanel) return null;
 
 	return (
 		<C.UserPanel>
 			<S.DrawerTitle>
-				<F.H3>{data.name}</F.H3>
-				<Close onClick={() => setOpenUserPanel(false)} />
+				<F.H3>{userInPanel.name}</F.H3>
+				<Close
+					onClick={() =>
+						ChatDispatch({type: 'update_user_panel', payload: false})
+					}
+				/>
 			</S.DrawerTitle>
 			<S.FriendDetails>
-				<img className="drawer__avatar" src={data.image} alt="user avatar" />
-				<ActivityStatus state={data.status} />
+				<img
+					className="drawer__avatar"
+					src={userInPanel.image}
+					alt="user avatar"
+				/>
+				<ActivityStatus state={userInPanel.status} />
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<Buttons.ViewProfile user={data.name} />
-				<Buttons.Invite id={data.name} />
-				<Buttons.Message user={data.name} />
-				<Buttons.AddFriend user={data} />
-				<Buttons.RemoveFriend user={data} />
-				<Buttons.BlockUser user={data} />
-				<Buttons.Mute id={1} />
-				<Buttons.Ban id={1} />
+				<ViewProfile user={userInPanel.name} />
+				<Invite id={userInPanel.name} />
+				<Message user={userInPanel.name} />
+				<AddFriend user={userInPanel} />
+				<RemoveFriend user={userInPanel} />
+				<BlockUser user={userInPanel} />
+				<Mute id={1} />
+				<Ban id={1} />
 			</S.FriendOptions>
 		</C.UserPanel>
 	);
