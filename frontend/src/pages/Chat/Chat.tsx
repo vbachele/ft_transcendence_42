@@ -2,7 +2,7 @@ import * as C from './containers/containers.styles';
 import ChannelBar from './containers/ChannelBar';
 import MainField from './containers/MainField';
 import UserPanel from './containers/UserPanel';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import ChatContext from 'contexts/Chat/context';
 import {useResponsiveLayout} from 'hooks/chat/useResponsiveLayout';
 
@@ -18,17 +18,15 @@ import {useResponsiveLayout} from 'hooks/chat/useResponsiveLayout';
  */
 function Chat() {
 	const {activeLobby} = useContext(ChatContext).ChatState;
-	const [activeUserPanel, setActiveUserPanel] = useState(false);
 	const {responsive} = useResponsiveLayout();
+	const {isOpenUserPanel} = useContext(ChatContext).ChatState;
 
 	if (responsive) {
 		return (
 			<C.Chat>
 				{!activeLobby && <ChannelBar />}
-				{!activeUserPanel && activeLobby && (
-					<MainField setOpenUserPanel={setActiveUserPanel} />
-				)}
-				{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+				{!isOpenUserPanel && activeLobby && <MainField />}
+				{isOpenUserPanel && <UserPanel />}
 			</C.Chat>
 		);
 	}
@@ -36,8 +34,8 @@ function Chat() {
 	return (
 		<C.Chat>
 			<ChannelBar />
-			<MainField setOpenUserPanel={setActiveUserPanel} />
-			{activeUserPanel && <UserPanel setOpenUserPanel={setActiveUserPanel} />}
+			<MainField />
+			{isOpenUserPanel && <UserPanel />}
 		</C.Chat>
 	);
 }

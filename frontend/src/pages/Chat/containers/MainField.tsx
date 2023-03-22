@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext} from 'react';
+import React, {useContext} from 'react';
 import TopBar from '../components/TopBar';
 import ChatInputBar from '../components/ChatInputBar';
 import EmptyChat from '../components/EmptyChat';
@@ -7,22 +7,17 @@ import {useReceiveMessage} from 'hooks/chat/useReceiveMessage';
 import Message from '../components/Message';
 import * as C from './containers.styles';
 
-interface MainFieldProps {
-	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
-}
-
-function MainField({setOpenUserPanel}: MainFieldProps) {
+function MainField() {
 	const {activeLobby} = useContext(ChatContext).ChatState;
-	const messages = useReceiveMessage();
+	const messages = useReceiveMessage(activeLobby);
 
 	if (!activeLobby) return <EmptyChat />;
 
-
 	return (
 		<C.MainFieldLayout>
-			<TopBar setOpenUserPanel={setOpenUserPanel} />
+			<TopBar />
 			<C.Scroller>
-				<C.MessageList>
+				<C.MessageList key={activeLobby?.id}>
 					{messages.map((message, index) => (
 						<Message
 							key={index}

@@ -10,6 +10,7 @@ export const LateralBar = styled.div`
 	@media only screen and (min-width: 768px) {
 		border-right: 1px solid;
 		border-color: ${(p) => (p.theme.name === 'light' ? '#e5e7eb' : '#403F40')};
+		min-width: 380px;
 		width: 380px;
 	}
 `;
@@ -56,7 +57,8 @@ export const UserPanel = styled.div`
 	overflow: auto;
 	@media only screen and (min-width: 768px) {
 		border-left: lightgray solid 1px;
-		width: 300px;
+		min-width: 320px;
+		width: 380px;
 	}
 `;
 export const MainFieldLayout = styled.div`
@@ -73,7 +75,7 @@ export const Scroller = styled.div`
 `;
 
 export const MessageList = styled.div`
-	word-break: break-all;
+	word-break: break-word;
 `;
 
 export const Chat = styled.div`
