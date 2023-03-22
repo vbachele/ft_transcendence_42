@@ -30,7 +30,7 @@ const messages: Messages = {
 	FRIEND_REQUEST: 'sent you a friend request',
 	FRIEND_ACCEPT: 'accepted your friend request',
 	FRIEND_DENY: 'denied your friend request',
-	BLOCKED: 'blocked you', //todo pas sur
+	BLOCKED: 'blocked you',
 	MESSAGE: 'sent you a message',
 
 	BANNED: "You've been banned from",
@@ -44,22 +44,22 @@ function formatNotifMessage(
 	type: string
 ): string {
 	if (
-		type ===
-		('FRIEND_REQUEST' ||
-			'FRIEND_ACCEPT' ||
-			'FRIEND_DENY' ||
-			'BLOCKED' ||
-			'MESSAGE')
+		[
+			'FRIEND_REQUEST',
+			'FRIEND_ACCEPT',
+			'FRIEND_DENY',
+			'BLOCKED',
+			'MESSAGE',
+		].includes(type)
 	) {
 		return `${sender} ${message}`;
-	}
-	if (type === ('BANNED' || 'KICKED' || 'ADMIN')) {
+	} else if (['BANNED', 'KICKED', 'ADMIN'].includes(type)) {
 		return `${message} ${sender}`;
-	}
-	if (type === 'ACHIEVEMENT') {
+	} else if (type === 'ACHIEVEMENT') {
 		return `${message}`;
+	} else {
+		return ``;
 	}
-	return ``;
 }
 
 interface INotification {
@@ -107,6 +107,7 @@ export class NotificationGateway implements OnGatewayConnection {
 			messages[notifData.type],
 			notifData.type
 		);
+
 		const newNotif: INotification = {
 			id: Date.now(),
 			message: message,

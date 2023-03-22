@@ -25,37 +25,33 @@ export const Container = styled.div`
 `;
 
 export const DropdownContainer = styled.div`
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	background-color: rgb(0, 0, 0, 0.5);
-	backdrop-filter: blur(16px);
-	position: fixed;
 	display: flex;
 	flex-direction: column;
-	z-index: 90;
-	right: 24px;
-	border-radius: 6px;
-	padding: 1em;
+	position: absolute;
+	right: 0;
 	width: 275px;
+	border-radius: 8px;
+	padding: 1em;
+	background-color: rgb(0, 0, 0, 0.7);
+	backdrop-filter: blur(16px);
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	z-index: 90;
 
 	hr {
 		height: 1px;
 		background-color: #fff;
-		/* border: none; */
 		margin: 1em 0;
 	}
 
 	@media only screen and (max-width: 768px) {
 		position: fixed;
+		width: 100%;
+		height: 100%;
 		align-items: center;
-		border-radius: 0px;
+		border-radius: 0;
 		z-index: 50;
 		top: 0;
-		right: 0;
-		width: 100%;
-		min-width: 280px;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.9);
-		backdrop-filter: blur(8px);
+		background-color: rgba(0, 0, 0, 0.8);
 
 		hr {
 			margin: 32px 0;

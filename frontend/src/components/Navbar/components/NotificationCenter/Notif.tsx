@@ -23,13 +23,14 @@ const Notif = ({notif}: IProps) => {
 
 	return (
 		<S.Notif>
-			<S.NotifLink className="sender" to={`dashboard/${notif.sender}`}>
-				<img src={sender.data?.image} />
-			</S.NotifLink>
-
-			<S.NotifLink className="message" to={`social`}>
-				{notif.message}
-			</S.NotifLink>
+			<div style={{display: 'flex', gap: '8px'}}>
+				<S.NotifLink to={`dashboard/${notif.sender}`}>
+					<img src={sender.data?.image} />
+				</S.NotifLink>
+				<S.NotifLink className="message" to={`social`}>
+					{notif.message}
+				</S.NotifLink>
+			</div>
 
 			<F.Subtitle>{formattedDate}</F.Subtitle>
 		</S.Notif>

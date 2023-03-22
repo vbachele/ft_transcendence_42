@@ -67,8 +67,13 @@ function AddFriend({user}: IProps) {
 			// 	unlockAchievement('TEAM', userName.userName);
 			// }
 
-			openNotification('success', `${user.name} has been added`);
+			socket?.emit(ClientSocialEvents.SendNotif, {
+				sender: userName.userName,
+				receiver: user.name,
+				type: 'FRIEND_ACCEPT',
+			});
 
+			openNotification('success', `${user.name} has been added`);
 			return;
 		}
 

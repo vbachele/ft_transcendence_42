@@ -29,7 +29,6 @@ const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 	};
 
 	const onClearNotifs = () => {
-		setBellOpen(!bellOpen);
 		socket?.emit(ClientSocialEvents.ClearNotifs);
 		socket?.emit(
 			ClientSocialEvents.GetNotifications,
@@ -60,6 +59,21 @@ const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 			{bellOpen && (
 				<S.NotifCenterContainer>
 					<F.H4>Notifications</F.H4>
+					<S.SmallScreenButtons>
+						{notifications.length > 0 && (
+							<button className="top-button" onClick={onClearNotifs}>
+								Clear notifications
+							</button>
+						)}
+						<button
+							className="top-button"
+							onClick={() => {
+								setBellOpen(false);
+							}}
+						>
+							Close
+						</button>
+					</S.SmallScreenButtons>
 					<hr />
 					{notifications.length > 0 && (
 						<S.NotifsContainer>
@@ -72,9 +86,9 @@ const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 						</S.NotifsContainer>
 					)}
 					{notifications.length > 0 && (
-						<UI.SecondaryButtonSmall onClick={onClearNotifs}>
-							Mark as read
-						</UI.SecondaryButtonSmall>
+						<button className="bottom-button" onClick={onClearNotifs}>
+							Clear notifications
+						</button>
 					)}
 					{notifications.length < 1 && <p>You have no new notifications</p>}
 				</S.NotifCenterContainer>
