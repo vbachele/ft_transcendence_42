@@ -82,4 +82,4 @@ export class GameService {
       y: data.y,
     });
   }
-}
+ }

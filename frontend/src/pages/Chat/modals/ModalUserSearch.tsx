@@ -1,5 +1,4 @@
 import {Modal} from 'antd';
-import useFetchUsers from 'hooks/useFetchUsers';
 import React, {FormEvent, useState} from 'react';
 import {IUser} from 'types/models';
 import User from '../components/User';
@@ -17,9 +16,15 @@ interface ModalUserSearchProps {
 	isModalOpen: boolean;
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	userList: IUser[];
+	type: 'newDirectMessage' | 'openUserPanel';
 }
 
-function ModalUserSearch({isModalOpen, setIsModalOpen, userList}: ModalUserSearchProps) {
+function ModalUserSearch({
+	isModalOpen,
+	setIsModalOpen,
+	userList,
+	type,
+}: ModalUserSearchProps) {
 	const [search, setSearch] = useState<string>('');
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
@@ -54,7 +59,12 @@ function ModalUserSearch({isModalOpen, setIsModalOpen, userList}: ModalUserSearc
 				})
 				.map((player: IUser, index) => {
 					return (
-						<User key={index} user={player} setIsModalOpen={setIsModalOpen} />
+						<User
+							key={index}
+							user={player}
+							setIsModalOpen={setIsModalOpen}
+							type={type}
+						/>
 					);
 				})}
 		</Modal>

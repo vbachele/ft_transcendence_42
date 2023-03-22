@@ -12,17 +12,18 @@ import ChatContext from '../../../contexts/Chat/context';
 interface IProps {
 	user: IUser;
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	type: 'newDirectMessage' | 'openUserPanel';
 }
 
-function User({user, setIsModalOpen}: IProps) {
+function User({user, setIsModalOpen, type}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {lobbyList} = useContext(ChatContext).ChatState;
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const name = useUserInfos().userName.userName;
 
-	function onClick(event: React.MouseEvent) {
+	function createDirectMessage(event: React.MouseEvent) {
 		event.stopPropagation();
-		const lobbyName = [user.name + '+' + name, name + '+' + user.name]
+		const lobbyName = [user.name + '+' + name, name + '+' + user.name];
 		if ([...lobbyList].find((lobby) => lobbyName.includes(lobby.name))) {
 			console.log(`lobby found`);
 			ChatDispatch({
@@ -46,8 +47,19 @@ function User({user, setIsModalOpen}: IProps) {
 		setIsModalOpen(false);
 	}
 
+	function openUserPanel(event: React.MouseEvent) {
+		event.stopPropagation();
+		ChatDispatch({type: 'active_user_in_panel', payload: user});
+		ChatDispatch({type: 'update_user_panel', payload: true});
+		setIsModalOpen(false);
+	}
+
 	return (
-		<StyledUser onClick={onClick}>
+		<StyledUser
+			onClick={
+				type === 'newDirectMessage' ? createDirectMessage : openUserPanel
+			}
+		>
 			<div style={{width: '48px', height: '48px', position: 'relative'}}>
 				<S.ProfilePic src={user.image} />
 				{displayStatus(user.status)}

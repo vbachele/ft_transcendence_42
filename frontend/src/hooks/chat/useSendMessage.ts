@@ -8,7 +8,6 @@ export function useSendMessage(lobbyId: string) {
 
 	const sendMessage = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log(message);
 		socket?.emit(ClientChatEvents.SendMessage, {
 			message: message,
 			lobbyId: lobbyId,

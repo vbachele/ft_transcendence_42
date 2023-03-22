@@ -19,6 +19,7 @@ export class GameLobbyDto {
 export class GameLobby extends ALobby {
   data: GameLobbyDto;
   instance: Pong;
+  state: 'waiting' | 'running' | 'paused';
 
   constructor(
     data: GameLobbyDto,
@@ -27,10 +28,12 @@ export class GameLobby extends ALobby {
     super(websocketService.server, 2);
     this.data = data;
     this.instance = new Pong(this.dispatchToLobby.bind(this));
+    this.state = 'waiting';
   }
 
   runGame() {
     this.instance.start();
+    this.state = 'running';
   }
 
   movePaddle(
@@ -54,8 +57,7 @@ export class GameLobby extends ALobby {
         break;
     }
     this.dispatchToLobby(ServerGameEvents.MovePaddle, {
-      id: paddle.id,
-      type: paddle.type,
+      label: paddle.label,
       position: paddle.position,
     });
   }
