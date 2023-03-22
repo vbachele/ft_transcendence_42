@@ -15,7 +15,7 @@ function Invite({id}: IProps) {
 	const {hasInvited, setHasInvited} = usePopup();
 
 	function onInvite() {
-		console.log(`friend id `, id)
+		console.log(`friend id `, id);
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'game',
 			data: {
@@ -32,7 +32,6 @@ function Invite({id}: IProps) {
 				});
 			}
 		});
-
 	}
 
 	return (

@@ -32,7 +32,8 @@ export const DropdownContainer = styled.div`
 	width: 275px;
 	border-radius: 8px;
 	padding: 1em;
-	background-color: rgb(0, 0, 0, 0.7);
+	background-color: rgb(0, 0, 0, 0.8);
+	/* background-color: #dc4f19; */
 	backdrop-filter: blur(16px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 90;
@@ -51,7 +52,6 @@ export const DropdownContainer = styled.div`
 		border-radius: 0;
 		z-index: 50;
 		top: 0;
-		background-color: rgba(0, 0, 0, 0.8);
 
 		hr {
 			margin: 32px 0;

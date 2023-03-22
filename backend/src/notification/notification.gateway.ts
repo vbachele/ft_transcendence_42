@@ -11,6 +11,7 @@ import {ClientSocialEvents, ServerSocialEvents} from './events/social.events';
 import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
+//todo faire enum
 interface Messages {
 	ACHIEVEMENT: string;
 	FRIEND_REQUEST: string;
@@ -81,6 +82,7 @@ export class NotificationGateway implements OnGatewayConnection {
 		if (!this.notifs.has(client.data.name)) {
 			this.notifs.set(client.data.name, []);
 		}
+
 	}
 
 	@SubscribeMessage(ClientSocialEvents.GetNotifications)

@@ -58,7 +58,9 @@ const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 			</div>
 			{bellOpen && (
 				<S.NotifCenterContainer>
-					<F.H4>Notifications</F.H4>
+					<div style={{backgroundColor: '#dc4f19'}}>
+						<F.H4>Notifications</F.H4>
+					</div>
 					<S.SmallScreenButtons>
 						{notifications.length > 0 && (
 							<button className="top-button" onClick={onClearNotifs}>

@@ -7,6 +7,7 @@ export const Container = styled.div`
 
 	h4 {
 		margin: 0 auto;
+		background-color: #dc4f19;
 	}
 
 	.bell {
@@ -56,7 +57,7 @@ export const NotifCenterContainer = styled.div`
 	border-radius: 8px;
 	padding: 1em;
 	color: white;
-	background-color: rgb(0, 0, 0, 0.7);
+	background-color: rgba(0, 0, 0, 0.8);
 	backdrop-filter: blur(16px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 50;
@@ -115,6 +116,10 @@ export const Notif = styled.div`
 	align-items: center;
 	gap: 8px;
 	justify-content: space-between;
+
+	p {
+		color: white;
+	}
 `;
 
 export const NotifLink = styled(Link)`
