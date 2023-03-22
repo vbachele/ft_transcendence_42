@@ -1,4 +1,3 @@
-import {motion} from 'framer-motion';
 import styled from 'styled-components';
 
 // prettier-ignore
@@ -25,27 +24,23 @@ export const Container = styled.div`
 	}
 `;
 
-export const DropdownContainer = styled(motion.div)`
+export const DropdownContainer = styled.div`
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	background-color: rgb(0, 0, 0, 0.5);
+	backdrop-filter: blur(16px);
+	position: fixed;
 	display: flex;
 	flex-direction: column;
-
-	background-color: #dc4f19;
-	background-color: rgb(0, 0, 0, 0.5);
-	backdrop-filter: blur(8px);
-
-	position: fixed;
 	z-index: 90;
 	right: 24px;
 	border-radius: 6px;
 	padding: 1em;
 	width: 275px;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	transform: translateX(4em);
 
 	hr {
 		height: 1px;
 		background-color: #fff;
-		border: none;
+		/* border: none; */
 		margin: 1em 0;
 	}
 

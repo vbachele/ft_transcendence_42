@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {ReactComponent as Play} from 'components/Navbar/assets/play.svg';
 import {ReactComponent as Chat} from 'components/Navbar/assets/chat.svg';
@@ -14,21 +14,6 @@ import LogoutPopup from 'components/Popup/Logout/LogoutPopup';
 import {usePopup} from 'contexts/Popup/Popup';
 import * as S from './Dropdown.styles';
 import * as F from 'styles/font.styles';
-
-const menuVariants = {
-	open: {
-		transform: 'translateX(0%)',
-	},
-	closed: {
-		transform: 'translateX(150%)',
-	},
-};
-
-const menuTransition = {
-	type: 'spring',
-	duration: 0.5,
-	bounce: 0,
-};
 
 const Dropdown = () => {
 	const [logout, setLogout] = useState(false);
@@ -68,12 +53,7 @@ const Dropdown = () => {
 				<img className="avatar" src={image.image} />
 			</div>
 			{isOpen && (
-				<S.DropdownContainer
-					initial={false}
-					animate={isOpen ? 'open' : 'closed'}
-					variants={menuVariants}
-					transition={menuTransition}
-				>
+				<S.DropdownContainer>
 					{/* PROFILE */}
 					<S.User>
 						<>

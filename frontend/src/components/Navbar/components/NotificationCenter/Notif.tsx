@@ -1,9 +1,8 @@
 import * as S from './NotificationCenter.styles';
 import * as F from 'styles/font.styles';
 import {INotification} from 'types/models';
-import {Link} from 'react-router-dom';
 import useFetchUserByName from 'hooks/useFetchUserByName';
-import {formatDistanceToNow} from 'date-fns';
+import {formatDistanceToNowStrict} from 'date-fns';
 
 interface IProps {
 	notif: INotification;
@@ -11,12 +10,13 @@ interface IProps {
 
 const Notif = ({notif}: IProps) => {
 	const sender = useFetchUserByName(notif.sender);
-	const test = new Date(notif.createdAt);
-	const formattedDate: string = formatDistanceToNow(test);
+
+	const date = new Date(notif.createdAt);
+	const formattedDate: string = formatDistanceToNowStrict(date, {
+		addSuffix: true,
+	});
 
 	let link: string;
-	// console.log('ssss');
-
 	if (true) {
 		link = '/social';
 	}
@@ -25,14 +25,13 @@ const Notif = ({notif}: IProps) => {
 		<S.Notif>
 			<S.NotifLink className="sender" to={`dashboard/${notif.sender}`}>
 				<img src={sender.data?.image} />
-				{notif.sender}
 			</S.NotifLink>
 
 			<S.NotifLink className="message" to={`social`}>
-				{notif.message}{' '}
+				{notif.message}
 			</S.NotifLink>
 
-			<F.Subtitle>{formattedDate} ago</F.Subtitle>
+			<F.Subtitle>{formattedDate}</F.Subtitle>
 		</S.Notif>
 	);
 };

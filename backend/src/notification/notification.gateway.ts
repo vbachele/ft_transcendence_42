@@ -11,22 +11,62 @@ import {ClientSocialEvents, ServerSocialEvents} from './events/social.events';
 import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
+interface Messages {
+	ACHIEVEMENT: string;
+	FRIEND_REQUEST: string;
+	FRIEND_ACCEPT: string;
+	FRIEND_DENY: string;
+	BLOCKED: string;
+	MESSAGE: string;
+	BANNED: string;
+	KICKED: string;
+	ADMIN: string;
+	[key: string]: string;
+}
+
+const messages: Messages = {
+	ACHIEVEMENT: 'You have unlocked a new achievement',
+
+	FRIEND_REQUEST: 'sent you a friend request',
+	FRIEND_ACCEPT: 'accepted your friend request',
+	FRIEND_DENY: 'denied your friend request',
+	BLOCKED: 'blocked you', //todo pas sur
+	MESSAGE: 'sent you a message',
+
+	BANNED: "You've been banned from",
+	KICKED: "You've been kicked out from",
+	ADMIN: 'You are now the admin of',
+};
+
+function formatNotifMessage(
+	sender: string,
+	message: string,
+	type: string
+): string {
+	if (
+		type ===
+		('FRIEND_REQUEST' ||
+			'FRIEND_ACCEPT' ||
+			'FRIEND_DENY' ||
+			'BLOCKED' ||
+			'MESSAGE')
+	) {
+		return `${sender} ${message}`;
+	}
+	if (type === ('BANNED' || 'KICKED' || 'ADMIN')) {
+		return `${message} ${sender}`;
+	}
+	if (type === 'ACHIEVEMENT') {
+		return `${message}`;
+	}
+	return ``;
+}
+
 interface INotification {
 	id: number;
 	message: string;
 	sender: string;
 	createdAt: Date;
-	channel?: string;
-	type:
-		| 'ACHIEVEMENT'
-		| 'FRIEND_REQUEST'
-		| 'FRIEND_ACCEPT'
-		| 'FRIEND_DENY'
-		| 'BLOCKED'
-		| 'MESSAGE'
-		| 'BANNED'
-		| 'KICKED'
-		| 'ADMIN';
 }
 
 @WebSocketGateway()
@@ -43,50 +83,42 @@ export class NotificationGateway implements OnGatewayConnection {
 		}
 	}
 
-	@SubscribeMessage(ClientSocialEvents.RequestNotifs)
-	onRequestNotifs(@MessageBody(new ValidationPipe()) data: NotificationDto) {
-		const client = this.websocketService.getClient(data.senderName);
-		const clientNotifs = this.notifs.get(data.senderName);
-
-		if (client) {
-			this.websocketService.server
-				.to(client.id)
-				.emit(ServerSocialEvents.IncomingNotifsRequest, clientNotifs);
-		}
+	@SubscribeMessage(ClientSocialEvents.GetNotifications)
+	async getNotifications(
+		@ConnectedSocket() client: AuthenticatedSocket
+	): Promise<INotification[]> {
+		const notifications = this.notifs.get(client.data.name) || [];
+		return notifications;
 	}
 
 	@SubscribeMessage(ClientSocialEvents.ClearNotifs)
-	onClearNotifs(@MessageBody(new ValidationPipe()) data: NotificationDto) {
-		const client = this.websocketService.getClient(data.senderName);
-		let clientNotifs = this.notifs.get(data.senderName);
-		clientNotifs = [];
-
-		if (client) {
-			this.websocketService.server
-				.to(client.id)
-				.emit(ServerSocialEvents.IncomingNotifsRequest, clientNotifs);
-		}
+	onClearNotifs(@ConnectedSocket() client: AuthenticatedSocket) {
+		let clientNotifs = this.notifs.get(client.data.name);
+		clientNotifs?.splice(0);
+		console.log(clientNotifs);
 	}
 
-	@SubscribeMessage(ClientSocialEvents.SendFriendRequest)
-	onSendRequest(@MessageBody(new ValidationPipe()) data: NotificationDto) {
-		const clientNotifs = this.notifs.get(data.receiverName);
+	@SubscribeMessage(ClientSocialEvents.SendNotif)
+	onSendNotif(@MessageBody(new ValidationPipe()) notifData: NotificationDto) {
+		const client = this.websocketService.getClient(notifData.receiver);
+		const clientNotifs = this.notifs.get(notifData.receiver);
+		const message = formatNotifMessage(
+			notifData.sender,
+			messages[notifData.type],
+			notifData.type
+		);
 		const newNotif: INotification = {
 			id: Date.now(),
-			message: 'sent you a friend request',
-			sender: data.senderName,
+			message: message,
+			sender: notifData.sender,
 			createdAt: new Date(),
-			type: 'FRIEND_REQUEST',
 		};
 
 		clientNotifs?.push(newNotif);
-
-		const client = this.websocketService.getClient(data.receiverName);
-
 		if (client) {
 			this.websocketService.server
 				.to(client.id)
-				.emit(ServerSocialEvents.IncomingFriendRequest, data.senderName);
+				.emit(ServerSocialEvents.ReceiveNotif, newNotif);
 		}
 	}
 }

@@ -42,17 +42,19 @@ export const NotifCounter = styled.div`
 	}
 `;
 
-export const PanelContainer = styled.div`
-	background-color: #000;
+export const NotifCenterContainer = styled.div`
+	background-color: rgb(0, 0, 0, 0.5);
+	backdrop-filter: blur(16px);
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	border-radius: 8px;
-	padding: 8px;
+	padding: 1em;
 	width: max-content;
-	position: absolute;
 	right: 0;
 	z-index: 50;
 
 	display: flex;
 	flex-direction: column;
+	position: absolute;
 	gap: 8px;
 
 	button {
@@ -62,8 +64,11 @@ export const PanelContainer = styled.div`
 
 export const NotifsContainer = styled.div`
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	gap: 8px;
+	height: 100px;
+
+	overflow-y: auto;
 `;
 
 export const Notif = styled.div`

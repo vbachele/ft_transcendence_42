@@ -72,15 +72,11 @@ function AddFriend({user}: IProps) {
 			return;
 		}
 
-		socket?.emit(ClientSocialEvents.SendFriendRequest, {
-			senderName: userName.userName,
-			receiverName: user.name,
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: userName.userName,
+			receiver: user.name,
 			type: 'FRIEND_REQUEST',
 		});
-
-		// socket?.emit(ClientSocialEvents.RequestNotifs, {
-		// 	senderName: user.name,
-		// });
 
 		backend.addPending(user.name, userName.userName);
 		openNotification('info', `Friend request sent to ${user.name}`);

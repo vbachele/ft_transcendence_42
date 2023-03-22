@@ -13,56 +13,71 @@ import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	notifications: INotification[];
+	setNotifications: React.Dispatch<React.SetStateAction<INotification[]>>;
 }
 
-const NotificationCenter = ({notifications}: IProps) => {
+const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
-	const {userName} = useUserInfos();
 	const {
 		ref: dropRef,
 		isComponentVisible: bellOpen,
 		setIsComponentVisible: setBellOpen,
 	} = useComponentVisible(false);
 
-	console.log(notifications);
-
 	const onOpenNotifs = () => {
-		// socket?.emit(ClientSocialEvents.RequestNotifs, {
-		// 	senderName: userName.userName,
-		// });
 		setBellOpen(!bellOpen);
 	};
 
 	const onClearNotifs = () => {
 		setBellOpen(!bellOpen);
-		socket?.emit(ClientSocialEvents.ClearNotifs, {
-			senderName: userName.userName,
-		});
+		socket?.emit(ClientSocialEvents.ClearNotifs);
+		socket?.emit(
+			ClientSocialEvents.GetNotifications,
+			(notifications: INotification[]) => {
+				setNotifications(notifications);
+			}
+		);
 	};
+
+	if (bellOpen) {
+		document.body.style.overflow = 'hidden';
+	} else {
+		document.body.style.overflowY = 'auto';
+	}
 
 	return (
 		<S.Container ref={dropRef}>
-			{notifications.length > 0 && (
-				<S.NotifCounter>{notifications.length}</S.NotifCounter>
-			)}
-			{bellOpen ? (
-				<BellOpened className="bell" onClick={onOpenNotifs} />
-			) : (
-				<BellClosed className="bell" onClick={onOpenNotifs} />
-			)}
+			<div onClick={onOpenNotifs} style={{cursor: 'pointer'}}>
+				{notifications.length > 0 && (
+					<S.NotifCounter>{notifications.length}</S.NotifCounter>
+				)}
+				{bellOpen ? (
+					<BellOpened className="bell" />
+				) : (
+					<BellClosed className="bell" />
+				)}
+			</div>
 			{bellOpen && (
-				<S.PanelContainer>
+				<S.NotifCenterContainer>
 					<F.H4>Notifications</F.H4>
 					<hr />
-					<S.NotifsContainer>
-						{notifications.map((notif) => (
-							<Notif notif={notif} key={notif.id} />
-						))}
-					</S.NotifsContainer>
-					<UI.SecondaryButtonSmall onClick={onClearNotifs}>
-						Mark as read
-					</UI.SecondaryButtonSmall>
-				</S.PanelContainer>
+					{notifications.length > 0 && (
+						<S.NotifsContainer>
+							{notifications
+								.slice()
+								.reverse()
+								.map((notif) => (
+									<Notif notif={notif} key={notif.id} />
+								))}
+						</S.NotifsContainer>
+					)}
+					{notifications.length > 0 && (
+						<UI.SecondaryButtonSmall onClick={onClearNotifs}>
+							Mark as read
+						</UI.SecondaryButtonSmall>
+					)}
+					{notifications.length < 1 && <p>You have no new notifications</p>}
+				</S.NotifCenterContainer>
 			)}
 		</S.Container>
 	);
