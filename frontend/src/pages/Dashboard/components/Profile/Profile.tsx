@@ -1,16 +1,14 @@
 import {useContext, useEffect, useState} from 'react';
+import {IUser} from 'types/models';
+import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import ActivityStatus from 'components/ActivityStatus';
-import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import UserDropdown from './UserDropdown';
 import getRanks from 'helpers/getRanks';
 import isUserIn from 'helpers/isUserIn';
-import {IUser} from 'types/models';
-import {backend} from 'lib/backend';
+import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
-import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	user: IUser;
@@ -18,7 +16,6 @@ interface IProps {
 
 const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	const {socket} = useContext(SocketContext).SocketState;
 	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
 	const {global, coalition} = getRanks(user);
@@ -39,19 +36,6 @@ const Profile = ({user}: IProps) => {
 		fetchFriends();
 	}, [dropdownVisible]);
 
-	const [status, setStatus] = useState(user.status);
-
-	useEffect(() => {
-		socket?.on('UPDATE_STATUS', (data: any) => {
-			if (data.user === user.name) {
-				setStatus(data.status);
-			}
-		});
-		return () => {
-			socket?.off('UPDATE_STATUS');
-		};
-	}, [socket]);
-
 	return (
 		<S.Profile coalition={user.coalition}>
 			<S.Avatar src={user.image} />
@@ -60,10 +44,10 @@ const Profile = ({user}: IProps) => {
 					<F.H1>{user.name}</F.H1>
 					{isUserIn(friendUsers, user.name) && <FriendIcon />}
 				</S.HDiv>
-				<ActivityStatus state={status} />
+				<ActivityStatus user={user} />
 				<UserDropdown
 					user={user}
-					status={status}
+					status={user.status}
 					friendUsers={friendUsers}
 					dropdownVisible={dropdownVisible}
 					setDropdownVisible={setDropdownVisible}

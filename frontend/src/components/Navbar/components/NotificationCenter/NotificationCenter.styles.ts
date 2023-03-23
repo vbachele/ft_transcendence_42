@@ -7,7 +7,6 @@ export const Container = styled.div`
 
 	h4 {
 		margin: 0 auto;
-		background-color: ${(p) => p.theme.colors.main};
 	}
 
 	.bell {
@@ -56,8 +55,7 @@ export const NotifCenterPanel = styled.div`
 	gap: 10px;
 	border-radius: 8px;
 	color: white;
-	background-color: rgba(10, 10, 10, 0.8);
-	backdrop-filter: blur(16px);
+	background-color: #151515;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 50;
 
@@ -136,6 +134,18 @@ export const SmallScreenButtons = styled.div`
 	display: none;
 	flex-direction: row;
 
+	.close {
+		position: fixed;
+		top: 8px;
+		right: 16px;
+		margin: 0;
+
+		svg {
+			width: 30px;
+			height: 30px;
+		}
+	}
+
 	@media screen and (max-width: 768px) {
 		display: flex;
 	}
@@ -147,6 +157,12 @@ export const Title = styled.div`
 	height: 48px;
 	text-align: center;
 	align-items: center;
-	border-bottom: 2px solid white;
 	border-radius: 8px 8px 0 0;
+
+	@media screen and (max-width: 768px) {
+		background-color: #202020;
+		border-bottom: 1px solid white;
+		display: flex;
+		border-radius: 0;
+	}
 `;

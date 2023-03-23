@@ -28,8 +28,7 @@ export const DropdownContainer = styled.div`
 	right: 0;
 	width: 275px;
 	border-radius: 8px;
-	background-color: rgb(10, 10, 10, 0.8);
-	backdrop-filter: blur(16px);
+	background-color: #151515;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 90;
 
@@ -59,7 +58,6 @@ export const User = styled(Link)`
 	height: 64px;
 	gap: 16px;
 	border-radius: 8px 8px 0 0;
-	border-bottom: 2px solid white;
 	color: white;
 
 	img {
@@ -73,6 +71,8 @@ export const User = styled(Link)`
 		border-radius: 0;
 		padding: 0;
 		justify-content: center;
+		background-color: #202020;
+		border-bottom: 1px solid white;
 	}
 `;
 

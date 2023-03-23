@@ -33,7 +33,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<img className="avatar" src={friend.image} />
 				<div style={{textAlign: 'left'}}>
 					<F.H5>{friend.name}</F.H5>
-					<ActivityStatus size="16px" state={friend.status} />
+					<ActivityStatus size="16px" user={friend} />
 				</div>
 			</S.Friend>
 			<Drawer
@@ -51,7 +51,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				</S.DrawerTitle>
 				<S.FriendDetails>
 					<img className="drawer__avatar" src={friend.image} />
-					<ActivityStatus state={friend.status} />
+					<ActivityStatus user={friend} />
 				</S.FriendDetails>
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>

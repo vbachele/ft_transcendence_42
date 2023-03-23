@@ -41,7 +41,7 @@ function UserPanel({setOpenUserPanel}: IProps) {
 			</S.DrawerTitle>
 			<S.FriendDetails>
 				<img className="drawer__avatar" src={data.image} alt="user avatar" />
-				<ActivityStatus state={data.status} />
+				<ActivityStatus user={data} />
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>

@@ -12,7 +12,7 @@ export const StyledUser = styled.button`
 	background-color: transparent;
 	gap: 32px;
 	border: none;
-	color: ${(p) => (p.theme.name === 'light' ? '#000' : '#fff')};
+	color: ${(p) => p.theme.colors.text};
 	border-bottom: 1px dotted;
 	border-bottom-color: ${(p) =>
 		p.theme.name === 'light' ? '#e5e7eb' : '#403F40'};
@@ -84,6 +84,7 @@ export const PastillePic = styled.div`
 export const ProfilePic = styled.img`
 	width: 48px;
 	border-radius: 50%;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const InputSearch = styled(AntdInput.Search)`

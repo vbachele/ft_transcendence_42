@@ -267,24 +267,47 @@ export const HDiv = styled.div`
 	}
 `;
 
-export const NotifCounter = styled.div`
+export const AddUser = styled.div`
 	display: flex;
+	flex-direction: row;
 	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	background-color: red;
-	position: absolute;
-	top: -8px;
-	left: -8px;
-	padding: 10px;
-	border-radius: 50%;
-	font-size: 16px;
-	font-weight: 500;
-	color: white;
-	z-index: 70;
+	gap: 16px;
+`;
 
-	@media screen and (max-width: 768px) {
-		top: -4px;
+export const User = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 8px 16px;
+	transition: all 0.2s linear;
+	background: none;
+	gap: 32px;
+	border: none;
+	color: ${(p) => p.theme.colors.text};
+
+	border-bottom: 1px dotted;
+	border-bottom-color: ${(p) =>
+		p.theme.name === 'light' ? '#e5e7eb' : '#403F40'};
+
+	button {
+		border: none;
+		background: none;
+
+		p {
+			display: none;
+		}
+
+		svg {
+			cursor: pointer;
+			fill: ${(p) => p.theme.colors.text};
+			width: 24px;
+			height: 24px;
+
+			:hover {
+				transform: scale(1.1);
+			}
+		}
 	}
 `;

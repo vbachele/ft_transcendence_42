@@ -7,10 +7,6 @@ import {ReactComponent as Dashboard} from 'components/Navbar/assets/dashboard.sv
 import {ReactComponent as Friends} from 'components/Navbar/assets/social.svg';
 import {ReactComponent as Settings} from 'components/Navbar/assets/settings.svg';
 import {ReactComponent as Logout} from 'components/Navbar/assets/logout.svg';
-import {ReactComponent as Order} from 'assets/order.svg';
-import {ReactComponent as Federation} from 'assets/federation.svg';
-import {ReactComponent as Assembly} from 'assets/assembly.svg';
-import {ReactComponent as Alliance} from 'assets/alliance.svg';
 import useComponentVisible from 'hooks/useComponentVisible';
 import {useUserInfos} from 'contexts/User/userContent';
 import {ToggleDrop} from './ToggleDrop';
@@ -22,7 +18,7 @@ import * as F from 'styles/font.styles';
 const Dropdown = () => {
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
-	const {image, userName, coalition} = useUserInfos();
+	const {image, userName} = useUserInfos();
 
 	const {
 		ref: dropRef,
@@ -59,8 +55,8 @@ const Dropdown = () => {
 			{isOpen && (
 				<S.DropdownContainer>
 					<S.User to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
-						<img className="avatar" src={image.image} />
-						<F.H3>{userName.userName}</F.H3>
+						<img src={image.image} />
+						<F.H4>{userName.userName}</F.H4>
 					</S.User>
 					<S.LinksContainer>
 						<S.PopupButton onClick={handlePlay}>

@@ -120,6 +120,6 @@ export class WebsocketService {
 					throw new WsException('Failed to update status of user');
 				}
 			}
-		}, 5_000);
+		}, 1_000); //todo remettre 5sec
 	}
 }

@@ -5,6 +5,7 @@ import {ClientSocialEvents} from 'events/social.events';
 import useComponentVisible from 'hooks/useComponentVisible';
 import {ReactComponent as BellOpened} from '../../assets/bell-opened.svg';
 import {ReactComponent as BellClosed} from '../../assets/bell-closed.svg';
+import {ReactComponent as Close} from 'assets/close.svg';
 import Notif from './Notif';
 import * as S from './NotificationCenter.styles';
 import * as F from 'styles/font.styles';
@@ -65,11 +66,12 @@ const NotificationCenter = ({notifications, setNotifications}: IProps) => {
 							<button onClick={onClearNotifs}>Clear notifications</button>
 						)}
 						<button
+							className="close"
 							onClick={() => {
 								setBellOpen(false);
 							}}
 						>
-							Close
+							<Close />
 						</button>
 					</S.SmallScreenButtons>
 
