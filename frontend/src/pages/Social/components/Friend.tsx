@@ -38,7 +38,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 			</S.Friend>
 			<Drawer
 				headerStyle={{display: 'none'}}
-				drawerStyle={{backgroundColor: theme.colors.main}}
+				drawerStyle={{backgroundColor: theme.colors.background}}
 				placement="right"
 				width={window.innerWidth <= 768 ? '100%' : 424}
 				closable={true}

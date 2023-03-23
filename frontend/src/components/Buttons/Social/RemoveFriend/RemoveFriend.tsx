@@ -1,6 +1,9 @@
+import SocketContext from 'contexts/Socket/context';
 import {useUserInfos} from 'contexts/User/userContent';
+import {ClientSocialEvents} from 'events/social.events';
 import {openNotification} from 'helpers/openNotification';
 import {backend} from 'lib/backend';
+import {useContext} from 'react';
 import * as F from 'styles/font.styles';
 import {IUser} from 'types/models';
 import {ReactComponent as Icon} from './remove.svg';
@@ -12,6 +15,7 @@ interface IProps {
 }
 
 function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
+	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
 
 	const handleClick = () => {
@@ -27,6 +31,13 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 		if (hideDrawer) {
 			hideDrawer();
 		}
+
+		console.log('sdalut');
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: userName.userName,
+			receiver: user.name,
+			type: 'REMOVE',
+		});
 
 		openNotification('error', `${user.name} has been removed`);
 	};

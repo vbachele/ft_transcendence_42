@@ -1,9 +1,9 @@
-import * as S from './History.styles';
-import * as F from 'styles/font.styles';
-import {formatDistanceToNow} from 'date-fns';
+import {formatDistanceToNowStrict} from 'date-fns';
 import useFetchUserByName from 'hooks/useFetchUserByName';
 import {ReactComponent as WinIcon} from '../../assets/win.svg';
 import {ReactComponent as LossIcon} from '../../assets/loss.svg';
+import * as S from './History.styles';
+import * as F from 'styles/font.styles';
 
 interface IMatch {
 	user: string;
@@ -20,7 +20,7 @@ interface IProps {
 const Card = ({match}: IProps) => {
 	const {data: user, isLoading, error} = useFetchUserByName(match.user);
 	const result: string = match.myScore > match.userScore ? 'win' : 'loss';
-	const formattedDate: string = formatDistanceToNow(match.date);
+	const formattedDate: string = formatDistanceToNowStrict(match.date);
 
 	return (
 		<S.CardContainer>

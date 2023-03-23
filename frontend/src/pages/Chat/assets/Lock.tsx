@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import styled, {ThemeContext} from 'styled-components';
 
 const StyledLock = styled.svg`
-	color: ${(props) => props.theme.colors.secondary};
+	color: ${(props) => props.theme.colors.text};
 `;
 
 function Lock() {

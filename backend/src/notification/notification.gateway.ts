@@ -17,7 +17,7 @@ interface Messages {
 	FRIEND_REQUEST: string;
 	FRIEND_ACCEPT: string;
 	FRIEND_DENY: string;
-	BLOCKED: string;
+	REMOVE: string;
 	MESSAGE: string;
 	BANNED: string;
 	KICKED: string;
@@ -31,9 +31,9 @@ const messages: Messages = {
 	FRIEND_REQUEST: 'sent you a friend request',
 	FRIEND_ACCEPT: 'accepted your friend request',
 	FRIEND_DENY: 'denied your friend request',
-	BLOCKED: 'blocked you',
 	MESSAGE: 'sent you a message',
 
+	REMOVE: 'You are no longer friends with',
 	BANNED: "You've been banned from",
 	KICKED: "You've been kicked out from",
 	ADMIN: 'You are now the admin of',
@@ -45,16 +45,10 @@ function formatNotifMessage(
 	type: string
 ): string {
 	if (
-		[
-			'FRIEND_REQUEST',
-			'FRIEND_ACCEPT',
-			'FRIEND_DENY',
-			'BLOCKED',
-			'MESSAGE',
-		].includes(type)
+		['FRIEND_REQUEST', 'FRIEND_ACCEPT', 'FRIEND_DENY', 'MESSAGE'].includes(type)
 	) {
 		return `${sender} ${message}`;
-	} else if (['BANNED', 'KICKED', 'ADMIN'].includes(type)) {
+	} else if (['REMOVE', 'BANNED', 'KICKED', 'ADMIN'].includes(type)) {
 		return `${message} ${sender}`;
 	} else if (type === 'ACHIEVEMENT') {
 		return `${message}`;
@@ -68,6 +62,7 @@ interface INotification {
 	message: string;
 	sender: string;
 	createdAt: Date;
+	type: string;
 }
 
 @WebSocketGateway()
@@ -82,7 +77,6 @@ export class NotificationGateway implements OnGatewayConnection {
 		if (!this.notifs.has(client.data.name)) {
 			this.notifs.set(client.data.name, []);
 		}
-
 	}
 
 	@SubscribeMessage(ClientSocialEvents.GetNotifications)
@@ -115,6 +109,7 @@ export class NotificationGateway implements OnGatewayConnection {
 			message: message,
 			sender: notifData.sender,
 			createdAt: new Date(),
+			type: notifData.type,
 		};
 
 		clientNotifs?.push(newNotif);

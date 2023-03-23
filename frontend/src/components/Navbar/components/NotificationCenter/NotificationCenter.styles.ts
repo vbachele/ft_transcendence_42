@@ -7,26 +7,26 @@ export const Container = styled.div`
 
 	h4 {
 		margin: 0 auto;
-		background-color: #dc4f19;
+		background-color: ${(p) => p.theme.colors.main};
 	}
 
 	.bell {
 		cursor: pointer;
 		user-select: none;
 		border-radius: 0;
-		fill: ${(p) => p.theme.colors.secondary};
+		fill: ${(p) => p.theme.colors.text};
 		width: 24px;
 		height: 24px;
 
 		:hover {
-			fill: #dc4f19;
+			fill: ${(p) => p.theme.colors.main};
 		}
 	}
 `;
 
 export const NotifCounter = styled.div`
 	user-select: none;
-	background-color: #dc4f19;
+	background-color: ${(p) => p.theme.colors.main};
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -47,7 +47,7 @@ export const NotifCounter = styled.div`
 	}
 `;
 
-export const NotifCenterContainer = styled.div`
+export const NotifCenterPanel = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: absolute;
@@ -55,9 +55,8 @@ export const NotifCenterContainer = styled.div`
 	width: max-content;
 	gap: 10px;
 	border-radius: 8px;
-	padding: 1em;
 	color: white;
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: rgba(10, 10, 10, 0.8);
 	backdrop-filter: blur(16px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 50;
@@ -85,7 +84,6 @@ export const NotifCenterContainer = styled.div`
 		width: 100%;
 		height: 100%;
 		top: 0;
-		background-color: rgba(0, 0, 0, 0.8);
 		border-radius: 0;
 		z-index: 65;
 
@@ -102,6 +100,7 @@ export const NotifsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	padding: 1em;
 	max-height: 50vh;
 	overflow-y: auto;
 
@@ -134,6 +133,20 @@ export const NotifLink = styled(Link)`
 `;
 
 export const SmallScreenButtons = styled.div`
-	display: flex;
+	display: none;
 	flex-direction: row;
+
+	@media screen and (max-width: 768px) {
+		display: flex;
+	}
+`;
+
+export const Title = styled.div`
+	background-color: ${(p) => p.theme.colors.main};
+	display: flex;
+	height: 48px;
+	text-align: center;
+	align-items: center;
+	border-bottom: 2px solid white;
+	border-radius: 8px 8px 0 0;
 `;

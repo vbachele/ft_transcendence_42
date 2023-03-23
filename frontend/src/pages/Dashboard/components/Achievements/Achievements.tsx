@@ -1,9 +1,8 @@
 import {IAchievement, IUser} from 'types/models';
+import AchievementList from 'assets/achievements.json';
+import Card from './Card';
 import * as S from './Achievements.styles';
 import * as F from 'styles/font.styles';
-import * as UI from 'styles/buttons.styles';
-import Card from './Card';
-import AchievementList from 'assets/achievements.json';
 
 interface IProps {
 	user: IUser;
@@ -26,6 +25,7 @@ const Achievements = ({user}: IProps) => {
 					<Card
 						achievement={achievement}
 						unlocked={user.achievements.includes(achievement.api)}
+						// unlocked={!!(achievement.id % 4)}
 						key={achievement.id}
 					/>
 				))}

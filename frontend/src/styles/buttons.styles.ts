@@ -29,7 +29,7 @@ const Button = styled.button`
 
 // prettier-ignore
 export const PrimaryButton = styled(Button)`
-	background-color: #dc4f19;
+	background-color: ${p => p.theme.colors.main};
 	border: none;
 
 	&, a {
@@ -44,14 +44,14 @@ export const PrimaryButton = styled(Button)`
 // prettier-ignore
 export const SecondaryButton = styled(Button)`
 	background-color: #fff;
-	border: 2px solid #dc4f19;
+	border: 2px solid ${p => p.theme.colors.main};
 
 	&, a {
-		color: #dc4f19;;
+		color: ${p => p.theme.colors.main};;
 	}
 
 	&:hover {
-		background-color: #dc4f19;
+		background-color: ${p => p.theme.colors.main};
 		&, a {
 			color: #fff;
 		}
@@ -63,14 +63,14 @@ export const SecondaryButtonSmall = styled(Button)`
 	background-color: #fff;
 	font-size: small;
 	padding: 0.5em 1em;
-	border: 2px solid #dc4f19;
+	border: 2px solid ${p => p.theme.colors.main};
 
 	&, a {
-		color: #dc4f19;
+		color: ${p => p.theme.colors.main};
 	}
 
 	&:hover {
-		background-color: #dc4f19;
+		background-color: ${p => p.theme.colors.main};
 		&, a {
 			color: #fff;
 		}

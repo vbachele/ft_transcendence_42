@@ -7,6 +7,10 @@ import {ReactComponent as Dashboard} from 'components/Navbar/assets/dashboard.sv
 import {ReactComponent as Friends} from 'components/Navbar/assets/social.svg';
 import {ReactComponent as Settings} from 'components/Navbar/assets/settings.svg';
 import {ReactComponent as Logout} from 'components/Navbar/assets/logout.svg';
+import {ReactComponent as Order} from 'assets/order.svg';
+import {ReactComponent as Federation} from 'assets/federation.svg';
+import {ReactComponent as Assembly} from 'assets/assembly.svg';
+import {ReactComponent as Alliance} from 'assets/alliance.svg';
 import useComponentVisible from 'hooks/useComponentVisible';
 import {useUserInfos} from 'contexts/User/userContent';
 import {ToggleDrop} from './ToggleDrop';
@@ -54,37 +58,15 @@ const Dropdown = () => {
 			</div>
 			{isOpen && (
 				<S.DropdownContainer>
-					{/* PROFILE */}
-					<S.User>
-						<>
-							<Link to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
-								<img src={image.image} />
-							</Link>
-							<S.User__Infos>
-								<Link
-									to={`/dashboard/${userName.userName}`}
-									onClick={toggleDrop}
-								>
-									<F.H5>{userName.userName}</F.H5>
-								</Link>
-								<Link
-									to="/leaderboard"
-									state={{selectedOption: 'Federation', rank: 5}}
-									onClick={toggleDrop}
-								>
-									<F.Text weight="500">{coalition.coalition}</F.Text>
-								</Link>
-							</S.User__Infos>
-						</>
+					<S.User to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
+						<img className="avatar" src={image.image} />
+						<F.H3>{userName.userName}</F.H3>
 					</S.User>
-					<hr className="first-hr" />
 					<S.LinksContainer>
-						{/* PLAY */}
 						<S.PopupButton onClick={handlePlay}>
 							<Play />
 							<F.Text weight="500">Play</F.Text>
 						</S.PopupButton>
-						{/* CHAT */}
 						<Link
 							to="/chat"
 							onClick={toggleDrop}
@@ -93,12 +75,10 @@ const Dropdown = () => {
 							<Chat />
 							<F.Text weight="500">Chat</F.Text>
 						</Link>
-						{/* LEADERBOARD */}
 						<Link to="/leaderboard" onClick={toggleDrop}>
 							<Leaderboard />
 							<F.Text weight="500">Leaderboard</F.Text>
 						</Link>
-						{/* DASHBOARD */}
 						<Link to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
 							<Dashboard />
 							<F.Text weight="500">Career</F.Text>
@@ -114,12 +94,10 @@ const Dropdown = () => {
 					</S.LinksContainer>
 					<hr className="second-hr" />
 					<S.LinksContainer>
-						{/* SETTINGS */}
 						<Link to="/settings" onClick={toggleDrop}>
 							<Settings />
 							<F.Text weight="500">Settings</F.Text>
 						</Link>
-						{/* LOGOUT */}
 						<S.PopupButton onClick={handleLogout}>
 							<Logout />
 							<F.Text weight="500">Logout</F.Text>

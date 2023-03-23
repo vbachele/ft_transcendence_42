@@ -1,6 +1,6 @@
 import {Route, Routes, useRoutes} from 'react-router-dom';
 import {ConfigProvider, theme as antdTheme} from 'antd';
-import {ThemeProvider} from 'styled-components';
+import {ThemeProvider, useTheme} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import {useState} from 'react';

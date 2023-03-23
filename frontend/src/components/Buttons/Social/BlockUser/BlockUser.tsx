@@ -7,9 +7,6 @@ import {IUser} from 'types/models';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
-import {useContext} from 'react';
-import SocketContext from 'contexts/Socket/context';
-import {ClientSocialEvents} from 'events/social.events';
 
 interface IProps {
 	user: IUser;
@@ -19,7 +16,6 @@ interface IProps {
 
 function BlockUser({user, hideDrawer, onBlock}: IProps) {
 	const {userName} = useUserInfos();
-	const {socket} = useContext(SocketContext).SocketState;
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
 
 	const handleClick = () => {
@@ -32,12 +28,6 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 		backend.removeFriend(user.name, userName.userName);
 		backend.removePending(userName.userName, user.name);
 		backend.removePending(user.name, userName.userName);
-
-		socket?.emit(ClientSocialEvents.SendNotif, {
-			sender: userName.userName,
-			receiver: user.name,
-			type: 'BLOCKED',
-		});
 
 		if (onBlock) {
 			onBlock(user);

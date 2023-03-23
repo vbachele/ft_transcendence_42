@@ -1,4 +1,4 @@
-import {IsDate, IsIn, IsOptional, IsString} from 'class-validator';
+import {IsIn, IsOptional, IsString} from 'class-validator';
 
 export class NotificationDto {
 	@IsString()
@@ -14,7 +14,7 @@ export class NotificationDto {
 		'FRIEND_REQUEST',
 		'FRIEND_ACCEPT',
 		'FRIEND_DENY',
-		'BLOCKED',
+		'REMOVE',
 		'MESSAGE',
 		'BANNED',
 		'KICKED',

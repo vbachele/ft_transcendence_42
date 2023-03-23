@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
-// Leaderboard Page
 export const Container = styled.div`
 	text-align: center;
 
@@ -31,7 +30,6 @@ export const Container = styled.div`
 	}
 `;
 
-// Filter Fields
 export const FiltersContainer = styled.div`
 	display: flex;
 	justify-content: center;
@@ -53,15 +51,13 @@ export const FiltersContainer = styled.div`
 	}
 `;
 
-// Rank
 export const Slot = styled(Link)`
 	display: flex;
 	justify-content: space-between;
 	text-decoration: none;
-	color: ${(p) => p.theme.colors.secondary};
+	color: ${(p) => p.theme.colors.text};
 	margin: 24px 10%;
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#303030'};
+	background-color: ${(p) => p.theme.colors.secondary};
 	border-radius: 8px;
 	padding: 10px 5%;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
@@ -69,8 +65,7 @@ export const Slot = styled(Link)`
 
 	:hover {
 		transform: scale(1.01);
-		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#e9e9eb' : '#282828'};
+		background-color: ${(p) => p.theme.colors.hover};
 	}
 
 	@media screen and (max-width: 1200px) {
@@ -96,6 +91,7 @@ export const Stat = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+
 	@media screen and (max-width: 768px) {
 		.rank-subtitle {
 			display: none;

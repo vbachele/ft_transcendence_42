@@ -17,7 +17,7 @@ const matches: IMatch[] = [
 	{id: 27, user: 'Harmour', myScore: 5, userScore: 6, date: new Date('2023-03-12T19:30:00.000Z')},
 	{id: 24, user: 'Lemoir', myScore: 10, userScore: 3, date: new Date('2023-03-09T18:45:00.000Z')},
 	{id: 25, user: 'Bess', myScore: 7, userScore: 5, date: new Date('2023-03-08T20:00:00.000Z')},
-	{id: 26, user: 'Tshowes', myScore: 5, userScore: 6, date: new Date('2023-03-07T19:30:00.000Z')},
+	{id: 26, user: 'Gready', myScore: 5, userScore: 6, date: new Date('2023-03-07T19:30:00.000Z')},
 ];
 
 const History = () => {

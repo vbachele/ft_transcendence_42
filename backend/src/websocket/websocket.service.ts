@@ -120,6 +120,6 @@ export class WebsocketService {
 					throw new WsException('Failed to update status of user');
 				}
 			}
-		}, 1_000);
+		}, 5_000);
 	}
 }

@@ -25,10 +25,8 @@ interface IProps {
 	unlocked: boolean;
 }
 
-// prettier-ignore
 export const Card = styled.div<IProps>`
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	display: flex;
 	flex-direction: column;
@@ -47,20 +45,25 @@ export const Card = styled.div<IProps>`
 		word-wrap: normal;
 	}
 
-	${(p) => p.theme.name === 'light' && css`
-		.subtitle {
-			color: #767676;
-		}
-	`}
+	${(p) =>
+		p.theme.name === 'light' &&
+		css`
+			.subtitle {
+				color: #767676;
+			}
+		`}
 
-	${(p) => !p.unlocked && css`
-		svg, img {
-			filter: grayscale(1);
-		}
-		color: white;
-		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#b5b5bd' : '#101010'};
-	`}
+	${(p) =>
+		!p.unlocked &&
+		css`
+			svg,
+			img {
+				filter: grayscale(1);
+			}
+			color: white;
+			background-color: ${(p) =>
+				p.theme.name === 'light' ? '#a7a7a7' : '#151515'};
+		`}
 
 	@media screen and (max-width: 768px) {
 		width: 128px;
@@ -69,7 +72,7 @@ export const Card = styled.div<IProps>`
 			font-size: 16px;
 		}
 		.subtitle {
-			font-size: 12px
+			font-size: 12px;
 		}
 	}
 `;

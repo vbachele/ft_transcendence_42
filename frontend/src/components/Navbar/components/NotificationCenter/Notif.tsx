@@ -10,14 +10,13 @@ interface IProps {
 
 const Notif = ({notif}: IProps) => {
 	const sender = useFetchUserByName(notif.sender);
-
 	const date = new Date(notif.createdAt);
 	const formattedDate: string = formatDistanceToNowStrict(date, {
 		addSuffix: true,
 	});
 
 	let link: string;
-	if (true) {
+	if (notif.type === 'FRIEND_REQUEST') {
 		link = '/social';
 	}
 

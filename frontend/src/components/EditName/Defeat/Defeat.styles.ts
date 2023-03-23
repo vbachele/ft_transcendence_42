@@ -1,150 +1,150 @@
 import styled, {keyframes} from 'styled-components';
 
 const zoom = keyframes`
-  0% {
-    color: #fff;
-  }
+	0% {
+		color: #fff;
+	}
 
-  25% {
-    opacity: 1;
-    color: #fff;
-  }
-  40% {
-    color: #dc4f19;
-  }
+	25% {
+		opacity: 1;
+		color: #fff;
+	}
+	40% {
+		color: var(--mainColor);
+	}
 
-  30% {
-    transform: scale(0.75, 0.75);
-  }
+	30% {
+		transform: scale(0.75, 0.75);
+	}
 
-  75% {
-    opacity: 1;
-    color: #dc4f19;
-  }
+	75% {
+		opacity: 1;
+		color: var(--mainColor);
+	}
 
-  100% {
-    color: #dc4f19;
-    transform: scale(0.65, 0.65);
-  }
+	100% {
+		color: var(--mainColor);
+		transform: scale(0.65, 0.65);
+	}
 `;
 
 const stutter = keyframes`
  0% {
-    left: 0px;
-    top: -10px;
-    opacity: 1;
-  }
+		left: 0px;
+		top: -10px;
+		opacity: 1;
+	}
 
-  5% {
-    left: 5px;
-    top: -15px;
-    opacity: 0;
-  }
+	5% {
+		left: 5px;
+		top: -15px;
+		opacity: 0;
+	}
 
-  10% {
-    left: 10px;
-    top: -15px;
-    opacity: 1;
-  }
+	10% {
+		left: 10px;
+		top: -15px;
+		opacity: 1;
+	}
 
-  15% {
-    left: 15px;
-    top: -10px;
-  }
+	15% {
+		left: 15px;
+		top: -10px;
+	}
 
-  20% {
-    left: 20px;
-    top: -5px;
-    opacity: 0;
-  }
+	20% {
+		left: 20px;
+		top: -5px;
+		opacity: 0;
+	}
 
-  25% {
-    left: 20px;
-    top: 0px;
-    opacity: 1;
-  }
+	25% {
+		left: 20px;
+		top: 0px;
+		opacity: 1;
+	}
 
-  30% {
-    left: 20px;
-    top: 5px;
-  }
+	30% {
+		left: 20px;
+		top: 5px;
+	}
 
-  35% {
-    left: 20px;
-    top: 10px;
-  }
+	35% {
+		left: 20px;
+		top: 10px;
+	}
 
-  40% {
-    left: 15px;
-    top: 10px;
-  }
+	40% {
+		left: 15px;
+		top: 10px;
+	}
 
-  45% {
-    left: 10px;
-    top: 15px;
-    opacity: 0;
-  }
+	45% {
+		left: 10px;
+		top: 15px;
+		opacity: 0;
+	}
 
-  50% {
-    left: 5px;
-    top: 15px;
-    opacity: 1;
-  }
+	50% {
+		left: 5px;
+		top: 15px;
+		opacity: 1;
+	}
 
-  55% {
-    left: 0px;
-    top: 15px;
-  }
+	55% {
+		left: 0px;
+		top: 15px;
+	}
 
-  60% {
-    left: -5px;
-    top: 15px;
-  }
+	60% {
+		left: -5px;
+		top: 15px;
+	}
 
-  65% {
-    left: -10px;
-    top: 10px;
-    opacity: 0;
-  }
+	65% {
+		left: -10px;
+		top: 10px;
+		opacity: 0;
+	}
 
-  70% {
-    left: -15px;
-    top: 5px;
-    opacity: 1;
-  }
+	70% {
+		left: -15px;
+		top: 5px;
+		opacity: 1;
+	}
 
-  75% {
-    left: -20px;
-    top: 0px;
-  }
+	75% {
+		left: -20px;
+		top: 0px;
+	}
 
-  80% {
-    left: -20px;
-    top: -5px;
-  }
+	80% {
+		left: -20px;
+		top: -5px;
+	}
 
-  85% {
-    left: -15px;
-    top: 0px;
-    opacity: 0;
-  }
+	85% {
+		left: -15px;
+		top: 0px;
+		opacity: 0;
+	}
 
-  90% {
-    left: -10px;
-    top: -5px;
-    opacity: 1;
-  }
+	90% {
+		left: -10px;
+		top: -5px;
+		opacity: 1;
+	}
 
-  95% {
-    left: -5px;
-    top: -5px;
-  }
+	95% {
+		left: -5px;
+		top: -5px;
+	}
 
-  100% {
-    left: 0px;
-    top: -15px;
-    opacity: 0;
-  }
+	100% {
+		left: 0px;
+		top: -15px;
+		opacity: 0;
+	}
 `;
 
 export const Text = styled.div`

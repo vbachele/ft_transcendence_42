@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 // prettier-ignore
@@ -9,12 +10,8 @@ export const Container = styled.div`
 
 	.avatar {
 		cursor: pointer;
+		border-radius: 50%;
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	}
-
-	a, p {
-		text-decoration: none;
-		word-break: break-all;
 	}
 
 	@media only screen and (max-width: 768px) {
@@ -31,18 +28,10 @@ export const DropdownContainer = styled.div`
 	right: 0;
 	width: 275px;
 	border-radius: 8px;
-	padding: 1em;
-	background-color: rgb(0, 0, 0, 0.8);
-	/* background-color: #dc4f19; */
+	background-color: rgb(10, 10, 10, 0.8);
 	backdrop-filter: blur(16px);
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 90;
-
-	hr {
-		height: 1px;
-		background-color: #fff;
-		margin: 1em 0;
-	}
 
 	@media only screen and (max-width: 768px) {
 		position: fixed;
@@ -53,47 +42,37 @@ export const DropdownContainer = styled.div`
 		z-index: 50;
 		top: 0;
 
-		hr {
-			margin: 32px 0;
-		}
-
-		.first-hr {
-			width: 100vw;
-			margin-top: 8px;
-		}
 		.second-hr {
-			width: 60vw;
+			margin: 16px 0;
+			width: 60%;
 		}
 	}
 `;
 
-export const User = styled.div`
+export const User = styled(Link)`
+	background-color: ${(p) => p.theme.colors.main};
 	display: flex;
+	flex-direction: row;
 	align-items: center;
-	gap: 1em;
+	justify-content: flex-start;
+	padding-left: 1em;
+	height: 64px;
+	gap: 16px;
+	border-radius: 8px 8px 0 0;
+	border-bottom: 2px solid white;
+	color: white;
 
 	img {
-		width: 64px;
-		height: 64px;
-		border-radius: 50%;
+		width: 50px;
+		height: 50px;
 	}
 
 	@media screen and (max-width: 768px) {
-		img {
-			width: 48px;
-			height: 48px;
-			border-radius: 50%;
-		}
+		height: 80px;
 		width: 100%;
-		padding: 0 16px;
+		border-radius: 0;
+		padding: 0;
 		justify-content: center;
-	}
-`;
-
-// prettier-ignore
-export const User__Infos = styled.div`
-	a, p {
-		color: white;
 	}
 `;
 
@@ -102,6 +81,7 @@ export const LinksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	padding: 1em;
 
 
 	a, button {
