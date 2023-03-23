@@ -26,7 +26,6 @@ function ModalAddUser({
 		event.stopPropagation();
 		setIsModalOpen(false);
 	}
-	console.log('sasas');
 
 	return (
 		<Modal

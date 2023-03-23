@@ -18,7 +18,6 @@ interface IProps {
 
 const Navbar = ({setTheme}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
-	const {userName} = useUserInfos();
 	const [notifications, setNotifications] = useState<INotification[]>([]);
 
 	useEffect(() => {

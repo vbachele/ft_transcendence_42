@@ -11,7 +11,6 @@ import {ClientSocialEvents, ServerSocialEvents} from './events/social.events';
 import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
-//todo faire enum
 interface Messages {
 	ACHIEVEMENT: string;
 	FRIEND_REQUEST: string;
@@ -27,17 +26,23 @@ interface Messages {
 
 const messages: Messages = {
 	ACHIEVEMENT: 'You have unlocked a new achievement',
-
 	FRIEND_REQUEST: 'sent you a friend request',
 	FRIEND_ACCEPT: 'accepted your friend request',
 	FRIEND_DENY: 'denied your friend request',
 	MESSAGE: 'sent you a message',
-
 	REMOVE: 'You are no longer friends with',
 	BANNED: "You've been banned from",
 	KICKED: "You've been kicked out from",
 	ADMIN: 'You are now the admin of',
 };
+
+interface INotification {
+	id: number;
+	message: string;
+	sender: string;
+	createdAt: Date;
+	type: string;
+}
 
 function formatNotifMessage(
 	sender: string,
@@ -57,18 +62,42 @@ function formatNotifMessage(
 	}
 }
 
-interface INotification {
-	id: number;
-	message: string;
-	sender: string;
-	createdAt: Date;
-	type: string;
+function replaceUsernameInMap(
+	map: Map<string, INotification[]>,
+	oldUsername: string,
+	newUsername: string
+): Map<string, INotification[]> {
+	if (map.has(oldUsername)) {
+		const notifications = map.get(oldUsername);
+		map.delete(oldUsername);
+		map.set(newUsername, notifications!);
+	}
+	return map;
+}
+
+function updateNotifications(
+	map: Map<string, INotification[]>,
+	oldUsername: string,
+	newUsername: string
+): void {
+	map.forEach((notifs: INotification[], key: string) => {
+		const updatedNotifs = notifs.map((notif: INotification) => {
+			if (notif.sender === oldUsername) {
+				notif.sender = newUsername;
+			}
+			if (notif.message.includes(oldUsername)) {
+				notif.message = notif.message.replace(oldUsername, newUsername);
+			}
+			return notif;
+		});
+		map.set(key, updatedNotifs);
+	});
 }
 
 @WebSocketGateway()
 export class NotificationGateway implements OnGatewayConnection {
 	constructor(private readonly websocketService: WebsocketService) {}
-	private readonly notifs: Map<string, INotification[]> = new Map<
+	private notifs: Map<string, INotification[]> = new Map<
 		string,
 		INotification[]
 	>();
@@ -87,11 +116,19 @@ export class NotificationGateway implements OnGatewayConnection {
 		return notifications;
 	}
 
+	@SubscribeMessage(ClientSocialEvents.UpdateUsername)
+	onUpdateUsername(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody() newUsername: string
+	) {
+		replaceUsernameInMap(this.notifs, client.data.name, newUsername);
+		updateNotifications(this.notifs, client.data.name, newUsername);
+	}
+
 	@SubscribeMessage(ClientSocialEvents.ClearNotifs)
 	onClearNotifs(@ConnectedSocket() client: AuthenticatedSocket) {
 		let clientNotifs = this.notifs.get(client.data.name);
 		clientNotifs?.splice(0);
-		console.log(clientNotifs);
 	}
 
 	@SubscribeMessage(ClientSocialEvents.SendNotif)
@@ -112,7 +149,14 @@ export class NotificationGateway implements OnGatewayConnection {
 			type: notifData.type,
 		};
 
-		clientNotifs?.push(newNotif);
+		const existingNotif = clientNotifs?.find(
+			(notif) => notif.message === message && notif.type === notifData.type
+		);
+
+		if (!existingNotif) {
+			clientNotifs?.push(newNotif);
+		}
+
 		if (client) {
 			this.websocketService.server
 				.to(client.id)

@@ -104,7 +104,11 @@ function Social() {
 	};
 
 	const handleAdd = (user: IUser) => {
-		setPendingsSent((prev) => [...prev, user]);
+		if (isUserIn(receivedPendings, user.name)) {
+			handleAccept(user);
+		} else {
+			setPendingsSent((prev) => [...prev, user]);
+		}
 	};
 
 	useEffect(() => {

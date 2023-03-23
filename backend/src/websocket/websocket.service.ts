@@ -42,26 +42,19 @@ export class WebsocketService {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		type: string
 	) {
-		switch (type) {
-			case 'online':
-				this.setOnline(client);
-				break;
-			case 'busy':
-				this.setBusy(client);
-				break;
-			case 'offline':
-				this.setOffline(client);
-				break;
-			default:
-				break;
-		}
-
-		/*
-			if deco
-			timeout 5sec
-			into check if this.get.client pour voir si il est co
-		 *
-		 */
+		// switch (type) {
+		// 	case 'online':
+		// 		this.setOnline(client);
+		// 		break;
+		// 	case 'busy':
+		// 		this.setBusy(client);
+		// 		break;
+		// 	case 'offline':
+		// 		this.setOffline(client);
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
 	}
 
 	private async setOnline(@ConnectedSocket() client: AuthenticatedSocket) {
@@ -72,7 +65,7 @@ export class WebsocketService {
 					status: 'online',
 				},
 			});
-			this.sendMessage(client, 'UPDATE_STATUS', {
+			this.sendMessage(client, 'update_status', {
 				status: 'online',
 				user: client.data.name,
 			});
@@ -91,7 +84,7 @@ export class WebsocketService {
 					status: 'ingame',
 				},
 			});
-			this.sendMessage(client, 'UPDATE_STATUS', {
+			this.sendMessage(client, 'update_status', {
 				status: 'ingame',
 				user: client.data.name,
 			});
@@ -111,7 +104,7 @@ export class WebsocketService {
 							status: 'offline',
 						},
 					});
-					this.sendMessage(client, 'UPDATE_STATUS', {
+					this.sendMessage(client, 'update_status', {
 						status: 'offline',
 						user: client.data.name,
 					});
@@ -120,6 +113,6 @@ export class WebsocketService {
 					throw new WsException('Failed to update status of user');
 				}
 			}
-		}, 1_000); //todo remettre 5sec
+		}, 5_000); //todo remettre 5sec
 	}
 }

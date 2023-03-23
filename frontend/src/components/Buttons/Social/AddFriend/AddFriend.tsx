@@ -4,11 +4,11 @@ import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
-import * as F from 'styles/font.styles';
 import {useContext} from 'react';
 import {ClientSocialEvents} from 'events/social.events';
 import unlockAchievement from 'helpers/unlockAchievement';
 import SocketContext from 'contexts/Socket/context';
+import * as F from 'styles/font.styles';
 
 interface IProps {
 	user: IUser;
@@ -72,7 +72,6 @@ function AddFriend({user}: IProps) {
 				receiver: user.name,
 				type: 'FRIEND_ACCEPT',
 			});
-
 			openNotification('success', `${user.name} has been added`);
 			return;
 		}

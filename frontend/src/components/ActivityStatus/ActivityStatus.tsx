@@ -23,13 +23,13 @@ function ActivityStatus({user, weight, size}: IProps) {
 	const output: string = stateEnumLookup[status];
 
 	useEffect(() => {
-		socket?.on('UPDATE_STATUS', (data: any) => {
+		socket?.on('update_status', (data: any) => {
 			if (data.user === user.name) {
 				setStatus(data.status);
 			}
 		});
 		return () => {
-			socket?.off('UPDATE_STATUS');
+			socket?.off('update_status');
 		};
 	}, [socket]);
 

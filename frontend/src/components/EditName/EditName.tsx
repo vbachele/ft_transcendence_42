@@ -7,6 +7,8 @@ import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
 import {Input} from 'antd';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
 
 interface Props {
 	visible?: boolean;
@@ -16,6 +18,7 @@ interface Props {
 
 /* MAIN FUNCTION */
 const EditName = (props: Props) => {
+	const {socket} = useContext(SocketContext).SocketState;
 	const navigate = useNavigate();
 	const [value, setValue] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -89,6 +92,8 @@ const EditName = (props: Props) => {
 			setUserName({userName: value});
 			setUploadApproved(true);
 			setLoading(false);
+
+			socket?.emit(ClientSocialEvents.UpdateUsername, value);
 		}
 	}
 

@@ -311,3 +311,17 @@ export const User = styled.div`
 		}
 	}
 `;
+
+export const UserLink = styled(Link)`
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	text-decoration: none;
+
+	color: ${(p) => p.theme.colors.text};
+
+	:hover {
+		color: ${(p) => p.theme.colors.text};
+		text-decoration: underline;
+	}
+`;
