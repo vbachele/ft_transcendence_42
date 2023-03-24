@@ -1,4 +1,10 @@
-import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from 'react';
+import React, {
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 import * as F from 'styles/font.styles';
 import * as S from '../components/components.styles';
 import * as C from '../containers/containers.styles';
@@ -9,7 +15,10 @@ import Profile from '../assets/Profile';
 import BurgerMenu from '../assets/BurgerMenu';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
-import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
+import {
+	useFetchLobbyUserList,
+	useFetchLobbyUserListExceptMe,
+} from '../../../hooks/chat/useFetchUsers';
 import useFetchUserByName from '../../../hooks/useFetchUserByName';
 import {backend} from '../../../lib/backend';
 
@@ -19,7 +28,7 @@ function TopBar() {
 	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const name = useUserInfos().userName.userName;
-	const {userList} = useFetchLobbyUserList();
+	const {userList} = useFetchLobbyUserListExceptMe();
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
 
@@ -37,7 +46,9 @@ function TopBar() {
 	}
 
 	async function openUserPanel() {
-		const user = await backend.getUserByName(directMessageName(activeLobby!.name));
+		const user = await backend.getUserByName(
+			directMessageName(activeLobby!.name)
+		);
 		ChatDispatch({type: 'active_user_in_panel', payload: user});
 		ChatDispatch({type: 'update_user_panel', payload: true});
 	}
@@ -45,8 +56,6 @@ function TopBar() {
 	if (activeLobby?.type === 'channel')
 		return (
 			<C.TopBar>
-
-
 				<S.ChannelName>
 					{responsive && (
 						<button onClick={clearActiveLobby}>

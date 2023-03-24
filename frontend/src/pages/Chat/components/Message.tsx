@@ -1,8 +1,11 @@
 import styled, {ThemeContext} from 'styled-components';
-import {useContext} from 'react';
+import {useCallback, useContext, useEffect, useLayoutEffect} from 'react';
 import * as F from 'styles/font.styles';
 import {useUserInfos} from 'contexts/User/userContent';
 import useFetchUserByName from 'hooks/useFetchUserByName';
+import {backend} from 'lib/backend';
+import {useState} from 'react';
+import {IUser} from 'types/models';
 
 const ImgContainer = styled.img`
 	width: 40px;
@@ -53,7 +56,7 @@ function TextWithBackgroundBox({content, authorName, date}: MessageProps) {
 				style={{
 					background:
 						userName.userName === authorName
-							? '#dc4f19'
+							? '#d4673c'
 							: theme.name === 'light'
 							? '#E5E7EB'
 							: '#454648',

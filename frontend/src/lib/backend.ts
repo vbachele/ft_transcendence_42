@@ -7,6 +7,12 @@ export const backend = {
 		const response = await api.get('/users');
 		return await response.json();
 	},
+	async getAllUsersExceptMe(currentUserName: string): Promise<any> {
+		const response = await api.get('/users');
+		const users = await response.json();
+	  
+		return users.filter((user: any) => user.name !== currentUserName);
+	  },
 	async getUserByName(name: string): Promise<IUser> {
 		const response = await api.get('/users/' + name);
 		return await response.json();
@@ -78,8 +84,11 @@ export const backend = {
 		return await response.json();
 	},
 	async getUserByToken(): Promise<any> {
+		try {
 		const response = await api.get('/auth/getuserbytoken');
 		return await response.json();
+		}
+		catch (error) {};
 	},
 	async checkToken(): Promise<any> {
 		const response = await api.get('/auth/token');

@@ -14,10 +14,13 @@ import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
 import ChatContext from '../../../contexts/Chat/context';
+import Kick from 'components/Buttons/Channel/Kick';
+import {useUserInfos} from 'contexts/User/userContent';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-	const {userInPanel} = useContext(ChatContext).ChatState;
+	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
+	const {userName} = useUserInfos();
 
 	if (!userInPanel) return null;
 
@@ -47,8 +50,13 @@ function UserPanel() {
 				<AddFriend user={userInPanel} />
 				<RemoveFriend user={userInPanel} />
 				<BlockUser user={userInPanel} />
-				<Mute id={1} />
-				<Ban id={1} />
+				{activeLobby?.adminName === userName.userName && (
+					<>
+						<Mute id={1} />
+						<Ban id={1} />
+						<Kick id={1} />
+					</>
+				)}
 			</S.FriendOptions>
 		</C.UserPanel>
 	);

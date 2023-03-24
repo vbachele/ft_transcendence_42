@@ -139,6 +139,21 @@ export class PrismaLobbyService {
     });
   }
 
+  async fetchUsersInLobbyExceptMe(lobbyId: string, currentUserName: string): Promise<any> {
+    const lobby = await this.prismaService.lobby.findUnique({
+      where: {
+        id: lobbyId,
+      },
+      select: {
+        users: true,
+      },
+    });
+  
+    const users = lobby?.users.filter((user: any) => user.name !== currentUserName);
+  
+    return { ...lobby, users };
+  }
+
   async fetchAdminInLobby(
     lobbyId: string
   ): Promise<{ adminName: string } | null> {
