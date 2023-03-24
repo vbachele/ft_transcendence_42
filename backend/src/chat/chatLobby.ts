@@ -1,12 +1,14 @@
 import {ALobby} from '../lobby/ALobby';
 import {PrismaLobbyService} from '../database/lobby/prismaLobby.service';
-import {Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {IsBooleanString, IsIn, IsNumber, IsString} from 'class-validator';
 import {WebsocketService} from '../websocket/websocket.service';
 import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {ConnectedSocket, WsException} from '@nestjs/websockets';
 import {ServerEvents} from '../lobby/events/lobby.events';
 import {ServerChatEvents} from './events/chat.events';
+import * as bcrypt from 'bcrypt';
+
 
 export class ChatLobbyDto {
 	id?: string;
@@ -26,6 +28,7 @@ export class ChatLobbyDto {
 	@IsString()
 	@IsIn(['channel', 'direct_message'])
 	type: string;
+	password?: string;
 }
 
 export interface Lobby {
@@ -36,6 +39,7 @@ export interface Lobby {
 	maxClients: number;
 	type: string;
 	privacy: string;
+	password?: any ;
 }
 
 @Injectable()
@@ -46,19 +50,19 @@ export class ChatLobby extends ALobby {
 		private readonly websocketService: WebsocketService
 	) {
 		super(websocketService.server, data.maxClients);
-		if (data.id) {
+		if (data.id) {//
 			this.id = data.id;
 		}
 		this.afterInit(data);
 	}
-
+	  
 	/**
 	 * @description Push the new lobby to the database and emit the lobby to the clients
 	 * @param data Lobby data used to create the lobby
 	 */
 	async afterInit(data: ChatLobbyDto) {
 		if (data.init) {
-			const lobby = this.initLobby(data);
+			const lobby = await this.initLobby(data);
 			try {
 				await this.prismaLobbyService.pushLobby(lobby, data.owner);
 				if (data.type === 'direct_message') {
@@ -66,6 +70,7 @@ export class ChatLobby extends ALobby {
 				}
 			} catch (error) {
 				throw new WsException(`Error while creating lobby: ` + error);
+
 			}
 			if (data.type === 'channel') {
 				this.server.emit(ServerChatEvents.LobbyCreated, {lobby: lobby});
@@ -73,7 +78,17 @@ export class ChatLobby extends ALobby {
 		}
 	}
 
-	private initLobby(data: ChatLobbyDto): Lobby {
+	async hashPassword(password: string | undefined)
+	{
+		if (password){
+			const saltOrRounds = 10;
+			const hash  = await bcrypt.hash(password, saltOrRounds);			
+			return hash;
+		}
+		return null;
+	}
+	private async initLobby(data: ChatLobbyDto): Promise<Lobby> {
+		const hashPassword = await this.hashPassword(data.password)
 		return {
 			id: this.id,
 			name: data.name,
@@ -82,6 +97,7 @@ export class ChatLobby extends ALobby {
 			maxClients: this.maxClients,
 			type: data.type,
 			privacy: data.privacy,
+			password: hashPassword,
 		};
 	}
 
