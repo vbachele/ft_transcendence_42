@@ -5,32 +5,25 @@ import {Text} from '../../../styles/font.styles';
 import SocketContext from '../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../events/game.events';
 import {useSearchParams} from "react-router-dom";
+import {PopupButton} from '../../../styles/buttons.styles';
 
 function Countdown() {
-	const [countdown, setCountdown] = useState(3);
+	const [showPopup, setShowPopup] = useState(true);
 	const {socket} = useContext(SocketContext).SocketState;
 	const [searchParams] = useSearchParams();
 
-
-	useEffect(() => {
-		const timeout = setInterval(() => {
-			if (countdown) setCountdown(countdown - 1);
-		}, 1_000);
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [countdown]);
-
-	if (!countdown) {
+	function setReady() {
 		const lobbyId = searchParams.get('lobbyId');
 		socket?.emit(ClientGameEvents.Ready, {lobbyId: lobbyId});
-		return null;
+		setShowPopup(false);
+		searchParams.delete('lobbyId');
 	}
+
+	if (!showPopup) return null;
+
 	return (
-		<Popup title="Game starting in..." headerImage={<FireGif />} overlay={true}>
-			<Text style={{color: 'white', fontSize: '4em'}}>
-				{countdown.toString()}
-			</Text>
+		<Popup title="Ready to play?" headerImage={<FireGif />} overlay={true}>
+			<PopupButton onClick={setReady}>Go!</PopupButton>
 		</Popup>
 	);
 }
