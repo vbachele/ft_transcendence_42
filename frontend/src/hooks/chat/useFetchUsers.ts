@@ -33,14 +33,13 @@ export function useFetchLobbyUserListExceptMe() {
 
 	useEffect(() => {
 		socket?.emit(ClientChatEvents.FetchUsersExceptMe, {lobbyId: activeLobby?.id, senderName: userName.userName});
-		socket?.on(ServerChatEvents.UserList, (data) => {
+		socket?.on(ServerChatEvents.UserListExceptMe, (data) => {
 			setUserList(data.users);
 		})
-
+		
 		return () => {
 			socket?.off(ServerChatEvents.UserListExceptMe);
 		}
 	}, [socket])
-
 	return {userList};
 }

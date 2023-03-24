@@ -69,9 +69,9 @@ export class ChatGateway implements OnGatewayConnection {
   @SubscribeMessage(ClientChatEvents.FetchUsersExceptMe)
   async onFetchUsersExceptMe(
     @MessageBody("lobbyId") lobbyId: string,
-    @MessageBody("SenderName") name: string
+    @MessageBody("senderName") senderName: string
     ) {
-    const users = await this.prismaLobbyService.fetchUsersInLobbyExceptMe(lobbyId, name);
+    const users = await this.prismaLobbyService.fetchUsersInLobbyExceptMe(lobbyId, senderName);
     return {
       event: ServerChatEvents.UserListExceptMe,
       data: users,

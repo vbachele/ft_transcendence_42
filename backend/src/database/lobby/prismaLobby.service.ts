@@ -149,9 +149,10 @@ export class PrismaLobbyService {
       },
     });
   
-    const users = lobby?.users.filter((user: any) => user.name !== currentUserName);
+    const filteredUsers = lobby?.users.filter((user: any) => user.name !== currentUserName);
+    console.log("userlist : " + filteredUsers);
   
-    return { ...lobby, users };
+    return { ...lobby, users: filteredUsers };
   }
 
   async fetchAdminInLobby(

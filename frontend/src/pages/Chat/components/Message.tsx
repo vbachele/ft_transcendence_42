@@ -16,6 +16,7 @@ const ImgContainer = styled.img`
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
+	margin-left: 4px;
 `;
 
 const BoxContainer = styled.div`
