@@ -81,7 +81,9 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	};
 
 	function handleSubmit(data: any) {
-		socket?.emit(ClientEvents.CreateLobby, {
+		console.log("prout");
+		
+		const response = socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
 				maxClients: 1024,
@@ -92,6 +94,8 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				...data,
 			},
 		});
+		console.log('RESPONSE IS', response);
+		
 		console.info(`Channel created`);
 		setIsModalOpen(false);
 	}

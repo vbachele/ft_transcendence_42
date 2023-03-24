@@ -12,7 +12,10 @@ export function useJoinLobby() {
 
 	const joinLobby = (event: React.MouseEvent) => {
 		event.preventDefault();
+		console.log(lobbyList);
+		
 		let lobbyName = [event.currentTarget.textContent!];
+		
 		if (lobbyName[0].includes("#")) {
 			lobbyName[0] = lobbyName[0].replace("#", "");
 		} else {

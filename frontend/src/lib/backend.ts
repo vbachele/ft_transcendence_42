@@ -75,6 +75,17 @@ export const backend = {
 		return await response.json();
 	},
 
+	//Channel
+
+	async checkPassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/password/' + password);
+		return await response.json();
+	},
+
 	// Token
 	async deleteTokenCookie(): Promise<any> {
 		const response = await api.get('/auth/logout');

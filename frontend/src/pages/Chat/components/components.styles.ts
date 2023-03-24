@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Arrow from '../../../assets/send_message_arrow.svg';
 import {Input as AntdInput} from 'antd';
+import {AiFillInfoCircle} from "react-icons/ai"
+
 
 export const StyledUser = styled.button`
 	width: 100%;
@@ -144,3 +146,6 @@ export const UserList = styled.button`
 		background-color: ${(props) => props.theme.name === 'light' ? 'lightgray' : 'gray'};
 	}
 `;
+
+export const infoIcon = styled(AiFillInfoCircle)`
+`

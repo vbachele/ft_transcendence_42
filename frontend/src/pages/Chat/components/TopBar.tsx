@@ -12,6 +12,9 @@ import ModalUserSearch from '../modals/ModalUserSearch';
 import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
 import useFetchUserByName from '../../../hooks/useFetchUserByName';
 import {backend} from '../../../lib/backend';
+import ModalDescription from '../modals/ModalDescription';
+import { channel } from 'diagnostics_channel';
+import { act } from 'react-dom/test-utils';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -45,8 +48,6 @@ function TopBar() {
 	if (activeLobby?.type === 'channel')
 		return (
 			<C.TopBar>
-
-
 				<S.ChannelName>
 					{responsive && (
 						<button onClick={clearActiveLobby}>
@@ -54,6 +55,7 @@ function TopBar() {
 						</button>
 					)}
 					<F.Text weight="700">#{activeLobby.name}</F.Text>
+					<ModalDescription description={activeLobby.description}/>
 				</S.ChannelName>
 				<S.UserList onClick={() => setIsModalOpen(true)}>
 					<ModalUserSearch

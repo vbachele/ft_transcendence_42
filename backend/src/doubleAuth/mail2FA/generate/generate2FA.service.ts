@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { PrismaService } from 'src/database/prisma.service';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
-const myHTML = fs.readFileSync('/usr/src/app/src/doubleAuth/mail2FA/generate/index2.html', 'utf8');
+const myHTML = fs.readFileSync('/usr/src/app/src/doubleAuth/mail2FA/generate/index.html', 'utf8');
 
 
 @Injectable()

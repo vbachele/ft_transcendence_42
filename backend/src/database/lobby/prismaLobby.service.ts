@@ -1,20 +1,31 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import { Lobby as LobbyModel, Message as MessageModel } from "@prisma/client";
 import { Lobby } from "../../chat/chatLobby";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class PrismaLobbyService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async pushLobby(lobby: Lobby, owner: string): Promise<LobbyModel> {
-    console.log(`owner is `, owner);
-    return this.prismaService.lobby.create({
+  async pushLobby(lobby: Lobby, owner: string) {
+    try{
+      console.log(`owner is `, owner);
+      const channel = await this.prismaService.lobby.create({
       data: {
         ...lobby,
         adminName: owner,
       },
     });
+  }
+  catch (error)
+  {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: "Problem to create channel"
+      }, HttpStatus.BAD_REQUEST); 
+  }
   }
 
   async pushUserToLobby(
@@ -151,6 +162,24 @@ export class PrismaLobbyService {
       },
     });
   }
+
+  async fetchLobbbyByName(password : string, chanName: string){
+    try {
+       return await this.prismaService.lobby.findFirst({
+        where: {
+          name: chanName,
+        },
+      })      
+    }
+    catch ( error) 
+  {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: "Channel doesn't exist"
+      }, HttpStatus.BAD_REQUEST); 
+  }  
+}
 
   async addToBannedList(lobbyId: string, username: string) {
     return this.prismaService.lobby.update({

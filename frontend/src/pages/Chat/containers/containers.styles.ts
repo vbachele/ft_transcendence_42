@@ -101,3 +101,4 @@ export const TopBar = styled.div`
 	border-bottom: solid 1px;
 	border-color: ${(p) => (p.theme.name === 'light' ? '#e5e7eb' : '#403F40')};
 `;
+
