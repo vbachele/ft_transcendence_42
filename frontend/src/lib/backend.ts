@@ -84,11 +84,8 @@ export const backend = {
 		return await response.json();
 	},
 	async getUserByToken(): Promise<any> {
-		try {
 		const response = await api.get('/auth/getuserbytoken');
 		return await response.json();
-		}
-		catch (error) {};
 	},
 	async checkToken(): Promise<any> {
 		const response = await api.get('/auth/token');
