@@ -1,5 +1,9 @@
 import {IUser} from 'types/models';
 import {api} from './api';
+import React, {useContext} from 'react';
+import {ClientEvents} from '../events/socket.events';
+import SocketContext from '../contexts/Socket/context';
+import ChatContext from '../contexts/Chat/context';
 
 export const backend = {
 	// User

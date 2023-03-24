@@ -26,7 +26,7 @@ function ModalUserSearch({
 	type,
 }: ModalUserSearchProps) {
 	const [search, setSearch] = useState<string>('');
-
+		
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
 	}

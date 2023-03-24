@@ -60,8 +60,11 @@ export class GameGateway {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) data: FetchSetupDto
 	) {
-		console.log(data);
-		this.gameService.gameSetup(client, data.lobbyId);
+		const gameSetup = this.gameService.gameSetup(client, data.lobbyId);
+		return {
+			event: ServerGameEvents.Setup,
+			data: gameSetup,
+		}
 	}
 
 	@SubscribeMessage(ClientGameEvents.Ready)
@@ -70,7 +73,7 @@ export class GameGateway {
 		@MessageBody() data: any
 	) {
 		console.info(`Client [${client.data.name}] ready`);
-		this.gameService.runGame(data.lobbyId);
+		this.gameService.updatePlayerState(client, data.lobbyId);
 	}
 
 	@SubscribeMessage(ClientGameEvents.MovePaddle)
@@ -82,10 +85,10 @@ export class GameGateway {
 	}
 
 	@SubscribeMessage(ClientGameEvents.SearchGame)
-	onSearchGame(@ConnectedSocket() client: AuthenticatedSocket) {
+	async onSearchGame(@ConnectedSocket() client: AuthenticatedSocket) {
 		this.queue.push(client);
 		if (this.queue.length >= 2) {
-			const lobby = this.lobbyService.create('game', {
+			const lobby = await this.lobbyService.create('game', {
 				mode: 'duo',
 			});
 			console.log(`Lobby created: ${lobby.id}`);

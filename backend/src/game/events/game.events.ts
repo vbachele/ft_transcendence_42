@@ -17,5 +17,6 @@ export enum ServerGameEvents {
   PaddleHit = "server.game.paddleHit",
   GameFound = "server.game.gameFound",
   GamePaused = "server.game.gamePaused",
+  PlayerScored = "server.game.playerScored",
 }
 

@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import {WebSocketServer, WsException} from '@nestjs/websockets';
 import { TLobbyDto } from "./dto/lobby.dto";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
+import {ChatLobby, ChatLobbyDto} from '../chat/chatLobby';
 
 /**
  * @brief This service manage all the lobby instances on the server
@@ -53,8 +54,11 @@ export class LobbyService {
     return lobby;
   }
 
-  public create(type: string, payload: TLobbyDto): ALobby {
-    const lobby = this.lobbyCreator.create({ type: type, data: payload });
+  public async create(type: string, payload: TLobbyDto): Promise<ALobby> {
+    const lobby = this.lobbyCreator.create({ type: type, data: payload }) as ALobby;
+    if (type === "chat") {
+      await (lobby as ChatLobby).init(payload as ChatLobbyDto);
+    }
     this.lobbies.set(lobby.id, lobby);
     return lobby;
   }

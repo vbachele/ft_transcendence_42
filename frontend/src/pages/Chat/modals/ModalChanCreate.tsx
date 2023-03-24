@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Input, Modal, Switch} from 'antd';
 import styled from 'styled-components';
 import Lock from '../assets/Lock';
@@ -80,9 +80,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 		setIsModalOpen(false);
 	};
 
-	function handleSubmit(data: any) {
-		console.log("prout");
-		
+	function handleSubmit(data: any) {		
 		const response = socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
@@ -93,13 +91,33 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				type: 'channel',
 				...data,
 			},
-		});
-		console.log('RESPONSE IS', response);
-		
+		});		
+		socket?.on('error', (data) => {
+			console.log("Status is ", data);
+			
+		if (data.status === 'forbidden') {
+				console.log('Channel already taken');
+		}
+	})
 		console.info(`Channel created`);
 		setIsModalOpen(false);
 	}
 
+	// useEffect(() => {
+	// 	console.log("checking for Forbidden status");
+	// 	const handleForbiddenStatus = (status: string) => {
+	// 		console.log("STATUS IS", status);
+		
+		//   if (status === 'Forbidden') {
+		// 	console.error("Forbidden status received");
+			// handle Forbidden status here
+		//   }
+		
+	// 	socket?.on("forbidden", handleForbiddenStatus);
+	// 	// return () => {
+	// 	//   socket?.off("status", handleForbiddenStatus);
+	// 	// };
+	//   }, [socket]);
 	return (
 		<Modal
 			title={<h1>Create channel</h1>}

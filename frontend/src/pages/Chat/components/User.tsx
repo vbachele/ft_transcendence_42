@@ -36,7 +36,7 @@ function User({user, setIsModalOpen, type}: IProps) {
 				data: {
 					maxClients: 2,
 					owner: name,
-					privacy: 'private',
+					privacy: 'public',
 					init: 'true',
 					type: 'direct_message',
 					name: user.name + '+' + name,

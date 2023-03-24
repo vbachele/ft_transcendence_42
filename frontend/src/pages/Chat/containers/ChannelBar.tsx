@@ -10,6 +10,8 @@ import styled from 'styled-components';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import {AiTwotoneLock} from "react-icons/ai";
 import ModalChanPass from '../modals/ModalChanPass';
+import {backend} from '../../../lib/backend';
+import Channel from '../components/Channel';
 
 const StyledInputSearch = styled(Input.Search)`
 	padding: 0 8px;
@@ -17,7 +19,6 @@ const StyledInputSearch = styled(Input.Search)`
 
 function ChannelBar() {
 	const [search, setSearch] = useState<string>('');
-	const {joinLobby} = useJoinLobby();
 	const {lobbyList} = useContext(ChatContext).ChatState;
 	const [privateChan, setPrivateChan] = useState<boolean>(false); 
 	const name = useUserInfos().userName.userName;
@@ -63,20 +64,10 @@ function ChannelBar() {
 					.filter((lobby) => lobby.type === 'channel')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
-						<React.Fragment key={index}>
-							{lobby.privacy === 'public' ? (
-						<S.Channel key={index} onClick={joinLobby}>
-							#{lobby.name}
-						</S.Channel> ) : (
-						<S.Channel key={index} onClick={() => handlePrivateChannel(lobby.name)}>
-							<AiTwotoneLock style={{ marginRight: '10px' }} />
-							#{lobby.name}
-						</S.Channel> 
-						)}
-						</React.Fragment>
+						<Channel key={lobby.name} lobby={lobby} />
 					))}
 			</C.ChannelList>
-			{privateChan && <ModalChanPass click={privateChan} onClose={() => setPrivateChan(false)} ChannelName={channelName} />}
+			{privateChan && <ModalChanPass click={privateChan} onClose={() => setPrivateChan(false)} lobby={lobbyList} />}
 			<C.Header>
 				<F.H3> Direct messages</F.H3>
 				<NewDiscussion type={'direct_message'} />
@@ -86,9 +77,7 @@ function ChannelBar() {
 					.filter((lobby) => lobby.type === 'direct_message')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
-						<S.Channel key={index} onClick={joinLobby}>
-							{directMessageName(lobby.name)}
-						</S.Channel>
+						<Channel key={lobby.name} lobby={lobby}/>
 					))}
 			</C.ChannelList>
 		</C.LateralBar>

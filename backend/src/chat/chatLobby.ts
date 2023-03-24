@@ -53,20 +53,19 @@ export class ChatLobby extends ALobby {
 		if (data.id) {//
 			this.id = data.id;
 		}
-		this.afterInit(data);
 	}
 	  
 	/**
 	 * @description Push the new lobby to the database and emit the lobby to the clients
 	 * @param data Lobby data used to create the lobby
 	 */
-	async afterInit(data: ChatLobbyDto) {
+	async init(data: ChatLobbyDto) {
 		if (data.init) {
 			const lobby = await this.initLobby(data);
 			try {
 				await this.prismaLobbyService.pushLobby(lobby, data.owner);
 				if (data.type === 'direct_message') {
-					this.initDirectMessage(lobby);
+					await this.initDirectMessage(lobby);
 				}
 			} catch (error) {
 				throw new WsException(`Error while creating lobby: ` + error);

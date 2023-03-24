@@ -16,8 +16,6 @@ const LeftPaddle = styled.img`
 	transform-origin: center;
 	width: 27px;
 	height: 140px;
-	top: 300px;
-	//left: 50%;
 `;
 
 const RightPaddle = styled.img`
@@ -25,9 +23,25 @@ const RightPaddle = styled.img`
 	transform-origin: center;
 	width: 27px;
 	height: 140px;
-	top: 300px;
-	//left: 90%;
-`
+`;
+
+const StyledFireBall = styled.div`
+	width: 40px;
+	height: 40px;
+	//background: linear-gradient(90deg, red 50%, green 50%);
+	display: inline-flex;
+	position: absolute;
+	align-items: flex-end;
+	justify-content: center;
+	line-height: 0;
+	transform-origin: center;
+	.lf-player-container {
+		flex: 1 0 auto;
+		padding-right: 7px;
+		width: 200px;
+		line-height: 0;
+	}
+`;
 
 export interface Lobby {
 	id: string;
@@ -42,7 +56,7 @@ function Game() {
 	const pongRef = useRef<Pong>();
 	const [searchParams] = useSearchParams();
 	const fireBall = useRef<HTMLElement>();
-	const canvasPos = useRef<DOMRect>();
+	// const canvasPos = useRef<DOMRect>();
 	const paddleHitRef = React.createRef<Player>();
 	const paddleHitElem = useRef<HTMLElement>();
 	const leftPaddle = useRef<HTMLElement>();
@@ -50,67 +64,74 @@ function Game() {
 
 	useEffect(() => {
 		const lobbyId = searchParams.get('lobbyId');
-		const canvas = canvasRef.current! as HTMLCanvasElement;
-		canvasPos.current = canvas.getBoundingClientRect();
 
-		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
-		socket?.on(ServerGameEvents.Setup, (data) => {
-			console.log(`game init`);
-			pongRef.current = new Pong(canvasRef.current!, socket!, data, lobbyId!);
-			pongRef.current?.paddleController();
-		});
 		fireBall.current = document.getElementById('fireBall')!;
 		paddleHitElem.current = document.getElementById('paddleHit')!;
 		leftPaddle.current = document.getElementById('leftPaddle')!;
 		rightPaddle.current = document.getElementById('rightPaddle')!;
+		pongRef.current = new Pong(socket!, lobbyId!);
+
+		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
+		socket?.on(ServerGameEvents.Setup, (data) => {
+			pongRef.current?.moveBall(
+				fireBall.current!,
+				data.ball.position,
+				data.ball.velocity
+			);
+			pongRef.current?.movePaddle(
+				leftPaddle.current!,
+				data.leftPaddle.position
+			);
+			pongRef.current?.movePaddle(
+				rightPaddle.current!,
+				data.rightPaddle.position
+			);
+			pongRef.current?.start();
+		});
 		return () => {
 			socket?.off(ServerGameEvents.Setup);
 			socket?.emit(ClientGameEvents.LeaveGame, {lobbyId: lobbyId});
 		};
 	}, []);
 
-	function movePaddle(paddle: HTMLElement, position: {x: number; y: number}) {
-		paddle.style.transform = `translate(${
-			position.x - paddle.clientWidth! / 2
-		}px, ${position.y - paddle.clientHeight! / 2}px)`;
-	}
-
 	useEffect(() => {
 		socket?.on(ServerGameEvents.GamePaused, () => {
 			console.log(`game paused!`);
-		})
+		});
 
 		socket?.on(ServerGameEvents.MoveBall, (data) => {
-			const angle = Math.atan2(data.velocity.x, data.velocity.y);
-			fireBall.current!.style.transform = `translate(${
-				data.position.x - fireBall.current?.clientWidth! / 2
-			}px, ${
-				data.position.y - fireBall.current?.clientHeight!
-			}px) rotate(${-angle}rad)`;
+			if (data.message) {
+				console.log(`message: `, data.message);
+			}
+			pongRef.current?.moveBall(
+				fireBall.current!,
+				data.position,
+				data.velocity
+			);
 		});
 
 		socket?.on(ServerGameEvents.MovePaddle, (data) => {
-			switch (data.label) {
-				case 'leftPaddle':
-					movePaddle(leftPaddle.current!, data.position);
+			switch (data.paddle) {
+				case 'left':
+					pongRef.current?.movePaddle(leftPaddle.current!, data.position);
 					break;
-				case 'rightPaddle':
-					movePaddle(rightPaddle.current!, data.position);
+				case 'right':
+					pongRef.current?.movePaddle(rightPaddle.current!, data.position);
 					break;
 			}
 		});
 
-		socket?.on(ServerGameEvents.PaddleHit, (data) => {
-			paddleHitElem.current!.style.visibility = 'visible';
-			paddleHitElem.current!.style.transform = `translate(${
-				data.position.x - paddleHitElem.current?.clientWidth! / 2
-			}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
-
-			paddleHitRef.current?.play();
-			setTimeout(() => {
-				paddleHitElem.current!.style.visibility = 'hidden';
-			}, 1_000);
-		});
+		// socket?.on(ServerGameEvents.PaddleHit, (data) => {
+		// 	paddleHitElem.current!.style.visibility = 'visible';
+		// 	paddleHitElem.current!.style.transform = `translate(${
+		// 		data.position.x - paddleHitElem.current?.clientWidth! / 2
+		// 	}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
+		//
+		// 	paddleHitRef.current?.play();
+		// 	setTimeout(() => {
+		// 		paddleHitElem.current!.style.visibility = 'hidden';
+		// 	}, 1_000);
+		// });
 		return () => {
 			socket?.off(ServerGameEvents.MoveBall);
 			socket?.off(ServerGameEvents.MovePaddle);
@@ -120,37 +141,24 @@ function Game() {
 
 	return (
 		<div>
-			<div style={{position: 'relative'}}>
-				<StyledCanvas
-					id="canvas"
-					ref={canvasRef}
-					tabIndex={1}
-					style={{position: 'absolute'}}
-				></StyledCanvas>
-				<Player
-					id={'fireBall'}
-					autoplay={true}
-					loop={true}
-					src={FireBall}
-					style={{
-						position: 'absolute',
-						transformOrigin: 'bottom center',
-					}}
-				/>
-				<Player
-					id={'paddleHit'}
-					src={PaddleHit}
-					autoplay={false}
-					loop={false}
-					ref={paddleHitRef}
-					style={{
-						position: 'absolute',
-						transformOrigin: 'center',
-						width: '200px',
-						height: '200px',
-						visibility: 'hidden',
-					}}
-				/>
+			<div style={{border: '1px solid black', width: '800px', height: '600px'}}>
+				<StyledFireBall id={'fireBall'}>
+					<Player autoplay={true} loop={true} src={FireBall} />
+				</StyledFireBall>
+				{/*<Player*/}
+				{/*	id={'paddleHit'}*/}
+				{/*	src={PaddleHit}*/}
+				{/*	autoplay={false}*/}
+				{/*	loop={false}*/}
+				{/*	ref={paddleHitRef}*/}
+				{/*	style={{*/}
+				{/*		position: 'absolute',*/}
+				{/*		transformOrigin: 'center',*/}
+				{/*		width: '200px',*/}
+				{/*		height: '200px',*/}
+				{/*		visibility: 'hidden',*/}
+				{/*	}}*/}
+				{/*/>*/}
 				<LeftPaddle id={'leftPaddle'} src={Stick} alt={'left paddle'} />
 				<RightPaddle id={'rightPaddle'} src={Stick} alt={'right paddle'} />
 			</div>
