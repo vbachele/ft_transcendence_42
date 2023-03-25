@@ -10,6 +10,8 @@ export enum ClientChatEvents {
 }
 
 
+
+
 export enum ServerChatEvents {
   IncomingMessage = "server.chat.incomingMessage",
   LobbyList = "server.chat.lobbyList",
@@ -19,5 +21,5 @@ export enum ServerChatEvents {
   UserKicked = "server.chat.userKicked",
   UserMuted = "server.chat.userMuted",
   UserSetAdmin = "server.chat.userSetAdmin",
-  UserListExceptMe = "server.chat.userListExceptMe"
+  UserListExceptMe = "server.chat.userListExceptMe",
 }

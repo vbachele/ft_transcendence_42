@@ -2,12 +2,12 @@ import {GiArrowhead} from 'react-icons/gi';
 import * as F from 'styles/font.styles';
 
 interface IProps {
-	id: number;
+	onClick: (event: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-function Kick({id}: IProps) {
+function Kick({onClick}: IProps) {
 	return (
-		<button>
+		<button onClick={onClick}>
 			<GiArrowhead style={{fill: '#ff4d4f'}} />
 			<F.Text style={{color: '#ff4d4f'}}>Kick</F.Text>
 		</button>

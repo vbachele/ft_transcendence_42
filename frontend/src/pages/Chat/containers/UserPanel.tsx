@@ -16,11 +16,13 @@ import * as C from './containers.styles';
 import ChatContext from '../../../contexts/Chat/context';
 import Kick from 'components/Buttons/Channel/Kick';
 import {useUserInfos} from 'contexts/User/userContent';
+import {useKickUser} from '../../../hooks/chat/useKickUser';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
 	const {userName} = useUserInfos();
+	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
 
 	if (!userInPanel) return null;
 
@@ -54,7 +56,7 @@ function UserPanel() {
 					<>
 						<Mute id={1} />
 						<Ban id={1} />
-						<Kick id={1} />
+						<Kick onClick={kickUser} />
 					</>
 				)}
 			</S.FriendOptions>

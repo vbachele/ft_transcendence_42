@@ -149,9 +149,7 @@ export class PrismaLobbyService {
       },
     });
   
-    const filteredUsers = lobby?.users.filter((user: any) => user.name !== currentUserName);
-    console.log("userlist : " + filteredUsers);
-  
+    const filteredUsers = lobby?.users.filter((user: any) => user.name !== currentUserName);  
     return { ...lobby, users: filteredUsers };
   }
 
@@ -187,6 +185,24 @@ export class PrismaLobbyService {
     return this.prismaService.lobby.delete({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async deleteUserFromLobby(
+    lobbyId: string,
+    userToDelete: string
+  )
+   {
+    console.log(userToDelete)
+    return this.prismaService.lobby.update({
+      where: {
+        id: lobbyId,
+      },
+      data: {
+        users: {
+          disconnect: [{name: userToDelete}]
+        },
       },
     });
   }

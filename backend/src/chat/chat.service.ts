@@ -6,6 +6,7 @@ import { Lobby as LobbyModel } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
 import { ServerChatEvents } from "./events/chat.events";
 import {WebsocketService} from '../websocket/websocket.service';
+import { ClientEvents } from "src/lobby/events/lobby.events";
 
 @Injectable()
 export class ChatService {
@@ -62,4 +63,18 @@ export class ChatService {
       throw new WsException(`Error when trying to ban user: ` + e.message);
     }
   }
+
+  public async kickUser(userNameToKick: string, lobbyId: string) {
+    try {
+      this.prismaLobbyService.deleteUserFromLobby(lobbyId, userNameToKick);
+      const userToKick = this.websocketService.getClient(userNameToKick);
+      if (!userToKick) return;
+      this.websocketService.server.to(userToKick.id).emit(ServerChatEvents.UserKicked, {lobbyId: lobbyId});
+      this.lobbyService.leave(lobbyId, userToKick);
+    }
+    catch (e) {
+      throw new WsException(`Error when trying to kick user: ` + e.message);
+    }
+  }
+
 }

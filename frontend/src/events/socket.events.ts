@@ -2,6 +2,7 @@ export enum ClientEvents {
   PaddlePosition = "client.paddlePosition",
   CreateLobby = 'client.createLobby',
   JoinLobby = 'client.joinLobby',
+  LeaveLobby = "client.leaveLobby",
   InviteToLobby = 'client.inviteToLobby',
   InvitationResponse = 'client.invitationResponse'
 }
