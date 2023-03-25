@@ -90,6 +90,24 @@ export const backend = {
 		return await response.json();
 	},
 
+	async changePassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifypassword/' + password);
+		return await response.json();
+	},
+
+	async changeDescription(description : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			description: description
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifydescription/' + description);
+		return await response.json();
+	},
+
 	// Token
 	async deleteTokenCookie(): Promise<any> {
 		const response = await api.get('/auth/logout');

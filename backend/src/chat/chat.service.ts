@@ -101,4 +101,17 @@ export class ChatService {
     }
     return response;
   }
+
+  public async modifyPassword(@Req() req: Request, @Res() res: Response, chanName: string, password: string) {
+      const saltOrRounds = 10;
+      const hashPassword = password;
+      const hash = await bcrypt.hash(hashPassword , saltOrRounds);
+      await this.prismaLobbyService.updatePassword(hash, chanName)
+      res.status(200).json({status : "password changed"})
+  }
+
+  public async modifyDescription(@Req() req: Request, @Res() res: Response, chanName: string, description: string) {
+    await this.prismaLobbyService.updateDescription(description, chanName)
+    res.status(200).json({status : "description changed"})
+  }
 }

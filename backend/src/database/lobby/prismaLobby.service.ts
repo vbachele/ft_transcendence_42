@@ -163,6 +163,7 @@ export class PrismaLobbyService {
     });
   }
 
+/* Password Channel Part */
   async fetchLobbbyByName(password : string, chanName: string){
     try {
        return await this.prismaService.lobby.findFirst({
@@ -181,6 +182,48 @@ export class PrismaLobbyService {
   }  
 }
 
+async updatePassword(hashPassword: string, chanName: string) {
+    try{
+      await this.prismaService.lobby.update({
+        where: {
+          name: chanName,
+        },
+        data : {
+          password : hashPassword,
+        }
+    })    
+  }
+    catch (error)
+    {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: `Error to update channel password for ${chanName}`
+        }, HttpStatus.BAD_REQUEST); 
+      }
+}
+
+async updateDescription(description: string, chanName: string) {  
+  try{
+    await this.prismaService.lobby.update({
+      where: {
+        name: chanName,
+      },
+      data : {
+        description: description,
+      }
+  })    
+}
+  catch (error)
+  {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: `Error to update description for ${chanName}`
+      }, HttpStatus.BAD_REQUEST); 
+    }
+}
+
   async addToBannedList(lobbyId: string, username: string) {
     return this.prismaService.lobby.update({
       where: {
@@ -195,6 +238,7 @@ export class PrismaLobbyService {
       },
     });
   }
+
 
   async deleteLobby(id: string): Promise<LobbyModel> {
     return this.prismaService.lobby.delete({

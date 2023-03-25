@@ -30,18 +30,24 @@ function Channel({lobby}: ChannelProps) {
 
 	function onJoinLobbyPass() {
 		setPopup(true);
+		console.log("POPUP", popup);
+		
+	}
+	function handleModalClose() {
+		setPopup(!popup);
+		console.log("POPUP cLOSE", popup);
 	}
 
 	return (
 		<S.Channel
-			onClick={lobby.privacy === 'private' ? onJoinLobbyPass : onJoinLobby}
+			onClick={lobby.privacy === 'private' && lobby.type ==="channel" ? onJoinLobbyPass : onJoinLobby}
 		>
-			{lobby.privacy === 'private' && <AiTwotoneLock style={{ marginRight: '10px' }}  />}
+			{lobby.privacy === 'private' && lobby.type ==="channel"  && <AiTwotoneLock style={{ marginRight: '10px' }}  />}
 			{lobby.type === 'channel'
 				? '#' + lobby.name
 				: directMessageName(lobby.name)}
 			{popup && <ModalChanPass click={popup}
-							onClose={() => setPopup(false)} lobby={lobby} />}
+					onClose={handleModalClose} lobby={lobby} />}
 		</S.Channel>
 	);
 }

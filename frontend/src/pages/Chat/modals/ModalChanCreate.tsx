@@ -6,6 +6,7 @@ import {ClientEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
 import {useUserInfos} from '../../../contexts/User/userContent';
+import { H5, H6, Subtitle } from 'styles/font.styles';
 
 const StyledTogglePrivate = styled.div`
 	display: flex;
@@ -74,6 +75,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	const [form] = Form.useForm();
 	const {socket} = useContext(SocketContext).SocketState;
 	const name = useUserInfos().userName.userName;
+	const [error, setError] = useState<boolean>(false);
 
 	const handleCancel = (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -91,33 +93,17 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				type: 'channel',
 				...data,
 			},
-		});		
-		socket?.on('error', (data) => {
-			console.log("Status is ", data);
-			
-		if (data.status === 'forbidden') {
-				console.log('Channel already taken');
-		}
-	})
-		console.info(`Channel created`);
+		});	
+		socket?.timeout(0).on('exception', (data) => {	
+			if (data.status === 'forbidden') {
+					setError(true);
+					return;
+			}
+			console.info(`Channel created`);
+		});
 		setIsModalOpen(false);
 	}
 
-	// useEffect(() => {
-	// 	console.log("checking for Forbidden status");
-	// 	const handleForbiddenStatus = (status: string) => {
-	// 		console.log("STATUS IS", status);
-		
-		//   if (status === 'Forbidden') {
-		// 	console.error("Forbidden status received");
-			// handle Forbidden status here
-		//   }
-		
-	// 	socket?.on("forbidden", handleForbiddenStatus);
-	// 	// return () => {
-	// 	//   socket?.off("status", handleForbiddenStatus);
-	// 	// };
-	//   }, [socket]);
 	return (
 		<Modal
 			title={<h1>Create channel</h1>}
@@ -128,6 +114,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 			onCancel={handleCancel}
 		>
 			<Form form={form} layout={'vertical'} onFinish={handleSubmit}>
+				{error && <Subtitle style={{color:"#dc4f19"}}> Channel name already taken </Subtitle> }
 				<Form.Item
 					name={'name'}
 					label={'Channel name'}

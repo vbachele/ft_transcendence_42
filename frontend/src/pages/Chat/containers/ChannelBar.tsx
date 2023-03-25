@@ -23,6 +23,7 @@ function ChannelBar() {
 	const [privateChan, setPrivateChan] = useState<boolean>(false); 
 	const name = useUserInfos().userName.userName;
 	const [channelName, setChannelName] = useState<string>("");
+	
 
 	const searchFilter = (value: any): boolean => {
 		return value
@@ -33,6 +34,7 @@ function ChannelBar() {
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
+		setPrivateChan(!privateChan);
 	}
 
 	function directMessageName(lobbyName: string) {
@@ -66,9 +68,7 @@ function ChannelBar() {
 					.map((lobby, index) => (
 						<Channel key={lobby.name} lobby={lobby} />
 					))}
-			</C.ChannelList>
-			{privateChan && <ModalChanPass click={privateChan} onClose={() => setPrivateChan(false)} lobby={lobbyList} />}
-			<C.Header>
+			</C.ChannelList>			<C.Header>
 				<F.H3> Direct messages</F.H3>
 				<NewDiscussion type={'direct_message'} />
 			</C.Header>

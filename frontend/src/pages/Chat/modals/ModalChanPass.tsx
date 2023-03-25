@@ -13,7 +13,7 @@ import ChatContext, { ILobby } from '../../../contexts/Chat/context';
 interface IProps {
   click: boolean;
   onClose: React.MouseEventHandler<HTMLButtonElement| HTMLAnchorElement>;
-  lobby: any;
+  lobby?: any;
 }
 
 const StyledPasswordInput = styled(Input.Password)`
@@ -31,27 +31,6 @@ const ModalChanPass: React.FC<IProps> = (props) => {
   const {joinLobby} = useJoinLobby();
   const {socket} = useContext(SocketContext).SocketState;
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-
-	const handleOk = async () => {
-		// try {
-		// 	const res = await socket?.emitWithAck(ClientEvents.JoinLobby, {
-		// 		lobbyId: lobby.id,
-		// 	});
-		// } catch (error) {
-		// 	console.log(error);
-		// }
-		// socket?.on(error, (data) => {
-		// 	if (data.error === 'password') {
-		// 		console.log('wrong password');
-		// 	} else {
-	// 			ChatDispatch({type: 'update_user_panel', payload: false});
-	// 		}
-	// 		setIsModalOpen(false);
-	// 	});
-	// 	if (password === 'ok') {
-	// 		socket?.emit(ClientEvents.JoinLobby, {lobbyId: lobby.id});
-	// 	}
-	};
 
   const handleCancel = (event : React.MouseEvent<HTMLButtonElement>) => {
     props.onClose(event);
@@ -86,7 +65,7 @@ const ModalChanPass: React.FC<IProps> = (props) => {
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" style={{border: 'none'}} onClick={handleCancel}>
+          <Button key="back" style={{border: 'none'}} onClick={props.onClose}>
             Cancel
           </Button>,
           <Button key="Confirm" onClick={() => form.submit()}>

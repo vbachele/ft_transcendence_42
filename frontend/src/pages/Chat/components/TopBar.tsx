@@ -15,6 +15,7 @@ import {backend} from '../../../lib/backend';
 import ModalDescription from '../modals/ModalDescription';
 import { channel } from 'diagnostics_channel';
 import { act } from 'react-dom/test-utils';
+import AdminPanel from './AdminPanel';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -25,6 +26,7 @@ function TopBar() {
 	const {userList} = useFetchLobbyUserList();
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
+	const [dropdownVisible, setDropdownVisible] = useState(false);
 
 	function directMessageName(lobbyName: string) {
 		const displayedName = lobbyName.split('+');
@@ -56,6 +58,8 @@ function TopBar() {
 					)}
 					<F.Text weight="700">#{activeLobby.name}</F.Text>
 					<ModalDescription description={activeLobby.description}/>
+					{name === activeLobby.adminName && <AdminPanel dropdownVisible={dropdownVisible}
+					setDropdownVisible={setDropdownVisible} activeLobby={activeLobby}></AdminPanel>}
 				</S.ChannelName>
 				<S.UserList onClick={() => setIsModalOpen(true)}>
 					<ModalUserSearch
