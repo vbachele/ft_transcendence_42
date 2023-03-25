@@ -28,15 +28,12 @@ function Channel({lobby}: ChannelProps) {
 		ChatDispatch({type: 'update_user_panel', payload: false});
 	}
 
-	function onJoinLobbyPass() {
+	function onJoinLobbyPass(event: React.MouseEvent) {
 		setPopup(true);
 		console.log("POPUP", popup);
 		
 	}
-	function handleModalClose() {
-		setPopup(!popup);
-		console.log("POPUP cLOSE", popup);
-	}
+
 
 	return (
 		<S.Channel
@@ -46,8 +43,8 @@ function Channel({lobby}: ChannelProps) {
 			{lobby.type === 'channel'
 				? '#' + lobby.name
 				: directMessageName(lobby.name)}
-			{popup && <ModalChanPass click={popup}
-					onClose={handleModalClose} lobby={lobby} />}
+			{popup && <ModalChanPass popup={popup} 
+					setPopup={setPopup} lobby={lobby} />}
 		</S.Channel>
 	);
 }

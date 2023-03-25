@@ -37,17 +37,6 @@ function ChannelBar() {
 		setPrivateChan(!privateChan);
 	}
 
-	function directMessageName(lobbyName: string) {
-		const displayedName = lobbyName.split('+');
-		if (displayedName[0] === name) return displayedName[1];
-		else return displayedName[0];
-	}
-
-	function handlePrivateChannel(channelName:string) {
-		setChannelName(channelName)
-		setPrivateChan(!privateChan);
-	}
-
 	return (
 		<C.LateralBar>
 			<F.H2 style={{padding: '0 8px'}}>Discussion</F.H2>

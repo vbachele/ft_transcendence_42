@@ -12,7 +12,7 @@ async checkPassword(@Req() req: Request, @Res() res: Response, 	@Param('chanName
 	await this.chatservice.checkPassword(req, res, chanName, password);
 }
 
-@UseGuards(AdminGuard)
+// @UseGuards(AdminGuard)
 @Patch(":chanName/modifypassword/:password")
 async modifyPassword(@Req() req: Request, @Res() res: Response, @Param('chanName') chanName: string, @Param('password') password: string) {
 	await this.chatservice.modifyPassword(req, res, chanName, password);

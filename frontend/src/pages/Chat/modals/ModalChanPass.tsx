@@ -11,8 +11,8 @@ import ChatContext, { ILobby } from '../../../contexts/Chat/context';
 
 
 interface IProps {
-  click: boolean;
-  onClose: React.MouseEventHandler<HTMLButtonElement| HTMLAnchorElement>;
+  popup: boolean;
+  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
   lobby?: any;
 }
 
@@ -25,16 +25,18 @@ const StyledPasswordInput = styled(Input.Password)`
 `;
 
 const ModalChanPass: React.FC<IProps> = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  // const [isModalOpen, setIsModalOpen] = useState(true);
   const [form] = Form.useForm();
   const [error, setError] = useState<boolean>(false);
   const {joinLobby} = useJoinLobby();
   const {socket} = useContext(SocketContext).SocketState;
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 
-  const handleCancel = (event : React.MouseEvent<HTMLButtonElement>) => {
-    props.onClose(event);
-    setIsModalOpen(false);
+  const handleCancel = (event : React.MouseEvent) => {
+    		event.stopPropagation();
+
+    props.setPopup(false);
+    // setIsModalOpen(false);
   };
 
   async function handleSubmit(data: any) {    
@@ -46,7 +48,8 @@ const ModalChanPass: React.FC<IProps> = (props) => {
     }
     		socket?.emit(ClientEvents.JoinLobby, {lobbyId: props.lobby.id});
 				ChatDispatch({type: 'update_user_panel', payload: false});
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
+         props.setPopup(false);
   }
 
   return (
@@ -61,11 +64,11 @@ const ModalChanPass: React.FC<IProps> = (props) => {
           </div>}
         centered
         width={'393px'}
-        open={isModalOpen}
+        open={props.popup}
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" style={{border: 'none'}} onClick={props.onClose}>
+          <Button key="back" style={{border: 'none'}} onClick={handleCancel}>
             Cancel
           </Button>,
           <Button key="Confirm" onClick={() => form.submit()}>

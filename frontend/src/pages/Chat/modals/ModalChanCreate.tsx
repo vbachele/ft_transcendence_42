@@ -82,7 +82,8 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 		setIsModalOpen(false);
 	};
 
-	function handleSubmit(data: any) {		
+	async function handleSubmit(data: any) {	
+		let closeModal = true;	
 		const response = socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
@@ -91,17 +92,25 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				privacy: data.password ? 'private' : 'public',
 				init: 'true',
 				type: 'channel',
-				...data,
-			},
-		});	
-		socket?.timeout(0).on('exception', (data) => {	
+				...data, }
+			}, (response:any ) => {
+				console.log("response", response.status); // ok
+			  });
+		
+		
+		socket?.on('exception', (data) => {	
 			if (data.status === 'forbidden') {
 					setError(true);
+					closeModal = false;
 					return;
 			}
 			console.info(`Channel created`);
 		});
-		setIsModalOpen(false);
+		setTimeout(() => {
+			if (closeModal)
+				setIsModalOpen(false)}
+				, 500)
+
 	}
 
 	return (
