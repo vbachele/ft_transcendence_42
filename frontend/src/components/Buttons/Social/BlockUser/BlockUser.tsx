@@ -7,6 +7,7 @@ import {IUser} from 'types/models';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
+import {userExists} from 'helpers/userExists';
 
 interface IProps {
 	user: IUser;
@@ -18,8 +19,10 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 	const {userName} = useUserInfos();
 	const {data: blocked} = useFetchBlockedOf(userName.userName);
 
-	const handleClick = () => {
-		if (isUserIn(blocked, user.name)) {
+	const handleClick = async () => {
+		const exists = await userExists(user.name, userName.userName);
+		if (!exists || isUserIn(blocked, user.name)) {
+			openNotification('warning', `${user.name} can't be blocked`);
 			return;
 		}
 

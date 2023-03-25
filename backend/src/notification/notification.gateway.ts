@@ -123,6 +123,8 @@ export class NotificationGateway implements OnGatewayConnection {
 	) {
 		replaceUsernameInMap(this.notifs, client.data.name, newUsername);
 		updateNotifications(this.notifs, client.data.name, newUsername);
+
+		client.data.name = newUsername;
 	}
 
 	@SubscribeMessage(ClientSocialEvents.ClearNotifs)

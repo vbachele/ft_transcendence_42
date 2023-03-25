@@ -37,7 +37,7 @@ export const EditAvatar = (props: Props) => {
 
 	const setUploadedimg = () => {
 		setUploadApproved(true);
-		unlockAchievement('AVATAR', userName.userName);
+		// unlockAchievement('AVATAR', userName.userName);
 	};
 
 	const setUploadedimgFalse = () => {

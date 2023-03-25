@@ -12,6 +12,27 @@ export const Container = styled.div`
 	gap: 64px;
 `;
 
+export const SearchContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 24px;
+
+	.add-icon {
+		cursor: pointer;
+		fill: ${(p) => p.theme.colors.text};
+		width: 28px;
+		height: 28px;
+
+		:hover {
+			transform: scale(1.1);
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+	}
+`;
+
 export const StyledCollapse = styled(Collapse)`
 	user-select: none;
 	display: flex;

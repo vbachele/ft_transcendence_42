@@ -141,6 +141,7 @@ export const SmallScreenButtons = styled.div`
 		margin: 0;
 
 		svg {
+			fill: white;
 			width: 30px;
 			height: 30px;
 		}

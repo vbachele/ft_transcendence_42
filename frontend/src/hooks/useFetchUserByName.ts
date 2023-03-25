@@ -4,10 +4,10 @@ import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
 
 async function fetchUser(name: string, blockedOf: string) {
-	try {
-		const data = await backend.getUserByName(name, blockedOf);
+	const data = await backend.getUserByName(name, blockedOf);
+	if (data) {
 		return {data, error: null};
-	} catch (err) {
+	} else {
 		return {data: null, error: 'Could not fetch the data'};
 	}
 }

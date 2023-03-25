@@ -13,11 +13,12 @@ import PendingSent from './components/PendingSent';
 import PendingReceived from './components/PendingReceived';
 import useFetchUsers from 'hooks/useFetchUsers';
 import * as Chat from '../Chat/components/components.styles';
-import * as F from 'styles/font.styles';
-import * as S from './Social.styles';
 import isUserIn from 'helpers/isUserIn';
 import ModalAddUser from './components/ModalAddUser';
 import filterByName from 'helpers/filterByName';
+import {ReactComponent as AddButton} from 'components/Buttons/Social/AddFriend/add.svg';
+import * as F from 'styles/font.styles';
+import * as S from './Social.styles';
 
 const {Search} = Input;
 
@@ -142,17 +143,25 @@ function Social() {
 
 	return (
 		<S.Container>
-			<Search
-				placeholder="Search a user"
-				size="large"
-				value={search}
-				onChange={onSearch}
-				onSearch={() => setDisplayModal(true)}
-				enterButton
-				style={{
-					width: '250px',
-				}}
-			/>
+			<div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+				<S.SearchContainer>
+					<Search
+						placeholder="Search a user"
+						size="large"
+						value={search}
+						onChange={onSearch}
+						onSearch={() => setDisplayModal(true)}
+						enterButton
+						style={{
+							width: '250px',
+						}}
+					/>
+					<AddButton
+						className="add-icon"
+						onClick={() => setDisplayModal(true)}
+					/>
+				</S.SearchContainer>
+			</div>
 			{displayModal && (
 				<ModalAddUser
 					isModalOpen={displayModal}
@@ -175,6 +184,7 @@ function Social() {
 					{friendUsers &&
 						friendUsers
 							.sort(compareStatus)
+							.filter((user) => filterByName(user, search))
 							.map((user: IUser) => (
 								<Friend
 									friend={user}

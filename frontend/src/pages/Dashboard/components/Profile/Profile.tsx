@@ -18,6 +18,7 @@ const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
 	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
+	const [status, setStatus] = useState(user.status);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 
@@ -44,10 +45,10 @@ const Profile = ({user}: IProps) => {
 					<F.H1>{user.name}</F.H1>
 					{isUserIn(friendUsers, user.name) && <FriendIcon />}
 				</S.HDiv>
-				<ActivityStatus user={user} />
+				<ActivityStatus user={user} updateStatus={setStatus} />
 				<UserDropdown
 					user={user}
-					status={user.status}
+					status={status}
 					friendUsers={friendUsers}
 					dropdownVisible={dropdownVisible}
 					setDropdownVisible={setDropdownVisible}

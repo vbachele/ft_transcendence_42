@@ -8,6 +8,7 @@ interface IProps {
 	user: IUser;
 	weight?: string;
 	size?: string;
+	updateStatus?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const stateEnumLookup: {[key: string]: string} = {
@@ -16,7 +17,7 @@ const stateEnumLookup: {[key: string]: string} = {
 	offline: 'Offline',
 };
 
-function ActivityStatus({user, weight, size}: IProps) {
+function ActivityStatus({user, weight, size, updateStatus}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 
 	const [status, setStatus] = useState(user.status);
@@ -26,8 +27,12 @@ function ActivityStatus({user, weight, size}: IProps) {
 		socket?.on('update_status', (data: any) => {
 			if (data.user === user.name) {
 				setStatus(data.status);
+				if (updateStatus) {
+					updateStatus(data.status);
+				}
 			}
 		});
+
 		return () => {
 			socket?.off('update_status');
 		};

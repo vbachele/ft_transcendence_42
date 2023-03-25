@@ -42,19 +42,19 @@ export class WebsocketService {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		type: string
 	) {
-		// switch (type) {
-		// 	case 'online':
-		// 		this.setOnline(client);
-		// 		break;
-		// 	case 'busy':
-		// 		this.setBusy(client);
-		// 		break;
-		// 	case 'offline':
-		// 		this.setOffline(client);
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
+		switch (type) {
+			case 'online':
+				this.setOnline(client);
+				break;
+			case 'busy':
+				this.setBusy(client);
+				break;
+			case 'offline':
+				this.setOffline(client);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private async setOnline(@ConnectedSocket() client: AuthenticatedSocket) {
@@ -69,7 +69,6 @@ export class WebsocketService {
 				status: 'online',
 				user: client.data.name,
 			});
-
 			return updatedUser;
 		} catch (error) {
 			throw new WsException('Failed to update status of user');
@@ -113,6 +112,6 @@ export class WebsocketService {
 					throw new WsException('Failed to update status of user');
 				}
 			}
-		}, 5_000); //todo remettre 5sec
+		}, 5_000);
 	}
 }

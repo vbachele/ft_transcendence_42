@@ -88,7 +88,7 @@ const UserDropdown = ({
 								setDropdownVisible(false);
 							}}
 						>
-							<Buttons.Spectate user={user.name} />
+							<Buttons.Spectate user={user} />
 						</S.OptionButton>
 					)}
 				</>

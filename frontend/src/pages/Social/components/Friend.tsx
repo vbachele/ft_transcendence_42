@@ -17,6 +17,7 @@ interface IProps {
 
 function Friend({friend, onBlock, onRemove}: IProps) {
 	const [open, setOpen] = useState(false);
+	const [status, setStatus] = useState(friend.status);
 	const theme = useTheme();
 
 	const showDrawer = () => {
@@ -33,7 +34,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<img className="avatar" src={friend.image} />
 				<div style={{textAlign: 'left'}}>
 					<F.H5>{friend.name}</F.H5>
-					<ActivityStatus size="16px" user={friend} />
+					<ActivityStatus size="16px" user={friend} updateStatus={setStatus} />
 				</div>
 			</S.Friend>
 			<Drawer
@@ -42,6 +43,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				placement="right"
 				width={window.innerWidth <= 768 ? '100%' : 424}
 				closable={true}
+				forceRender={true}
 				onClose={hideDrawer}
 				open={open}
 			>
@@ -56,10 +58,8 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
 					<Buttons.ViewProfile user={friend.name} />
-					{friend.status === 'online' && <Buttons.Invite id={friend.name} />}
-					{friend.status === 'ingame' && (
-						<Buttons.Spectate user={friend.name} />
-					)}
+					{status === 'online' && <Buttons.Invite id={friend.name} />}
+					{status === 'ingame' && <Buttons.Spectate user={friend} />}
 					<Buttons.Message user={friend.name} />
 					<Buttons.RemoveFriend
 						user={friend}

@@ -1,6 +1,8 @@
 import SocketContext from 'contexts/Socket/context';
 import {useUserInfos} from 'contexts/User/userContent';
 import {ClientSocialEvents} from 'events/social.events';
+import {fetchFriends} from 'helpers/fetchFriends';
+import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
 import {backend} from 'lib/backend';
 import {useContext} from 'react';
@@ -18,11 +20,18 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
 
-	const handleClick = () => {
-		backend.removeFriend(userName.userName, user.name);
-		backend.removeFriend(user.name, userName.userName);
-		backend.removePending(userName.userName, user.name);
-		backend.removePending(user.name, userName.userName);
+	const handleClick = async () => {
+		const friends = await fetchFriends(userName.userName);
+
+		if (!friends || !isUserIn(friends, user.name)) {
+			openNotification('warning', `${user.name} can't be removed`);
+			return;
+		}
+
+		await backend.removeFriend(userName.userName, user.name);
+		await backend.removeFriend(user.name, userName.userName);
+		await backend.removePending(userName.userName, user.name);
+		await backend.removePending(user.name, userName.userName);
 
 		if (onRemove) {
 			onRemove(user);
@@ -32,7 +41,6 @@ function RemoveFriend({user, hideDrawer, onRemove}: IProps) {
 			hideDrawer();
 		}
 
-		console.log('sdalut');
 		socket?.emit(ClientSocialEvents.SendNotif, {
 			sender: userName.userName,
 			receiver: user.name,
