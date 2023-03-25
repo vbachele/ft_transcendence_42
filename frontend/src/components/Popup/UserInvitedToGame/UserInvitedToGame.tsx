@@ -8,7 +8,7 @@ import Popup from '../components/Popup/Popup';
 import {ServerEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/context';
 import {createSearchParams, useNavigate} from 'react-router-dom';
-import {ILobbyData} from "../../../types/models";
+import {ILobbyData} from '../../../types/models';
 
 function UserInvitedToGame() {
 	const [showComponent, setShowComponent] = useState(false);

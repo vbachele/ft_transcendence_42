@@ -6,7 +6,7 @@ export const userExists = async (
 	blockedOf: string
 ): Promise<boolean> => {
 	try {
-		const user: IUser = await backend.getUserByName(username, blockedOf);
+		const user: IUser | null = await backend.getUserByName(username, blockedOf);
 		return Boolean(user);
 	} catch (error) {
 		console.error(error);

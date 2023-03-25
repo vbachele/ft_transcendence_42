@@ -5,6 +5,11 @@ import {useContext, useRef} from 'react';
 import SocketContext from '../../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../../events/game.events';
 import {usePopup} from '../../../../contexts/Popup/Popup';
+import {userExists} from 'helpers/userExists';
+import {useUserInfos} from 'contexts/User/userContent';
+import {fetchFriends} from 'helpers/fetchFriends';
+import isUserIn from 'helpers/isUserIn';
+import {openNotification} from 'helpers/openNotification';
 
 interface IProps {
 	id: string;
@@ -13,8 +18,17 @@ interface IProps {
 function Invite({id}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {hasInvited, setHasInvited} = usePopup();
+	const {userName} = useUserInfos();
 
-	function onInvite() {
+	async function onInvite() {
+		const exists = userExists(id, userName.userName);
+		const friends = await fetchFriends(userName.userName);
+
+		if (!exists || !isUserIn(friends, id)) {
+			openNotification('warning', `${id} can't be invited`);
+			return;
+		}
+
 		console.log(`friend id `, id);
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'game',

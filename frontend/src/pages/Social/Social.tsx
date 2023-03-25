@@ -6,18 +6,15 @@ import compareStatus from 'helpers/compareStatus';
 import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
-import ModalUserSearch from 'pages/Chat/modals/ModalUserSearch';
 import Blocked from './components/Blocked';
 import Friend from './components/Friend';
 import PendingSent from './components/PendingSent';
 import PendingReceived from './components/PendingReceived';
 import useFetchUsers from 'hooks/useFetchUsers';
-import * as Chat from '../Chat/components/components.styles';
 import isUserIn from 'helpers/isUserIn';
 import ModalAddUser from './components/ModalAddUser';
 import filterByName from 'helpers/filterByName';
 import {ReactComponent as AddButton} from 'components/Buttons/Social/AddFriend/add.svg';
-import * as F from 'styles/font.styles';
 import * as S from './Social.styles';
 
 const {Search} = Input;
@@ -48,7 +45,7 @@ const isEmptyPendings = (sent: IUser[], reiceved: IUser[]): string => {
 
 function Social() {
 	const {userName} = useUserInfos();
-	const {data} = useFetchUsers();
+	const {data} = useFetchUsers('_');
 	const [search, setSearch] = useState('');
 
 	const {data: friends} = useFetchFriendsOf(userName.userName);
@@ -128,6 +125,9 @@ function Social() {
 	}, [blocked, sentPendings, receivedPendings, friends]);
 
 	let users: IUser[];
+	const user = data?.find((user) => user.name === 'ww');
+	console.log(user);
+
 	if (data) {
 		users = data
 			?.filter((user) => {
