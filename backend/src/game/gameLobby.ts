@@ -1,105 +1,97 @@
-import { ALobby } from "../lobby/ALobby";
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { IsString } from "class-validator";
-import { AuthenticatedSocket } from "../lobby/types/lobby.type";
-import { WebsocketService } from "../websocket/websocket.service";
+import {ALobby} from '../lobby/ALobby';
+import {ForbiddenException, Injectable} from '@nestjs/common';
+import {IsString} from 'class-validator';
+import {AuthenticatedSocket} from '../lobby/types/lobby.type';
+import {WebsocketService} from '../websocket/websocket.service';
 import {ConnectedSocket, WsException} from '@nestjs/websockets';
-import { ServerGameEvents } from "./events/game.events";
-import { Pong } from "./pong";
-import Matter = require("matter-js");
-import { Events } from "matter-js";
-import { serialize } from "class-transformer";
+import {ServerGameEvents} from './events/game.events';
+import {Pong} from './pong';
+import Matter = require('matter-js');
+import {Events} from 'matter-js';
+import {serialize} from 'class-transformer';
 
 export class GameLobbyDto {
-  @IsString()
-  mode: string;
+	@IsString()
+	mode: string;
 }
+
+type PlayerState = 'ready' | 'notReady';
 
 @Injectable()
 export class GameLobby extends ALobby {
-  data: GameLobbyDto;
-  instance: Pong;
+	data: GameLobbyDto;
+	instance: Pong;
+	state: 'waiting' | 'running' | 'paused';
+	playerStates: Map<string, PlayerState> = new Map();
 
-  constructor(
-    data: GameLobbyDto,
-    private readonly websocketService: WebsocketService
-  ) {
-    super(websocketService.server, 2);
-    this.data = data;
-    this.instance = new Pong(this.dispatchToLobby.bind(this));
-  }
+	constructor(
+		data: GameLobbyDto,
+		private readonly websocketService: WebsocketService
+	) {
+		super(websocketService.server, 2);
+		this.data = data;
+		this.instance = new Pong(this.dispatchToLobby.bind(this));
+		this.state = 'waiting';
+	}
 
-  runGame() {
-    this.instance.start();
-  }
+	runGame() {
+		this.instance.start();
+		this.state = 'running';
+	}
 
-  movePaddle(
-    @ConnectedSocket()
-    client: AuthenticatedSocket,
-    paddle: Matter.Body,
-    direction: string
-  ) {
-    switch (direction) {
-      case "up":
-        Matter.Body.setPosition(paddle, {
-          x: paddle.position.x,
-          y: paddle.position.y - 5,
-        });
-        break;
-      case "down":
-        Matter.Body.setPosition(paddle, {
-          x: paddle.position.x,
-          y: paddle.position.y + 5,
-        });
-        break;
-    }
-    this.dispatchToLobby(ServerGameEvents.MovePaddle, {
-      id: paddle.id,
-      type: paddle.type,
-      position: paddle.position,
-    });
-  }
+	movePaddle(
+		@ConnectedSocket()
+		client: AuthenticatedSocket,
+		direction: 'up' | 'down'
+	) {
+		if (this.state !== 'running') return;
+		this.validateClient(client);
+		this.instance.movePaddle(client.data.paddle, direction);
+		const paddle =
+			this.instance.paddles[client.data.paddle as 'left' | 'right'];
+		this.dispatchToLobby(ServerGameEvents.MovePaddle, {
+			paddle: client.data.paddle,
+			position: paddle.position,
+		});
+	}
 
-  serializeBody(body: Matter.Body) {
-    return JSON.stringify(body, (key, value) =>
-      key === "parent" || key === "parts" || key === "body" ? undefined : value
-    );
-  }
+	gameSetup() {
+		[...this.clients.values()][0].data.paddle = 'left';
+		[...this.clients.values()][1].data.paddle = 'right';
+		return {
+			ball: {
+				position: this.instance.ball.position,
+				velocity: this.instance.ball.velocity,
+				size: this.instance.ball.radius * 2,
+			},
+			leftPaddle: this.instance.paddles['left'],
+			rightPaddle: this.instance.paddles['right'],
+		};
+	}
 
-  dispatchGameSetup() {
-    const clients = [...this.clients.values()];
-    let bodies: string[] = [];
-    Matter.Composite.allBodies(this.instance.world).forEach((body) =>
-      bodies.push(this.serializeBody(body))
-    );
-    clients[0].data.paddle = this.instance.paddles[0];
-    clients[1].data.paddle = this.instance.paddles[1];
-    this.server.to(clients[0].id).emit(ServerGameEvents.Setup, bodies);
-    this.server.to(clients[1].id).emit(ServerGameEvents.Setup, bodies);
-    console.info(`Game setup dispatched to lobby`);
-  }
+	validateClient(
+		@ConnectedSocket()
+		client: AuthenticatedSocket
+	) {
+		if (!this.clients.has(client.data.name))
+			throw new WsException(
+				`Client [${client.data.name}] doesn't belong to the lobby`
+			);
+	}
 
-  validateClient(
-    @ConnectedSocket()
-    client: AuthenticatedSocket
-  ) {
-    if (!this.clients.has(client.data.name))
-      throw new WsException(`Client [${client.data.name}] doesn't belong to the lobby`);
-  }
-
-  dispatchToOpponent<T>(
-    @ConnectedSocket()
-    client: AuthenticatedSocket,
-    event: ServerGameEvents,
-    payload: T
-  ) {
-    const opponents = [...this.clients.values()].filter(
-      (socket) => socket.data.name !== client.data.name
-    );
-    opponents.forEach((opponent) => {
-      payload
-        ? this.server.to(opponent.id).emit(event, payload)
-        : this.server.to(opponent.id).emit(event);
-    });
-  }
+	dispatchToOpponent<T>(
+		@ConnectedSocket()
+		client: AuthenticatedSocket,
+		event: ServerGameEvents,
+		payload: T
+	) {
+		const opponents = [...this.clients.values()].filter(
+			(socket) => socket.data.name !== client.data.name
+		);
+		opponents.forEach((opponent) => {
+			payload
+				? this.server.to(opponent.id).emit(event, payload)
+				: this.server.to(opponent.id).emit(event);
+		});
+	}
 }

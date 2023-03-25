@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import SocketContext from '../../contexts/Socket/context';
 import {ServerChatEvents} from '../../events/chat.events';
-import ChatContext from '../../contexts/Chat/context';
+import ChatContext, {ILobby} from '../../contexts/Chat/context';
 import {act} from 'react-dom/test-utils';
 
 export interface IMessage {
@@ -12,9 +12,8 @@ export interface IMessage {
 	lobbyId: string;
 }
 
-export function useReceiveMessage() {
+export function useReceiveMessage(activeLobby: ILobby | undefined) {
 	const {socket} = useContext(SocketContext).SocketState;
-	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [messages, setMessages] = useState<IMessage[]>([]);
 
 	useEffect(() => {

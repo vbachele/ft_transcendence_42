@@ -1,174 +1,168 @@
-import Matter = require("matter-js");
-import { Events } from "matter-js";
-import { ServerGameEvents } from "./events/game.events";
+import Matter = require('matter-js');
+import {ServerGameEvents} from './events/game.events';
+import * as process from 'process';
 
-const Engine = Matter.Engine,
-  Render = Matter.Render,
-  Runner = Matter.Runner,
-  Body = Matter.Body,
-  Bodies = Matter.Bodies,
-  World = Matter.World;
-
-const PLAYGROUND_SIZE = { x: 800, y: 600 };
-const PADDLE_SIZE = { x: 20, y: 100 };
-const PADDLE_BORDER_SPACING = 20;
-const WALL_THICKNESS = 20;
-const BALL_SIZE = 1;
-const BALL_STARTING_POSTION = {
-  x: PLAYGROUND_SIZE.x / 2,
-  y: PLAYGROUND_SIZE.y / 2,
+const PLAYGROUND_SIZE = {x: 800, y: 600};
+const PADDLE_SIZE = {x: 27, y: 140};
+const PADDLE_BORDER_SPACING = 40;
+let BALL_SPEED = {x: 150, y: 150};
+const BALL_SIZE = 40;
+const BALL_STARTING_POSITION = {
+	x: PLAYGROUND_SIZE.x / 2,
+	y: PLAYGROUND_SIZE.y / 2,
 };
-
-const enum Wall {
-  TOP,
-  RIGHT,
-  BOTTOM,
-  LEFT,
-}
+const FRAME_RATE = 1000 / 60;
+const PADDLE_SPEED = 10;
+const BALL_ACCELERATION = 1.03;
 
 export class Pong {
-  public readonly engine: Matter.Engine;
-  public readonly runner: Matter.Runner;
-  public readonly world: Matter.World;
-  public walls: Matter.Body[];
-  public ball: Matter.Body;
-  public paddles: Matter.Body[];
-  private dispatchToLobby: (event: string, data: any) => void;
+	public ball = {
+		position: BALL_STARTING_POSITION,
+		velocity: {x: 0, y: 0},
+		radius: BALL_SIZE / 2,
+	};
+	public paddles = {
+		['left']: {
+			position: {x: PADDLE_BORDER_SPACING, y: PLAYGROUND_SIZE.y / 2},
+			size: PADDLE_SIZE,
+		},
+		['right']: {
+			position: {
+				x: PLAYGROUND_SIZE.x - PADDLE_BORDER_SPACING,
+				y: PLAYGROUND_SIZE.y / 2,
+			},
+			size: PADDLE_SIZE,
+		},
+	};
+	private readonly dispatchToLobby: (event: string, data: any) => void;
+	private score = [0, 0];
+	private previousTick = Date.now();
+	private actualTicks = 0;
+	private pause = false;
+	private gameLoop: NodeJS.Timeout;
 
-  constructor(dispatchToLobby: (event: string, data: any) => void) {
-    this.dispatchToLobby = dispatchToLobby;
-    this.engine = Engine.create({ gravity: { scale: 0 } });
-    this.world = this.engine.world;
-    this.runner = Runner.create();
-    this.createWalls();
-    this.createBall();
-    this.createPaddles();
-  }
+	constructor(dispatchToLobby: (event: string, data: any) => void) {
+		this.dispatchToLobby = dispatchToLobby;
+	}
 
-  // create walls starting from top in clockwise direction
-  private createWalls() {
-    this.walls = [
-      Bodies.rectangle(
-        PLAYGROUND_SIZE.x / 2,
-        -(WALL_THICKNESS / 2),
-        PLAYGROUND_SIZE.x,
-        WALL_THICKNESS,
-        { label: "topWall", isStatic: true }
-      ),
-      Bodies.rectangle(
-        PLAYGROUND_SIZE.x + WALL_THICKNESS / 2,
-        PLAYGROUND_SIZE.y / 2,
-        WALL_THICKNESS,
-        PLAYGROUND_SIZE.y,
-        { label: "rightWall", isStatic: true }
-      ),
-      Bodies.rectangle(
-        PLAYGROUND_SIZE.x / 2,
-        PLAYGROUND_SIZE.y + WALL_THICKNESS / 2,
-        PLAYGROUND_SIZE.x,
-        WALL_THICKNESS,
-        { label: "bottomWall", isStatic: true }
-      ),
-      Bodies.rectangle(
-        -(WALL_THICKNESS / 2),
-        PLAYGROUND_SIZE.y / 2,
-        WALL_THICKNESS,
-        PLAYGROUND_SIZE.y,
-        { label: "leftWall", isStatic: true }
-      ),
-    ];
-    World.add(this.world, this.walls);
-  }
+	private kickoff() {
+		console.log(`kickoff`);
+	}
 
-  private createBall() {
-    this.ball = Bodies.circle(
-      BALL_STARTING_POSTION.x,
-      BALL_STARTING_POSTION.y,
-      BALL_SIZE,
-      {
-        label: "ball",
-        inertia: Infinity,
-        friction: 0,
-        frictionStatic: 0,
-        frictionAir: 0,
-        restitution: 1,
-        render: {
-          visible: true,
-        },
-      }
-    );
-    World.add(this.world, this.ball);
-  }
+	private detectPaddleCollision() {
+		const ball = this.ball;
+		const paddles = this.paddles;
+		if (
+			ball.position.x - ball.radius <=
+				paddles.left.position.x + PADDLE_SIZE.x / 2 &&
+			ball.position.y >= paddles.left.position.y - PADDLE_SIZE.y / 2 &&
+			ball.position.y <= paddles.left.position.y + PADDLE_SIZE.y / 2
+		) {
+			BALL_SPEED.x = -BALL_SPEED.x * BALL_ACCELERATION;
+			ball.velocity.x = -ball.velocity.x;
+		}
+		if (
+			ball.position.x + ball.radius >=
+				paddles.right.position.x - PADDLE_SIZE.x / 2 &&
+			ball.position.y >= paddles.right.position.y - PADDLE_SIZE.y / 2 &&
+			ball.position.y <= paddles.right.position.y + PADDLE_SIZE.y / 2
+		) {
+			BALL_SPEED.x = -BALL_SPEED.x * BALL_ACCELERATION;
+			ball.velocity.x = -ball.velocity.x;
+		}
+	}
 
-  private createPaddles() {
-    this.paddles = [
-      Bodies.rectangle(
-        PADDLE_BORDER_SPACING,
-        PLAYGROUND_SIZE.y / 2,
-        PADDLE_SIZE.x,
-        PADDLE_SIZE.y,
-        { isStatic: true, label: "leftPaddle" }
-      ),
-      Bodies.rectangle(
-        PLAYGROUND_SIZE.x - PADDLE_BORDER_SPACING,
-        PLAYGROUND_SIZE.y / 2,
-        PADDLE_SIZE.x,
-        PADDLE_SIZE.y,
-        { isStatic: true, label: "rightPaddle" }
-      ),
-    ];
-    World.add(this.world, this.paddles);
-  }
+	private detectWallCollision() {
+		if (this.ball.position.x - this.ball.radius <= 0) {
+			this.playerScored('left');
+		}
+		if (this.ball.position.x + this.ball.radius >= PLAYGROUND_SIZE.x) {
+			this.playerScored('right');
+		}
+		if (this.ball.position.y - this.ball.radius <= 0) {
+			BALL_SPEED.y = -BALL_SPEED.y;
+			this.ball.velocity.y = -this.ball.velocity.y;
+		}
+		if (this.ball.position.y + this.ball.radius >= PLAYGROUND_SIZE.y) {
+			BALL_SPEED.y = -BALL_SPEED.y;
+			this.ball.velocity.y = -this.ball.velocity.y;
+		}
+	}
 
-  private kickoff() {
-    Matter.Body.setVelocity(this.ball, { x: 5, y: 5 });
-    let prevBallPos = { x: 0, y: 0 };
-    Events.on(this.engine, "beforeUpdate", () => {
-      if (
-        prevBallPos.x !== this.ball.position.x ||
-        prevBallPos.y !== this.ball.position.y
-      ) {
-        this.dispatchToLobby(ServerGameEvents.MoveBall, {
-          id: this.ball.id,
-          type: this.ball.type,
-          position: this.ball.position,
-          velocity: this.ball.velocity,
-        });
-        prevBallPos = { ...this.ball.position };
-      }
-    });
-  }
+	private playerScored(player: 'left' | 'right') {
+		// this.pause = true;
+		clearTimeout(this.gameLoop);
+		this.score[player === 'left' ? 0 : 1]++;
+		this.ball.position = {x: 400, y: 300};
+		// this.dispatchToLobby(ServerGameEvents.PlayerScored, this.score);
+		console.log(`BALL STARTING POSITION: `, BALL_STARTING_POSITION)
+		this.dispatchToLobby(ServerGameEvents.MoveBall, {
+			position: {x: 400, y: 300},
+			velocity: {x: 0, y: 0},
+			message: "stop",
+		});
+		console.log(`Player ${player} scored! Score: ${this.score}`)
+		// this.pause = false;
+		this.loop();
+	}
 
-  private detectPaddleCollision() {
-    Events.on(this.engine, "collisionStart", (event) => {
-      const pairs = event.pairs;
-      for (let i = 0; i < pairs.length; i++) {
-        const pair = pairs[i];
-        if (
-          pair.bodyA.label === "leftPaddle" ||
-          pair.bodyB.label === "leftPaddle"
-        ) {
-          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
-            position: this.paddles[0].position,
-          });
-        } else if (
-          pair.bodyA.label === "rightPaddle" ||
-          pair.bodyB.label === "rightPaddle"
-        ) {
-          this.dispatchToLobby(ServerGameEvents.PaddleHit, {
-            position: this.paddles[1].position,
-          });
-        }
-      }
-    });
-  }
+	public movePaddle(paddle: 'left' | 'right', direction: 'up' | 'down') {
+		switch (direction) {
+			case 'up':
+				if (
+					this.paddles[paddle].position.y - PADDLE_SIZE.y / 2 - PADDLE_SPEED <
+					0
+				)
+					return;
+				this.paddles[paddle].position.y -= PADDLE_SPEED;
+				break;
+			case 'down':
+				if (
+					this.paddles[paddle].position.y + PADDLE_SIZE.y / 2 + PADDLE_SPEED >
+					PLAYGROUND_SIZE.y
+				)
+					return;
+				this.paddles[paddle].position.y += PADDLE_SPEED;
+				break;
+		}
+	}
 
-  public start() {
-    Runner.run(this.engine);
-    Events.on(this.runner, "afterUpdate", () => {
-      console.log("afterUpdate");
-    });
-    this.kickoff()
-    this.detectPaddleCollision();
-  }
+	private update(progress: number) {
+		this.detectWallCollision();
+		this.detectPaddleCollision();
+		this.ball.position.x += BALL_SPEED.x * progress;
+		this.ball.position.y += BALL_SPEED.y * progress;
+		this.ball.velocity.x = this.ball.velocity.x + BALL_SPEED.x * progress;
+		this.ball.velocity.y = this.ball.velocity.y + BALL_SPEED.y * progress;
+		this.dispatchToLobby(ServerGameEvents.MoveBall, {
+			position: this.ball.position,
+			velocity: this.ball.velocity,
+		});
+	}
+
+	private loop() {
+		// console.log(`tick`);
+		const now = Date.now();
+		this.actualTicks++;
+		if (this.previousTick + FRAME_RATE <= now) {
+			const progress = (now - this.previousTick) / 1000;
+			this.previousTick = now;
+			this.update(progress);
+			this.actualTicks = 0;
+		}
+		if (this.pause) return;
+		// const looper = this.loop.bind(this);
+		// if (Date.now() - this.previousTick < FRAME_RATE - 16) {
+		this.gameLoop = setTimeout(() => {
+			this.loop();
+		}, FRAME_RATE);
+		// } else {
+		// 	setImmediate(looper);
+		// }
+	}
+
+	public start() {
+		this.previousTick = Date.now();
+		this.loop();
+	}
 }

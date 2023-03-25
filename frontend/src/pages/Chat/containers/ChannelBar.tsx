@@ -8,6 +8,10 @@ import ChatContext from 'contexts/Chat/context';
 import NewDiscussion from '../components/NewDiscussion';
 import styled from 'styled-components';
 import {useUserInfos} from '../../../contexts/User/userContent';
+import {AiTwotoneLock} from "react-icons/ai";
+import ModalChanPass from '../modals/ModalChanPass';
+import {backend} from '../../../lib/backend';
+import Channel from '../components/Channel';
 
 const StyledInputSearch = styled(Input.Search)`
 	padding: 0 8px;
@@ -15,9 +19,11 @@ const StyledInputSearch = styled(Input.Search)`
 
 function ChannelBar() {
 	const [search, setSearch] = useState<string>('');
-	const {joinLobby} = useJoinLobby();
 	const {lobbyList} = useContext(ChatContext).ChatState;
+	const [privateChan, setPrivateChan] = useState<boolean>(false); 
 	const name = useUserInfos().userName.userName;
+	const [channelName, setChannelName] = useState<string>("");
+	
 
 	const searchFilter = (value: any): boolean => {
 		return value
@@ -28,12 +34,7 @@ function ChannelBar() {
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
-	}
-
-	function directMessageName(lobbyName: string) {
-		const displayedName = lobbyName.split('+');
-		if (displayedName[0] === name) return displayedName[1];
-		else return displayedName[0];
+		setPrivateChan(!privateChan);
 	}
 
 	return (
@@ -54,12 +55,9 @@ function ChannelBar() {
 					.filter((lobby) => lobby.type === 'channel')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
-						<S.Channel key={index} onClick={joinLobby}>
-							#{lobby.name}
-						</S.Channel>
+						<Channel key={lobby.name} lobby={lobby} />
 					))}
-			</C.ChannelList>
-			<C.Header>
+			</C.ChannelList>			<C.Header>
 				<F.H3> Direct messages</F.H3>
 				<NewDiscussion type={'direct_message'} />
 			</C.Header>
@@ -68,9 +66,7 @@ function ChannelBar() {
 					.filter((lobby) => lobby.type === 'direct_message')
 					.filter((lobby) => searchFilter(lobby.name))
 					.map((lobby, index) => (
-						<S.Channel key={index} onClick={joinLobby}>
-							{directMessageName(lobby.name)}
-						</S.Channel>
+						<Channel key={lobby.name} lobby={lobby}/>
 					))}
 			</C.ChannelList>
 		</C.LateralBar>

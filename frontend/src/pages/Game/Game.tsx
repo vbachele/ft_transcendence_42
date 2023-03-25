@@ -6,9 +6,42 @@ import Countdown from '../../components/Popup/Countdown/Countdown';
 import {useParams, useSearchParams} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import {Player} from '@lottiefiles/react-lottie-player';
-import FireBall from 'assets/fireBall.json';
-import PaddleHit from 'assets/paddleHit.json';
-import Background from 'pages/Game/pong_background.jpg';
+import FireBall from 'pages/Game/assets/fireBall.json';
+import PaddleHit from 'pages/Game/assets/paddleHit.json';
+import Stick from 'pages/Game/assets/stick.png';
+import styled from 'styled-components';
+
+const LeftPaddle = styled.img`
+	position: absolute;
+	transform-origin: center;
+	width: 27px;
+	height: 140px;
+`;
+
+const RightPaddle = styled.img`
+	position: absolute;
+	transform-origin: center;
+	width: 27px;
+	height: 140px;
+`;
+
+const StyledFireBall = styled.div`
+	width: 40px;
+	height: 40px;
+	//background: linear-gradient(90deg, red 50%, green 50%);
+	display: inline-flex;
+	position: absolute;
+	align-items: flex-end;
+	justify-content: center;
+	line-height: 0;
+	transform-origin: center;
+	.lf-player-container {
+		flex: 1 0 auto;
+		padding-right: 7px;
+		width: 200px;
+		line-height: 0;
+	}
+`;
 
 export interface Lobby {
 	id: string;
@@ -23,61 +56,82 @@ function Game() {
 	const pongRef = useRef<Pong>();
 	const [searchParams] = useSearchParams();
 	const fireBall = useRef<HTMLElement>();
-	const canvasPos = useRef<DOMRect>();
+	// const canvasPos = useRef<DOMRect>();
 	const paddleHitRef = React.createRef<Player>();
 	const paddleHitElem = useRef<HTMLElement>();
-	const background = new Image(600, 400)
+	const leftPaddle = useRef<HTMLElement>();
+	const rightPaddle = useRef<HTMLElement>();
 
 	useEffect(() => {
 		const lobbyId = searchParams.get('lobbyId');
-		const canvas = canvasRef.current! as HTMLCanvasElement;
-		canvasPos.current = canvas.getBoundingClientRect();
 
-		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
-		// socket?.on(ServerGameEvents.Setup, (data) => {
-		// 	pongRef.current = new Pong(canvasRef.current!, socket!, data, lobbyId!);
-		// 	pongRef.current?.paddleController();
-		// });
 		fireBall.current = document.getElementById('fireBall')!;
 		paddleHitElem.current = document.getElementById('paddleHit')!;
-		const newImage = new Image();
-		const canvasCtx = canvas.getContext('2d')!;
-		newImage.addEventListener("load", () => {
-			canvasCtx.drawImage(newImage, 0, 0, 1920, 1080);
-			console.log(`drawing`)
-		},
-		false);
-		newImage.src = 'https://cdn.discordapp.com/attachments/1052973968652509254/1083027464709742722/vbachele_high_resolution_dark_background_city_in_fire__vector_i_aeae9986-ac94-43e0-9c3e-4c85a7f42888.png';
+		leftPaddle.current = document.getElementById('leftPaddle')!;
+		rightPaddle.current = document.getElementById('rightPaddle')!;
+		pongRef.current = new Pong(socket!, lobbyId!);
 
-		// addEventListener('resize', resize);
+		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
+		socket?.on(ServerGameEvents.Setup, (data) => {
+			pongRef.current?.moveBall(
+				fireBall.current!,
+				data.ball.position,
+				data.ball.velocity
+			);
+			pongRef.current?.movePaddle(
+				leftPaddle.current!,
+				data.leftPaddle.position
+			);
+			pongRef.current?.movePaddle(
+				rightPaddle.current!,
+				data.rightPaddle.position
+			);
+			pongRef.current?.start();
+		});
 		return () => {
 			socket?.off(ServerGameEvents.Setup);
+			socket?.emit(ClientGameEvents.LeaveGame, {lobbyId: lobbyId});
 		};
 	}, []);
 
 	useEffect(() => {
-		socket?.on(ServerGameEvents.MoveBall, (data) => {
-			const angle = Math.atan2(data.velocity.x, data.velocity.y);
-			fireBall.current!.style.transform = `translate(${
-				data.position.x - fireBall.current?.clientWidth! / 2
-			}px, ${
-				data.position.y - fireBall.current?.clientHeight!
-			}px) rotate(${-angle}rad)`;
+		socket?.on(ServerGameEvents.GamePaused, () => {
+			console.log(`game paused!`);
 		});
-		// socket?.on(ServerGameEvents.MovePaddle, (data) => {
-		// 	pongRef.current?.updateBody(data);
-		// });
-		socket?.on(ServerGameEvents.PaddleHit, (data) => {
-			paddleHitElem.current!.style.visibility = 'visible';
-			paddleHitElem.current!.style.transform = `translate(${
-				data.position.x - paddleHitElem.current?.clientWidth! / 2
-			}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
 
-			paddleHitRef.current?.play();
-			setTimeout(() => {
-				paddleHitElem.current!.style.visibility = 'hidden';
-			}, 1_000);
+		socket?.on(ServerGameEvents.MoveBall, (data) => {
+			if (data.message) {
+				console.log(`message: `, data.message);
+			}
+			pongRef.current?.moveBall(
+				fireBall.current!,
+				data.position,
+				data.velocity
+			);
 		});
+
+		socket?.on(ServerGameEvents.MovePaddle, (data) => {
+			switch (data.paddle) {
+				case 'left':
+					pongRef.current?.movePaddle(leftPaddle.current!, data.position);
+					break;
+				case 'right':
+					pongRef.current?.movePaddle(rightPaddle.current!, data.position);
+					break;
+			}
+		});
+
+		// socket?.on(ServerGameEvents.PaddleHit, (data) => {
+		// 	paddleHitElem.current!.style.visibility = 'visible';
+		// 	paddleHitElem.current!.style.transform = `translate(${
+		// 		data.position.x - paddleHitElem.current?.clientWidth! / 2
+		// 	}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
+		//
+		// 	paddleHitRef.current?.play();
+		// 	setTimeout(() => {
+		// 		paddleHitElem.current!.style.visibility = 'hidden';
+		// 	}, 1_000);
+		// });
 		return () => {
 			socket?.off(ServerGameEvents.MoveBall);
 			socket?.off(ServerGameEvents.MovePaddle);
@@ -85,45 +139,28 @@ function Game() {
 		};
 	}, [socket]);
 
-	function resize() {
-		const canvas: HTMLCanvasElement = canvasRef.current!;
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-	}
-
 	return (
 		<div>
-			<div style={{position: 'relative'}}>
-				<StyledCanvas
-					id="canvas"
-					ref={canvasRef}
-					tabIndex={1}
-					style={{position: 'absolute'}}
-				></StyledCanvas>
-				<Player
-					id={'fireBall'}
-					autoplay={true}
-					loop={true}
-					src={FireBall}
-					style={{
-						position: 'absolute',
-						transformOrigin: 'bottom center',
-					}}
-				/>
-				<Player
-					id={'paddleHit'}
-					src={PaddleHit}
-					autoplay={false}
-					loop={false}
-					ref={paddleHitRef}
-					style={{
-						position: 'absolute',
-						transformOrigin: 'center',
-						width: '200px',
-						height: '200px',
-						visibility: 'hidden',
-					}}
-				/>
+			<div style={{border: '1px solid black', width: '800px', height: '600px'}}>
+				<StyledFireBall id={'fireBall'}>
+					<Player autoplay={true} loop={true} src={FireBall} />
+				</StyledFireBall>
+				{/*<Player*/}
+				{/*	id={'paddleHit'}*/}
+				{/*	src={PaddleHit}*/}
+				{/*	autoplay={false}*/}
+				{/*	loop={false}*/}
+				{/*	ref={paddleHitRef}*/}
+				{/*	style={{*/}
+				{/*		position: 'absolute',*/}
+				{/*		transformOrigin: 'center',*/}
+				{/*		width: '200px',*/}
+				{/*		height: '200px',*/}
+				{/*		visibility: 'hidden',*/}
+				{/*	}}*/}
+				{/*/>*/}
+				<LeftPaddle id={'leftPaddle'} src={Stick} alt={'left paddle'} />
+				<RightPaddle id={'rightPaddle'} src={Stick} alt={'right paddle'} />
 			</div>
 			<Countdown />
 		</div>

@@ -84,7 +84,8 @@ export class ChatGateway implements OnGatewayConnection {
   async onKickUser(
     @MessageBody("nameToKick") userToKick: string,
     @MessageBody("lobbyId") lobbyId: string
-  ) {}
+  ) {
+  }
 
   @UseGuards(AdminGuard)
   @SubscribeMessage(ClientChatEvents.MuteUser)

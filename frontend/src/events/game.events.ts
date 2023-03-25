@@ -1,14 +1,18 @@
 export enum ClientGameEvents {
-	Invite = 'client.game.invite',
-	MovePaddle = 'client.game.movePaddle',
-	Ready = 'client.game.ready',
-	FetchSetup = 'client.game.fetchSetup',
+	Invite = "client.game.invite",
+	MovePaddle = "client.game.movePaddle",
+	Ready = "client.game.ready",
+	FetchSetup = "client.game.fetchSetup",
+	SearchGame = "client.game.searchGame",
+	LeaveGame = "client.game.leaveGame",
 }
 
 export enum ServerGameEvents {
-	Invitation = 'server.game.invitation',
-	MovePaddle = 'server.game.movePaddle',
-	MoveBall = 'server.game.moveBall',
-	Setup = 'server.game.setup',
-	PaddleHit = 'server.game.paddleHit',
+	Invitation = "server.game.invitation",
+	MovePaddle = "server.game.movePaddle",
+	MoveBall = "server.game.moveBall",
+	Setup = "server.game.setup",
+	PaddleHit = "server.game.paddleHit",
+	GameFound = "server.game.gameFound",
+	GamePaused = "server.game.gamePaused",
 }

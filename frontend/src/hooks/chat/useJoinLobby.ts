@@ -7,11 +7,15 @@ import {useUserInfos} from '../../contexts/User/userContent';
 export function useJoinLobby() {
 	const { socket } = useContext(SocketContext).SocketState;
 	const {lobbyList} = useContext(ChatContext).ChatState;
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const name = useUserInfos().userName.userName;
 
 	const joinLobby = (event: React.MouseEvent) => {
 		event.preventDefault();
+		console.log(lobbyList);
+		
 		let lobbyName = [event.currentTarget.textContent!];
+		
 		if (lobbyName[0].includes("#")) {
 			lobbyName[0] = lobbyName[0].replace("#", "");
 		} else {
@@ -21,6 +25,7 @@ export function useJoinLobby() {
 		console.log(lobbyName);
 		const lobbyId = [...lobbyList].find((lobby) => lobbyName.includes(lobby.name))?.id;
 		socket?.emit(ClientEvents.JoinLobby, {lobbyId: lobbyId});
+		ChatDispatch({type: 'update_user_panel', payload: false})
 	}
 
 	return { joinLobby };
