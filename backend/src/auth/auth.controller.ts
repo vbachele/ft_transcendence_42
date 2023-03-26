@@ -29,8 +29,11 @@ export class AuthController {
   @Get("callback")
   async getToken(@Req() req: Request, @Res() res: Response) {
     const codeFromUrl = req.query.code as string;
-    
+    console.log("je recup le code de 42", codeFromUrl);
+
     const token = await this.Oauth42.accessToken(codeFromUrl);
+    console.log("je recup ensuite mon token", token);
+
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token
     );
