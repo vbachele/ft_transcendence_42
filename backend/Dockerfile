@@ -18,7 +18,7 @@ RUN npm run build
 
 EXPOSE 3000
 
-USER node
+# USER node
 
 FROM node:19-buster as production
 
