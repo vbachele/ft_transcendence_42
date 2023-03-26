@@ -194,7 +194,6 @@ export class PrismaLobbyService {
     userToDelete: string
   )
    {
-    console.log(userToDelete)
     return this.prismaService.lobby.update({
       where: {
         id: lobbyId,

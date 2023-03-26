@@ -25,7 +25,6 @@ function UserPanel() {
 	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
 
 	if (!userInPanel) return null;
-
 	return (
 		<C.UserPanel>
 			<S.DrawerTitle>

@@ -69,8 +69,21 @@ export class ChatService {
       this.prismaLobbyService.deleteUserFromLobby(lobbyId, userNameToKick);
       const userToKick = this.websocketService.getClient(userNameToKick);
       if (!userToKick) return;
-      this.websocketService.server.to(userToKick.id).emit(ServerChatEvents.UserKicked, {lobbyId: lobbyId});
+      // this.websocketService.server.to(userToKick.id).emit(ServerChatEvents.UserKicked, {lobbyId: lobbyId});
       this.lobbyService.leave(lobbyId, userToKick);
+    }
+    catch (e) {
+      throw new WsException(`Error when trying to kick user: ` + e.message);
+    }
+  }
+
+  public async kickFromLobby(userNameToKick: string, lobbyId: string) {
+    try {
+      const userToKick = this.websocketService.getClient(userNameToKick);
+      if (!userToKick) return;
+      this.websocketService.server
+      .to(userToKick.id)
+      .emit(ServerChatEvents.KickedFromLobby, {lobbyId: lobbyId});
     }
     catch (e) {
       throw new WsException(`Error when trying to kick user: ` + e.message);

@@ -12,8 +12,7 @@ import { UseGuards, ValidationPipe } from "@nestjs/common";
 import { SendMessageDto } from "./dto/chat.dto";
 import { ChatService } from './chat.service';
 import { AdminGuard } from "./guards/admin.guard";
-import { LobbyService } from "src/lobby/lobby.service";
-import { LeaveLobbyDto } from "src/lobby/dto/lobby.dto";
+
 
 /**
  * @brief Gateway for the chat module
@@ -100,6 +99,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody("lobbyId") lobbyId: string
   ) {
     this.chatService.kickUser(userToKick, lobbyId);
+    this.chatService.kickFromLobby(userToKick, lobbyId);
 
     console.info(
       `User - [${userToKick}] - has been kicked from the lobby - [${lobbyId}]`
