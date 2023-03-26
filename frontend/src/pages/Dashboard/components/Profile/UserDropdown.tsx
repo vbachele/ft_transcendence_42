@@ -72,7 +72,7 @@ const UserDropdown = ({
 								setDropdownVisible(false);
 							}}
 						>
-							<Buttons.Invite id={user.name} />
+							<Buttons.Invite user={user} />
 						</S.OptionButton>
 					)}
 				</>

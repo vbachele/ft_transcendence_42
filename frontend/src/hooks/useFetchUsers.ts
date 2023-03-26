@@ -4,8 +4,6 @@ import {useEffect, useState} from 'react';
 import {IUser} from 'types/models';
 
 async function fetchAllUsers(blockedOf: string) {
-	console.log('blockedOf: [', blockedOf, ']');
-
 	try {
 		const data = await backend.getAllUsers(blockedOf);
 		return {data, error: null};
@@ -20,7 +18,6 @@ function useFetchUsers(blockedOf?: string) {
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	console.log('blockedOf: [', blockedOf, ']');
 	useEffect(() => {
 		async function fetchData() {
 			const {data, error} = await fetchAllUsers(

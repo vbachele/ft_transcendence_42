@@ -25,7 +25,6 @@ const Achievements = ({user}: IProps) => {
 					<Card
 						achievement={achievement}
 						unlocked={user.achievements.includes(achievement.api)}
-						// unlocked={!!(achievement.id % 4)}
 						key={achievement.id}
 					/>
 				))}

@@ -13,9 +13,32 @@ import {fetchPendings} from 'helpers/fetchPendings';
 import {fetchFriends} from 'helpers/fetchFriends';
 import {fetchBlocked} from 'helpers/fetchBlocked';
 import {userExists} from 'helpers/userExists';
+import {fetchUserByName} from 'helpers/fetchUserByName';
 
 interface IProps {
 	user: IUser;
+}
+
+async function addUserToFriends(user: string, friend: string) {
+	const data = await fetchUserByName(user, user);
+	const friends = await fetchFriends(user);
+
+	const hasTeamAchievement = data?.achievements?.includes('TEAM');
+	const hasFriendAchievement = data?.achievements?.includes('ADD');
+	const hasThreeFriends = friends && friends?.length + 1 >= 3;
+
+	backend.addFriend(user, friend);
+	backend.removePending(user, friend);
+
+	if (data && !hasFriendAchievement) {
+		console.log('unlocking ADD for', data.name);
+		unlockAchievement('ADD', data);
+	}
+
+	if (data && !hasTeamAchievement && hasThreeFriends) {
+		console.log('unlocking TEAM for', data.name);
+		unlockAchievement('TEAM', data);
+	}
 }
 
 function AddFriend({user}: IProps) {
@@ -38,25 +61,15 @@ function AddFriend({user}: IProps) {
 		}
 
 		if (isUserIn(receivedPendings, user.name)) {
-			backend.removePending(user.name, userName.userName);
-			backend.removePending(userName.userName, user.name);
-			backend.addFriend(user.name, userName.userName);
-			backend.addFriend(userName.userName, user.name);
-
-			//TODO move this to backend
-			//TODO socket on
-			// unlockAchievement('ADD', userName.userName);
-			// unlockAchievement('ADD', user.name);
-			// if (friends && friends.length + 1 >= 3) {
-			// 	unlockAchievement('TEAM', user.name);
-			// 	unlockAchievement('TEAM', userName.userName);
-			// }
+			addUserToFriends(userName.userName, user.name);
+			addUserToFriends(user.name, userName.userName);
 
 			socket?.emit(ClientSocialEvents.SendNotif, {
 				sender: userName.userName,
 				receiver: user.name,
 				type: 'FRIEND_ACCEPT',
 			});
+
 			openNotification('success', `${user.name} has been added`);
 			return;
 		}

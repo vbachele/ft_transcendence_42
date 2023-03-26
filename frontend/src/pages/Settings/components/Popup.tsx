@@ -19,7 +19,6 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 
 	const handleFormPhone: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setVerifyCode(e.target.value);
-		console.log('lds');
 	};
 
 	async function handleSubmitCode() {

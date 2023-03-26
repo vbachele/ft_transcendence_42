@@ -45,8 +45,8 @@ function UserPanel({setOpenUserPanel}: IProps) {
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<Buttons.ViewProfile user={data.name} />
-				<Buttons.Invite id={data.name} />
+				<Buttons.ViewProfile user={data} />
+				<Buttons.Invite user={data} />
 				<Buttons.Message user={data.name} />
 				<Buttons.AddFriend user={data} />
 				<Buttons.RemoveFriend user={data} />

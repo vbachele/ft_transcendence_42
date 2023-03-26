@@ -11,30 +11,17 @@ import {ClientSocialEvents, ServerSocialEvents} from './events/social.events';
 import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
-interface Messages {
-	ACHIEVEMENT: string;
-	FRIEND_REQUEST: string;
-	FRIEND_ACCEPT: string;
-	FRIEND_DENY: string;
-	REMOVE: string;
-	MESSAGE: string;
-	BANNED: string;
-	KICKED: string;
-	ADMIN: string;
-	[key: string]: string;
+enum EMessages {
+	ACHIEVEMENT = 'You have unlocked a new achievement',
+	FRIEND_REQUEST = 'sent you a friend request',
+	FRIEND_ACCEPT = 'accepted your friend request',
+	FRIEND_DENY = 'denied your friend request',
+	REMOVE = 'You are no longer friends with',
+	MESSAGE = 'sent you a message',
+	BANNED = "You've been banned from",
+	KICKED = "You've been kicked out from",
+	ADMIN = 'You are now the admin of',
 }
-
-const messages: Messages = {
-	ACHIEVEMENT: 'You have unlocked a new achievement',
-	FRIEND_REQUEST: 'sent you a friend request',
-	FRIEND_ACCEPT: 'accepted your friend request',
-	FRIEND_DENY: 'denied your friend request',
-	MESSAGE: 'sent you a message',
-	REMOVE: 'You are no longer friends with',
-	BANNED: "You've been banned from",
-	KICKED: "You've been kicked out from",
-	ADMIN: 'You are now the admin of',
-};
 
 interface INotification {
 	id: number;
@@ -137,9 +124,10 @@ export class NotificationGateway implements OnGatewayConnection {
 	onSendNotif(@MessageBody(new ValidationPipe()) notifData: NotificationDto) {
 		const client = this.websocketService.getClient(notifData.receiver);
 		const clientNotifs = this.notifs.get(notifData.receiver);
+
 		const message = formatNotifMessage(
 			notifData.sender,
-			messages[notifData.type],
+			EMessages[notifData.type as keyof typeof EMessages],
 			notifData.type
 		);
 

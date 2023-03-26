@@ -1,7 +1,7 @@
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './invite.svg';
 import {ClientEvents, ServerEvents} from '../../../../events/socket.events';
-import {useContext, useRef} from 'react';
+import {useContext} from 'react';
 import SocketContext from '../../../../contexts/Socket/context';
 import {ClientGameEvents} from '../../../../events/game.events';
 import {usePopup} from '../../../../contexts/Popup/Popup';
@@ -10,26 +10,27 @@ import {useUserInfos} from 'contexts/User/userContent';
 import {fetchFriends} from 'helpers/fetchFriends';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
+import {IUser} from 'types/models';
 
 interface IProps {
-	id: string;
+	user: IUser;
 }
 
-function Invite({id}: IProps) {
+function Invite({user}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {hasInvited, setHasInvited} = usePopup();
 	const {userName} = useUserInfos();
 
 	async function onInvite() {
-		const exists = userExists(id, userName.userName);
+		const exists = userExists(user.name, userName.userName);
 		const friends = await fetchFriends(userName.userName);
 
-		if (!exists || !isUserIn(friends, id)) {
-			openNotification('warning', `${id} can't be invited`);
+		if (!exists || !isUserIn(friends, user.name) || user.status !== 'online') {
+			openNotification('warning', `${user.name} can't be invited`);
 			return;
 		}
 
-		console.log(`friend id `, id);
+		console.log(`friend name `, user.name);
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'game',
 			data: {
@@ -42,7 +43,7 @@ function Invite({id}: IProps) {
 				console.info(`Sending invitation request`);
 				socket?.emit(ClientGameEvents.Invite, {
 					lobbyId: data.lobbyId,
-					invitedClientName: id,
+					invitedClientName: user.name,
 				});
 			}
 		});

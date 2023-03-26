@@ -125,9 +125,6 @@ function Social() {
 	}, [blocked, sentPendings, receivedPendings, friends]);
 
 	let users: IUser[];
-	const user = data?.find((user) => user.name === 'ww');
-	console.log(user);
-
 	if (data) {
 		users = data
 			?.filter((user) => {
