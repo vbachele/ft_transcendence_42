@@ -51,9 +51,6 @@ export class Mail2FaValidateService {
 		const {token} = req.body;
 		const token_mail = user?.token_mail;
 		const isMatch = await bcrypt.compare(token, token_mail);
-		console.log("IS IT CORRECT", isMatch);
-		console.log("TOKEN IS", token);
-		
 		if (!isMatch)
 	   {
 			   throw new HttpException({

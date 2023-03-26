@@ -19,7 +19,6 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 
 	const handleFormPhone: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setVerifyCode(e.target.value);
-		console.log('lds');
 	};
 
 	async function handleSubmitCode() {
@@ -28,7 +27,7 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 			token: verifyCode,
 		};
 		const response = await backend.verify2FA(userForm);
-		if (response.status === 'fail') {
+		if (response.statusCode === 400) {
 			console.error(response.message);
 			setErrorCode(true);
 			return;
@@ -45,9 +44,9 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 				<S.GIF src="https://cdn.discordapp.com/attachments/1067488107827576916/1069217769515651132/Rectangle.gif" />
 				<F.H2>Enable 2FA</F.H2>
 			</S.Title>
-			<F.Subtitle>An email with a code has been sent to {email}</F.Subtitle>
+			<F.Subtitle color='white' style={{ textAlign: 'center' }}>An email with a code has been sent to {email}</F.Subtitle>
 			<S.Divider />
-			<F.Subtitle>Enter the 6 digit code</F.Subtitle>
+			<F.Subtitle color='white' style={{ textAlign: 'center' }}>Enter the 6 digit code</F.Subtitle>
 			<Form name="basic" onFinish={handleSubmitCode}>
 				<Form.Item
 					name="code"

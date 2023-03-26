@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import {useLayoutEffect, useState} from 'react';
+import {IUser} from '../../../types/models';
+import {backend} from '../../../lib/backend';
 
 // Affichage message temporaire, a modifier
 const MessageContainer = styled.div`
@@ -29,7 +32,8 @@ function Message({authorName, content, date}: MessageProps) {
 				<h3>{authorName}</h3>
 				<h5>
 					{dateUTC.getDate()}/{dateUTC.getUTCMonth()}/{dateUTC.getUTCFullYear()}{' '}
-					- {dateUTC.getUTCHours()}:{dateUTC.getUTCMinutes()}:{dateUTC.getUTCSeconds()}
+					- {dateUTC.getUTCHours()}:{dateUTC.getUTCMinutes()}:
+					{dateUTC.getUTCSeconds()}
 				</h5>
 			</Header>
 			<p>{content}</p>

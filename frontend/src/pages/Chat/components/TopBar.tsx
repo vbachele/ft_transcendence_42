@@ -10,20 +10,23 @@ import BurgerMenu from '../assets/BurgerMenu';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
 import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
+import useFetchUserByName from '../../../hooks/useFetchUserByName';
+import {backend} from '../../../lib/backend';
+import ModalDescription from '../modals/ModalDescription';
+import { channel } from 'diagnostics_channel';
+import { act } from 'react-dom/test-utils';
+import AdminPanel from './AdminPanel';
 
-interface IProps {
-	setOpenUserPanel: Dispatch<SetStateAction<boolean>>;
-}
-
-const user = Array.from(User.players)[0];
-
-function TopBar({setOpenUserPanel}: IProps) {
+function TopBar() {
 	const {responsive} = useResponsiveLayout();
 	const updateActiveLobby = useContext(ChatContext).ChatDispatch;
 	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const name = useUserInfos().userName.userName;
 	const {userList} = useFetchLobbyUserList();
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
+	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
+	const [dropdownVisible, setDropdownVisible] = useState(false);
 
 	function directMessageName(lobbyName: string) {
 		const displayedName = lobbyName.split('+');
@@ -38,6 +41,12 @@ function TopBar({setOpenUserPanel}: IProps) {
 		});
 	}
 
+	async function openUserPanel() {
+		const user = await backend.getUserByName(directMessageName(activeLobby!.name), name);
+		ChatDispatch({type: 'active_user_in_panel', payload: user});
+		ChatDispatch({type: 'update_user_panel', payload: true});
+	}
+
 	if (activeLobby?.type === 'channel')
 		return (
 			<C.TopBar>
@@ -48,12 +57,16 @@ function TopBar({setOpenUserPanel}: IProps) {
 						</button>
 					)}
 					<F.Text weight="700">#{activeLobby.name}</F.Text>
+					<ModalDescription description={activeLobby.description}/>
+					{name === activeLobby.adminName && <AdminPanel dropdownVisible={dropdownVisible}
+					setDropdownVisible={setDropdownVisible} activeLobby={activeLobby}></AdminPanel>}
 				</S.ChannelName>
 				<S.UserList onClick={() => setIsModalOpen(true)}>
 					<ModalUserSearch
 						isModalOpen={isModalOpen}
 						setIsModalOpen={setIsModalOpen}
 						userList={userList}
+						type={'openUserPanel'}
 					/>
 					<F.Text>{userList.length}</F.Text>
 					<Profile />
@@ -69,8 +82,8 @@ function TopBar({setOpenUserPanel}: IProps) {
 							<BurgerMenu />
 						</button>
 					)}
-					<S.ProfilePic src={user.image} />
-					<F.Text weight="700">{directMessageName(activeLobby.name)}</F.Text>
+					<S.ProfilePic src={data?.image} />
+					<F.Text weight="700">{data?.name}</F.Text>
 				</S.ChannelName>
 				<button
 					style={{
@@ -78,7 +91,7 @@ function TopBar({setOpenUserPanel}: IProps) {
 						border: 'none',
 						cursor: 'pointer',
 					}}
-					onClick={() => setOpenUserPanel(true)}
+					onClick={openUserPanel}
 				>
 					<Profile />
 				</button>

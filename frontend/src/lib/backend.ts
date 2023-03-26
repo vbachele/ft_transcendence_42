@@ -1,5 +1,9 @@
 import {IUser} from 'types/models';
 import {api} from './api';
+import React, {useContext} from 'react';
+import {ClientEvents} from '../events/socket.events';
+import SocketContext from '../contexts/Socket/context';
+import ChatContext from '../contexts/Chat/context';
 
 export const backend = {
 	// User
@@ -75,6 +79,35 @@ export const backend = {
 		return await response.json();
 	},
 
+	//Channel
+
+	async checkPassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/password/' + password);
+		return await response.json();
+	},
+
+	async changePassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifypassword/' + password);
+		return await response.json();
+	},
+
+	async changeDescription(description : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			description: description
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifydescription/' + description);
+		return await response.json();
+	},
+
 	// Token
 	async deleteTokenCookie(): Promise<any> {
 		const response = await api.get('/auth/logout');
@@ -98,10 +131,6 @@ export const backend = {
 		const response = await api.post('/2FA/verify', user);
 		return await response.json();
 	},
-	// async validate2FA(user: unknown): Promise<any> {
-	// 	const response = await api.post('/2FA/validate', user);
-	// 	return await response.json();
-	// },
 	async disable2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/disable', user);
 		return await response.json();

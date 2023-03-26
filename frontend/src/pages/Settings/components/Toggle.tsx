@@ -3,7 +3,6 @@ import {useUserInfos} from 'contexts/User/userContent';
 import {backend} from 'lib/backend';
 import {useState} from 'react';
 import {Switch} from 'antd';
-import QRCode from 'qrcode';
 import Disable2FA from './Disable2FA';
 import Popup from './Popup';
 import * as F from 'styles/font.styles';
@@ -14,8 +13,11 @@ const Toggle = () => {
 	const [email, setEmail] = useState('');
 
 	const handleToggle = async () => {
-		const generate = await backend.generate2FA(userName);
-		setEmail(generate.email);
+		if (!doubleAuth.doubleAuth)
+		{	
+			const generate = await backend.generate2FA(userName);setEmail(generate.email);
+			setEmail(generate.email);
+		}
 		setIsOpen(!isOpen);
 	};
 

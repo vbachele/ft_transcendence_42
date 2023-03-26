@@ -1,41 +1,93 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Button, Form, Input, Modal } from 'antd';
 import * as F from 'styles/font.styles';
+import styled from 'styled-components';
+import { backend } from 'lib/backend';
+import { ChannelName } from '../components/components.styles';
+import { useJoinLobby } from 'hooks/chat/useJoinLobby';
+import {ClientEvents} from '../../../events/socket.events';
+import SocketContext from '../../../contexts/Socket/context';
+import ChatContext, { ILobby } from '../../../contexts/Chat/context';
 
-const ModalChanPass: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const handleOk = () => {
-    setIsModalOpen(false);
+interface IProps {
+  popup: boolean;
+  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  lobby?: any;
+}
+
+const StyledPasswordInput = styled(Input.Password)`
+	padding: 16px;
+	font-size: 1.25em;
+	/* .ant-input {
+		background-color: transparent;
+	} */
+`;
+
+const ModalChanPass: React.FC<IProps> = (props) => {
+  // const [isModalOpen, setIsModalOpen] = useState(true);
+  const [form] = Form.useForm();
+  const [error, setError] = useState<boolean>(false);
+  const {joinLobby} = useJoinLobby();
+  const {socket} = useContext(SocketContext).SocketState;
+	const ChatDispatch = useContext(ChatContext).ChatDispatch;
+
+  const handleCancel = (event : React.MouseEvent) => {
+    		event.stopPropagation();
+
+    props.setPopup(false);
+    // setIsModalOpen(false);
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  async function handleSubmit(data: any) {    
+    const confirm = await backend.checkPassword(data.password, props.lobby.name);    
+    if (confirm.statusCode === 400)
+    {
+      setError(true);
+      return ;
+    }
+    		socket?.emit(ClientEvents.JoinLobby, {lobbyId: props.lobby.id});
+				ChatDispatch({type: 'update_user_panel', payload: false});
+    // setIsModalOpen(false);
+         props.setPopup(false);
+  }
 
   return (
     <>
       <Modal 
 		    title= {
           <div style={{display: 'flex'}}>
-              <h1 color={'black'}>#Boomers</h1>
+           <h2 color={'black'}>
+               {props.lobby.name.substring(0, 14)}
+               {props.lobby.name.length > 14 && '...'}
+           </h2>
           </div>}
         centered
         width={'393px'}
-        open={isModalOpen}
-        onOk={handleOk} 
+        open={props.popup}
+        onOk={form.submit}
         onCancel={handleCancel}
         footer={[
           <Button key="back" style={{border: 'none'}} onClick={handleCancel}>
             Cancel
           </Button>,
-          <Button key="back" onClick={handleOk}>
-            Validate
+          <Button key="Confirm" onClick={() => form.submit()}>
+            Confirm
           </Button>
-        ]}>
+        ]}
+        >
+        <Form form={form} layout={'vertical'} onFinish={handleSubmit}>
             <p style={{marginBottom: '24px', marginTop: '16px'}}> This channel is protected by a password.</p>
             <F.H5 style={{fontWeight: 500, marginBottom: '8px'}}> Password </F.H5>
-            {/*<InputBox placeHolder=''/>                 */}
+            {error && <F.H5 style={{fontWeight: 500, marginBottom: '8px', color: '#dc4f19'}}> This password is incorrect </F.H5> }
+
+            <Form.Item
+						  name={'password'}
+						  rules={[{required: true, message: 'Password incorrect'}]}
+				  	>
+						  <StyledPasswordInput placeholder="Enter a password" />
+					</Form.Item>
+          </Form>        
       </Modal>
     </>
   );
