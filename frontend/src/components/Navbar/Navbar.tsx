@@ -16,6 +16,18 @@ interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
+enum ETypes {
+	ACHIEVEMENT = 'success',
+	FRIEND_REQUEST = 'info',
+	FRIEND_ACCEPT = 'success',
+	FRIEND_DENY = 'error',
+	REMOVE = 'error',
+	MESSAGE = 'info',
+	BANNED = 'error',
+	KICKED = 'info',
+	ADMIN = 'info',
+}
+
 const Navbar = ({setTheme}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
 	const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -31,7 +43,11 @@ const Navbar = ({setTheme}: IProps) => {
 
 	useEffect(() => {
 		socket?.on(ServerSocialEvents.ReceiveNotif, (notifData: INotification) => {
-			openNotification('info', `${notifData.message}`, 'topRight');
+			openNotification(
+				ETypes[notifData.type as keyof typeof ETypes],
+				`${notifData.message}`,
+				'topRight'
+			);
 			socket?.emit(
 				ClientSocialEvents.GetNotifications,
 				(notifications: INotification[]) => {

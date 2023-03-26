@@ -75,7 +75,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 			setCoalition({coalition: res.coalition});
 			setDoubleAuth({doubleAuth: res.otp_enabled});
 			setVerified2FA({verified2FA: res.otp_validated});
-			setEmail({email: res.email})
+			setEmail({email: res.email});
 		});
 	}, []);
 	return (
@@ -94,7 +94,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 				verified2FA,
 				setVerified2FA,
 				email,
-				setEmail
+				setEmail,
 			}}
 		>
 			{children}

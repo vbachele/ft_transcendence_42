@@ -23,12 +23,12 @@ export interface INotification {
 	message: string;
 	sender: string;
 	createdAt: Date;
-	channel?: string;
 	type:
 		| 'ACHIEVEMENT'
 		| 'FRIEND_REQUEST'
 		| 'FRIEND_ACCEPT'
 		| 'FRIEND_DENY'
+		| 'REMOVE'
 		| 'BLOCKED'
 		| 'MESSAGE'
 		| 'BANNED'

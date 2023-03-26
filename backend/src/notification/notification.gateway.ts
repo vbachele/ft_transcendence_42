@@ -12,7 +12,7 @@ import {NotificationDto} from './dto/notification.dto';
 import {AuthenticatedSocket} from 'src/lobby/types/lobby.type';
 
 enum EMessages {
-	ACHIEVEMENT = 'You have unlocked a new achievement',
+	ACHIEVEMENT = 'You have unlocked a new achievement !',
 	FRIEND_REQUEST = 'sent you a friend request',
 	FRIEND_ACCEPT = 'accepted your friend request',
 	FRIEND_DENY = 'denied your friend request',
@@ -140,7 +140,10 @@ export class NotificationGateway implements OnGatewayConnection {
 		};
 
 		const existingNotif = clientNotifs?.find(
-			(notif) => notif.message === message && notif.type === notifData.type
+			(notif) =>
+				notif.message === message &&
+				notif.type === notifData.type &&
+				notif.sender === notifData.sender
 		);
 
 		if (!existingNotif) {

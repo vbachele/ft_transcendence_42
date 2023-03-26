@@ -3,10 +3,12 @@ import Default from 'assets/default-avatar.png';
 import * as F from 'styles/font.styles';
 import * as S from './EditAvatar.styles';
 import {backend} from 'lib/backend';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {IUser} from 'types/models';
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
+import {fetchUserByName} from 'helpers/fetchUserByName';
+import SocketContext from 'contexts/Socket/context';
 
 interface Props {
 	page: string;
@@ -14,7 +16,9 @@ interface Props {
 
 /* MAIN FUNCTION */
 export const EditAvatar = (props: Props) => {
-	const {userName, image, setImage, coalition} = useUserInfos();
+	const {socket} = useContext(SocketContext).SocketState;
+	const {userName, image, setImage, coalition, setAchievements} =
+		useUserInfos();
 	const [loading, setLoading] = useState(false);
 	const [uploadApproved, setUploadApproved] = useState(false);
 
@@ -35,9 +39,15 @@ export const EditAvatar = (props: Props) => {
 		setLoading(false);
 	};
 
-	const setUploadedimg = () => {
+	const setUploadedimg = async () => {
+		const data = await fetchUserByName(userName.userName, userName.userName);
+		const hasAvatarAchievement = data?.achievements.includes('AVATAR');
+
 		setUploadApproved(true);
-		// unlockAchievement('AVATAR', userName.userName);
+		if (data && !hasAvatarAchievement) {
+			unlockAchievement('AVATAR', data, socket);
+			setAchievements({achievements: [...data.achievements]});
+		}
 	};
 
 	const setUploadedimgFalse = () => {

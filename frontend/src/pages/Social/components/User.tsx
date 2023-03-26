@@ -4,6 +4,9 @@ import * as Chat from 'pages/Chat/components/components.styles';
 import * as F from 'styles/font.styles';
 import * as S from '../Social.styles';
 import {Link} from 'react-router-dom';
+import {fetchBlocked} from 'helpers/fetchBlocked';
+import isUserIn from 'helpers/isUserIn';
+import {useUserInfos} from 'contexts/User/userContent';
 
 interface IProps {
 	user: IUser;
@@ -19,6 +22,16 @@ const displayStatus = (params: string) => {
 };
 
 function User({user, onAdd}: IProps) {
+	const {userName} = useUserInfos();
+
+	const handleClick = async () => {
+		const blockedOfUser = await fetchBlocked(user.name);
+
+		if (!isUserIn(blockedOfUser, userName.userName)) {
+			onAdd(user);
+		}
+	};
+
 	return (
 		<S.User>
 			<S.UserLink to={`/dashboard/${user.name}`}>
@@ -28,11 +41,7 @@ function User({user, onAdd}: IProps) {
 				</div>
 				<F.Text>{user.name}</F.Text>
 			</S.UserLink>
-			<div
-				onClick={() => {
-					onAdd(user);
-				}}
-			>
+			<div onClick={handleClick}>
 				<AddFriend user={user} />
 			</div>
 		</S.User>

@@ -119,7 +119,6 @@ function App() {
 						}}
 					>
 						<SocketContextComponent>
-							{/* <Popup.UserInvitedToGame /> */}
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />

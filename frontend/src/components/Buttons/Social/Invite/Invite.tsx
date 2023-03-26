@@ -11,6 +11,8 @@ import {fetchFriends} from 'helpers/fetchFriends';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
 import {IUser} from 'types/models';
+import {fetchUserByName} from 'helpers/fetchUserByName';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface IProps {
 	user: IUser;
@@ -19,15 +21,22 @@ interface IProps {
 function Invite({user}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {hasInvited, setHasInvited} = usePopup();
-	const {userName} = useUserInfos();
+	const {userName, setAchievements} = useUserInfos();
 
 	async function onInvite() {
 		const exists = userExists(user.name, userName.userName);
 		const friends = await fetchFriends(userName.userName);
+		const data = await fetchUserByName(userName.userName, userName.userName);
+		const hasDuelAchievement = data?.achievements.includes('DUEL');
 
 		if (!exists || !isUserIn(friends, user.name) || user.status !== 'online') {
 			openNotification('warning', `${user.name} can't be invited`);
 			return;
+		}
+
+		if (data && !hasDuelAchievement) {
+			unlockAchievement('DUEL', data, socket);
+			setAchievements({achievements: [...data.achievements]});
 		}
 
 		console.log(`friend name `, user.name);

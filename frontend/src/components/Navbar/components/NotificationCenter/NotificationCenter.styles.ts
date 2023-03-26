@@ -124,7 +124,8 @@ export const NotifLink = styled(Link)`
 	align-items: center;
 	color: white;
 
-	img {
+	img,
+	svg {
 		width: 40px;
 		height: 40px;
 	}

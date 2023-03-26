@@ -10,6 +10,7 @@ import * as F from 'styles/font.styles';
 import {useContext} from 'react';
 import SocketContext from 'contexts/Socket/context';
 import {ClientSocialEvents} from 'events/social.events';
+import {addUserToFriends} from 'helpers/addUserToFriends';
 
 interface IProps {
 	user: IUser;
@@ -18,9 +19,8 @@ interface IProps {
 }
 
 function PendingReceived({user, onAccept, onDeny}: IProps) {
-	const {userName} = useUserInfos();
 	const {socket} = useContext(SocketContext).SocketState;
-	// const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
+	const {userName} = useUserInfos();
 
 	const fetchPendings = async (): Promise<{
 		sentPendings: IUser[];
@@ -42,11 +42,8 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 			return;
 		}
 
-		backend.removePending(userName.userName, user.name);
-		backend.removePending(user.name, userName.userName);
-		backend.addFriend(user.name, userName.userName);
-		backend.addFriend(userName.userName, user.name);
-
+		addUserToFriends(userName.userName, user.name, socket);
+		addUserToFriends(user.name, userName.userName, socket);
 		onAccept(user);
 		openNotification('success', `${user.name}'s request has been accepted`);
 		socket?.emit(ClientSocialEvents.SendNotif, {
@@ -54,14 +51,6 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 			receiver: user.name,
 			type: 'FRIEND_ACCEPT',
 		});
-
-		//TODO move this to backend
-		// unlockAchievement('ADD', userName.userName);
-		// unlockAchievement('ADD', user.name);
-		// if (friends && friends.length + 1 >= 3) {
-		// 	unlockAchievement('TEAM', user.name);
-		// 	unlockAchievement('TEAM', userName.userName);
-		// }
 	};
 
 	const handleDeny = () => {
@@ -74,7 +63,6 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 			receiver: user.name,
 			type: 'FRIEND_DENY',
 		});
-
 	};
 
 	return (

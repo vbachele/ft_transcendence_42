@@ -1,44 +1,21 @@
+import {useContext} from 'react';
 import {useUserInfos} from 'contexts/User/userContent';
-import {ReactComponent as Icon} from './add.svg';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
-import {useContext} from 'react';
-import {ClientSocialEvents} from 'events/social.events';
-import unlockAchievement from 'helpers/unlockAchievement';
-import SocketContext from 'contexts/Socket/context';
-import * as F from 'styles/font.styles';
 import {fetchPendings} from 'helpers/fetchPendings';
 import {fetchFriends} from 'helpers/fetchFriends';
 import {fetchBlocked} from 'helpers/fetchBlocked';
 import {userExists} from 'helpers/userExists';
-import {fetchUserByName} from 'helpers/fetchUserByName';
+import {addUserToFriends} from 'helpers/addUserToFriends';
+import {ReactComponent as Icon} from './add.svg';
+import * as F from 'styles/font.styles';
 
 interface IProps {
 	user: IUser;
-}
-
-async function addUserToFriends(user: string, friend: string) {
-	const data = await fetchUserByName(user, user);
-	const friends = await fetchFriends(user);
-
-	const hasTeamAchievement = data?.achievements?.includes('TEAM');
-	const hasFriendAchievement = data?.achievements?.includes('ADD');
-	const hasThreeFriends = friends && friends?.length + 1 >= 3;
-
-	backend.addFriend(user, friend);
-	backend.removePending(user, friend);
-
-	if (data && !hasFriendAchievement) {
-		console.log('unlocking ADD for', data.name);
-		unlockAchievement('ADD', data);
-	}
-
-	if (data && !hasTeamAchievement && hasThreeFriends) {
-		console.log('unlocking TEAM for', data.name);
-		unlockAchievement('TEAM', data);
-	}
 }
 
 function AddFriend({user}: IProps) {
@@ -61,8 +38,8 @@ function AddFriend({user}: IProps) {
 		}
 
 		if (isUserIn(receivedPendings, user.name)) {
-			addUserToFriends(userName.userName, user.name);
-			addUserToFriends(user.name, userName.userName);
+			addUserToFriends(userName.userName, user.name, socket);
+			addUserToFriends(user.name, userName.userName, socket);
 
 			socket?.emit(ClientSocialEvents.SendNotif, {
 				sender: userName.userName,
