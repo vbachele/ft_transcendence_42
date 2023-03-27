@@ -128,6 +128,10 @@ export const OptionButton = styled.div`
 export const DropdownContainer = styled.div`
 	width: fit-content;
 
+	&.invite {
+		font-weight: 800;
+	}
+
 	.antd-space {
 		user-select: none;
 		display: flex;
