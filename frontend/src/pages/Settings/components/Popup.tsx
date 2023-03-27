@@ -1,4 +1,4 @@
-import {ChangeEventHandler, useState} from 'react';
+import {ChangeEventHandler, useContext, useState} from 'react';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import {Form, Input} from 'antd';
@@ -6,6 +6,9 @@ import {openNotification} from 'helpers/openNotification';
 import * as S from './Popup.styles';
 import * as F from 'styles/font.styles';
 import * as UI from 'styles/buttons.styles';
+import {fetchUserByName} from 'helpers/fetchUserByName';
+import SocketContext from 'contexts/Socket/context';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 interface IProps {
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,7 +16,8 @@ interface IProps {
 }
 
 const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
-	const {userName, setDoubleAuth} = useUserInfos();
+	const {socket} = useContext(SocketContext).SocketState;
+	const {userName, setDoubleAuth, setAchievements} = useUserInfos();
 	const [errorCode, setErrorCode] = useState(false);
 	const [verifyCode, setVerifyCode] = useState('');
 
@@ -22,6 +26,8 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 	};
 
 	async function handleSubmitCode() {
+		const data = await fetchUserByName(userName.userName, userName.userName);
+		const hasAuthAchievement = data?.achievements.includes('2FA');
 		const userForm = {
 			userName,
 			token: verifyCode,
@@ -34,8 +40,12 @@ const DoubleAuthPopup = ({setIsOpen, email}: IProps) => {
 		}
 		setDoubleAuth({doubleAuth: true});
 		setIsOpen(false);
-
 		openNotification('success', '2FA enabled');
+
+		if (data && !hasAuthAchievement) {
+			unlockAchievement('2FA', data, socket);
+			setAchievements({achievements: [...data.achievements]});
+		}
 	}
 
 	return (

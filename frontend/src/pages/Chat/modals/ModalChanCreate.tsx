@@ -6,6 +6,8 @@ import {ClientEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
 import {useUserInfos} from '../../../contexts/User/userContent';
+import {fetchUserByName} from 'helpers/fetchUserByName';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 const StyledTogglePrivate = styled.div`
 	display: flex;
@@ -80,7 +82,10 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 		setIsModalOpen(false);
 	};
 
-	function handleSubmit(data: any) {
+	async function handleSubmit(data: any) {
+		const user = await fetchUserByName(name, name);
+		const hasCreateAchievement = user?.achievements.includes('CREATE');
+
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
@@ -93,6 +98,12 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 			},
 		});
 		console.info(`Channel created`);
+
+		if (user && !hasCreateAchievement) {
+			unlockAchievement('CREATE', user, socket);
+			setAchievements({achievements: [...user.achievements]});
+		}
+
 		setIsModalOpen(false);
 	}
 
@@ -140,3 +151,6 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	);
 }
 export default ModalChanCreate;
+function setAchievements(arg0: {achievements: string[]}) {
+	throw new Error('Function not implemented.');
+}
