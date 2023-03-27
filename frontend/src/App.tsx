@@ -106,12 +106,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						{/* <SocketContextComponent> */}
+						<SocketContextComponent>
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							{routes}
-						{/* </SocketContextComponent> */}
+						</SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>
