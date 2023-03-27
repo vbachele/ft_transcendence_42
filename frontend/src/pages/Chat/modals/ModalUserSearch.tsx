@@ -4,7 +4,7 @@ import {IUser} from 'types/models';
 import User from '../components/User';
 import * as S from '../components/components.styles';
 
-export const displayStatus = (params: string) => {
+export const displayStatus = (params: string | undefined) => {
 	if (params == 'online')
 		return <S.PastillePic style={{background: '#2FE837'}} />;
 	else if (params == 'offline')
@@ -26,7 +26,7 @@ function ModalUserSearch({
 	type,
 }: ModalUserSearchProps) {
 	const [search, setSearch] = useState<string>('');
-		
+
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
 	}

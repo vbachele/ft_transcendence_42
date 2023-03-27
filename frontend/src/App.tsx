@@ -53,16 +53,15 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			// element: <UserMocks />,
-			element: <Pages.Landing />,
+			element: <UserMocks />,
+			// element: <Pages.Landing />,
 		},
 		{
 			path: '/',
 			element: (
-					<PrivateRoute>
-						<Pages.Home />
-					</PrivateRoute>
-
+				<PrivateRoute>
+					<Pages.Home />
+				</PrivateRoute>
 			),
 		},
 		{
@@ -87,29 +86,26 @@ function App() {
 						<Victory />
 					</PrivateRoute>
 				</SocketContextComponent>
-
 			),
 		},
 		{
 			path: '/Defeat',
 			element: (
 				<SocketContextComponent>
-				<PrivateRoute>
-					<Defeat />
-				</PrivateRoute>
+					<PrivateRoute>
+						<Defeat />
+					</PrivateRoute>
 				</SocketContextComponent>
-
 			),
 		},
 		{
 			path: '/*',
 			element: (
 				<SocketContextComponent>
-				<PrivateRoute>
-					<WithNavbar />
-				</PrivateRoute>
+					<PrivateRoute>
+						<WithNavbar />
+					</PrivateRoute>
 				</SocketContextComponent>
-
 			),
 		},
 	]);
@@ -131,10 +127,10 @@ function App() {
 						}}
 					>
 						{/* <SocketContextComponent> */}
-							<GlobalStyle />
-							<Popup.GameInvite />
-							<Popup.SearchPlayer />
-							{routes}
+						<GlobalStyle />
+						<Popup.GameInvite />
+						<Popup.SearchPlayer />
+						{routes}
 						{/* </SocketContextComponent> */}
 					</ConfigProvider>
 				</ThemeProvider>

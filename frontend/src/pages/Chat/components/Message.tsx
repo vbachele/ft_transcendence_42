@@ -24,7 +24,7 @@ const BoxContainer = styled.div`
 	flex-direction: column;
 	border-radius: 0px 8px 8px 8px;
 	max-width: 70%;
-	min-width: 300px;
+	min-width: 1%;
 	margin: 8px;
 	margin-bottom: 16px;
 `;

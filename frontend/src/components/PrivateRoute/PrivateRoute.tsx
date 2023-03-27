@@ -13,12 +13,12 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	const location = useLocation();
 
 	async function checkUserToken() {
-		const response = await backend.checkToken();
-		if (response.statusCode == 400 || response.statusCode == "403") {
+		// const response = await backend.checkToken();
+		// if (response.statusCode == 400 || response.statusCode == "403") {
 
-		navigate("/login");
-		  return;
-		}
+		// navigate("/login");
+		//   return;
+		// }
 		setIsLoading(false);
 		setTokenExists(true);
 	}
@@ -33,10 +33,10 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 			navigate('/');
 		}
 		if (verified2FA.verified2FA === false && doubleAuth.doubleAuth === true) {
-			console.log("inside");
+			console.log('inside');
 
 			await backend.generate2FA(userName);
-			console.log("after");
+			console.log('after');
 
 			navigate('/2FA');
 			return;

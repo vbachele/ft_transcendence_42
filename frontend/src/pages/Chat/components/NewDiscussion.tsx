@@ -1,10 +1,10 @@
 import ModalChanCreate from '../modals/ModalChanCreate';
 import {useState} from 'react';
 import ModalUserSearch from '../modals/ModalUserSearch';
-import * as S from './components.styles'
+import * as S from './components.styles';
 import useFetchUsers from '../../../hooks/useFetchUsers';
-
-
+import useFetchUsersExceptMe from 'hooks/useFetchUsersExceptMe';
+import {useUserInfos} from 'contexts/User/userContent';
 
 interface NewDiscussionProps {
 	type: 'channel' | 'direct_message';
@@ -12,7 +12,8 @@ interface NewDiscussionProps {
 
 function NewDiscussion({type}: NewDiscussionProps) {
 	const [displayModal, setDisplayModal] = useState(false);
-	const {data} = useFetchUsers();
+	const {userName} = useUserInfos();
+	const {data} = useFetchUsersExceptMe(userName.userName);
 
 	return (
 		<S.NewDiscussion onClick={() => setDisplayModal(true)}>

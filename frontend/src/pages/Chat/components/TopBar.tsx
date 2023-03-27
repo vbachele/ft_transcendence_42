@@ -15,14 +15,17 @@ import Profile from '../assets/Profile';
 import BurgerMenu from '../assets/BurgerMenu';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
-import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
+import {
+	useFetchLobbyUserList,
+	useFetchLobbyUserListExceptMe,
+} from '../../../hooks/chat/useFetchUsers';
 import useFetchUserByName from '../../../hooks/useFetchUserByName';
 import {backend} from '../../../lib/backend';
 import ModalDescription from '../modals/ModalDescription';
-import { channel } from 'diagnostics_channel';
-import { act } from 'react-dom/test-utils';
+import {channel} from 'diagnostics_channel';
+import {act} from 'react-dom/test-utils';
 import AdminPanel from './AdminPanel';
-import { IUser } from 'types/models';
+import {IUser} from 'types/models';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -30,7 +33,8 @@ function TopBar() {
 	const {activeLobby} = useContext(ChatContext).ChatState;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const name = useUserInfos().userName.userName;
-	const {userList} = useFetchLobbyUserList();
+	// const {userList} = useFetchLobbyUserList();
+	const {userList} = useFetchLobbyUserListExceptMe();
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
 	const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -49,7 +53,10 @@ function TopBar() {
 	}
 
 	async function openUserPanel() {
-		const user:any = await backend.getUserByName(directMessageName(activeLobby!.name), name);
+		const user: any = await backend.getUserByName(
+			directMessageName(activeLobby!.name),
+			name
+		);
 		ChatDispatch({type: 'active_user_in_panel', payload: user});
 		ChatDispatch({type: 'update_user_panel', payload: true});
 	}
@@ -64,9 +71,14 @@ function TopBar() {
 						</button>
 					)}
 					<F.Text weight="700">#{activeLobby.name}</F.Text>
-					<ModalDescription description={activeLobby.description}/>
-					{name === activeLobby.adminName && <AdminPanel dropdownVisible={dropdownVisible}
-					setDropdownVisible={setDropdownVisible} activeLobby={activeLobby}></AdminPanel>}
+					<ModalDescription description={activeLobby.description} />
+					{name === activeLobby.adminName && (
+						<AdminPanel
+							dropdownVisible={dropdownVisible}
+							setDropdownVisible={setDropdownVisible}
+							activeLobby={activeLobby}
+						></AdminPanel>
+					)}
 				</S.ChannelName>
 				<S.UserList onClick={() => setIsModalOpen(true)}>
 					<ModalUserSearch
