@@ -10,4 +10,6 @@ export class SendMessageDto {
 export class FetchUsersDto {
   @IsString()
   lobbyId: string;
+  @IsString()
+  senderName: string;
 }

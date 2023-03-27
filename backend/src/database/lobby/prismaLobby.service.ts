@@ -150,6 +150,20 @@ export class PrismaLobbyService {
     });
   }
 
+  async fetchUsersInLobbyExceptMe(lobbyId: string, currentUserName: string): Promise<any> {
+    const lobby = await this.prismaService.lobby.findUnique({
+      where: {
+        id: lobbyId,
+      },
+      select: {
+        users: true,
+      },
+    });
+  
+    const filteredUsers = lobby?.users.filter((user: any) => user.name !== currentUserName);  
+    return { ...lobby, users: filteredUsers };
+  }
+
   async fetchAdminInLobby(
     lobbyId: string
   ): Promise<{ adminName: string } | null> {
@@ -244,6 +258,23 @@ async updateDescription(description: string, chanName: string) {
     return this.prismaService.lobby.delete({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async deleteUserFromLobby(
+    lobbyId: string,
+    userToDelete: string
+  )
+   {
+    return this.prismaService.lobby.update({
+      where: {
+        id: lobbyId,
+      },
+      data: {
+        users: {
+          disconnect: [{name: userToDelete}]
+        },
       },
     });
   }

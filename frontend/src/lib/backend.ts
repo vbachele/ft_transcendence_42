@@ -15,6 +15,12 @@ export const backend = {
 		const response = await api.getFilterBlocked('/users/' + name, blockedOf);
 		return await response.json();
 	},
+	async getAllUsersExceptMe(currentUserName: string): Promise<any> {
+		const response = await api.get('/users');
+		const users = await response.json();
+
+		return users.filter((user: any) => user.name !== currentUserName);
+	  },
 	async patchUser(name: string, updateUser: unknown): Promise<any> {
 		const response = await api.patch('/users/' + name, updateUser);
 		return response.json();

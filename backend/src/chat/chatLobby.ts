@@ -54,7 +54,7 @@ export class ChatLobby extends ALobby {
 			this.id = data.id;
 		}
 	}
-	  
+
 	/**
 	 * @description Push the new lobby to the database and emit the lobby to the clients
 	 * @param data Lobby data used to create the lobby
@@ -81,7 +81,7 @@ export class ChatLobby extends ALobby {
 	{
 		if (password){
 			const saltOrRounds = 10;
-			const hash  = await bcrypt.hash(password, saltOrRounds);			
+			const hash  = await bcrypt.hash(password, saltOrRounds);
 			return hash;
 		}
 		return null;

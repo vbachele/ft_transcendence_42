@@ -8,6 +8,7 @@ export enum ClientEvents {
   LeaveLobby = "client.leaveLobby",
   InviteToLobby = "client.inviteToLobby",
   InvitationResponse = "client.invitationResponse",
+  KickLobby = "client.kickLobby"
 }
 
 /**

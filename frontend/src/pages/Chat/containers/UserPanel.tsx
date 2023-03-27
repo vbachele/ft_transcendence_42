@@ -16,13 +16,17 @@ import Invite from 'components/Buttons/Social/Invite/Invite';
 import RemoveFriend from 'components/Buttons/Social/RemoveFriend/RemoveFriend';
 import ViewProfile from 'components/Buttons/Social/ViewProfile/ViewProfile';
 import Message from 'components/Buttons/Social/Message/Message';
+import Kick from 'components/Buttons/Channel/Kick';
+import {useUserInfos} from 'contexts/User/userContent';
+import {useKickUser} from '../../../hooks/chat/useKickUser';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-	const {userInPanel} = useContext(ChatContext).ChatState;
+	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
+	const {userName} = useUserInfos();
+	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
 
 	if (!userInPanel) return null;
-
 	return (
 		<C.UserPanel>
 			<S.DrawerTitle>
@@ -49,8 +53,13 @@ function UserPanel() {
 				<AddFriend user={userInPanel} />
 				<RemoveFriend user={userInPanel} />
 				<BlockUser user={userInPanel} />
-				<Mute id={1} />
-				<Ban id={1} />
+				{activeLobby?.adminName === userName.userName && (
+					<>
+						<Mute id={1} />
+						<Ban id={1} />
+						<Kick onClick={kickUser} />
+					</>
+				)}
 			</S.FriendOptions>
 		</C.UserPanel>
 	);

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import ModalChanCreate from '../modals/ModalChanCreate';
 import {useState} from 'react';
 import ModalUserSearch from '../modals/ModalUserSearch';
