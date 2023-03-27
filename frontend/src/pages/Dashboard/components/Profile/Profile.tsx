@@ -1,18 +1,16 @@
-import getRanks from 'helpers/getRanks';
-import ActivityStatus from 'components/ActivityStatus';
+import {useContext, useEffect, useState} from 'react';
 import {IUser} from 'types/models';
+import {backend} from 'lib/backend';
+import {useUserInfos} from 'contexts/User/userContent';
+import ActivityStatus from 'components/ActivityStatus';
+import UserDropdown from './UserDropdown';
+import getRanks from 'helpers/getRanks';
+import isUserIn from 'helpers/isUserIn';
+import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
-
-import UserDropdown from './UserDropdown';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
-import {useUserInfos} from 'contexts/User/userContent';
-import isUserIn from 'helpers/isUserIn';
-import {useEffect, useState} from 'react';
-import {backend} from 'lib/backend';
-
-import {ReactComponent as WinIcon} from '../../assets/win.svg';
-import {ReactComponent as LossIcon} from '../../assets/loss.svg';
+import Buttons from 'components/Buttons';
+import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
 
 interface IProps {
 	user: IUser;
@@ -20,8 +18,9 @@ interface IProps {
 
 const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
-	// const {data: friends} = useFetchFriendsOf(userName.userName);
+	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
+	const [status, setStatus] = useState(user.status);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 
@@ -29,15 +28,16 @@ const Profile = ({user}: IProps) => {
 		checkRanks = true;
 	}
 
+	const fetchFriends = async () => {
+		const data = await backend.getFriendsOf(userName.userName);
+		if (data) {
+			setFriendUsers(data);
+		}
+	};
+
 	useEffect(() => {
-		const fetchFriends = async () => {
-			const data = await backend.getFriendsOf(userName.userName);
-			if (data) {
-				setFriendUsers(data);
-			}
-		};
 		fetchFriends();
-	}, [friendUsers]);
+	}, [dropdownVisible]);
 
 	return (
 		<S.Profile coalition={user.coalition}>
@@ -45,10 +45,16 @@ const Profile = ({user}: IProps) => {
 			<S.VDiv className="name" isFriend={isUserIn(friendUsers, user.name)}>
 				<S.HDiv style={{flexDirection: 'row'}}>
 					<F.H1>{user.name}</F.H1>
-					{isUserIn(friendUsers, user.name) && <WinIcon />}
+					{isUserIn(friendUsers, user.name) && <FriendIcon />}
 				</S.HDiv>
-				<ActivityStatus state={user.status} />
-				<UserDropdown user={user} />
+				<ActivityStatus user={user} updateStatus={setStatus} />
+				<UserDropdown
+					user={user}
+					status={status}
+					friendUsers={friendUsers}
+					dropdownVisible={dropdownVisible}
+					setDropdownVisible={setDropdownVisible}
+				/>
 			</S.VDiv>
 
 			{checkRanks && (
@@ -66,6 +72,7 @@ const Profile = ({user}: IProps) => {
 					</S.VDivLink>
 				</S.VDiv>
 			)}
+			<UserInvitedToGame />
 		</S.Profile>
 	);
 };

@@ -1,13 +1,6 @@
-import {
-	ForbiddenException,
-	HttpException,
-	HttpStatus,
-	Injectable,
-	Post,
-} from '@nestjs/common';
-import {PrismaService} from 'src/database/prisma.service';
-import {PrismaClientKnownRequestError} from '@prisma/client/runtime';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {Request} from 'express';
+import {PrismaService} from 'src/database/prisma.service';
 import {BlockedService} from 'src/social/blocked/blocked.service';
 
 @Injectable({})
@@ -19,11 +12,10 @@ export class UserService {
 
 	async getAllUsers(blockedOf: string) {
 		try {
+			const users = await this.prisma.user.findMany({});
 			const blockedUsers = await this.blockedService.getBlockedOfUser(
 				blockedOf
 			);
-
-			const users = await this.prisma.user.findMany({});
 
 			return users.filter((user) =>
 				blockedUsers

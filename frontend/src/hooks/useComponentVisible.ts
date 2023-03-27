@@ -1,8 +1,8 @@
 import {useState, useEffect, useRef} from 'react';
 
-function useComponentVisible(initialIsVisible: boolean) {
+function useComponentVisible(initialState: boolean) {
 	const [isComponentVisible, setIsComponentVisible] =
-		useState<boolean>(initialIsVisible);
+		useState<boolean>(initialState);
 	const ref = useRef<HTMLDivElement>(null);
 
 	const handleClickOutside = (event: MouseEvent) => {

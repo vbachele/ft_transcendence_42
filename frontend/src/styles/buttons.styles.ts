@@ -29,7 +29,7 @@ const Button = styled.button`
 
 // prettier-ignore
 export const PrimaryButton = styled(Button)`
-	background-color: #dc4f19;
+	background-color: ${p => p.theme.colors.main};
 	border: none;
 
 	&, a {
@@ -39,19 +39,19 @@ export const PrimaryButton = styled(Button)`
 	&:hover {
 		background-color: #a53b13;
 	}
-	`;
+`;
 
 // prettier-ignore
 export const SecondaryButton = styled(Button)`
 	background-color: #fff;
-	border: 2px solid #dc4f19;
+	border: 2px solid ${p => p.theme.colors.main};
 
 	&, a {
-		color: #dc4f19;;
+		color: ${p => p.theme.colors.main};;
 	}
 
 	&:hover {
-		background-color: #dc4f19;
+		background-color: ${p => p.theme.colors.main};
 		&, a {
 			color: #fff;
 		}
@@ -63,50 +63,33 @@ export const SecondaryButtonSmall = styled(Button)`
 	background-color: #fff;
 	font-size: small;
 	padding: 0.5em 1em;
-	border: 2px solid #dc4f19;
+	border: 2px solid ${p => p.theme.colors.main};
 
 	&, a {
-		color: #dc4f19;
+		color: ${p => p.theme.colors.main};
 	}
 
 	&:hover {
-		background-color: #dc4f19;
+		background-color: ${p => p.theme.colors.main};
 		&, a {
 			color: #fff;
 		}
 	}
 `;
 
-interface Iprops {
+interface IButtonProps {
 	backgroundColor?: string;
 	border?: string;
 	width?: string;
 	height?: string;
 }
 
-export const PopupButton = styled(Button)<Iprops>`
+export const PopupButton = styled(Button)<IButtonProps>`
 	background-color: ${(p) => p.backgroundColor || 'transparent'};
 	height: 50px;
 	border: ${(p) => p.border || 'none'};
 	margin: auto;
 	width: ${(p) => p.width || ' clamp(50px, 35vw, 10rem)'};
-	&,
-	a {
-		color: white;
-	}
-	:hover {
-		transform: scaleY(1.08);
-		border: 1.5px solid #e5e7eb;
-	}
-`;
-
-export const DoubleAuthButton = styled.button<Iprops>`
-	background-color: ${(p) => p.backgroundColor || '#DC4F19'};
-	height: 30px;
-	border: ${(p) => p.border || 'none'};
-	margin: 0;
-	border-radius: 20px;
-	width: ${(p) => p.width || ' 10px'};
 	&,
 	a {
 		color: white;

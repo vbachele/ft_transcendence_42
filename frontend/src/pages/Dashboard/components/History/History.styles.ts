@@ -66,13 +66,13 @@ interface ICardProps {
 }
 
 export const Card = styled(Link)<ICardProps>`
-	color: ${(p) => p.theme.colors.secondary};
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	color: ${(p) => p.theme.colors.text};
+	background-color: ${(p) => p.theme.colors.secondary};
+
 	box-shadow: ${(p) =>
 		p.result === 'win'
-			? 'rgba(75, 174, 79, 1) 0px 0px 8px'
-			: 'rgba(224, 79, 95, 1) 0px 0px 8px'};
+			? 'rgba(75, 174, 79, 1) 0px 0px 6px'
+			: 'rgba(224, 79, 95, 1) 0px 0px 6px'};
 
 	display: flex;
 	flex-direction: column;
@@ -90,11 +90,14 @@ export const Card = styled(Link)<ICardProps>`
 		border-radius: 50%;
 		width: 96px;
 		height: 96px;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	}
 
 	transition: all 0.1s linear;
 
 	:hover {
+		background-color: ${(p) => p.theme.colors.hover};
+
 		transform: translateY(-8px);
 	}
 

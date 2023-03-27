@@ -36,10 +36,9 @@ export const Menu = styled.div`
 
 	svg {
 		border-radius: 50%;
-		/* width: 40px;
-		height: 40px; */
-		fill: ${(props) => props.theme.colors.secondary};
+		fill: ${(props) => props.theme.colors.text};
 	}
+
 	img {
 		border-radius: 50%;
 		width: 40px;
@@ -49,9 +48,6 @@ export const Menu = styled.div`
 	a {
 		text-decoration: none;
 	}
-
-	@media screen and (max-width: 768px) {
-	}
 `;
 
 export const Divider = styled.div`
@@ -59,7 +55,7 @@ export const Divider = styled.div`
 	height: 2px;
 	border-radius: 4px;
 	transform: rotate(-90deg);
-	background-color: ${(p) => p.theme.colors.secondary};
+	background-color: ${(p) => p.theme.colors.text};
 	@media screen and (max-width: 768px) {
 		display: none;
 	}
@@ -67,6 +63,8 @@ export const Divider = styled.div`
 
 export const StyledToggleTheme = styled.label`
 	cursor: pointer;
+	width: 24px;
+	height: 24px;
 
 	svg {
 		width: 24px;
@@ -75,6 +73,6 @@ export const StyledToggleTheme = styled.label`
 	}
 
 	svg:hover {
-		fill: #dc4f19;
+		fill: ${p => p.theme.colors.main};
 	}
 `;

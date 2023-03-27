@@ -1,27 +1,25 @@
 import React, {useState} from 'react';
 import {IUser} from 'types/models';
-import {Input} from 'antd';
-import Rank from './Rank';
+import {Input, Select} from 'antd';
 import compareScore from 'helpers/compareScore';
 import filterByName from 'helpers/filterByName';
+import Rank from './Rank';
 import * as S from '../Leaderboard.styles';
 import * as F from 'styles/font.styles';
+
+const {Search} = Input;
 
 interface IProps {
 	players: IUser[];
 	opt: string;
 }
 
-const {Search} = Input;
-
 const RankList = ({players, opt}: IProps) => {
 	const [selectedCoalition, setSelectedCoalition] = useState(opt);
 	const [search, setSearch] = useState('');
 
-	const handleCoalitionChange = (
-		event: React.ChangeEvent<HTMLSelectElement>
-	) => {
-		setSelectedCoalition(event.target.value);
+	const handleCoalitionChange = (value: string) => {
+		setSelectedCoalition(value);
 	};
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,18 +40,28 @@ const RankList = ({players, opt}: IProps) => {
 					size="large"
 					onChange={handleSearchChange}
 					style={{
-						width: '250px',
+						width: 200,
 						alignSelf: 'center',
 					}}
 					enterButton
 				/>
-				<S.SearchCoalition onChange={handleCoalitionChange} defaultValue={opt}>
-					<option value="All">All Coalitions</option>
-					<option value="Federation">Federation</option>
-					<option value="Order">Order</option>
-					<option value="Assembly">Assembly</option>
-					<option value="Alliance">Alliance</option>
-				</S.SearchCoalition>
+				<Select
+					defaultValue={opt}
+					size="large"
+					style={{
+						width: 150,
+						alignSelf: 'center',
+						textAlign: 'left',
+					}}
+					onChange={handleCoalitionChange}
+					options={[
+						{value: 'All', label: 'All Coalitions'},
+						{value: 'Federation', label: 'Federation'},
+						{value: 'Alliance', label: 'Alliance'},
+						{value: 'Order', label: 'Order'},
+						{value: 'Assembly', label: 'Assembly'},
+					]}
+				/>
 				<F.Text className="player-count">
 					{players.filter(filterCoalition).length} player(s)
 				</F.Text>

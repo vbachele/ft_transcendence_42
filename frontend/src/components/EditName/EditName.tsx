@@ -6,6 +6,10 @@ import {useNavigate} from 'react-router-dom';
 import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
+import {Input} from 'antd';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
+import {fetchUserByName} from 'helpers/fetchUserByName';
 
 interface Props {
 	visible?: boolean;
@@ -15,10 +19,13 @@ interface Props {
 
 /* MAIN FUNCTION */
 const EditName = (props: Props) => {
+	const {socket} = useContext(SocketContext).SocketState;
 	const navigate = useNavigate();
 	const [value, setValue] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [uploadApproved, setUploadApproved] = useState(false);
+	const [error, setError] = useState(false);
+	const [errorImage, setErrorImage] = useState(false);
 
 	const {
 		userName,
@@ -49,13 +56,23 @@ const EditName = (props: Props) => {
 		};
 		const user = await backend.createUser(UserCreation);
 		const upload = await backend.patchUser(value, image);
+		if (user.statusCode === 400) {
+			setError(true);
+			setUploadApproved(false);
+			setLoading(false);
+		}
+		if (upload.statusCode === 400) {
+			setErrorImage(true);
+			setUploadApproved(false);
+			setLoading(false);
+		}
 		setUserInfosContext(value);
 	}
 
 	/* Registration of the user in database in the page /registration*/
 	async function userRegistrationPage() {
 		if (props.page === 'registration') {
-			const user = await createUser(value);
+			const response = await createUser(value);
 		}
 	}
 
@@ -65,11 +82,27 @@ const EditName = (props: Props) => {
 			let newuserName = {
 				name: value,
 			};
+
 			const response = await backend.patchUser(userName.userName, newuserName);
+			if (response.statusCode === 400) {
+				setError(true);
+				setUploadApproved(false);
+				setLoading(false);
+				return;
+			}
+			setError(false);
 			setUserName({userName: value});
 			setUploadApproved(true);
 			setLoading(false);
-			unlockAchievement('RENAME', newuserName.name);
+			socket?.emit(ClientSocialEvents.UpdateUsername, value);
+
+			const data = await fetchUserByName(value, value);
+			const hasRenameAchievement = data?.achievements.includes('RENAME');
+
+			if (data && !hasRenameAchievement) {
+				unlockAchievement('RENAME', data, socket);
+				setAchievements({achievements: [...data.achievements]});
+			}
 		}
 	}
 
@@ -78,7 +111,7 @@ const EditName = (props: Props) => {
 		setValue(e.target.value);
 	};
 
-	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 		userRegistrationPage(); // if in registrationPage
@@ -87,31 +120,51 @@ const EditName = (props: Props) => {
 
 	return (
 		<S.FormContainer onSubmit={handleSubmit}>
-			<S.InputContainer>
-				<F.Text weight="600">
-					{props.page === 'settings' && 'Change your nickname'}
-					{props.page === 'registration' && 'Choose a nickname*'}
-				</F.Text>
-				<S.Input
-					type="text"
-					value={value}
-					onChange={handleChange}
-					placeholder="Enter your nickname"
-					maxLength={8}
-					minLength={2}
-					required
-				/>
-			</S.InputContainer>
+			<S.errorDisplay>
+				<S.InputContainer>
+					<F.Text weight="600">
+						{props.page === 'settings' && 'Change your nickname'}
+						{props.page === 'registration' && 'Choose a nickname*'}
+					</F.Text>
+					<S.Input
+						type="text"
+						value={value}
+						onChange={handleChange}
+						placeholder="Enter your nickname"
+						maxLength={8}
+						minLength={2}
+						required
+					/>
+					{error && (
+						<F.Subtitle
+							style={{color: '#E04F5F', textAlign: 'left'}}
+							weight={'350'}
+							fontSize="1rem"
+						>
+							Nickname is already taken
+						</F.Subtitle>
+					)}
+					{errorImage && (
+						<F.Subtitle
+							style={{color: '#E04F5F', textAlign: 'left'}}
+							weight={'350'}
+							fontSize="1rem"
+						>
+							Impossible to load file
+						</F.Subtitle>
+					)}
+				</S.InputContainer>
+			</S.errorDisplay>
 			<S.ConfirmContainer>
 				<UI.SecondaryButton type="submit">
 					{props.page === 'settings' && 'Confirm'}
 					{props.page === 'registration' && 'Continue'}
 				</UI.SecondaryButton>
 				{loading && (
-					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif" />
+					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082305985042984960/Dual_Ring-1s-200px_1.gif"></S.loadingimg>
 				)}
 				{uploadApproved && (
-					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png" />
+					<S.loadingimg src="https://cdn.discordapp.com/attachments/1067488107827576916/1082309957053071370/check-mark.png"></S.loadingimg>
 				)}
 			</S.ConfirmContainer>
 		</S.FormContainer>

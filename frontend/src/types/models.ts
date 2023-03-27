@@ -18,6 +18,24 @@ export interface IAchievement {
 	image: string;
 }
 
+export interface INotification {
+	id: number;
+	message: string;
+	sender: string;
+	createdAt: Date;
+	type:
+		| 'ACHIEVEMENT'
+		| 'FRIEND_REQUEST'
+		| 'FRIEND_ACCEPT'
+		| 'FRIEND_DENY'
+		| 'REMOVE'
+		| 'BLOCKED'
+		| 'MESSAGE'
+		| 'BANNED'
+		| 'KICKED'
+		| 'ADMIN';
+}
+
 export type TCallback = ({}) => void;
 
 export interface ILobbyData {

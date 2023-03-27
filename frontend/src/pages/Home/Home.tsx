@@ -3,6 +3,7 @@ import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
 import Popup from 'components/Popup';
 import logo_ai from 'assets/logo_ai.png';
+import logo from 'assets/logo-text.svg';
 import * as S from './Home.styles';
 import SocketContext from '../../contexts/Socket/context';
 import {ClientGameEvents} from '../../events/game.events';
@@ -49,7 +50,7 @@ const Homepage = () => {
 					type="video/mp4"
 				/>
 			</S.Background>
-			<S.Image src={logo_ai} />
+			<S.Image src={logo} />
 			<S.LinksContainer>
 				<S.BoldYellowButton
 					onClick={() => setShowGameModes(!showGameModes)}
@@ -78,7 +79,7 @@ const Homepage = () => {
 							onClose={() => setLogout(false)}
 						/>
 					)}
-					LOG OUT
+					LOGOUT
 				</S.RegularButton>
 			</S.LinksContainer>
 			<S.UserInfo to={`/dashboard/${userName.userName}`}>

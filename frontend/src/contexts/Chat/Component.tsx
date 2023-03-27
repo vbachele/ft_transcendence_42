@@ -2,7 +2,8 @@ import {PropsWithChildren, useContext, useEffect, useReducer} from 'react';
 import {
 	ChatContextProvider,
 	ChatReducer,
-	defaultChatContextState, ILobby,
+	defaultChatContextState,
+	ILobby,
 } from './context';
 import SocketContext from '../Socket/context';
 import {ServerEvents} from '../../events/socket.events';
@@ -44,6 +45,7 @@ function ChatContextComponent(props: IChatContextComponentProps) {
 			ChatDispatch({type: 'add_lobby', payload: data.lobby});
 		});
 		return () => {
+			socket?.off(ServerChatEvents.KickedFromLobby);
 			socket?.off(ServerEvents.AddedToLobby);
 			socket?.off(ServerChatEvents.LobbyCreated);
 		};

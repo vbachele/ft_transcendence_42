@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PlusSign from 'assets/new_discussion.svg';
 
+
 export const LateralBar = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -49,6 +50,7 @@ export const Header = styled.div`
 					p.theme.name === 'light' ? '#e5e7eb' : '#bfc1c4'};
       }
     }
+}
 `;
 
 export const UserPanel = styled.div`

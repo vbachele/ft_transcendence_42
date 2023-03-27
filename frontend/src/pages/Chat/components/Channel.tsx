@@ -5,6 +5,8 @@ import SocketContext from '../../../contexts/Socket/context';
 import {ClientEvents} from '../../../events/socket.events';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalChanPass from '../modals/ModalChanPass';
+import {AiTwotoneLock} from "react-icons/ai";
+
 
 interface ChannelProps {
 	lobby: ILobby;
@@ -26,18 +28,20 @@ function Channel({lobby}: ChannelProps) {
 		ChatDispatch({type: 'update_user_panel', payload: false});
 	}
 
-	function onJoinLobbyPass() {
+	function onJoinLobbyPass(event: React.MouseEvent) {
 		setPopup(true);
 	}
 
 	return (
 		<S.Channel
-			onClick={lobby.privacy === 'private' && lobby.type === 'channel' ? onJoinLobbyPass : onJoinLobby}
+			onClick={lobby.privacy === 'private' && lobby.type ==="channel" ? onJoinLobbyPass : onJoinLobby}
 		>
+			{lobby.privacy === 'private' && lobby.type ==="channel"  && <AiTwotoneLock style={{ marginRight: '10px' }}  />}
 			{lobby.type === 'channel'
 				? '#' + lobby.name
 				: directMessageName(lobby.name)}
-			{popup && <ModalChanPass />}
+			{popup && <ModalChanPass popup={popup} 
+					setPopup={setPopup} lobby={lobby} />}
 		</S.Channel>
 	);
 }

@@ -8,13 +8,19 @@ export class PendingService {
 
 	async getPendingsOfUser(name: string) {
 		try {
-			const pendings = await this.prisma.user.findFirst({
+			const user = await this.prisma.user.findFirst({
 				where: {
 					name: name,
 				},
-				include: {pendings: true},
+				include: {
+					pendings: true,
+					pendingsOf: true,
+				},
 			});
-			return pendings?.pendings;
+			const sentPendings = user?.pendingsOf;
+			const receivedPendings = user?.pendings;
+
+			return {sentPendings, receivedPendings};
 		} catch (error) {
 			throw error;
 		}

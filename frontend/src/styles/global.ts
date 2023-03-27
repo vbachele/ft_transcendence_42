@@ -32,6 +32,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	#root {
+		--mainColor: ${(p) => p.theme.colors.main};
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
@@ -40,8 +41,8 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	body {
-		background-color: ${(props) => props.theme.colors.main};
-		color: ${(props) => props.theme.colors.secondary};
+		background-color: ${(props) => props.theme.colors.background};
+		color: ${(props) => props.theme.colors.text};
 		margin: 0px;
 		padding: 0px;
 		overflow-x: hidden;

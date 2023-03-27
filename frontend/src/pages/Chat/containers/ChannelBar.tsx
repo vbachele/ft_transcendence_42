@@ -8,6 +8,8 @@ import ChatContext from 'contexts/Chat/context';
 import NewDiscussion from '../components/NewDiscussion';
 import styled from 'styled-components';
 import {useUserInfos} from '../../../contexts/User/userContent';
+import {AiTwotoneLock} from "react-icons/ai";
+import ModalChanPass from '../modals/ModalChanPass';
 import {backend} from '../../../lib/backend';
 import Channel from '../components/Channel';
 
@@ -18,6 +20,10 @@ const StyledInputSearch = styled(Input.Search)`
 function ChannelBar() {
 	const [search, setSearch] = useState<string>('');
 	const {lobbyList} = useContext(ChatContext).ChatState;
+	const [privateChan, setPrivateChan] = useState<boolean>(false); 
+	const name = useUserInfos().userName.userName;
+	const [channelName, setChannelName] = useState<string>("");
+	
 
 	const searchFilter = (value: any): boolean => {
 		return value
@@ -28,6 +34,7 @@ function ChannelBar() {
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);
+		setPrivateChan(!privateChan);
 	}
 
 	return (
@@ -50,8 +57,7 @@ function ChannelBar() {
 					.map((lobby, index) => (
 						<Channel key={lobby.name} lobby={lobby} />
 					))}
-			</C.ChannelList>
-			<C.Header>
+			</C.ChannelList>			<C.Header>
 				<F.H3> Direct messages</F.H3>
 				<NewDiscussion type={'direct_message'} />
 			</C.Header>

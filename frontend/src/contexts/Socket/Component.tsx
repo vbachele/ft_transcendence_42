@@ -1,11 +1,14 @@
 import React, {PropsWithChildren, useEffect, useReducer, useState} from 'react';
-import {useSocket} from '../../hooks/useSocket';
+import {useSocket} from 'hooks/useSocket';
 import {
 	defaultSocketContextState,
 	SocketContextProvider,
 	SocketReducer,
 } from './context';
 import {useUserInfos} from '../User/userContent';
+import { backend } from 'lib/backend';
+import getInfosFromDB from 'contexts/User/GetuserFromDB';
+import { useNavigate } from 'react-router-dom';
 
 export interface ISocketContextComponentProps extends PropsWithChildren {}
 
@@ -13,6 +16,8 @@ const SocketContextComponent: React.FunctionComponent<
 	ISocketContextComponentProps
 > = (props) => {
 	const {children} = props;
+	const [tokenValid, setTokenValid] = useState(false)
+	const navigate = useNavigate();
 
 	const [SocketState, SocketDispatch] = useReducer(
 		SocketReducer,
@@ -21,7 +26,6 @@ const SocketContextComponent: React.FunctionComponent<
 	const [loading, setLoading] = useState(true);
 	const name = useUserInfos().userName.userName;
 	const socket = useSocket('/', {
-
 		reconnectionAttempts: 5,
 		reconnectionDelay: 5000,
 		autoConnect: false,
@@ -29,7 +33,14 @@ const SocketContextComponent: React.FunctionComponent<
 			name: name,
 		},
 	});
-
+	// useEffect(() => {
+	// 	const user = getInfosFromDB(navigate)
+	// 	user.then((res) => {
+	// 		console.log("RESULT", res);
+	// 		if (res)
+	// 			setTokenValid(true)
+	// 	});
+	// })
 	useEffect(() => {
 		if (!name) return;
 		socket.io.opts.query!.name = name;
@@ -54,7 +65,7 @@ const SocketContextComponent: React.FunctionComponent<
 		});
 		socket.io.on('error', (error) => {
 			console.error(`Socket error: `, error);
-		})
+		});
 	};
 	const SendHandshake = () => {
 		console.info(`Sending handshake to server...`);
@@ -94,16 +105,19 @@ const SocketContextComponent: React.FunctionComponent<
 			socket.off('disconnect');
 			socket.off('user_disconnected');
 			socket.off('error');
-		}
+		};
 	}, []);
 
 	if (loading) return <p>Loading socket IO...</p>;
 
 	return (
-		<SocketContextProvider value={{SocketState, SocketDispatch}}>
-			{children}
-		</SocketContextProvider>
+		<>
+		{!tokenValid && <SocketContextProvider value={{SocketState, SocketDispatch}}>
+		{children}
+		</SocketContextProvider>}
+	</>
 	);
+	return <></>
 };
 
 export default SocketContextComponent;

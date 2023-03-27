@@ -1,33 +1,27 @@
-import { DefaultTheme } from "styled-components";
-
-// https://atmos.style/blog/working-with-colors-in-code
-
-// https://atmos.style/ : create color palettes
-const lightPalette = {
-	primary: {
-		300: "#A3A4FF",
-		400: "#8884FF",
-		500: "#6C5EFA",
-		600: "#573CFA",
-	},
-};
+import {DefaultTheme} from 'styled-components';
 
 export const light: DefaultTheme = {
-	name: "light",
-	borderRadius: "5px",
+	name: 'light',
 
 	colors: {
-		main: "#fff",
-		secondary: "#000",
+		background: '#fafafa',
+		text: '#000',
+		main: '#dc4f19',
+		secondary: '#f0f0f0',
+		third: '#e6e6e6',
+		hover: '#dbdbdb',
 	},
 };
 
 export const dark: DefaultTheme = {
-	name: "dark",
-	borderRadius: "5px",
+	name: 'dark',
 
 	colors: {
-		main: "#171717",
-		secondary: "#fff",
+		background: '#202020',
+		text: '#eee',
+		main: '#dc4f19',
+		secondary: '#2e2e2e',
+		third: '#383838',
+		hover: '#4d4d4d',
 	},
 };

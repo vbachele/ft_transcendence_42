@@ -56,6 +56,12 @@ function Game() {
 		};
 	}, [lobbyId]);
 
+	function movePaddle(paddle: HTMLElement, position: {x: number; y: number}) {
+		paddle.style.transform = `translate(${
+			position.x - paddle.clientWidth! / 2
+		}px, ${position.y - paddle.clientHeight! / 2}px)`;
+	}
+
 	useEffect(() => {
 		socket?.on(ServerGameEvents.Timer, (data) => {
 			console.log(`data = `, data);

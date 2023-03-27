@@ -1,19 +1,13 @@
-import {useState} from 'react';
-import {useTheme} from 'styled-components';
-import {IUser} from 'types/models';
-import ActivityStatus from 'components/ActivityStatus';
-import {Divider, Drawer} from 'antd';
-import {ReactComponent as Close} from 'assets/close.svg';
-import {ReactComponent as Block} from '../assets/block.svg';
-import * as S from '../Social.styles';
-import * as F from 'styles/font.styles';
-import ViewProfile from 'components/Buttons/Social/ViewProfile';
-import Invite from 'components/Buttons/Social/Invite';
-import Message from 'components/Buttons/Social/Message';
-import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
-import BlockUser from 'components/Buttons/Social/BlockUser';
 import UserInvitedToGame from '../../../components/Popup/UserInvitedToGame/UserInvitedToGame';
-import Spectate from 'components/Buttons/Social/Spectate';
+import {ReactComponent as Close} from 'assets/close.svg';
+import ActivityStatus from 'components/ActivityStatus';
+import {useTheme} from 'styled-components';
+import {Divider, Drawer} from 'antd';
+import {useState} from 'react';
+import {IUser} from 'types/models';
+import Buttons from 'components/Buttons';
+import * as F from 'styles/font.styles';
+import * as S from '../Social.styles';
 
 interface IProps {
 	friend: IUser;
@@ -23,6 +17,7 @@ interface IProps {
 
 function Friend({friend, onBlock, onRemove}: IProps) {
 	const [open, setOpen] = useState(false);
+	const [status, setStatus] = useState(friend.status);
 	const theme = useTheme();
 
 	const showDrawer = () => {
@@ -39,15 +34,16 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<img className="avatar" src={friend.image} />
 				<div style={{textAlign: 'left'}}>
 					<F.H5>{friend.name}</F.H5>
-					<ActivityStatus size="16px" state={friend.status} />
+					<ActivityStatus size="16px" user={friend} updateStatus={setStatus} />
 				</div>
 			</S.Friend>
 			<Drawer
 				headerStyle={{display: 'none'}}
-				drawerStyle={{backgroundColor: theme.colors.main}}
+				drawerStyle={{backgroundColor: theme.colors.background}}
 				placement="right"
 				width={window.innerWidth <= 768 ? '100%' : 424}
 				closable={true}
+				forceRender={true}
 				onClose={hideDrawer}
 				open={open}
 			>
@@ -57,20 +53,24 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				</S.DrawerTitle>
 				<S.FriendDetails>
 					<img className="drawer__avatar" src={friend.image} />
-					<ActivityStatus state={friend.status} />
+					<ActivityStatus user={friend} />
 				</S.FriendDetails>
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
-					<ViewProfile user={friend.name} />
-					{friend.status === 'online' && <Invite name={friend.name} />}
-					{friend.status === 'ingame' && <Spectate user={friend.name} />}
-					<Message user={friend.name} />
-					<RemoveFriend
+					<Buttons.ViewProfile user={friend} />
+					{status === 'online' && <Buttons.Invite user={friend} />}
+					{status === 'ingame' && <Buttons.Spectate user={friend} />}
+					<Buttons.Message user={friend.name} />
+					<Buttons.RemoveFriend
 						user={friend}
 						hideDrawer={hideDrawer}
 						onRemove={onRemove}
 					/>
-					<BlockUser user={friend} hideDrawer={hideDrawer} onBlock={onBlock} />
+					<Buttons.BlockUser
+						user={friend}
+						hideDrawer={hideDrawer}
+						onBlock={onBlock}
+					/>
 				</S.FriendOptions>
 				<UserInvitedToGame user={friend}/>
 			</Drawer>

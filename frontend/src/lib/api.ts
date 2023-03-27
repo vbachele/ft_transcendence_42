@@ -9,6 +9,12 @@ export const api = {
 	async get(url: string) {
 		return await fetch('/api' + url, {...requestConfig, method: 'GET'});
 	},
+	async getFilterBlocked(url: string, blockedOf: string) {
+		return await fetch('/api' + url + '?blockedOf=' + blockedOf, {
+			...requestConfig,
+			method: 'GET',
+		});
+	},
 	async post(url: string, data: unknown) {
 		return await fetch('/api' + url, {
 			...requestConfig,

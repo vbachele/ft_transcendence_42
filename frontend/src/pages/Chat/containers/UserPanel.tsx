@@ -1,25 +1,22 @@
 import {useContext} from 'react';
 import * as F from 'styles/font.styles';
-import ViewProfile from 'components/Buttons/Social/ViewProfile';
-import Invite from 'components/Buttons/Social/Invite';
-import Message from 'components/Buttons/Social/Message';
-import AddFriend from 'components/Buttons/Social/AddFriend';
-import RemoveFriend from 'components/Buttons/Social/RemoveFriend';
-import BlockUser from 'components/Buttons/Social/BlockUser';
-import Mute from 'components/Buttons/Channel/Mute';
-import Ban from 'components/Buttons/Channel/Ban';
+
+import Buttons from 'components/Buttons';
 import * as S from '../../Social/Social.styles';
 import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
 import ChatContext from 'contexts/Chat/context';
+import {useKickUser} from '../../../hooks/chat/useKickUser';
+import {useUserInfos} from 'contexts/User/userContent';
 import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
-import Spectate from '../../../components/Buttons/Social/Spectate/Spectate';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-	const {userInPanel} = useContext(ChatContext).ChatState;
+	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
+	const {userName} = useUserInfos();
+	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
 
 	if (!userInPanel) return null;
 
@@ -39,7 +36,7 @@ function UserPanel() {
 					src={userInPanel.image}
 					alt="user avatar"
 				/>
-				<ActivityStatus state={userInPanel.status} />
+				<ActivityStatus user={userInPanel} />
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
@@ -51,8 +48,13 @@ function UserPanel() {
 				<AddFriend user={userInPanel} />
 				<RemoveFriend user={userInPanel} />
 				<BlockUser user={userInPanel} />
-				<Mute id={1} />
-				<Ban id={1} />
+				{activeLobby?.adminName === userName.userName && (
+					<>
+						<Mute id={1} />
+						<Ban id={1} />
+						<Kick onClick={kickUser} />
+					</>
+				)}
 			</S.FriendOptions>
 			<UserInvitedToGame user={userInPanel}/>
 		</C.UserPanel>

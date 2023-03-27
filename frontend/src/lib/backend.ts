@@ -7,14 +7,24 @@ import ChatContext from '../contexts/Chat/context';
 
 export const backend = {
 	// User
-	async getAllUsers(): Promise<any> {
+	async getAllUsers(blockedOf: string): Promise<IUser[]> {
+		const response = await api.getFilterBlocked('/users', blockedOf);
+		return await response.json();
+	},
+	async getUserByName(name: string, blockedOf: string): Promise<IUser | null> {
+		try {
+			const response = await api.getFilterBlocked('/users/' + name, blockedOf);
+			return await response.json();
+		} catch (error) {
+			return null;
+		}
+	},
+	async getAllUsersExceptMe(currentUserName: string): Promise<any> {
 		const response = await api.get('/users');
-		return await response.json();
-	},
-	async getUserByName(name: string): Promise<IUser> {
-		const response = await api.get('/users/' + name);
-		return await response.json();
-	},
+		const users = await response.json();
+
+		return users.filter((user: any) => user.name !== currentUserName);
+	  },
 	async patchUser(name: string, updateUser: unknown): Promise<any> {
 		const response = await api.patch('/users/' + name, updateUser);
 		return response.json();
@@ -61,7 +71,10 @@ export const backend = {
 	},
 
 	// Pending
-	async getPendingsOf(name: string): Promise<IUser[]> {
+	async getPendingsOf(name: string): Promise<{
+		sentPendings: IUser[];
+		receivedPendings: IUser[];
+	}> {
 		const response = await api.get('/pendings/' + name);
 		return await response.json();
 	},
@@ -73,6 +86,35 @@ export const backend = {
 		const response = await api.delete(
 			'/pendings/' + user1 + '/remove/' + user2
 		);
+		return await response.json();
+	},
+
+	//Channel
+
+	async checkPassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/password/' + password);
+		return await response.json();
+	},
+
+	async changePassword(password : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			password: password
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifypassword/' + password);
+		return await response.json();
+	},
+
+	async changeDescription(description : string, chanName: string){
+		let infos = {
+			chanName: chanName,
+			description: description
+		}
+		const response = await api.patchURL('/chat/' + chanName + '/modifydescription/' + description);
 		return await response.json();
 	},
 
@@ -92,15 +134,11 @@ export const backend = {
 
 	// 2FA
 	async generate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/2FA/generate', user);
+		const response = await api.post('/2FA/sendEmail', user);
 		return await response.json();
 	},
 	async verify2FA(user: unknown): Promise<any> {
 		const response = await api.post('/2FA/verify', user);
-		return await response.json();
-	},
-	async validate2FA(user: unknown): Promise<any> {
-		const response = await api.post('/2FA/validate', user);
 		return await response.json();
 	},
 	async disable2FA(user: unknown): Promise<any> {

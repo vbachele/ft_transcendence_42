@@ -9,6 +9,7 @@ import {ClientEvents} from '../../../events/socket.events';
 import {usePopup} from '../../../contexts/Popup/Popup';
 import {ServerGameEvents} from '../../../events/game.events';
 import {useNavigate, createSearchParams} from 'react-router-dom';
+import { useTheme } from 'styled-components';
 
 interface ILobbyData {
 	id: string;
@@ -16,6 +17,7 @@ interface ILobbyData {
 }
 
 const GameInvite = () => {
+	const theme = useTheme();
 	const [showComponent, setShowComponent] = useState(false);
 	const {socket} = useContext(SocketContext).SocketState;
 	const {invited, setInvited} = usePopup();
@@ -93,7 +95,7 @@ const GameInvite = () => {
 	return (
 		<Popup
 			title="Join game?"
-			subtitle="Bartholomeow has just invited you"
+			subtitle="Username has just invited you"
 			loadingBar={<LoadingBar />}
 			stopPropagation={true}
 			overlay={true}
@@ -101,7 +103,7 @@ const GameInvite = () => {
 			<PopupButton border="1px solid #e5e7eb" onClick={onCancel}>
 				<Text weight="500">Cancel</Text>
 			</PopupButton>
-			<PopupButton backgroundColor={'#dc4f19'} onClick={onJoin}>
+			<PopupButton backgroundColor={theme.colors.main} onClick={onJoin}>
 				<Text weight="500"> JOIN </Text>
 			</PopupButton>
 			{showComponent ? <GameFound /> : ''}

@@ -22,4 +22,3 @@ export enum ServerGameEvents {
 	GameResult = "server.game.gameResult",
 	InvitationCancelled = "server.game.invitationCancelled",
 }
-

@@ -23,7 +23,7 @@ function LogoutPopup(props: IProps) {
 	}
 
 	return (
-		<Popup title="Log out" subtitle="Already leaving paradise?" overlay={true}>
+		<Popup title="LOGOUT" subtitle="Already leaving paradise?" overlay={true}>
 			<PopupButton
 				onClick={props.onClose}
 				border="1px solid #e5e7eb"

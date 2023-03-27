@@ -47,14 +47,14 @@ services:
     networks:
       - ft_transcendence
     volumes:
-      - postgres_vol:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data/
 
   adminer:
     container_name: adminer
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - ft_transcendence
 
@@ -63,9 +63,9 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${POSTGRES_DIR}
+  postgres:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: ${POSTGRES_DIR}

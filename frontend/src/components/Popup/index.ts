@@ -3,6 +3,7 @@ import LogoutPopup from './Logout/LogoutPopup';
 import SearchPlayer from './SearchPlayer/SearchPlayer';
 import UserInvitedToGame from './UserInvitedToGame/UserInvitedToGame';
 import Countdown from './Countdown/Countdown';
+import AuthPopup from './Auth/AuthPopup';
 
 export default {
 	GameInvite,
@@ -10,4 +11,5 @@ export default {
 	SearchPlayer,
 	UserInvitedToGame,
 	Countdown,
+	AuthPopup,
 };
