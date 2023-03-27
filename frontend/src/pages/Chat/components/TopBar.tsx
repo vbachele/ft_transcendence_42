@@ -22,6 +22,7 @@ import ModalDescription from '../modals/ModalDescription';
 import { channel } from 'diagnostics_channel';
 import { act } from 'react-dom/test-utils';
 import AdminPanel from './AdminPanel';
+import { IUser } from 'types/models';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -48,7 +49,7 @@ function TopBar() {
 	}
 
 	async function openUserPanel() {
-		const user = await backend.getUserByName(directMessageName(activeLobby!.name), name);
+		const user:any = await backend.getUserByName(directMessageName(activeLobby!.name), name);
 		ChatDispatch({type: 'active_user_in_panel', payload: user});
 		ChatDispatch({type: 'update_user_panel', payload: true});
 	}

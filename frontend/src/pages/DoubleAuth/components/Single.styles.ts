@@ -14,7 +14,7 @@ export const Input = styled.input`
 	display: flex;
 	flex-direction: row;
 	text-align: center;
-	color: ${(p) => p.theme.colors.secondary};
+	color: ${(p) => p.theme.colors.text};
 	width: clamp(2rem, 12vw, 6rem);
 	height: clamp(5rem, 15vw, 10rem);
 	::placeholder {
@@ -22,7 +22,7 @@ export const Input = styled.input`
 		font-size: 1em;
 		align-items: center;
 		justify-content: center;
-		color: ${(p) => p.theme.colors.secondary};
+		color: ${(p) => p.theme.colors.text};
 	}
 	::-webkit-inner-spin-button {
 		-webkit-appearance: none;
@@ -34,7 +34,7 @@ export const Input = styled.input`
 
 	:focus {
 		visibility: none;
-		border: 2px solid #dc4f19;
+		border: 2px solid ${(p) => p.theme.colors.main};
 	}
 	border: 1px solid #e6e6e6;
 	border-radius: 5px;

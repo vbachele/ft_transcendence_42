@@ -1,14 +1,24 @@
-import {IsOptional, IsString} from 'class-validator';
+import {IsIn, IsOptional, IsString} from 'class-validator';
 
 export class NotificationDto {
 	@IsString()
-	senderName: string;
+	sender: string;
 
 	@IsString()
 	@IsOptional()
-	receiverName: string;
+	receiver: string;
 
 	@IsString()
-	@IsOptional()
+	@IsIn([
+		'ACHIEVEMENT',
+		'FRIEND_REQUEST',
+		'FRIEND_ACCEPT',
+		'FRIEND_DENY',
+		'REMOVE',
+		'MESSAGE',
+		'BANNED',
+		'KICKED',
+		'ADMIN',
+	])
 	type: string;
 }

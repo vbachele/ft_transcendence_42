@@ -7,6 +7,10 @@ import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
 import * as S from '../Social.styles';
 import * as F from 'styles/font.styles';
+import {useContext} from 'react';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
+import {addUserToFriends} from 'helpers/addUserToFriends';
 
 interface IProps {
 	user: IUser;
@@ -15,8 +19,8 @@ interface IProps {
 }
 
 function PendingReceived({user, onAccept, onDeny}: IProps) {
+	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
-	// const {data: friends} = useFetchFriendsOf(userName.userName); //TODO fetching only userName and not user
 
 	const fetchPendings = async (): Promise<{
 		sentPendings: IUser[];
@@ -38,22 +42,15 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 			return;
 		}
 
-		backend.removePending(userName.userName, user.name);
-		backend.removePending(user.name, userName.userName);
-		backend.addFriend(user.name, userName.userName);
-		backend.addFriend(userName.userName, user.name);
-
+		addUserToFriends(userName.userName, user.name, socket);
+		addUserToFriends(user.name, userName.userName, socket);
 		onAccept(user);
-
 		openNotification('success', `${user.name}'s request has been accepted`);
-
-		//TODO move this to backend
-		// unlockAchievement('ADD', userName.userName);
-		// unlockAchievement('ADD', user.name);
-		// if (friends && friends.length + 1 >= 3) {
-		// 	unlockAchievement('TEAM', user.name);
-		// 	unlockAchievement('TEAM', userName.userName);
-		// }
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: userName.userName,
+			receiver: user.name,
+			type: 'FRIEND_ACCEPT',
+		});
 	};
 
 	const handleDeny = () => {
@@ -61,6 +58,11 @@ function PendingReceived({user, onAccept, onDeny}: IProps) {
 		backend.removePending(user.name, userName.userName);
 		onDeny(user);
 		openNotification('error', `${user.name}'s request has been denied`);
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: userName.userName,
+			receiver: user.name,
+			type: 'FRIEND_DENY',
+		});
 	};
 
 	return (

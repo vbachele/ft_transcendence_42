@@ -1,22 +1,43 @@
-import {useUserInfos} from 'contexts/User/userContent';
-import unlockAchievement from 'helpers/unlockAchievement';
+import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
-import * as F from 'styles/font.styles';
+import {IUser} from 'types/models';
+import {useUserInfos} from 'contexts/User/userContent';
+import {fetchFriends} from 'helpers/fetchFriends';
+import isUserIn from 'helpers/isUserIn';
+import {openNotification} from 'helpers/openNotification';
+import unlockAchievement from 'helpers/unlockAchievement';
+import {userExists} from 'helpers/userExists';
 import {ReactComponent as Icon} from './spectate.svg';
+import * as F from 'styles/font.styles';
+import SocketContext from 'contexts/Socket/context';
+import {fetchUserByName} from 'helpers/fetchUserByName';
 
 interface IProps {
-	user: string;
+	user: IUser;
 }
 
-function Message({user}: IProps) {
-	const {userName} = useUserInfos();
+function Spectate({user}: IProps) {
+	const {socket} = useContext(SocketContext).SocketState;
+	const {userName, setAchievements} = useUserInfos();
 	const navigate = useNavigate();
 
-	const handleClick = () => {
-		console.log(userName.userName, 'wants to spectate', user); //TODO
-		navigate(`/specate/${user}`);
+	const handleClick = async () => {
+		const exists = await userExists(user.name, userName.userName);
+		const friends = await fetchFriends(userName.userName);
+		const data = await fetchUserByName(userName.userName, userName.userName);
+		const hasWatchAchievement = data?.achievements.includes('WATCH');
 
-		unlockAchievement('WATCH', userName.userName);
+		if (!exists || !isUserIn(friends, user.name) || user.status !== 'ingame') {
+			openNotification('warning', `${user.name} can't be spectated`);
+			return;
+		}
+
+		navigate(`/spectate/${user}`);
+
+		if (data && !hasWatchAchievement) {
+			unlockAchievement('WATCH', data, socket);
+			setAchievements({achievements: [...data.achievements]});
+		}
 	};
 
 	return (
@@ -27,4 +48,4 @@ function Message({user}: IProps) {
 	);
 }
 
-export default Message;
+export default Spectate;

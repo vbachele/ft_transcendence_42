@@ -12,7 +12,7 @@ async function fetchAllUsers(blockedOf: string) {
 	}
 }
 
-function useFetchUsers() {
+function useFetchUsers(blockedOf?: string) {
 	const {userName} = useUserInfos();
 	const [data, setData] = useState<IUser[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,9 @@ function useFetchUsers() {
 
 	useEffect(() => {
 		async function fetchData() {
-			const {data, error} = await fetchAllUsers(userName.userName);
+			const {data, error} = await fetchAllUsers(
+				blockedOf ? blockedOf : userName.userName
+			);
 			setData(data);
 			setError(error);
 			setIsLoading(false);

@@ -20,8 +20,7 @@ export const Card = styled.div`
 	width: 32%;
 	border-radius: 8px;
 
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 	svg {
@@ -59,7 +58,7 @@ export const VDiv = styled.div`
 export const StyledProgress = styled(Progress)`
 	.ant-progress-text {
 		font-weight: 600;
-		color: ${(p) => p.theme.colors.secondary};
+		color: ${(p) => p.theme.colors.text};
 	}
 	.ant-progress-bg {
 		background-image: linear-gradient(
@@ -69,7 +68,8 @@ export const StyledProgress = styled(Progress)`
 		);
 	}
 	.ant-progress-inner {
-		background-color: #f8dde15e;
+		background-color: ${(p) =>
+			p.theme.name === 'light' ? '#cecece' : '#595959'};
 	}
 
 	@media screen and (max-width: 1600px) {

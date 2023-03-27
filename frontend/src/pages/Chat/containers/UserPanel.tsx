@@ -43,12 +43,12 @@ function UserPanel() {
 					src={userInPanel.image}
 					alt="user avatar"
 				/>
-				<ActivityStatus state={userInPanel.status} />
+				<ActivityStatus user={userInPanel} />
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<ViewProfile user={userInPanel.name} />
-				<Invite id={userInPanel.name} />
+				<ViewProfile user={userInPanel} />
+				<Invite user={userInPanel} />
 				<Message user={userInPanel.name} />
 				<AddFriend user={userInPanel} />
 				<RemoveFriend user={userInPanel} />

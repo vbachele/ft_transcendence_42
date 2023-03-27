@@ -12,6 +12,27 @@ export const Container = styled.div`
 	gap: 64px;
 `;
 
+export const SearchContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 24px;
+
+	.add-icon {
+		cursor: pointer;
+		fill: ${(p) => p.theme.colors.text};
+		width: 28px;
+		height: 28px;
+
+		:hover {
+			transform: scale(1.1);
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+	}
+`;
+
 export const StyledCollapse = styled(Collapse)`
 	user-select: none;
 	display: flex;
@@ -20,7 +41,7 @@ export const StyledCollapse = styled(Collapse)`
 	width: 60%;
 
 	.ant-collapse-header-text {
-		color: ${(p) => p.theme.colors.secondary};
+		color: ${(p) => p.theme.colors.text};
 		font-size: 24px;
 		font-weight: bold;
 		text-align: center;
@@ -30,7 +51,7 @@ export const StyledCollapse = styled(Collapse)`
 		align-self: center;
 
 		svg {
-			fill: ${(p) => p.theme.colors.secondary};
+			fill: ${(p) => p.theme.colors.text};
 			width: 16px;
 			height: 16px;
 		}
@@ -49,7 +70,7 @@ export const StyledPanel = styled(Panel)<IPanelProps>`
 		gap: 2em;
 
 		.empty {
-			color: ${(p) => p.theme.colors.secondary};
+			color: ${(p) => p.theme.colors.text};
 			filter: ${(p) =>
 				p.theme.name === 'light' ? 'brightness(1)' : 'brightness(0.9)'};
 		}
@@ -72,9 +93,8 @@ export const Friend = styled.button`
 	border: none;
 	border-radius: 8px;
 	align-items: center;
-	color: ${(p) => p.theme.colors.secondary};
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	color: ${(p) => p.theme.colors.text};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
 	transition: transform 0.1s linear;
 
@@ -86,8 +106,7 @@ export const Friend = styled.button`
 
 	:hover {
 		transform: scale(1.01);
-		background-color: ${(p) =>
-			p.theme.name === 'light' ? '#e9e9eb' : '#1f1f20'};
+		background-color: ${(p) => p.theme.colors.hover};
 	}
 `;
 
@@ -103,7 +122,7 @@ export const DrawerTitle = styled.div`
 		cursor: pointer;
 		width: 24px;
 		height: 24px;
-		fill: ${(p) => p.theme.colors.secondary};
+		fill: ${(p) => p.theme.colors.text};
 
 		:hover {
 			transform: scale(1.2);
@@ -134,7 +153,7 @@ export const FriendOptions = styled.div`
 	gap: 32px;
 
 	svg {
-		fill: ${(p) => p.theme.colors.secondary};
+		fill: ${(p) => p.theme.colors.text};
 		width: 24px;
 		height: 24px;
 	}
@@ -148,7 +167,7 @@ export const FriendOptions = styled.div`
 		border: none;
 		display: flex;
 		gap: 1em;
-		color: ${(p) => p.theme.colors.secondary};
+		color: ${(p) => p.theme.colors.text};
 		transition: transform 0.1s linear;
 
 		:hover {
@@ -165,13 +184,12 @@ export const Blocked = styled.div`
 	border: none;
 	border-radius: 8px;
 	align-items: center;
-	color: ${(p) => p.theme.colors.secondary};
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	color: ${(p) => p.theme.colors.text};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
 
 	h5 {
-		color: #9ca3af;
+		color: #808080;
 	}
 
 	.avatar {
@@ -199,7 +217,7 @@ export const Blocked = styled.div`
 		svg {
 			width: 24px;
 			height: 24px;
-			fill: #dc4f19;
+			fill: ${(p) => p.theme.colors.main};
 		}
 	}
 `;
@@ -211,8 +229,7 @@ export const Pending = styled.div`
 	border: none;
 	border-radius: 8px;
 	align-items: center;
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
 `;
 
@@ -230,7 +247,7 @@ export const HDivLink = styled(Link)`
 	}
 
 	h5 {
-		color: ${(p) => p.theme.colors.secondary};
+		color: ${(p) => p.theme.colors.text};
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -253,7 +270,7 @@ export const HDiv = styled.div`
 		.ignore-icon {
 			width: 20px;
 			height: 20px;
-			fill: #dc4f19;
+			fill: ${(p) => p.theme.colors.main};
 		}
 
 		.accept-icon {
@@ -271,24 +288,61 @@ export const HDiv = styled.div`
 	}
 `;
 
-export const NotifCounter = styled.div`
+export const AddUser = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 16px;
+`;
+
+export const User = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 8px 16px;
+	transition: all 0.2s linear;
+	background: none;
+	gap: 32px;
+	border: none;
+	color: ${(p) => p.theme.colors.text};
+
+	border-bottom: 1px dotted;
+	border-bottom-color: ${(p) =>
+		p.theme.name === 'light' ? '#e5e7eb' : '#403F40'};
+
+	button {
+		border: none;
+		background: none;
+
+		p {
+			display: none;
+		}
+
+		svg {
+			cursor: pointer;
+			fill: ${(p) => p.theme.colors.text};
+			width: 24px;
+			height: 24px;
+
+			:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+`;
+
+export const UserLink = styled(Link)`
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	background-color: red;
-	position: absolute;
-	top: -8px;
-	left: -8px;
-	padding: 10px;
-	border-radius: 50%;
-	font-size: 16px;
-	font-weight: 500;
-	color: white;
-	z-index: 70;
+	gap: 16px;
+	text-decoration: none;
 
-	@media screen and (max-width: 768px) {
-		top: -4px;
+	color: ${(p) => p.theme.colors.text};
+
+	:hover {
+		color: ${(p) => p.theme.colors.text};
+		text-decoration: underline;
 	}
 `;
