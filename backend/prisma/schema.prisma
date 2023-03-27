@@ -37,18 +37,20 @@ model User {
   blocked   User[] @relation("blocked")
   blockedOf User[] @relation("blocked")
 
-  otp_enabled   Boolean?  @default(false)
-  otp_verified  Boolean?  @default(false)
-  otp_validated Boolean?  @default(false)
-  otp_ascii     String?   @default("")
-  otp_hex       String?   @default("")
-  otp_base32    String?   @default("")
-  otp_auth_url  String?   @default("")
-  messages      Message[] @relation("author")
-  lobbies       Lobby[]   @relation("joined")
-  lobbyOwner    Lobby[]   @relation("owned")
-  bannedFrom    Lobby[]   @relation("banned")
-  muteFrom      Lobby[]   @relation("muted")
+  otp_enabled        Boolean?  @default(false)
+  otp_verified       Boolean?  @default(false)
+  otp_validated      Boolean?  @default(false)
+  otp_ascii          String?   @default("")
+  otp_hex            String?   @default("")
+  otp_base32         String?   @default("")
+  otp_auth_url       String?   @default("")
+  messages           Message[] @relation("author")
+  lobbies            Lobby[]   @relation("joined")
+  lobbyOwner         Lobby[]   @relation("owned")
+  bannedFrom         Lobby[]   @relation("banned")
+  muteFrom           Lobby[]   @relation("muted")
+  gamesAsLeftPlayer  Game[]    @relation("leftPlayer")
+  gamesAsRightPlayer Game[]    @relation("rightPlayer")
 }
 
 model Lobby {
@@ -68,17 +70,18 @@ model Lobby {
   messages    Message[]
 }
 
-model Match {
-  id Int @id
+model Game {
+  id Int @id @default(autoincrement())
 
-  createAt   DateTime
+  createdAt  DateTime
   finishedAt DateTime
 
-  userOneId     Int
-  userOnePoints Int
-
-  userTwoId     Int
-  userTwoPoints Int
+  leftPlayer      User   @relation("leftPlayer", fields: [leftPlayerName], references: [name])
+  leftPlayerName  String
+  rightPlayer     User   @relation("rightPlayer", fields: [rightPlayerName], references: [name])
+  rightPlayerName String
+  leftScore       Int
+  rightScore      Int
 }
 
 model Message {

@@ -66,7 +66,7 @@ export const RegularLink = styled(Link)`
 	}
 `;
 
-export const BoldYellowButton = styled.button`
+export const BoldYellowButton = styled.div`
 	border: none;
 	background: transparent;
 
@@ -77,10 +77,9 @@ export const BoldYellowButton = styled.button`
 	font-size: clamp(32px, 4vw, 64px);
 	text-shadow: 0px 0px 5px #bb7e29;
 	transition: all 0.1s ease-in;
-
-	:hover {
-		left: 16px;
-	}
+	//:hover {
+	//	left: 16px;
+	//}
 `;
 
 export const RegularButton = styled.button`
@@ -118,4 +117,22 @@ export const UserAchievements = styled.div`
 	color: rgba(255, 255, 255, 0.75);
 	font-size: clamp(16px, 3vw, 22px);
 	text-shadow: 0 0 2px rgb(0, 0, 0);
+`;
+
+export const GameMode = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s ease-in-out;
+	padding: 0 8px;
+	margin: 0 8px;
+	gap: 4px;
+	border-left: 1px solid white;
+
+	&.active {
+		margin: 8px;
+		max-height: 500px;
+	}
 `;

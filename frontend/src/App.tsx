@@ -1,9 +1,7 @@
 import {useState} from 'react';
 import {Route, Routes, useRoutes} from 'react-router-dom';
 
-import Defeat from 'components/EditName/Defeat';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
-import Victory from 'components/Victory';
 import FakeLogin from 'mocks/Login/FakeLogin';
 import {UserMocks} from './mocks/Users/UserMocks';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
@@ -80,22 +78,6 @@ function App() {
 			element: (
 				<PrivateRoute>
 					<DoubleAuthentication />
-				</PrivateRoute>
-			),
-		},
-		{
-			path: '/Victory',
-			element: (
-				<PrivateRoute>
-					<Victory />
-				</PrivateRoute>
-			),
-		},
-		{
-			path: '/Defeat',
-			element: (
-				<PrivateRoute>
-					<Defeat />
 				</PrivateRoute>
 			),
 		},

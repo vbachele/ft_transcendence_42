@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import * as S from './Victory.styles';
+import React, {useEffect, useState} from 'react';
+import * as S from './Draw.styles';
 import {useNavigate} from 'react-router-dom';
 
-function Victory() {
+function Draw() {
 	const [animate, setAnimate] = useState(false);
 	const navigate = useNavigate();
 
@@ -18,11 +18,11 @@ function Victory() {
 	return (
 		<S.Wrapper>
 			<S.Text className={animate ? 'animate' : ''}>
-				<>VICTORY</>
-				<span>VICTORY</span>
+				<>DRAW</>
+				<span>DRAW</span>
 			</S.Text>
 		</S.Wrapper>
 	);
-}
+};
 
-export default Victory;
+export default Draw;
