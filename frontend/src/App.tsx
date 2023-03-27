@@ -1,6 +1,4 @@
-import {useState} from 'react';
 import {Route, Routes, useRoutes} from 'react-router-dom';
-
 import {ConfigProvider, theme as antdTheme} from 'antd';
 import {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
@@ -14,6 +12,7 @@ import SocketContextComponent from 'contexts/Socket/Component';
 import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/Component';
 import Pages from 'pages';
+import Popup from 'components/Popup';
 
 function App() {
 	const defaultTheme = 'dark';
@@ -76,28 +75,6 @@ function App() {
 						<Pages.DoubleAuth />
 					</PrivateRoute>
 				</SocketContextComponent>
-			),
-		},
-		{
-			path: '/Victory',
-			element: (
-				<SocketContextComponent>
-					<PrivateRoute>
-						<Victory />
-					</PrivateRoute>
-				</SocketContextComponent>
-
-			),
-		},
-		{
-			path: '/Defeat',
-			element: (
-				<SocketContextComponent>
-				<PrivateRoute>
-					<Defeat />
-				</PrivateRoute>
-				</SocketContextComponent>
-
 			),
 		},
 		{

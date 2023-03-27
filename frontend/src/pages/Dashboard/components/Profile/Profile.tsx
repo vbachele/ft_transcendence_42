@@ -72,7 +72,7 @@ const Profile = ({user}: IProps) => {
 					</S.VDivLink>
 				</S.VDiv>
 			)}
-			<UserInvitedToGame />
+			<UserInvitedToGame user={user}/>
 		</S.Profile>
 	);
 };

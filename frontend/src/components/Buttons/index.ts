@@ -9,9 +9,11 @@ import Message from './Social/Message/Message';
 import RemoveFriend from './Social/RemoveFriend/RemoveFriend';
 import Spectate from './Social/Spectate/Spectate';
 import ViewProfile from './Social/ViewProfile/ViewProfile';
+import Kick from './Channel/Kick';
 
 export default {
 	AdminRights,
+	Kick,
 	Ban,
 	Mute,
 	Play,

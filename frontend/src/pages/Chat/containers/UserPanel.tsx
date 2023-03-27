@@ -40,19 +40,19 @@ function UserPanel() {
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<ViewProfile user={userInPanel.name} />
+				<Buttons.ViewProfile user={userInPanel} />
 				{/*{userInPanel.status === 'online' && <Invite name={userInPanel.name} />}*/}
+				<Buttons.Invite name={userInPanel.name} />
+				<Buttons.Message user={userInPanel.name} />
 				{/*{userInPanel.status === 'ingame' && <Spectate user={userInPanel.name} />}*/}
-				<Invite name={userInPanel.name} />
-				<Message user={userInPanel.name} />
-				<AddFriend user={userInPanel} />
-				<RemoveFriend user={userInPanel} />
-				<BlockUser user={userInPanel} />
+				<Buttons.AddFriend user={userInPanel} />
+				<Buttons.RemoveFriend user={userInPanel} />
+				<Buttons.BlockUser user={userInPanel} />
 				{activeLobby?.adminName === userName.userName && (
 					<>
-						<Mute id={1} />
-						<Ban id={1} />
-						<Kick onClick={kickUser} />
+						<Buttons.Mute id={1} />
+						<Buttons.Ban id={1} />
+						<Buttons.Kick onClick={kickUser} />
 					</>
 				)}
 			</S.FriendOptions>
