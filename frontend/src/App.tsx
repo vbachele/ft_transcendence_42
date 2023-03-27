@@ -60,9 +60,10 @@ function App() {
 		{
 			path: '/',
 			element: (
-				<PrivateRoute>
-					<Pages.Home />
-				</PrivateRoute>
+					<PrivateRoute>
+						<Pages.Home />
+					</PrivateRoute>
+
 			),
 		},
 		{
@@ -72,33 +73,44 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-				<PrivateRoute>
-					<Pages.DoubleAuth />
-				</PrivateRoute>
+				<SocketContextComponent>
+					<PrivateRoute>
+						<Pages.DoubleAuth />
+					</PrivateRoute>
+				</SocketContextComponent>
 			),
 		},
 		{
 			path: '/Victory',
 			element: (
-				<PrivateRoute>
-					<Victory />
-				</PrivateRoute>
+				<SocketContextComponent>
+					<PrivateRoute>
+						<Victory />
+					</PrivateRoute>
+				</SocketContextComponent>
+
 			),
 		},
 		{
 			path: '/Defeat',
 			element: (
+				<SocketContextComponent>
 				<PrivateRoute>
 					<Defeat />
 				</PrivateRoute>
+				</SocketContextComponent>
+
 			),
 		},
 		{
 			path: '/*',
 			element: (
+				<SocketContextComponent>
 				<PrivateRoute>
 					<WithNavbar />
 				</PrivateRoute>
+				</SocketContextComponent>
+
 			),
 		},
 	]);
@@ -119,13 +131,13 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						<SocketContextComponent>
+						{/* <SocketContextComponent> */}
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							<Notification />
 							{routes}
-						</SocketContextComponent>
+						{/* </SocketContextComponent> */}
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>

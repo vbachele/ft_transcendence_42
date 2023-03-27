@@ -8,5 +8,6 @@ async function checkUserToken() {
   if (response.statusCode == "400") {
     navigate("/login");
   }
+  return response
 }
 export default checkUserToken;

@@ -1,10 +1,15 @@
 import {backend} from 'lib/backend';
-import {Cookies} from 'typescript-cookie';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import {useUserInfos} from './userContent';
 
-const getInfosFromDB = async () => {
-	const user = await backend.getUserByToken();
-	return user;
+const getInfosFromDB = async (navigate: NavigateFunction) => {
+	const response = await backend.getUserByToken();
+	console.log('response', response);
+	if (response.statusCode === 400)
+	{
+		navigate("/login");
+	}
+	return response;
 };
 
 export default getInfosFromDB;

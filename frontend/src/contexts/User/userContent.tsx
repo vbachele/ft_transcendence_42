@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import getInfosFromDB from './GetuserFromDB';
 import {Achievements} from 'pages/Dashboard/components/Achievements/Achievements.styles';
+import { useNavigate } from 'react-router-dom';
 
 type UserContextProviderProps = {
 	children: React.ReactNode;
@@ -54,6 +55,7 @@ type UserContextType = {
 export const UserContext = createContext({} as UserContextType);
 
 export const UserContextProvider = ({children}: UserContextProviderProps) => {
+	const navigate = useNavigate();
 	const [userName, setUserName] = useState<UserName>({userName: ''});
 	const [image, setImage] = useState<AuthImage>({image: ''});
 	const [achievements, setAchievements] = useState<Achievements>({
@@ -67,7 +69,7 @@ export const UserContextProvider = ({children}: UserContextProviderProps) => {
 	const [email, setEmail] = useState<Email>({email: ''});
 
 	useEffect(() => {
-		const userInfos = getInfosFromDB();
+		const userInfos = getInfosFromDB(navigate);
 		userInfos.then((res) => {
 			setUserName({userName: res.name});
 			setImage({image: res.image});
