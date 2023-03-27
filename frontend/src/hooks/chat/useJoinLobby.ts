@@ -6,12 +6,12 @@ import {useUserInfos} from '../../contexts/User/userContent';
 import {fetchUserByName} from 'helpers/fetchUserByName';
 import unlockAchievement from 'helpers/unlockAchievement';
 
-export async function useJoinLobby() {
+export function useJoinLobby() {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {lobbyList} = useContext(ChatContext).ChatState;
 	const name = useUserInfos().userName.userName;
-	const user = await fetchUserByName(name, name);
-	const hasJoinAchievement = user?.achievements.includes('JOIN');
+	// const user = await fetchUserByName(name, name);
+	// const hasJoinAchievement = user?.achievements.includes('JOIN');
 
 	const joinLobby = (event: React.MouseEvent) => {
 		event.preventDefault();
@@ -28,9 +28,9 @@ export async function useJoinLobby() {
 		)?.id;
 		socket?.emit(ClientEvents.JoinLobby, {lobbyId: lobbyId});
 
-		if (user && !hasJoinAchievement) {
-			unlockAchievement('JOIN', user, socket);
-		}
+		// if (user && !hasJoinAchievement) {
+		// 	unlockAchievement('JOIN', user, socket);
+		// }
 	};
 
 	return {joinLobby};
