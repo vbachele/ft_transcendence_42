@@ -38,6 +38,8 @@ export class Mail2FaValidateService {
 			  otp_validated : true,
 			},
 		  });
+		  console.log("data", updatedUser);
+
 		}
 		catch(error){
 			throw new HttpException({
