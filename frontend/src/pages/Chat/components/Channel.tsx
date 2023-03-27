@@ -32,7 +32,7 @@ function Channel({lobby}: ChannelProps) {
 
 	return (
 		<S.Channel
-			onClick={lobby.privacy === 'private' ? onJoinLobbyPass : onJoinLobby}
+			onClick={lobby.privacy === 'private' && lobby.type === 'channel' ? onJoinLobbyPass : onJoinLobby}
 		>
 			{lobby.type === 'channel'
 				? '#' + lobby.name

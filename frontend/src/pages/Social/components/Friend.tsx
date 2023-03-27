@@ -62,7 +62,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<Divider style={{backgroundColor: '#bbbbbb'}} />
 				<S.FriendOptions>
 					<ViewProfile user={friend.name} />
-					{friend.status === 'online' && <Invite id={friend.name} />}
+					{friend.status === 'online' && <Invite name={friend.name} />}
 					{friend.status === 'ingame' && <Spectate user={friend.name} />}
 					<Message user={friend.name} />
 					<RemoveFriend
@@ -72,7 +72,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 					/>
 					<BlockUser user={friend} hideDrawer={hideDrawer} onBlock={onBlock} />
 				</S.FriendOptions>
-				<UserInvitedToGame />
+				<UserInvitedToGame user={friend}/>
 			</Drawer>
 		</>
 	);

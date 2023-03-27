@@ -76,10 +76,7 @@ export const BoldYellowButton = styled.div`
 	font-weight: 600;
 	font-size: clamp(32px, 4vw, 64px);
 	text-shadow: 0px 0px 5px #bb7e29;
-	transition: all 0.1s ease-in;
-	//:hover {
-	//	left: 16px;
-	//}
+	cursor: pointer;
 `;
 
 export const RegularButton = styled.button`
@@ -132,7 +129,6 @@ export const GameMode = styled.div`
 	border-left: 1px solid white;
 
 	&.active {
-		margin: 8px;
 		max-height: 500px;
 	}
 `;

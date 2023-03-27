@@ -13,7 +13,9 @@ import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
-import ChatContext from '../../../contexts/Chat/context';
+import ChatContext from 'contexts/Chat/context';
+import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
+import Spectate from '../../../components/Buttons/Social/Spectate/Spectate';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
@@ -42,7 +44,9 @@ function UserPanel() {
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
 				<ViewProfile user={userInPanel.name} />
-				<Invite id={userInPanel.name} />
+				{/*{userInPanel.status === 'online' && <Invite name={userInPanel.name} />}*/}
+				{/*{userInPanel.status === 'ingame' && <Spectate user={userInPanel.name} />}*/}
+				<Invite name={userInPanel.name} />
 				<Message user={userInPanel.name} />
 				<AddFriend user={userInPanel} />
 				<RemoveFriend user={userInPanel} />
@@ -50,6 +54,7 @@ function UserPanel() {
 				<Mute id={1} />
 				<Ban id={1} />
 			</S.FriendOptions>
+			<UserInvitedToGame user={userInPanel}/>
 		</C.UserPanel>
 	);
 }

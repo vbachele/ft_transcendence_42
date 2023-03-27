@@ -32,6 +32,19 @@ export class GameService {
 			});
 	}
 
+	public cancelInvitation(client: AuthenticatedSocket, lobbyId: string, invitedClientName: string) {
+		const invitedClient = this.websocketService.getClient(invitedClientName);
+		if (!invitedClient) {
+			throw new WsException(`User [${invitedClientName}] not found`);
+		}
+		this.websocketService.server
+			.to(invitedClient.id)
+			.emit(ServerGameEvents.InvitationCancelled, {
+				lobby: {id: lobbyId, type: 'game'},
+			});
+		this.lobbyService.delete(lobbyId);
+	}
+
 	public dispatchInvitationResponse(client: AuthenticatedSocket, data: any) {
 		const lobby = this.lobbyService.getLobby(data.lobby.id) as GameLobby;
 		lobby.dispatchToLobby(ServerEvents.InvitationResponse, {

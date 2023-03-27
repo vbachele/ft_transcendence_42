@@ -34,8 +34,13 @@ const GameInvite = () => {
 			setLobby(data.lobby);
 			setInvited(true);
 		});
+		socket?.on(ServerGameEvents.InvitationCancelled, () => {
+			console.info(`Invitation cancelled`);
+			setInvited(false);
+		});
 		return () => {
 			socket?.off(ServerGameEvents.Invitation);
+			socket?.off(ServerGameEvents.InvitationCancelled);
 		};
 	}, [socket]);
 

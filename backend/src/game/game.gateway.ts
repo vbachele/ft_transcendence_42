@@ -1,6 +1,7 @@
 import {
 	ConnectedSocket,
-	MessageBody, OnGatewayDisconnect,
+	MessageBody,
+	OnGatewayDisconnect,
 	SubscribeMessage,
 	WebSocketGateway,
 	WsException,
@@ -119,6 +120,27 @@ export class GameGateway implements OnGatewayDisconnect {
 				lobbyId: lobby.id,
 			});
 		}
+	}
+
+	@SubscribeMessage(ClientGameEvents.CancelSearch)
+	onCancelSearch(@ConnectedSocket() client: AuthenticatedSocket) {
+		this.queue[GameMode.AgainstTheClock] = this.queue[
+			GameMode.AgainstTheClock
+		].filter((c) => c !== client);
+		this.queue[GameMode.ScoreLimit] = this.queue[GameMode.ScoreLimit].filter(
+			(c) => c !== client
+		);
+		console.log(`Client [${client.data.name}] canceled search`);
+	}
+
+	@SubscribeMessage(ClientGameEvents.CancelInvitation)
+	onCancelInvitation(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('lobbyId') lobbyId: string,
+		@MessageBody('invitedClientName') invitedClientName: string
+	) {
+		console.log(`Client [${client.data.name}] canceled invitation`);
+		this.gameService.cancelInvitation(client, lobbyId, invitedClientName);
 	}
 
 	@SubscribeMessage(ClientGameEvents.LeaveGame)

@@ -146,7 +146,49 @@ export const LinksContainer = styled.div`
 	}
 `;
 
-export const PopupButton = styled.button`
+export const PlayContainer = styled.button`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin: 0 0 -8px 0;
 	background-color: transparent;
 	border: none;
+`;
+
+export const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+`;
+
+export const Button = styled.button`
+	background: none;
+	border: none;
+	font-size: 16px;
+  @media only screen and (max-width: 768px) {
+		font-size: 8px;
+  }
+`
+
+export const GameMode = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s ease-in-out;
+	padding: 0 8px;
+	margin: 0 8px;
+	gap: 4px;
+	border-left: 1px solid white;
+
+	&.active {
+		margin: 8px;
+		max-height: 500px;
+	}
+  @media only screen and (max-width: 768px) {
+		border-left: none;
+		gap: 8px;
+  }
+	
 `;

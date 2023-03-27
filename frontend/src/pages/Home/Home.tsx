@@ -51,7 +51,11 @@ const Homepage = () => {
 			</S.Background>
 			<S.Image src={logo_ai} />
 			<S.LinksContainer>
-				<S.BoldYellowButton onMouseEnter={onPlay} onMouseLeave={offPlay}>
+				<S.BoldYellowButton
+					onClick={() => setShowGameModes(!showGameModes)}
+					onMouseEnter={onPlay}
+					onMouseLeave={offPlay}
+				>
 					PLAY
 					<S.GameMode className={showGameModes ? 'active' : ''}>
 						<S.RegularButton onClick={onPlayAgainstTheClock}>
