@@ -1,15 +1,30 @@
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './admin.svg';
+import React, {useContext} from 'react';
+import SocketContext from '../../../../contexts/Socket/context';
+import {ClientChatEvents} from '../../../../events/chat.events';
 
 interface IProps {
-	id: number;
+	username: string;
+	lobbyId: string;
 }
 
-function AdminRights({id}: IProps) {
+function AdminRights({username, lobbyId}: IProps) {
+	const {socket} = useContext(SocketContext).SocketState;
+
+	function setAdmin(event: React.MouseEvent) {
+		event.preventDefault();
+		event.stopPropagation();
+		socket?.emit(ClientChatEvents.SetAdmin, {
+			nameToSetAdmin: username,
+			lobbyId: lobbyId,
+		});
+	}
+
 	return (
-		<button>
-			<Icon />
-			<F.Text>Give administrator rights</F.Text>
+		<button onClick={setAdmin}>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Give administrator rights</F.Text>
 		</button>
 	);
 }

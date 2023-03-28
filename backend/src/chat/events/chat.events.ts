@@ -7,7 +7,8 @@ export enum ClientChatEvents {
   KickUser = "client.chat.kickUser",
   MuteUser = "client.chat.muteUser",
   SetAdmin = "client.chat.setAdmin",
-  KickedFromLobby = "client.chat.kickedFromLobby"
+  KickedFromLobby = "client.chat.kickedFromLobby",
+  IsInLobby = "client.chat.isInLobby",
 }
 
 
@@ -21,5 +22,7 @@ export enum ServerChatEvents {
   UserMuted = "server.chat.userMuted",
   UserSetAdmin = "server.chat.userSetAdmin",
   UserListExceptMe = "server.chat.userListExceptMe",
-  KickedFromLobby = "server.chat.kickedFromLobby"
+  KickedFromLobby = "server.chat.kickedFromLobby",
+  InLobby = "server.chat.inLobby",
+  MutedFromLobby = "server.chat.mutedFromLobby",
 }
