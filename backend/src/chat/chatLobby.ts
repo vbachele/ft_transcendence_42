@@ -9,7 +9,6 @@ import {ServerEvents} from '../lobby/events/lobby.events';
 import {ServerChatEvents} from './events/chat.events';
 import * as bcrypt from 'bcrypt';
 
-
 export class ChatLobbyDto {
 	id?: string;
 	@IsString()
@@ -39,7 +38,7 @@ export interface Lobby {
 	maxClients: number;
 	type: string;
 	privacy: string;
-	password?: any ;
+	password?: any;
 }
 
 @Injectable()
@@ -50,7 +49,8 @@ export class ChatLobby extends ALobby {
 		private readonly websocketService: WebsocketService
 	) {
 		super(websocketService.server, data.maxClients);
-		if (data.id) {//
+		if (data.id) {
+			//
 			this.id = data.id;
 		}
 	}
@@ -69,7 +69,6 @@ export class ChatLobby extends ALobby {
 				}
 			} catch (error) {
 				throw new WsException(`Error while creating lobby: ` + error);
-
 			}
 			if (data.type === 'channel') {
 				this.server.emit(ServerChatEvents.LobbyCreated, {lobby: lobby});
@@ -77,17 +76,16 @@ export class ChatLobby extends ALobby {
 		}
 	}
 
-	async hashPassword(password: string | undefined)
-	{
-		if (password){
+	async hashPassword(password: string | undefined) {
+		if (password) {
 			const saltOrRounds = 10;
-			const hash  = await bcrypt.hash(password, saltOrRounds);
+			const hash = await bcrypt.hash(password, saltOrRounds);
 			return hash;
 		}
 		return null;
 	}
 	private async initLobby(data: ChatLobbyDto): Promise<Lobby> {
-		const hashPassword = await this.hashPassword(data.password)
+		const hashPassword = await this.hashPassword(data.password);
 		return {
 			id: this.id,
 			name: data.name,
@@ -122,16 +120,18 @@ export class ChatLobby extends ALobby {
 	async addClient(
 		@ConnectedSocket() client: AuthenticatedSocket
 	): Promise<ALobby> {
-		setTimeout(() => {
-			super.addClient(client);
-			this.prismaLobbyService
-				.pushUserToLobby(client.data.name, this.id)
-				.catch((e) => {
-					throw e;
-				});
-		}, 500);
+		super.addClient(client);
+		await this.prismaLobbyService.pushUserToLobby(client.data.name, this.id);
 		const lobby = await this.prismaLobbyService.fetchLobbyFromId(this.id);
-		this.server.to(client.id).emit(ServerEvents.AddedToLobby, {lobby: lobby});
+		const adminList = await this.prismaLobbyService.fetchAdminsInLobby(this.id);
+		this.server.to(client.id).emit(ServerEvents.AddedToLobby, {
+			lobby: {...lobby, admins: adminList?.admins.map((admin) => admin.name)},
+		});
+		const userList = await this.prismaLobbyService.fetchUsersInLobby(this.id);
+		this.server.emit(ServerChatEvents.UserList, {
+			users: userList?.users,
+			lobbyId: this.id,
+		});
 		return this;
 	}
 }

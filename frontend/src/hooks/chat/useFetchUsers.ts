@@ -14,13 +14,15 @@ export function useFetchLobbyUserList() {
 	useEffect(() => {
 		socket?.emit(ClientChatEvents.FetchUsers, {lobbyId: activeLobby?.id});
 		socket?.on(ServerChatEvents.UserList, (data) => {
-			setUserList(data.users);
+			console.log(`data = `, data);
+			if (data.lobbyId === activeLobby?.id)
+				setUserList(data.users);
 		})
 
 		return () => {
 			socket?.off(ServerChatEvents.UserList);
 		}
-	}, [socket])
+	}, [socket, activeLobby])
 
 	return {userList};
 }

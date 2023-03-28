@@ -37,15 +37,15 @@ model User {
   blocked   User[] @relation("blocked")
   blockedOf User[] @relation("blocked")
 
-  otp_enabled   Boolean?  @default(false)
-  otp_verified  Boolean?  @default(false)
-  otp_validated Boolean?  @default(false)
-  messages      Message[] @relation("author")
-  lobbies       Lobby[]   @relation("joined")
-  lobbyOwner    Lobby[]   @relation("owned")
-  bannedFrom    Lobby[]   @relation("banned")
-  muteFrom      Lobby[]   @relation("muted")
-  token_mail    String?   @default("")
+  otp_enabled        Boolean?  @default(false)
+  otp_verified       Boolean?  @default(false)
+  otp_validated      Boolean?  @default(false)
+  messages           Message[] @relation("author")
+  lobbies            Lobby[]   @relation("joined")
+  lobbyAdmin         Lobby[]   @relation("admin")
+  bannedFrom         Lobby[]   @relation("banned")
+  muteFrom           Lobby[]   @relation("muted")
+  token_mail         String?   @default("")
   gamesAsLeftPlayer  Game[]    @relation("leftPlayer")
   gamesAsRightPlayer Game[]    @relation("rightPlayer")
 }
@@ -59,8 +59,7 @@ model Lobby {
   privacy     String
   maxClients  Int
   password    String?
-  admin       User      @relation(name: "owned", fields: [adminName], references: [name])
-  adminName   String
+  admins      User[]    @relation("admin")
   users       User[]    @relation("joined")
   banned      User[]    @relation("banned")
   muted       User[]    @relation("muted")

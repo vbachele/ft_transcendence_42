@@ -11,13 +11,13 @@ export class AdminGuard implements CanActivate {
   ): Promise<boolean> {
 		const args = context.getArgs();
 		try {
-			const admin = await this.prismaLobbyService.fetchAdminInLobby(args[1].lobbyId);
-			if (!admin) return true;
-			if (admin.adminName === args[0].data.name) return true;
+			const res = await this.prismaLobbyService.fetchAdminsInLobby(args[1].lobbyId);
+			if (!res) return true;
+			const found = res.admins.find((admin) => admin.name === args[0].data.name);
+			return !!found;
 		} catch (e) {
 			console.log(e);
 			throw new WsException(`Admin right violation: ` + e);
 		}
-		return false;
 	}
 }

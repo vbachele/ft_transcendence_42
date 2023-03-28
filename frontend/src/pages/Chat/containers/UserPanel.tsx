@@ -15,8 +15,7 @@ import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToG
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
-	const {userName} = useUserInfos();
-	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
+	const {userName} = useUserInfos().userName;
 
 	if (!userInPanel) return null;
 
@@ -30,7 +29,7 @@ function UserPanel() {
 					}
 				/>
 			</S.DrawerTitle>
-			<S.FriendDetails>
+			<S.FriendDetails >
 				<img
 					className="drawer__avatar"
 					src={userInPanel.image}
@@ -48,15 +47,29 @@ function UserPanel() {
 				<Buttons.AddFriend user={userInPanel} />
 				<Buttons.RemoveFriend user={userInPanel} />
 				<Buttons.BlockUser user={userInPanel} />
-				{activeLobby?.adminName === userName.userName && (
-					<>
-						<Buttons.Mute id={1} />
-						<Buttons.Ban id={1} />
-						<Buttons.Kick onClick={kickUser} />
-					</>
-				)}
+				{activeLobby?.admins &&
+					activeLobby?.admins.find((adminName) => adminName === userName) && (
+						<>
+							<Buttons.Mute
+								username={userInPanel.name}
+								lobbyId={activeLobby?.id}
+							/>
+							<Buttons.Ban
+								username={userInPanel.name}
+								lobbyId={activeLobby?.id}
+							/>
+							<Buttons.Kick
+								username={userInPanel.name}
+								lobbyId={activeLobby?.id}
+							/>
+							<Buttons.AdminRights
+								username={userInPanel.name}
+								lobbyId={activeLobby?.id}
+							/>
+						</>
+					)}
 			</S.FriendOptions>
-			<UserInvitedToGame user={userInPanel}/>
+			<UserInvitedToGame user={userInPanel} />
 		</C.UserPanel>
 	);
 }

@@ -1,10 +1,9 @@
 import ModalChanCreate from '../modals/ModalChanCreate';
 import {useState} from 'react';
 import ModalUserSearch from '../modals/ModalUserSearch';
-import * as S from './components.styles'
+import * as S from './components.styles';
 import useFetchUsers from '../../../hooks/useFetchUsers';
-
-
+import {useUserInfos} from '../../../contexts/User/userContent';
 
 interface NewDiscussionProps {
 	type: 'channel' | 'direct_message';
@@ -12,6 +11,7 @@ interface NewDiscussionProps {
 
 function NewDiscussion({type}: NewDiscussionProps) {
 	const [displayModal, setDisplayModal] = useState(false);
+	const {userName} = useUserInfos().userName;
 	const {data} = useFetchUsers();
 
 	return (
@@ -32,7 +32,7 @@ function NewDiscussion({type}: NewDiscussionProps) {
 					<ModalUserSearch
 						isModalOpen={displayModal}
 						setIsModalOpen={setDisplayModal}
-						userList={data!}
+						userList={data?.filter((user) => user.name !== userName)!}
 						type={'newDirectMessage'}
 					/>
 				))}

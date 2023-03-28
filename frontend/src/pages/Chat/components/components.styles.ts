@@ -178,4 +178,33 @@ export const ModalContainer = styled.div`
 
 `
 
+export const DMContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+`;
 
+export const Avatar = styled.div`
+	display: flex;
+	align-items: center;
+	width: 48px;
+	height: 48px;
+`;
+
+export const UnreadMessages = styled.div`
+  background-color: ${(p) => p.theme.colors.main};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 400;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    top: -4px;
+  }
+`;
