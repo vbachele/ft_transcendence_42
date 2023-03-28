@@ -12,7 +12,7 @@ const ModalDescription = (props : Iprops) => {
 	<Popover
 			title="description"
 			overlayStyle={{
-				width: "40vw"
+				maxWidth: "40vw"
 			  }}
 			content={props.description}
 			placement="right"
