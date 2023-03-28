@@ -40,6 +40,9 @@ export class AuthController {
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);
     this.authService.updateCookies(res, token, userExists);
+    const host = req.get('host')
+    console.log("HOST is", host);
+
     this.authService.RedirectConnectingUser(res, userExists?.email);
   }
 
