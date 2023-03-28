@@ -4,7 +4,7 @@ import {IUser} from '../../types/models';
 export interface ILobby {
 	name: string;
 	description: string;
-	adminName: string;
+	admins: string[];
 	createdAt: string;
 	id: string;
 	maxClients: number;

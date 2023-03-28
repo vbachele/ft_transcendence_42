@@ -4,7 +4,7 @@ export enum ClientEvents {
   JoinLobby = 'client.joinLobby',
   LeaveLobby = "client.leaveLobby",
   InviteToLobby = 'client.inviteToLobby',
-  InvitationResponse = 'client.invitationResponse'
+  InvitationResponse = 'client.invitationResponse',
 }
 
 

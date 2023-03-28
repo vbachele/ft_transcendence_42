@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import Arrow from '../../../assets/send_message_arrow.svg';
 import {Input as AntdInput} from 'antd';
-import {AiFillInfoCircle} from "react-icons/ai"
+import {AiFillInfoCircle} from 'react-icons/ai';
 import {DownOutlined} from '@ant-design/icons';
-
-
 
 export const StyledUser = styled.button`
 	width: 100%;
@@ -151,31 +149,56 @@ export const UserList = styled.button`
 	}
 `;
 
-export const infoIcon = styled(AiFillInfoCircle)`
-`
+export const infoIcon = styled(AiFillInfoCircle)``;
 export const DropdownAdmin = styled.div`
 	display: flex;
 	flex-direction: row;
 	gap: 4px;
-`
+`;
 
 export const DropdownButton = styled.button`
- border: none;
-  background-color: transparent;
-  box-shadow: none;
-  text-decoration: none;
-  color: inherit;
-`
-
-
+	border: none;
+	background-color: transparent;
+	box-shadow: none;
+	text-decoration: none;
+	color: inherit;
+`;
 
 export const DropdownIcon = styled(DownOutlined)`
 	width: 14px;
 	height: 16px;
-`
+`;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div``;
 
-`
+export const DMContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+`;
 
+export const Avatar = styled.div`
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 48px;
+	height: 48px;
+`;
 
+export const UnreadMessages = styled.div`
+	background-color: ${(p) => p.theme.colors.main};
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	font-size: 15px;
+	font-weight: 400;
+	color: white;
+
+	@media screen and (max-width: 768px) {
+		top: -4px;
+	}
+`;

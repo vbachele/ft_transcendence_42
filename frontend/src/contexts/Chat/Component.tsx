@@ -48,6 +48,7 @@ function ChatContextComponent(props: IChatContextComponentProps) {
 			socket?.off(ServerChatEvents.KickedFromLobby);
 			socket?.off(ServerEvents.AddedToLobby);
 			socket?.off(ServerChatEvents.LobbyCreated);
+			socket?.off(ServerChatEvents.LobbyList);
 		};
 	}, [socket]);
 

@@ -70,17 +70,21 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
+				// <SocketContextComponent>
 					<PrivateRoute>
 						<Pages.DoubleAuth />
 					</PrivateRoute>
+				// </SocketContextComponent>
 			),
 		},
 		{
 			path: '/*',
 			element: (
+				// <SocketContextComponent>
 				<PrivateRoute>
 					<WithNavbar />
 				</PrivateRoute>
+				// </SocketContextComponent>
 
 			),
 		},
@@ -102,12 +106,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						<SocketContextComponent>
+						 <SocketContextComponent>
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							{routes}
-						</SocketContextComponent>
+						 </SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>

@@ -1,28 +1,18 @@
-import React, {
-	Dispatch,
-	SetStateAction,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import React, {useContext, useState} from 'react';
 import * as F from 'styles/font.styles';
 import * as S from '../components/components.styles';
 import * as C from '../containers/containers.styles';
-import User from 'mocks/Users/players.json';
 import ChatContext from '../../../contexts/Chat/context';
-import {useResponsiveLayout} from '../../../hooks/chat/useResponsiveLayout';
+import {useResponsiveLayout} from 'hooks/chat/useResponsiveLayout';
 import Profile from '../assets/Profile';
 import BurgerMenu from '../assets/BurgerMenu';
-import {useUserInfos} from '../../../contexts/User/userContent';
+import {useUserInfos} from 'contexts/User/userContent';
 import ModalUserSearch from '../modals/ModalUserSearch';
-import {useFetchLobbyUserList} from '../../../hooks/chat/useFetchUsers';
-import useFetchUserByName from '../../../hooks/useFetchUserByName';
+import {useFetchLobbyUserList} from 'hooks/chat/useFetchUsers';
+import useFetchUserByName from 'hooks/useFetchUserByName';
 import {backend} from '../../../lib/backend';
 import ModalDescription from '../modals/ModalDescription';
-import { channel } from 'diagnostics_channel';
-import { act } from 'react-dom/test-utils';
 import AdminPanel from './AdminPanel';
-import { IUser } from 'types/models';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -49,7 +39,10 @@ function TopBar() {
 	}
 
 	async function openUserPanel() {
-		const user:any = await backend.getUserByName(directMessageName(activeLobby!.name), name);
+		const user: any = await backend.getUserByName(
+			directMessageName(activeLobby!.name),
+			name
+		);
 		ChatDispatch({type: 'active_user_in_panel', payload: user});
 		ChatDispatch({type: 'update_user_panel', payload: true});
 	}
@@ -64,15 +57,20 @@ function TopBar() {
 						</button>
 					)}
 					<F.Text weight="700">#{activeLobby.name}</F.Text>
-					<ModalDescription description={activeLobby.description}/>
-					{name === activeLobby.adminName && <AdminPanel dropdownVisible={dropdownVisible}
-					setDropdownVisible={setDropdownVisible} activeLobby={activeLobby}></AdminPanel>}
+					<ModalDescription description={activeLobby.description} />
+					{activeLobby.admins.find((username) => username === name) && (
+						<AdminPanel
+							dropdownVisible={dropdownVisible}
+							setDropdownVisible={setDropdownVisible}
+							activeLobby={activeLobby}
+						></AdminPanel>
+					)}
 				</S.ChannelName>
 				<S.UserList onClick={() => setIsModalOpen(true)}>
 					<ModalUserSearch
 						isModalOpen={isModalOpen}
 						setIsModalOpen={setIsModalOpen}
-						userList={userList}
+						userList={userList.filter((user) => user.name !== name)}
 						type={'openUserPanel'}
 					/>
 					<F.Text>{userList.length}</F.Text>
