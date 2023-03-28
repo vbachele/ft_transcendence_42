@@ -57,10 +57,9 @@ function App() {
 		{
 			path: '/',
 			element: (
-					<PrivateRoute>
-						<Pages.Home />
-					</PrivateRoute>
-
+				<PrivateRoute>
+					<Pages.Home />
+				</PrivateRoute>
 			),
 		},
 		{
@@ -101,12 +100,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						 <SocketContextComponent>
+						<SocketContextComponent>
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							{routes}
-						 </SocketContextComponent>
+						</SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>
