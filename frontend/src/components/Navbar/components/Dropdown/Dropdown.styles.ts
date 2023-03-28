@@ -129,6 +129,7 @@ export const LinksContainer = styled.div`
 `;
 
 export const PlayContainer = styled.div`
+	color: white;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -137,7 +138,6 @@ export const PlayContainer = styled.div`
 	top: 8px;
 	background-color: transparent;
 	border: none;
-	/* outline: 2px solid crimson; */
 
 	@media screen and (max-width: 768px) {
 		text-align: center;
