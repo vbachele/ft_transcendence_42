@@ -142,7 +142,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 					label={'Channel name'}
 					rules={[{required: true, message: 'Missing channel name'}]}
 				>
-					<StyledInput prefix={'#'} placeholder="new-channel" />
+					<StyledInput prefix={'#'} maxLength={20} placeholder="new-channel" />
 				</Form.Item>
 				<Form.Item
 					name={'description'}

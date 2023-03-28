@@ -1,3 +1,4 @@
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import {Popover } from 'antd'
 import React from 'react'
 import * as S from '../components/components.styles';
@@ -10,10 +11,13 @@ const ModalDescription = (props : Iprops) => {
   return (
 	<Popover
 			title="description"
+			overlayStyle={{
+				width: "40vw"
+			  }}
 			content={props.description}
 			placement="right"
 		>
-		<S.infoIcon></S.infoIcon>
+		<BsFillInfoCircleFill></BsFillInfoCircleFill>
 	</Popover>
   )
 }

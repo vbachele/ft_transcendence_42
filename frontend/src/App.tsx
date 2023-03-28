@@ -70,22 +70,17 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-				// <SocketContextComponent>
 					<PrivateRoute>
 						<Pages.DoubleAuth />
 					</PrivateRoute>
-				// </SocketContextComponent>
 			),
 		},
 		{
 			path: '/*',
 			element: (
-				// <SocketContextComponent>
 				<PrivateRoute>
 					<WithNavbar />
 				</PrivateRoute>
-				// </SocketContextComponent>
-
 			),
 		},
 	]);
