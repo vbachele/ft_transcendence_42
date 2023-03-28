@@ -76,7 +76,7 @@ export const BoldYellowButton = styled.div`
 	cursor: pointer;
 `;
 
-export const RegularButton = styled.button`
+export const RegularButton = styled.div`
 	position: relative;
 	left: 0;
 	font-size: 24px;

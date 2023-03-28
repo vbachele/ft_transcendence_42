@@ -45,7 +45,7 @@ export const BoldYellow = styled.p`
 	}
 `;
 
-export const JoinButton = styled.button`
+export const JoinButton = styled.div`
 	cursor: pointer;
 	text-decoration: none;
 	background: none;
