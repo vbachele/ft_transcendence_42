@@ -13,7 +13,7 @@ export class UserService {
 	async getAllUsers(blockedOf: string) {
 		try {
 			const users = await this.prisma.user.findMany({});
-			const blockedUsers = await this.blockedService.getBlockedOfUser(
+			const blockedUsers = await this.blockedService.getBlocked(
 				blockedOf
 			);
 

@@ -2,8 +2,6 @@ import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import {DatabaseController} from './database/database.controller';
-import {DatabaseService} from './database/database.service';
 // import { LobbyModule } from "./lobby/lobby.module";
 import {AuthModule} from './auth/auth.module';
 import {PrismaModule} from './database/prisma.module';
@@ -18,9 +16,9 @@ import {AllExceptionsFilter} from './errors/all-exceptions.filter';
 import {FriendModule} from './social/friends/friends.module';
 import {PendingModule} from './social/pending/pendings.module';
 import {BlockedModule} from './social/blocked/blocked.module';
-import {ChatModule} from "./chat/chat.module";
-import { Mail2FaModule } from './doubleAuth/mail2FA/mail2Fa.module';
-
+import {ChatModule} from './chat/chat.module';
+import {Mail2FaModule} from './doubleAuth/mail2FA/mail2Fa.module';
+import {PrismaService} from './database/prisma.service';
 
 @Module({
 	imports: [
@@ -37,12 +35,12 @@ import { Mail2FaModule } from './doubleAuth/mail2FA/mail2Fa.module';
 		WebsocketModule,
 		// DoubleAuthModule,
 		Mail2FaModule,
-    ChatModule,
+		ChatModule,
 	],
-	controllers: [AppController, DatabaseController],
+	controllers: [AppController],
 	providers: [
 		AppService,
-		DatabaseService,
+		PrismaService,
 		{
 			provide: APP_FILTER,
 			useClass: AllExceptionsFilter,

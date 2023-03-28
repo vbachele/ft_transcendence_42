@@ -8,6 +8,8 @@ import {PrismaLobbyService} from '../database/lobby/prismaLobby.service';
 import {ChatLobby, ChatLobbyDto} from '../chat/chatLobby';
 import {ErrorType, LobbyException} from './errors/lobby.error';
 import {GameLobby} from '../game/gameLobby';
+import {ServerChatEvents} from '../chat/events/chat.events';
+import {WebsocketService} from '../websocket/websocket.service';
 
 /**
  * @brief This service manage all the lobby instances on the server
@@ -18,7 +20,8 @@ import {GameLobby} from '../game/gameLobby';
 export class LobbyService {
 	constructor(
 		@Inject('LOBBY_FACTORY') private readonly lobbyCreator: any,
-		private readonly prismaLobbyService: PrismaLobbyService
+		private readonly prismaLobbyService: PrismaLobbyService,
+		private readonly websocketService: WebsocketService,
 	) {}
 
 	private readonly lobbies: Map<ALobby['id'], ALobby> = new Map<
@@ -81,8 +84,18 @@ export class LobbyService {
 		console.info(`Client [${client.data.name}] left lobby [${lobbyId}]`);
 	}
 
+
 	public delete(lobbyId: string) {
 		this.lobbies.delete(lobbyId);
 		console.info(`Lobby [${lobbyId}] deleted`);
+	}
+
+	public async dispatchLobbyList(username: string) {
+		const client = this.websocketService.getClient(username);
+		if (!client) return;
+		const lobbies = await this.prismaLobbyService.fetchLobbies();
+		this.websocketService.server
+			.to(client.id)
+			.emit(ServerChatEvents.LobbyList, lobbies);
 	}
 }
