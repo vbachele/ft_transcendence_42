@@ -53,6 +53,7 @@ export const ChatBarInput = styled.input`
 	border: 1px solid #e6e6e6;
 	border-radius: 12px;
 	padding: 8px 16px;
+	padding-right: 35px;
 	font-size: 1.2em;
 `;
 

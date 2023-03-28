@@ -51,16 +51,15 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			// element: <UserMocks />,
-			element: <Pages.Landing />,
+			element: <UserMocks />,
+			// element: <Pages.Landing />,
 		},
 		{
 			path: '/',
 			element: (
-					<PrivateRoute>
-						<Pages.Home />
-					</PrivateRoute>
-
+				<PrivateRoute>
+					<Pages.Home />
+				</PrivateRoute>
 			),
 		},
 		{
@@ -71,9 +70,9 @@ function App() {
 			path: '/2FA',
 			element: (
 				// <SocketContextComponent>
-					<PrivateRoute>
-						<Pages.DoubleAuth />
-					</PrivateRoute>
+				<PrivateRoute>
+					<Pages.DoubleAuth />
+				</PrivateRoute>
 				// </SocketContextComponent>
 			),
 		},
@@ -85,7 +84,6 @@ function App() {
 					<WithNavbar />
 				</PrivateRoute>
 				// </SocketContextComponent>
-
 			),
 		},
 	]);
@@ -106,12 +104,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						 <SocketContextComponent>
+						<SocketContextComponent>
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
 							{routes}
-						 </SocketContextComponent>
+						</SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>
