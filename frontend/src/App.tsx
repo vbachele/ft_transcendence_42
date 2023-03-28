@@ -57,10 +57,9 @@ function App() {
 		{
 			path: '/',
 			element: (
-					<PrivateRoute>
-						<Pages.Home />
-					</PrivateRoute>
-
+				<PrivateRoute>
+					<Pages.Home />
+				</PrivateRoute>
 			),
 		},
 		{
@@ -70,22 +69,17 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-				// <SocketContextComponent>
-					<PrivateRoute>
-						<Pages.DoubleAuth />
-					</PrivateRoute>
-				// </SocketContextComponent>
+				<PrivateRoute>
+					<Pages.DoubleAuth />
+				</PrivateRoute>
 			),
 		},
 		{
 			path: '/*',
 			element: (
-				// <SocketContextComponent>
 				<PrivateRoute>
 					<WithNavbar />
 				</PrivateRoute>
-				// </SocketContextComponent>
-
 			),
 		},
 	]);
@@ -106,12 +100,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						 <SocketContextComponent>
-							<GlobalStyle />
-							<Popup.GameInvite />
-							<Popup.SearchPlayer />
-							{routes}
-						 </SocketContextComponent>
+						{/* <SocketContextComponent> */}
+						<GlobalStyle />
+						<Popup.GameInvite />
+						<Popup.SearchPlayer />
+						{routes}
+						{/* </SocketContextComponent> */}
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>

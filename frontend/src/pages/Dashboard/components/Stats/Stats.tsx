@@ -1,16 +1,33 @@
 import {ReactComponent as ScoreIcon} from '../../assets/score.svg';
 import {ReactComponent as GamesIcon} from '../../assets/games.svg';
 import {ReactComponent as RatioIcon} from '../../assets/ratio.svg';
-import {IUser} from 'types/models';
+import {IGame, IUser} from 'types/models';
 import * as S from './Stats.styles';
 import * as F from 'styles/font.styles';
-import * as UI from 'styles/buttons.styles';
+import {ClientGameEvents} from 'events/game.events';
+import {useContext, useEffect, useState} from 'react';
+import SocketContext from 'contexts/Socket/context';
+import {asyncEmit} from 'helpers/asyncEmit';
 
 interface IProps {
 	user: IUser;
 }
 
 const Stats = ({user}: IProps) => {
+	const {socket} = useContext(SocketContext).SocketState;
+	const [games, setGames] = useState<IGame[]>([]);
+
+	useEffect(() => {
+		if (socket) {
+			socket.emit(ClientGameEvents.FetchGames, (data: { games: IGame[] }) => {
+				setGames(data.games);
+			});
+		}
+	}, []);
+	//calculate Score
+
+	console.log(games.length);
+
 	return (
 		<S.Stats>
 			<S.Card>

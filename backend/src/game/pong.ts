@@ -86,9 +86,17 @@ export class Pong {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['left']?.data.name,
 			});
+			await this.prismaService.user.update({
+				where: { name: this.players['left']?.data.name },
+				data: { wins: { increment: 1 } },
+			});
 		} else if (this.score[0] < this.score[1]) {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['right']?.data.name,
+			});
+			await this.prismaService.user.update({
+				where: { name: this.players['right']?.data.name },
+				data: { wins: { increment: 1 } },
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
@@ -105,9 +113,36 @@ export class Pong {
 				rightScore: this.score[1],
 			},
 		});
+
+		this.updateUser(this.players['left']?.data.name!);
+		this.updateUser(this.players['right']?.data.name!);
+
 		this.players['left']!.data.paddle = undefined;
 		this.players['right']!.data.paddle = undefined;
 		return 'game_over';
+	}
+
+	private async updateUser(username: string) {
+		console.log('updating user', username);
+
+		const user = await this.prismaService.user.findUnique({
+			where: { name: username },
+		});
+
+		const games = user.games || 0;
+		const wins = user.wins || 0;
+		const gamesWon = games > 0 ? wins / games : 0;
+		const ratio = gamesWon.toFixed(2);
+		const score = Math.round((games * 10 + wins * 40) * (parseFloat(ratio) + 1));
+
+		await this.prismaService.user.update({
+			where: { name: username },
+			data: {
+				score,
+				games: { increment: 1 },
+				ratio: parseFloat(ratio),
+			},
+		});
 	}
 
 	private async playerScored(player: 'left' | 'right') {
