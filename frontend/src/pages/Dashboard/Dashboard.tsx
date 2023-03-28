@@ -8,7 +8,6 @@ import Leaderboard from './components/Leaderboard';
 import History from './components/History';
 import Achievements from './components/Achievements';
 import * as S from './Dashboard.styles';
-import * as F from 'styles/font.styles';
 
 const Dashboard = () => {
 	const name = useParams().name!;

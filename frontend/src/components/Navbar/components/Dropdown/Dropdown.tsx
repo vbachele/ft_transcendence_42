@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {ReactComponent as Play} from 'components/Navbar/assets/play.svg';
 import {ReactComponent as Chat} from 'components/Navbar/assets/chat.svg';
@@ -14,26 +14,16 @@ import LogoutPopup from 'components/Popup/Logout/LogoutPopup';
 import {usePopup} from 'contexts/Popup/Popup';
 import * as S from './Dropdown.styles';
 import * as F from 'styles/font.styles';
-
-const menuVariants = {
-	open: {
-		transform: 'translateX(0%)',
-	},
-	closed: {
-		transform: 'translateX(150%)',
-	},
-};
-
-const menuTransition = {
-	type: 'spring',
-	duration: 0.5,
-	bounce: 0,
-};
+import {ClientGameEvents} from '../../../../events/game.events';
+import {GameMode} from '../../../../pages/Game/types/game.type';
+import SocketContext from '../../../../contexts/Socket/context';
 
 const Dropdown = () => {
 	const [logout, setLogout] = useState(false);
 	const {popup, setPopup} = usePopup();
-	const {image, userName, coalition} = useUserInfos();
+	const {image, userName} = useUserInfos();
+	const {socket} = useContext(SocketContext).SocketState;
+	const [showGameModes, setShowGameModes] = useState(false);
 
 	const {
 		ref: dropRef,
@@ -50,10 +40,29 @@ const Dropdown = () => {
 		setLogout(!logout);
 	};
 
-	const handlePlay = () => {
+	function onPlay() {
+		setShowGameModes(true);
+	}
+
+	function offPlay() {
+		setShowGameModes(false);
+	}
+
+	function onPlayAgainstTheClock() {
+		socket?.emit(ClientGameEvents.SearchGame, {
+			mode: GameMode.AgainstTheClock,
+		});
+		setPopup({toggle: true});
 		setIsOpen(!isOpen);
-		setPopup({toggle: !popup.toggle});
-	};
+	}
+
+	function onPlayScoreLimit() {
+		socket?.emit(ClientGameEvents.SearchGame, {
+			mode: GameMode.ScoreLimit,
+		});
+		setPopup({toggle: true});
+		setIsOpen(!isOpen);
+	}
 
 	if (isOpen) {
 		document.body.style.overflow = 'hidden';
@@ -68,43 +77,31 @@ const Dropdown = () => {
 				<img className="avatar" src={image.image} />
 			</div>
 			{isOpen && (
-				<S.DropdownContainer
-					initial={false}
-					animate={isOpen ? 'open' : 'closed'}
-					variants={menuVariants}
-					transition={menuTransition}
-				>
-					{/* PROFILE */}
-					<S.User>
-						<>
-							<Link to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
-								<img src={image.image} />
-							</Link>
-							<S.User__Infos>
-								<Link
-									to={`/dashboard/${userName.userName}`}
-									onClick={toggleDrop}
-								>
-									<F.H5>{userName.userName}</F.H5>
-								</Link>
-								<Link
-									to="/leaderboard"
-									state={{selectedOption: 'Federation', rank: 5}}
-									onClick={toggleDrop}
-								>
-									<F.Text weight="500">{coalition.coalition}</F.Text>
-								</Link>
-							</S.User__Infos>
-						</>
+				<S.DropdownContainer>
+					<S.User to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
+						<img src={image.image} />
+						<F.H4>{userName.userName}</F.H4>
 					</S.User>
-					<hr className="first-hr" />
 					<S.LinksContainer>
-						{/* PLAY */}
-						<S.PopupButton onClick={handlePlay}>
+						<S.PlayContainer
+							onClick={() => setShowGameModes(!showGameModes)}
+							onMouseEnter={onPlay}
+							onMouseLeave={offPlay}
+						>
 							<Play />
-							<F.Text weight="500">Play</F.Text>
-						</S.PopupButton>
-						{/* CHAT */}
+							<S.Content>
+								<F.Text weight="400">Play</F.Text>
+								<S.GameMode
+									className={showGameModes ? 'active' : ''}
+									style={{margin: '0'}}
+								>
+									<S.Button onClick={onPlayAgainstTheClock}>
+										Against the clock
+									</S.Button>
+									<S.Button onClick={onPlayScoreLimit}>Score limit</S.Button>
+								</S.GameMode>
+							</S.Content>
+						</S.PlayContainer>
 						<Link
 							to="/chat"
 							onClick={toggleDrop}
@@ -113,12 +110,10 @@ const Dropdown = () => {
 							<Chat />
 							<F.Text weight="500">Chat</F.Text>
 						</Link>
-						{/* LEADERBOARD */}
 						<Link to="/leaderboard" onClick={toggleDrop}>
 							<Leaderboard />
 							<F.Text weight="500">Leaderboard</F.Text>
 						</Link>
-						{/* DASHBOARD */}
 						<Link to={`/dashboard/${userName.userName}`} onClick={toggleDrop}>
 							<Dashboard />
 							<F.Text weight="500">Career</F.Text>
@@ -134,16 +129,14 @@ const Dropdown = () => {
 					</S.LinksContainer>
 					<hr className="second-hr" />
 					<S.LinksContainer>
-						{/* SETTINGS */}
 						<Link to="/settings" onClick={toggleDrop}>
 							<Settings />
 							<F.Text weight="500">Settings</F.Text>
 						</Link>
-						{/* LOGOUT */}
-						<S.PopupButton onClick={handleLogout}>
+						<S.Button onClick={handleLogout}>
 							<Logout />
 							<F.Text weight="500">Logout</F.Text>
-						</S.PopupButton>
+						</S.Button>
 					</S.LinksContainer>
 				</S.DropdownContainer>
 			)}

@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import * as S from './Victory.styles';
-import {usePopup} from 'contexts/Popup/Popup';
+import {useNavigate} from 'react-router-dom';
 
-const Victory: React.FC = () => {
+function Victory() {
 	const [animate, setAnimate] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setTimeout(() => {
 			setAnimate(true);
-			return () => {};
 		}, 500);
+		setTimeout(() => {
+			navigate('/');
+		}, 8_000);
 	}, []);
 
 	return (
@@ -20,6 +23,6 @@ const Victory: React.FC = () => {
 			</S.Text>
 		</S.Wrapper>
 	);
-};
+}
 
 export default Victory;

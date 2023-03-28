@@ -1,6 +1,6 @@
 import {
 	ConnectedSocket,
-	MessageBody,
+	MessageBody, OnGatewayConnection, OnGatewayDisconnect,
 	OnGatewayInit,
 	SubscribeMessage,
 	WebSocketGateway,

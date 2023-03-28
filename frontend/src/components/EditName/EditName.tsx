@@ -7,6 +7,9 @@ import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
 import unlockAchievement from 'helpers/unlockAchievement';
 import {Input} from 'antd';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
+import {fetchUserByName} from 'helpers/fetchUserByName';
 
 interface Props {
 	visible?: boolean;
@@ -16,6 +19,7 @@ interface Props {
 
 /* MAIN FUNCTION */
 const EditName = (props: Props) => {
+	const {socket} = useContext(SocketContext).SocketState;
 	const navigate = useNavigate();
 	const [value, setValue] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -78,6 +82,7 @@ const EditName = (props: Props) => {
 			let newuserName = {
 				name: value,
 			};
+
 			const response = await backend.patchUser(userName.userName, newuserName);
 			if (response.statusCode === 400) {
 				setError(true);
@@ -89,6 +94,15 @@ const EditName = (props: Props) => {
 			setUserName({userName: value});
 			setUploadApproved(true);
 			setLoading(false);
+			socket?.emit(ClientSocialEvents.UpdateUsername, value);
+
+			const data = await fetchUserByName(value, value);
+			const hasRenameAchievement = data?.achievements.includes('RENAME');
+
+			if (data && !hasRenameAchievement) {
+				unlockAchievement('RENAME', data, socket);
+				setAchievements({achievements: [...data.achievements]});
+			}
 		}
 	}
 
@@ -97,7 +111,7 @@ const EditName = (props: Props) => {
 		setValue(e.target.value);
 	};
 
-	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 		userRegistrationPage(); // if in registrationPage

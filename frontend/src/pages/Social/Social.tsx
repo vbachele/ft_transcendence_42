@@ -1,16 +1,20 @@
 import {useEffect, useState} from 'react';
-import {IUser} from 'types/models';
 import {Empty, Input} from 'antd';
-import compareStatus from 'helpers/compareStatus';
-import filterByName from 'helpers/filterByName';
 import {useUserInfos} from 'contexts/User/userContent';
+import {IUser} from 'types/models';
+import compareStatus from 'helpers/compareStatus';
 import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
+import Blocked from './components/Blocked';
 import Friend from './components/Friend';
 import PendingSent from './components/PendingSent';
 import PendingReceived from './components/PendingReceived';
-import Blocked from './components/Blocked';
+import useFetchUsers from 'hooks/useFetchUsers';
+import isUserIn from 'helpers/isUserIn';
+import ModalAddUser from './components/ModalAddUser';
+import filterByName from 'helpers/filterByName';
+import {ReactComponent as AddButton} from 'components/Buttons/Social/AddFriend/add.svg';
 import * as S from './Social.styles';
 
 const {Search} = Input;
@@ -41,6 +45,7 @@ const isEmptyPendings = (sent: IUser[], reiceved: IUser[]): string => {
 
 function Social() {
 	const {userName} = useUserInfos();
+	const {data} = useFetchUsers('_');
 	const [search, setSearch] = useState('');
 
 	const {data: friends} = useFetchFriendsOf(userName.userName);
@@ -52,47 +57,56 @@ function Social() {
 	const [blockedUsers, setBlockedUsers] = useState<IUser[]>([]);
 	const [pendingsSent, setPendingsSent] = useState<IUser[]>([]);
 	const [pendingsReceived, setPendingsReceived] = useState<IUser[]>([]);
+	const [displayModal, setDisplayModal] = useState(false);
 
 	const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value);
 	};
 
 	const handleUnblock = (user: IUser) => {
-		setBlockedUsers((prevBlockedUsers) =>
-			prevBlockedUsers.filter((blockedUser) => blockedUser.name !== user.name)
+		setBlockedUsers((prev) =>
+			prev.filter((blockedUser) => blockedUser.name !== user.name)
 		);
 	};
 
 	const handleBlock = (user: IUser) => {
-		setBlockedUsers((prevBlockedUsers) => [...prevBlockedUsers, user]);
-		setFriendUsers((prevFriends) =>
-			prevFriends.filter((friend) => friend.name !== user.name)
+		setBlockedUsers((prev) => [...prev, user]);
+		setFriendUsers((prev) =>
+			prev.filter((friend) => friend.name !== user.name)
 		);
 	};
 
 	const handleRemove = (user: IUser) => {
-		setFriendUsers((prevFriends) =>
-			prevFriends.filter((friend) => friend.name !== user.name)
+		setFriendUsers((prev) =>
+			prev.filter((friend) => friend.name !== user.name)
 		);
-		setPendingsSent((prevPendings) =>
-			prevPendings.filter((pending) => pending.name !== user.name)
+		setPendingsSent((prev) =>
+			prev.filter((pending) => pending.name !== user.name)
 		);
 	};
 
 	const handleAccept = (user: IUser) => {
-		setFriendUsers((prevFriendUsers) => [...prevFriendUsers, user]);
-		setPendingsReceived((prevPendings) =>
-			prevPendings.filter((pending) => pending.name !== user.name)
+		setFriendUsers((prev) => [...prev, user]);
+		setPendingsReceived((prev) =>
+			prev.filter((pending) => pending.name !== user.name)
 		);
 	};
 
 	const handleDeny = (user: IUser) => {
-		setPendingsReceived((prevPendings) =>
-			prevPendings.filter((pending) => pending.name !== user.name)
+		setPendingsReceived((prev) =>
+			prev.filter((pending) => pending.name !== user.name)
 		);
-		setPendingsSent((prevPendings) =>
-			prevPendings.filter((pending) => pending.name !== user.name)
+		setPendingsSent((prev) =>
+			prev.filter((pending) => pending.name !== user.name)
 		);
+	};
+
+	const handleAdd = (user: IUser) => {
+		if (isUserIn(receivedPendings, user.name)) {
+			handleAccept(user);
+		} else {
+			setPendingsSent((prev) => [...prev, user]);
+		}
 	};
 
 	useEffect(() => {
@@ -110,17 +124,51 @@ function Social() {
 		}
 	}, [blocked, sentPendings, receivedPendings, friends]);
 
+	let users: IUser[];
+	if (data) {
+		users = data
+			?.filter((user) => {
+				return (
+					user.name !== userName.userName &&
+					!isUserIn(friendUsers, user.name) &&
+					!isUserIn(blockedUsers, user.name) &&
+					!isUserIn(pendingsSent, user.name)
+				);
+			})
+			.sort(compareStatus);
+	}
+
 	return (
 		<S.Container>
-			<Search
-				placeholder="Search a user"
-				size="large"
-				onChange={onSearch}
-				style={{
-					width: '250px',
-				}}
-				enterButton
-			/>
+			<div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+				<S.SearchContainer>
+					<Search
+						placeholder="Search a user"
+						size="large"
+						value={search}
+						onChange={onSearch}
+						onSearch={() => setDisplayModal(true)}
+						enterButton
+						style={{
+							width: '250px',
+						}}
+					/>
+					<AddButton
+						className="add-icon"
+						onClick={() => setDisplayModal(true)}
+					/>
+				</S.SearchContainer>
+			</div>
+			{displayModal && (
+				<ModalAddUser
+					isModalOpen={displayModal}
+					setIsModalOpen={setDisplayModal}
+					userList={users!}
+					onAdd={handleAdd}
+					search={search}
+					onSearch={onSearch}
+				/>
+			)}
 			<S.StyledCollapse ghost={true}>
 				<S.StyledPanel
 					header={`Friends - ${

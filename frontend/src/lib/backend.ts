@@ -11,10 +11,20 @@ export const backend = {
 		const response = await api.getFilterBlocked('/users', blockedOf);
 		return await response.json();
 	},
-	async getUserByName(name: string, blockedOf: string): Promise<IUser> {
-		const response = await api.getFilterBlocked('/users/' + name, blockedOf);
-		return await response.json();
+	async getUserByName(name: string, blockedOf: string): Promise<IUser | null> {
+		try {
+			const response = await api.getFilterBlocked('/users/' + name, blockedOf);
+			return await response.json();
+		} catch (error) {
+			return null;
+		}
 	},
+	async getAllUsersExceptMe(currentUserName: string): Promise<any> {
+		const response = await api.get('/users');
+		const users = await response.json();
+
+		return users.filter((user: any) => user.name !== currentUserName);
+	  },
 	async patchUser(name: string, updateUser: unknown): Promise<any> {
 		const response = await api.patch('/users/' + name, updateUser);
 		return response.json();

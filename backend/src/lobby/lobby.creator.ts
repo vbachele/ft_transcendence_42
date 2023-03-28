@@ -3,6 +3,7 @@ import { ChatLobby, ChatLobbyDto } from "../chat/chatLobby";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
 import { LobbyDto } from "./dto/lobby.dto";
 import { WebsocketService } from "../websocket/websocket.service";
+import {PrismaService} from '../database/prisma.service';
 
 /**
  * This is the lobby factory. It returns a lobby based on the type specified in the payload.
@@ -12,7 +13,8 @@ export const factory = {
   provide: "LOBBY_FACTORY",
   useFactory: (
     prismaLobbyService: PrismaLobbyService,
-    websocketService: WebsocketService
+    websocketService: WebsocketService,
+    prismaService: PrismaService,
   ): any => {
     return {
       create: function (payload: LobbyDto): GameLobby | ChatLobby {
@@ -20,7 +22,8 @@ export const factory = {
           case "game": {
             return new GameLobby(
               payload.data as GameLobbyDto,
-              websocketService
+              websocketService,
+              prismaService
             );
           }
           case "chat":
@@ -35,5 +38,5 @@ export const factory = {
       },
     };
   },
-  inject: [PrismaLobbyService, WebsocketService],
+  inject: [PrismaLobbyService, WebsocketService, PrismaService],
 };

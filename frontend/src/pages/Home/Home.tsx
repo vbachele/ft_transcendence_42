@@ -1,24 +1,43 @@
 import {useContext, useState} from 'react';
-import {Link} from 'react-router-dom';
 import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
 import Popup from 'components/Popup';
+import logo_ai from 'assets/logo_ai.png';
 import logo from 'assets/logo-text.svg';
 import * as S from './Home.styles';
-import useFetchPendingsOf from 'hooks/useFetchPendingsOf';
 import SocketContext from '../../contexts/Socket/context';
 import {ClientGameEvents} from '../../events/game.events';
+import {GameMode} from '../Game/types/game.type';
 
 const Homepage = () => {
 	const {userName, achievements} = useUserInfos();
 	const [logout, setLogout] = useState(false);
-	const {popup, setPopup} = usePopup();
+	const [showGameModes, setShowGameModes] = useState(false);
+	const {setPopup} = usePopup();
 	const {socket} = useContext(SocketContext).SocketState;
 
-	const handlePlay = () => {
-		socket?.emit(ClientGameEvents.SearchGame);
-		setPopup({toggle: !popup.toggle});
-	};
+	function onPlay() {
+		setShowGameModes(true);
+	}
+
+	function offPlay() {
+		setShowGameModes(false);
+	}
+
+	function onPlayAgainstTheClock() {
+		socket?.emit(ClientGameEvents.SearchGame, {
+			mode: GameMode.AgainstTheClock,
+		});
+		setPopup({toggle: true});
+	}
+
+	function onPlayScoreLimit() {
+		socket?.emit(ClientGameEvents.SearchGame, {
+			mode: GameMode.ScoreLimit,
+		});
+		setPopup({toggle: true});
+	}
+
 	const toggleLogout = () => {
 		setLogout(!logout);
 	};
@@ -33,7 +52,21 @@ const Homepage = () => {
 			</S.Background>
 			<S.Image src={logo} />
 			<S.LinksContainer>
-				<S.BoldYellowButton onClick={handlePlay}>PLAY</S.BoldYellowButton>
+				<S.BoldYellowButton
+					onClick={() => setShowGameModes(!showGameModes)}
+					onMouseEnter={onPlay}
+					onMouseLeave={offPlay}
+				>
+					PLAY
+					<S.GameMode className={showGameModes ? 'active' : ''}>
+						<S.RegularButton onClick={onPlayAgainstTheClock}>
+							Against the clock
+						</S.RegularButton>
+						<S.RegularButton onClick={onPlayScoreLimit}>
+							Score limit
+						</S.RegularButton>
+					</S.GameMode>
+				</S.BoldYellowButton>
 				<S.BoldLink to="/leaderboard">LEADERBOARD</S.BoldLink>
 				<S.BoldLink to={`/dashboard/${userName.userName}`}>CAREER</S.BoldLink>
 				<S.BoldLink to="/chat">CHAT</S.BoldLink>

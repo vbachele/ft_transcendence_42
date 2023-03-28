@@ -6,6 +6,8 @@ export enum ClientGameEvents {
   MoveBall = "client.game.moveBall",
   SearchGame = "client.game.searchGame",
   LeaveGame = "client.game.leaveGame",
+  CancelSearch = "client.game.cancelSearch",
+  CancelInvitation = "client.game.cancelInvitation",
 }
 
 export enum ServerGameEvents {
@@ -16,7 +18,9 @@ export enum ServerGameEvents {
   Start = "server.game.start",
   PaddleHit = "server.game.paddleHit",
   GameFound = "server.game.gameFound",
-  GamePaused = "server.game.gamePaused",
-  PlayerScored = "server.game.playerScored",
+  UpdateScore = "server.game.updateScore",
+  Timer = "server.game.timer",
+  GameResult = "server.game.gameResult",
+  InvitationCancelled = "server.game.invitationCancelled",
 }
 

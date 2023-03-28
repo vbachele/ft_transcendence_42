@@ -5,17 +5,14 @@ import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
 import {useState} from 'react';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
-import Defeat from 'components/EditName/Defeat';
-import Victory from 'components/Victory';
-import Popup from 'components/Popup';
 import FakeLogin from 'mocks/Login/FakeLogin';
 import {UserMocks} from 'mocks/Users/UserMocks';
 import {PopupContextProvider} from 'contexts/Popup/Popup';
 import SocketContextComponent from 'contexts/Socket/Component';
 import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/Component';
-import Notification from 'components/Notification/Notification';
 import Pages from 'pages';
+import Popup from 'components/Popup';
 
 function App() {
 	const defaultTheme = 'dark';
@@ -60,9 +57,10 @@ function App() {
 		{
 			path: '/',
 			element: (
-				<PrivateRoute>
-					<Pages.Home />
-				</PrivateRoute>
+					<PrivateRoute>
+						<Pages.Home />
+					</PrivateRoute>
+
 			),
 		},
 		{
@@ -72,33 +70,22 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-				<PrivateRoute>
-					<Pages.DoubleAuth />
-				</PrivateRoute>
-			),
-		},
-		{
-			path: '/Victory',
-			element: (
-				<PrivateRoute>
-					<Victory />
-				</PrivateRoute>
-			),
-		},
-		{
-			path: '/Defeat',
-			element: (
-				<PrivateRoute>
-					<Defeat />
-				</PrivateRoute>
+				<SocketContextComponent>
+					<PrivateRoute>
+						<Pages.DoubleAuth />
+					</PrivateRoute>
+				</SocketContextComponent>
 			),
 		},
 		{
 			path: '/*',
 			element: (
+				<SocketContextComponent>
 				<PrivateRoute>
 					<WithNavbar />
 				</PrivateRoute>
+				</SocketContextComponent>
+
 			),
 		},
 	]);
@@ -119,13 +106,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						<SocketContextComponent>
+						{/* <SocketContextComponent> */}
 							<GlobalStyle />
 							<Popup.GameInvite />
 							<Popup.SearchPlayer />
-							<Notification />
 							{routes}
-						</SocketContextComponent>
+						{/* </SocketContextComponent> */}
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>

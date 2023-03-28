@@ -1,7 +1,7 @@
 include ./.env
 UNAME := $(shell uname -s)
 
-all: 
+all:
 ifeq ($(shell grep POSTGRES_DIR .env > /dev/null; echo $$?), 1)
 	@read -p "Enter Postgres folder path: " POSTGRES_DIR; \
 	sudo mkdir -p $$POSTGRES_DIR/postgres_vol; \
@@ -17,7 +17,7 @@ ifneq ($(shell cat ./backend/.env > /dev/null 2>&1; echo $$?), 0)
 endif
 	docker compose up --build -V
 
-clean: 
+clean:
 ifeq ($(shell grep POSTGRES_DIR .env > /dev/null; echo $$?), 0)
 ifeq ($(UNAME), Darwin)
 	sed -i "" "$$(grep -n POSTGRES_DIR .env | cut -f1 -d:)d" ./.env

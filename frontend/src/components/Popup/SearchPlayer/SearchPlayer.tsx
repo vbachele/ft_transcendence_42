@@ -7,7 +7,7 @@ import Timer from '../components/SearchTimer/InviteTimer';
 import Popup from '../components/Popup/Popup';
 import FireGif from '../components/FireGif/FireGif';
 import SocketContext from '../../../contexts/Socket/context';
-import {ServerGameEvents} from '../../../events/game.events';
+import {ClientGameEvents, ServerGameEvents} from '../../../events/game.events';
 import {createSearchParams, useNavigate} from 'react-router-dom';
 
 // BACKEND : Ajouter que lorsque play on a le statut red
@@ -36,6 +36,11 @@ function SearchPlayer({}) {
 		}
 	}, [socket]);
 
+	function onCancel() {
+		socket?.emit(ClientGameEvents.CancelSearch);
+		setPopup({toggle: false});
+	}
+
 	return popup.toggle ? (
 		<Popup
 			title="Waiting for players"
@@ -48,7 +53,7 @@ function SearchPlayer({}) {
 			draggable={true}
 		>
 			<PopupButton
-				onClick={() => setPopup({toggle: false})}
+				onClick={onCancel}
 				border="1px solid #e5e7eb"
 				className="Cancel"
 				width="50%"

@@ -114,7 +114,7 @@ export const OptionButton = styled.div`
 		background: none;
 
 		p {
-			color: ${p => p.theme.colors.secondary};
+			color: ${p => p.theme.colors.text};
 			font-weight: 500;
 			font-size: 14px;
 		}

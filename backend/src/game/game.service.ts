@@ -32,6 +32,19 @@ export class GameService {
 			});
 	}
 
+	public cancelInvitation(client: AuthenticatedSocket, lobbyId: string, invitedClientName: string) {
+		const invitedClient = this.websocketService.getClient(invitedClientName);
+		if (!invitedClient) {
+			throw new WsException(`User [${invitedClientName}] not found`);
+		}
+		this.websocketService.server
+			.to(invitedClient.id)
+			.emit(ServerGameEvents.InvitationCancelled, {
+				lobby: {id: lobbyId, type: 'game'},
+			});
+		this.lobbyService.delete(lobbyId);
+	}
+
 	public dispatchInvitationResponse(client: AuthenticatedSocket, data: any) {
 		const lobby = this.lobbyService.getLobby(data.lobby.id) as GameLobby;
 		lobby.dispatchToLobby(ServerEvents.InvitationResponse, {
@@ -57,6 +70,7 @@ export class GameService {
 		const lobby = this.lobbyService.getLobby(lobbyId) as GameLobby;
 		lobby.validateClient(client);
 		lobby.playerStates.set(client.data.name, 'notReady');
+		lobby.state = 'ready';
 		return lobby.gameSetup();
 	}
 
@@ -79,15 +93,17 @@ export class GameService {
 		lobby.movePaddle(client, data.direction as 'up' | 'down');
 	}
 
-	public moveBall(client: AuthenticatedSocket, data: any) {
-		const lobby = this.lobbyService.getLobby(data.lobbyId) as GameLobby;
-		lobby.validateClient(client);
-		const isInLobby = lobby.clients.get(client.data.name);
-		if (!isInLobby)
-			throw new WsException(`You're not authorized to access this lobby`);
-		lobby.dispatchToOpponent(client, ServerGameEvents.MoveBall, {
-			x: data.x,
-			y: data.y,
-		});
+	public leaveLobby(@ConnectedSocket() client: AuthenticatedSocket) {
+		if (!client.data.gameLobby) return;
+		const lobby = this.lobbyService.getLobby(client.data.gameLobby.id) as GameLobby;
+		if (lobby.state === 'waiting') return;
+		if (lobby.state === 'running') {
+			lobby.stopGame();
+		}
+		lobby.removeClient(client);
+		client.data.gameLobby = undefined;
+		if (lobby.clients.size === 0) {
+			this.lobbyService.delete(lobby.id);
+		}
 	}
 }

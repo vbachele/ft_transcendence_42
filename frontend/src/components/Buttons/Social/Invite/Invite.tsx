@@ -1,45 +1,91 @@
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './invite.svg';
-import {ClientEvents, ServerEvents} from '../../../../events/socket.events';
-import {useContext, useRef} from 'react';
-import SocketContext from '../../../../contexts/Socket/context';
-import {ClientGameEvents} from '../../../../events/game.events';
-import {usePopup} from '../../../../contexts/Popup/Popup';
+import {ClientEvents, ServerEvents} from 'events/socket.events';
+import {useContext, useState} from 'react';
+import SocketContext from 'contexts/Socket/context';
+import {ClientGameEvents} from 'events/game.events';
+import {usePopup} from 'contexts/Popup/Popup';
+import * as S from 'pages/Home/Home.styles';
+import {GameMode} from 'pages/Game/types/game.type';
+import styled from 'styled-components';
+
+const StyleInvite = styled.div`
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+	margin: 0 0 -16px 0;
+`;
+
+const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+`;
+
+const Button = styled.button`
+	font-size: 16px;
+`;
 
 interface IProps {
-	id: string;
+	name: string;
 }
 
-function Invite({id}: IProps) {
+function Invite({name}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
-	const {hasInvited, setHasInvited} = usePopup();
+	const {setHasInvited} = usePopup();
+	const [showGameModes, setShowGameModes] = useState(false);
 
-	function onInvite() {
-		console.log(`friend id `, id)
+	function onInvite(mode: GameMode) {
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'game',
 			data: {
-				mode: 'duo',
+				mode: mode,
 			},
 		});
-		socket?.once(ServerEvents.LobbyMessage, (data) => {
+		socket?.on(ServerEvents.LobbyMessage, (data) => {
 			if (data.message === 'Lobby created') {
 				setHasInvited(true);
 				console.info(`Sending invitation request`);
 				socket?.emit(ClientGameEvents.Invite, {
 					lobbyId: data.lobbyId,
-					invitedClientName: id,
+					invitedClientName: name,
 				});
 			}
 		});
+	}
 
+	function onPlay() {
+		setShowGameModes(true);
+	}
+
+	function offPlay() {
+		setShowGameModes(false);
+	}
+
+	function onPlayAgainstTheClock() {
+		onInvite(GameMode.AgainstTheClock);
+	}
+
+	function onPlayScoreLimit() {
+		onInvite(GameMode.ScoreLimit);
 	}
 
 	return (
-		<button onClick={onInvite}>
+		<StyleInvite onMouseEnter={onPlay} onMouseLeave={offPlay}>
 			<Icon />
-			<F.Text>Invite to play</F.Text>
-		</button>
+			<Content>
+				<Button onClick={() => setShowGameModes(!showGameModes)}>
+					<F.Text>Invite to play</F.Text>
+				</Button>
+				<S.GameMode
+					className={showGameModes ? 'active' : ''}
+					style={{margin: '0', gap: '8px'}}
+				>
+					<Button onClick={onPlayAgainstTheClock}>Against the clock</Button>
+					<Button onClick={onPlayScoreLimit}>Score limit</Button>
+				</S.GameMode>
+			</Content>
+		</StyleInvite>
 	);
 }
 

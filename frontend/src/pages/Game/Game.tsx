@@ -1,47 +1,13 @@
-import React, {useContext, useEffect, useRef} from 'react';
-import {StyledCanvas, StyledGame} from './Game.styles';
-import SocketContext from '../../contexts/Socket/context';
-import {Pong} from './Pong';
-import Countdown from '../../components/Popup/Countdown/Countdown';
-import {useParams, useSearchParams} from 'react-router-dom';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import SocketContext from 'contexts/Socket/context';
+import {Pong} from './pong';
+import Countdown from 'components/Popup/Countdown/Countdown';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
-import {Player} from '@lottiefiles/react-lottie-player';
-import FireBall from 'pages/Game/assets/fireBall.json';
-import PaddleHit from 'pages/Game/assets/paddleHit.json';
-import Stick from 'pages/Game/assets/stick.png';
-import styled from 'styled-components';
-
-const LeftPaddle = styled.img`
-	position: absolute;
-	transform-origin: center;
-	width: 27px;
-	height: 140px;
-`;
-
-const RightPaddle = styled.img`
-	position: absolute;
-	transform-origin: center;
-	width: 27px;
-	height: 140px;
-`;
-
-const StyledFireBall = styled.div`
-	width: 40px;
-	height: 40px;
-	//background: linear-gradient(90deg, red 50%, green 50%);
-	display: inline-flex;
-	position: absolute;
-	align-items: flex-end;
-	justify-content: center;
-	line-height: 0;
-	transform-origin: center;
-	.lf-player-container {
-		flex: 1 0 auto;
-		padding-right: 7px;
-		width: 200px;
-		line-height: 0;
-	}
-`;
+import Victory from 'components/Victory/Victory';
+import Defeat from 'components/Defeat/Defeat';
+import {useUserInfos} from 'contexts/User/userContent';
+import Draw from '../../components/Draw/Draw';
 
 export interface Lobby {
 	id: string;
@@ -51,118 +17,116 @@ export interface Lobby {
 }
 
 function Game() {
-	const canvasRef = useRef(null);
 	const {socket} = useContext(SocketContext).SocketState;
 	const pongRef = useRef<Pong>();
 	const [searchParams] = useSearchParams();
-	const fireBall = useRef<HTMLElement>();
-	// const canvasPos = useRef<DOMRect>();
-	const paddleHitRef = React.createRef<Player>();
-	const paddleHitElem = useRef<HTMLElement>();
-	const leftPaddle = useRef<HTMLElement>();
-	const rightPaddle = useRef<HTMLElement>();
+	const [lobbyId, setLobbyId] = useState('');
+	const [showVictory, setShowVictory] = useState(false);
+	const [showDefeat, setShowDefeat] = useState(false);
+	const [showDraw, setShowDraw] = useState(false);
+	const container = document.getElementById('container');
+	const canvas = document.getElementById('playground') as HTMLCanvasElement;
+	const username = useUserInfos().userName.userName;
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const lobbyId = searchParams.get('lobbyId');
+		console.log(`lobbyId: ${lobbyId}`);
+		setLobbyId(searchParams.get('lobbyId')!);
+		if (canvas) {
+			canvas.width = canvas.offsetWidth;
+			canvas.height = canvas.offsetHeight;
+		}
+	}, []);
 
-		fireBall.current = document.getElementById('fireBall')!;
-		paddleHitElem.current = document.getElementById('paddleHit')!;
-		leftPaddle.current = document.getElementById('leftPaddle')!;
-		rightPaddle.current = document.getElementById('rightPaddle')!;
+	useEffect(() => {
+		if (!lobbyId) return;
 		pongRef.current = new Pong(socket!, lobbyId!);
-
 		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
 		socket?.on(ServerGameEvents.Setup, (data) => {
-			pongRef.current?.moveBall(
-				fireBall.current!,
-				data.ball.position,
-				data.ball.velocity
-			);
-			pongRef.current?.movePaddle(
-				leftPaddle.current!,
-				data.leftPaddle.position
-			);
-			pongRef.current?.movePaddle(
-				rightPaddle.current!,
-				data.rightPaddle.position
-			);
+			pongRef.current?.moveBall(data.ball.position, data.ball.velocity);
+			pongRef.current?.movePaddle('left', data.leftPaddle.position);
+			pongRef.current?.movePaddle('right', data.rightPaddle.position);
+			data.timer ? pongRef.current?.updateTimer(data.timer) : 0;
 			pongRef.current?.start();
 		});
 		return () => {
 			socket?.off(ServerGameEvents.Setup);
 			socket?.emit(ClientGameEvents.LeaveGame, {lobbyId: lobbyId});
 		};
-	}, []);
+	}, [lobbyId]);
+
+	function movePaddle(paddle: HTMLElement, position: {x: number; y: number}) {
+		paddle.style.transform = `translate(${
+			position.x - paddle.clientWidth! / 2
+		}px, ${position.y - paddle.clientHeight! / 2}px)`;
+	}
 
 	useEffect(() => {
-		socket?.on(ServerGameEvents.GamePaused, () => {
-			console.log(`game paused!`);
+		socket?.on(ServerGameEvents.Timer, (data) => {
+			console.log(`data = `, data);
+			pongRef.current?.updateTimer(data.time);
 		});
-
+		socket?.on('exception', (data) => {
+			if (data.status === 'game.forbidden' || 'bad_request')
+				navigate('/notfound');
+		});
 		socket?.on(ServerGameEvents.MoveBall, (data) => {
-			if (data.message) {
-				console.log(`message: `, data.message);
-			}
-			pongRef.current?.moveBall(
-				fireBall.current!,
-				data.position,
-				data.velocity
-			);
+			pongRef.current?.moveBall(data.position, data.velocity);
 		});
-
 		socket?.on(ServerGameEvents.MovePaddle, (data) => {
-			switch (data.paddle) {
-				case 'left':
-					pongRef.current?.movePaddle(leftPaddle.current!, data.position);
+			pongRef.current?.movePaddle(data.paddle, data.position);
+		});
+		socket?.on(ServerGameEvents.UpdateScore, (data) => {
+			pongRef.current?.updateScore(data.score);
+		});
+		socket?.on(ServerGameEvents.GameResult, (data) => {
+			pongRef.current?.stop();
+			console.log(`game result = `, data);
+			switch (data.winner) {
+				case 'draw':
+					setShowDraw(true);
 					break;
-				case 'right':
-					pongRef.current?.movePaddle(rightPaddle.current!, data.position);
+				case username:
+					setShowVictory(true);
 					break;
+				default:
+					setShowDefeat(true);
 			}
 		});
-
-		// socket?.on(ServerGameEvents.PaddleHit, (data) => {
-		// 	paddleHitElem.current!.style.visibility = 'visible';
-		// 	paddleHitElem.current!.style.transform = `translate(${
-		// 		data.position.x - paddleHitElem.current?.clientWidth! / 2
-		// 	}px, ${data.position.y - paddleHitElem.current?.clientHeight! / 2}px)`;
-		//
-		// 	paddleHitRef.current?.play();
-		// 	setTimeout(() => {
-		// 		paddleHitElem.current!.style.visibility = 'hidden';
-		// 	}, 1_000);
-		// });
 		return () => {
 			socket?.off(ServerGameEvents.MoveBall);
 			socket?.off(ServerGameEvents.MovePaddle);
-			socket?.off(ServerGameEvents.PaddleHit);
+			socket?.off(ServerGameEvents.UpdateScore);
+			socket?.off(ServerGameEvents.Timer);
+			socket?.off(ServerGameEvents.GameResult);
+			pongRef.current?.stop();
+			delete pongRef.current;
 		};
 	}, [socket]);
 
 	return (
 		<div>
-			<div style={{border: '1px solid black', width: '800px', height: '600px'}}>
-				<StyledFireBall id={'fireBall'}>
-					<Player autoplay={true} loop={true} src={FireBall} />
-				</StyledFireBall>
-				{/*<Player*/}
-				{/*	id={'paddleHit'}*/}
-				{/*	src={PaddleHit}*/}
-				{/*	autoplay={false}*/}
-				{/*	loop={false}*/}
-				{/*	ref={paddleHitRef}*/}
-				{/*	style={{*/}
-				{/*		position: 'absolute',*/}
-				{/*		transformOrigin: 'center',*/}
-				{/*		width: '200px',*/}
-				{/*		height: '200px',*/}
-				{/*		visibility: 'hidden',*/}
-				{/*	}}*/}
-				{/*/>*/}
-				<LeftPaddle id={'leftPaddle'} src={Stick} alt={'left paddle'} />
-				<RightPaddle id={'rightPaddle'} src={Stick} alt={'right paddle'} />
+			<div
+				id="container"
+				style={{
+					aspectRatio: '16 / 9',
+					maxHeight: '80vh',
+					boxShadow: '0 0 10px 10px rgba(100, 100, 100, 0.8)',
+					margin: '32px auto',
+				}}
+			>
+				<canvas
+					id="playground"
+					width={container ? container.clientWidth : 1280}
+					height={container ? container.clientHeight : 720}
+					style={{width: '100%', height: '100%'}}
+				/>
 			</div>
 			<Countdown />
+			{showVictory && <Victory />}
+			{showDefeat && <Defeat />}
+			{showDraw && <Draw />}
 		</div>
 	);
 }

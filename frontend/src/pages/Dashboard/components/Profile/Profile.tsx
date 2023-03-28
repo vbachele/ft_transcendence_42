@@ -1,15 +1,16 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import {IUser} from 'types/models';
+import {backend} from 'lib/backend';
 import {useUserInfos} from 'contexts/User/userContent';
-import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
 import ActivityStatus from 'components/ActivityStatus';
-import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import UserDropdown from './UserDropdown';
 import getRanks from 'helpers/getRanks';
 import isUserIn from 'helpers/isUserIn';
+import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
-import {IUser} from 'types/models';
-import {backend} from 'lib/backend';
+import Buttons from 'components/Buttons';
+import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
 
 interface IProps {
 	user: IUser;
@@ -19,6 +20,7 @@ const Profile = ({user}: IProps) => {
 	const {userName} = useUserInfos();
 	const [dropdownVisible, setDropdownVisible] = useState(false);
 	const [friendUsers, setFriendUsers] = useState<IUser[]>([]);
+	const [status, setStatus] = useState(user.status);
 	const {global, coalition} = getRanks(user);
 	let checkRanks: boolean = false;
 
@@ -45,9 +47,10 @@ const Profile = ({user}: IProps) => {
 					<F.H1>{user.name}</F.H1>
 					{isUserIn(friendUsers, user.name) && <FriendIcon />}
 				</S.HDiv>
-				<ActivityStatus state={user.status} />
+				<ActivityStatus user={user} updateStatus={setStatus} />
 				<UserDropdown
 					user={user}
+					status={status}
 					friendUsers={friendUsers}
 					dropdownVisible={dropdownVisible}
 					setDropdownVisible={setDropdownVisible}
@@ -69,6 +72,7 @@ const Profile = ({user}: IProps) => {
 					</S.VDivLink>
 				</S.VDiv>
 			)}
+			<UserInvitedToGame user={user}/>
 		</S.Profile>
 	);
 };

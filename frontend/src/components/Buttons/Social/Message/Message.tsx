@@ -13,8 +13,7 @@ function Message({user}: IProps) {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		console.log(userName.userName, 'wants to chat with', user); //TODO
-		navigate(`/chat/${user}`);
+		navigate(`/chat`);
 	};
 
 	return (

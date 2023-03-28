@@ -8,8 +8,8 @@ interface IProps {
 function Mute({id}: IProps) {
 	return (
 		<button>
-			<Icon />
-			<F.Text>Mute</F.Text>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Mute</F.Text>
 		</button>
 	);
 }

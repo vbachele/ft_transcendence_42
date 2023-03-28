@@ -10,36 +10,56 @@ import NotificationCenter from './components/NotificationCenter/NotificationCent
 import * as S from './Navbar.styles';
 import {INotification} from 'types/models';
 import SocketContext from 'contexts/Socket/context';
+import {openNotification} from 'helpers/openNotification';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
+enum ETypes {
+	ACHIEVEMENT = 'success',
+	FRIEND_REQUEST = 'info',
+	FRIEND_ACCEPT = 'success',
+	FRIEND_DENY = 'error',
+	REMOVE = 'error',
+	MESSAGE = 'info',
+	BANNED = 'error',
+	KICKED = 'info',
+	ADMIN = 'info',
+}
+
 const Navbar = ({setTheme}: IProps) => {
 	const {socket} = useContext(SocketContext).SocketState;
-	const {userName} = useUserInfos();
-	// const [bellOpen, setBellOpen] = useState(false);
 	const [notifications, setNotifications] = useState<INotification[]>([]);
 
 	useEffect(() => {
-		socket?.on(
-			ServerSocialEvents.IncomingNotifsRequest,
-			(clientNotifs: INotification[]) => {
-				setNotifications(clientNotifs);
+		socket?.emit(
+			ClientSocialEvents.GetNotifications,
+			(notifications: INotification[]) => {
+				setNotifications(notifications);
 			}
 		);
-
-		return () => {
-			socket?.off(ServerSocialEvents.IncomingNotifsRequest);
-		};
-	}, [socket]);
+	}, []);
 
 	useEffect(() => {
-		console.log('useeffect notif');
-		socket?.emit(ClientSocialEvents.RequestNotifs, {
-			senderName: userName.userName,
+		socket?.on(ServerSocialEvents.ReceiveNotif, (notifData: INotification) => {
+			openNotification(
+				ETypes[notifData.type as keyof typeof ETypes],
+				`${notifData.message}`,
+				'topRight'
+			);
+			socket?.emit(
+				ClientSocialEvents.GetNotifications,
+				(notifications: INotification[]) => {
+					setNotifications(notifications);
+				}
+			);
 		});
-	}, []);
+
+		return () => {
+			socket?.off(ServerSocialEvents.ReceiveNotif);
+		};
+	}, [socket]);
 
 	return (
 		<S.StyledNav id="navbar">
@@ -52,7 +72,10 @@ const Navbar = ({setTheme}: IProps) => {
 			<S.Menu>
 				<ToggleTheme setTheme={setTheme} />
 				<S.Divider />
-				<NotificationCenter notifications={notifications} />
+				<NotificationCenter
+					notifications={notifications}
+					setNotifications={setNotifications}
+				/>
 				<S.Divider />
 				<Dropdown />
 			</S.Menu>

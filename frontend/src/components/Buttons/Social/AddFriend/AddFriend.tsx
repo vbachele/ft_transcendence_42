@@ -1,14 +1,18 @@
+import {useContext} from 'react';
 import {useUserInfos} from 'contexts/User/userContent';
-import {ReactComponent as Icon} from './add.svg';
+import SocketContext from 'contexts/Socket/context';
+import {ClientSocialEvents} from 'events/social.events';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
+import {fetchPendings} from 'helpers/fetchPendings';
+import {fetchFriends} from 'helpers/fetchFriends';
+import {fetchBlocked} from 'helpers/fetchBlocked';
+import {userExists} from 'helpers/userExists';
+import {addUserToFriends} from 'helpers/addUserToFriends';
+import {ReactComponent as Icon} from './add.svg';
 import * as F from 'styles/font.styles';
-import {useContext} from 'react';
-import {ClientSocialEvents} from 'events/social.events';
-import unlockAchievement from 'helpers/unlockAchievement';
-import SocketContext from 'contexts/Socket/context';
 
 interface IProps {
 	user: IUser;
@@ -18,33 +22,14 @@ function AddFriend({user}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {userName} = useUserInfos();
 
-	const fetchFriends = async (): Promise<IUser[]> => {
-		const data = await backend.getFriendsOf(user.name);
-		return data;
-	};
-
-	const fetchPendings = async (): Promise<{
-		sentPendings: IUser[];
-		receivedPendings: IUser[];
-	}> => {
-		const data = await backend.getPendingsOf(userName.userName);
-		return {
-			sentPendings: data.sentPendings || [],
-			receivedPendings: data.receivedPendings || [],
-		};
-	};
-
-	const fetchBlocked = async (): Promise<IUser[]> => {
-		const data = await backend.getBlockedOf(user.name);
-		return data;
-	};
-
 	const onAdd = async () => {
-		const {receivedPendings} = await fetchPendings();
-		const friends = await fetchFriends();
-		const blocked = await fetchBlocked();
+		const {receivedPendings} = await fetchPendings(userName.userName);
+		const friends = await fetchFriends(userName.userName);
+		const blocked = await fetchBlocked(user.name);
+		const exists = await userExists(user.name, userName.userName);
 
 		if (
+			!exists ||
 			isUserIn(friends, userName.userName) ||
 			isUserIn(blocked, userName.userName)
 		) {
@@ -53,34 +38,24 @@ function AddFriend({user}: IProps) {
 		}
 
 		if (isUserIn(receivedPendings, user.name)) {
-			backend.removePending(user.name, userName.userName);
-			backend.removePending(userName.userName, user.name);
-			backend.addFriend(user.name, userName.userName);
-			backend.addFriend(userName.userName, user.name);
+			addUserToFriends(userName.userName, user.name, socket);
+			addUserToFriends(user.name, userName.userName, socket);
 
-			//TODO move this to backend
-			//TODO socket on
-			// unlockAchievement('ADD', userName.userName);
-			// unlockAchievement('ADD', user.name);
-			// if (friends && friends.length + 1 >= 3) {
-			// 	unlockAchievement('TEAM', user.name);
-			// 	unlockAchievement('TEAM', userName.userName);
-			// }
+			socket?.emit(ClientSocialEvents.SendNotif, {
+				sender: userName.userName,
+				receiver: user.name,
+				type: 'FRIEND_ACCEPT',
+			});
 
 			openNotification('success', `${user.name} has been added`);
-
 			return;
 		}
 
-		socket?.emit(ClientSocialEvents.SendFriendRequest, {
-			senderName: userName.userName,
-			receiverName: user.name,
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: userName.userName,
+			receiver: user.name,
 			type: 'FRIEND_REQUEST',
 		});
-
-		// socket?.emit(ClientSocialEvents.RequestNotifs, {
-		// 	senderName: user.name,
-		// });
 
 		backend.addPending(user.name, userName.userName);
 		openNotification('info', `Friend request sent to ${user.name}`);

@@ -39,14 +39,14 @@ export function ToggleDrop({toggle, isOpen}: IProps) {
 					animate={isOpen ? 'open' : 'closed'}
 					initial={false}
 					variants={{
-						closed: {d: 'M8 8 L24 8', stroke: theme.colors.secondary},
+						closed: {d: 'M8 8 L24 8', stroke: theme.colors.text},
 						open: {d: 'M8 8 L24 24', stroke: 'hsl(0, 0%, 100%)'},
 					}}
 					transition={transition}
 				/>
 				<Path
 					d="M8 16 L24 16"
-					stroke={theme.colors.secondary}
+					stroke={theme.colors.text}
 					animate={isOpen ? 'open' : 'closed'}
 					initial={false}
 					variants={{
@@ -61,7 +61,7 @@ export function ToggleDrop({toggle, isOpen}: IProps) {
 					variants={{
 						closed: {
 							d: 'M8 24 L24 24',
-							stroke: theme.colors.secondary,
+							stroke: theme.colors.text,
 						},
 						open: {d: 'M8 24 L24 8', stroke: 'hsl(0, 0%, 100%)'},
 					}}

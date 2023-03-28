@@ -3,6 +3,7 @@ import {WsException} from '@nestjs/websockets';
 export const enum ErrorType {
 	Forbidden = 'Forbidden',
 	LobbyAlreadyExist = 'LobbyAlreadyExist',
+	LobbyNotFound = 'LobbyNotFound',
 	InvalidPassword = 'InvalidPassword',
 }
 
@@ -18,6 +19,10 @@ export const LobbyError = {
 	[ErrorType.InvalidPassword]: {
 		status: 'forbidden',
 		message: 'Invalid password',
+	},
+	[ErrorType.LobbyNotFound]: {
+		status: 'bad_request',
+		message: 'Lobby not found',
 	}
 };
 

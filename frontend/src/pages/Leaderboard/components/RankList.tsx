@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {IUser} from 'types/models';
 import {Input, Select} from 'antd';
-import Rank from './Rank';
 import compareScore from 'helpers/compareScore';
 import filterByName from 'helpers/filterByName';
+import Rank from './Rank';
 import * as S from '../Leaderboard.styles';
 import * as F from 'styles/font.styles';
 

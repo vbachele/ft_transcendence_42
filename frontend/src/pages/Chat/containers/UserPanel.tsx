@@ -7,19 +7,16 @@ import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
 import * as C from './containers.styles';
-import ChatContext from '../../../contexts/Chat/context';
-import Ban from 'components/Buttons/Channel/Ban/Ban';
-import Mute from 'components/Buttons/Channel/Mute/Mute';
-import AddFriend from 'components/Buttons/Social/AddFriend/AddFriend';
-import BlockUser from 'components/Buttons/Social/BlockUser/BlockUser';
-import Invite from 'components/Buttons/Social/Invite/Invite';
-import RemoveFriend from 'components/Buttons/Social/RemoveFriend/RemoveFriend';
-import ViewProfile from 'components/Buttons/Social/ViewProfile/ViewProfile';
-import Message from 'components/Buttons/Social/Message/Message';
+import ChatContext from 'contexts/Chat/context';
+import {useKickUser} from '../../../hooks/chat/useKickUser';
+import {useUserInfos} from 'contexts/User/userContent';
+import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-	const {userInPanel} = useContext(ChatContext).ChatState;
+	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
+	const {userName} = useUserInfos();
+	const {kickUser} = useKickUser(userInPanel?.name, activeLobby?.id);
 
 	if (!userInPanel) return null;
 
@@ -39,19 +36,27 @@ function UserPanel() {
 					src={userInPanel.image}
 					alt="user avatar"
 				/>
-				<ActivityStatus state={userInPanel.status} />
+				<ActivityStatus user={userInPanel} />
 			</S.FriendDetails>
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
-				<ViewProfile user={userInPanel.name} />
-				<Invite id={userInPanel.name} />
-				<Message user={userInPanel.name} />
-				<AddFriend user={userInPanel} />
-				<RemoveFriend user={userInPanel} />
-				<BlockUser user={userInPanel} />
-				<Mute id={1} />
-				<Ban id={1} />
+				<Buttons.ViewProfile user={userInPanel} />
+				{/*{userInPanel.status === 'online' && <Invite name={userInPanel.name} />}*/}
+				<Buttons.Invite name={userInPanel.name} />
+				<Buttons.Message user={userInPanel.name} />
+				{/*{userInPanel.status === 'ingame' && <Spectate user={userInPanel.name} />}*/}
+				<Buttons.AddFriend user={userInPanel} />
+				<Buttons.RemoveFriend user={userInPanel} />
+				<Buttons.BlockUser user={userInPanel} />
+				{activeLobby?.adminName === userName.userName && (
+					<>
+						<Buttons.Mute id={1} />
+						<Buttons.Ban id={1} />
+						<Buttons.Kick onClick={kickUser} />
+					</>
+				)}
 			</S.FriendOptions>
+			<UserInvitedToGame user={userInPanel}/>
 		</C.UserPanel>
 	);
 }

@@ -1,4 +1,4 @@
-import {motion} from 'framer-motion';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 // prettier-ignore
@@ -10,12 +10,8 @@ export const Container = styled.div`
 
 	.avatar {
 		cursor: pointer;
+		border-radius: 50%;
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	}
-
-	a, p {
-		text-decoration: none;
-		word-break: break-all;
 	}
 
 	@media only screen and (max-width: 768px) {
@@ -25,84 +21,58 @@ export const Container = styled.div`
 	}
 `;
 
-export const DropdownContainer = styled(motion.div)`
+export const DropdownContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-
-	background-color: #dc4f19;
-	background-color: rgb(0, 0, 0, 0.5);
-	backdrop-filter: blur(8px);
-
-	position: fixed;
-	z-index: 90;
-	right: 24px;
-	border-radius: 6px;
-	padding: 1em;
+	position: absolute;
+	right: 0;
 	width: 275px;
+	border-radius: 8px;
+	background-color: #151515;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	transform: translateX(4em);
-
-	hr {
-		height: 1px;
-		background-color: #fff;
-		border: none;
-		margin: 1em 0;
-	}
+	z-index: 90;
 
 	@media only screen and (max-width: 768px) {
 		position: fixed;
+		width: 100%;
+		height: 100%;
 		align-items: center;
-		border-radius: 0px;
+		border-radius: 0;
 		z-index: 50;
 		top: 0;
-		right: 0;
-		width: 100%;
-		min-width: 280px;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.9);
-		backdrop-filter: blur(8px);
 
-		hr {
-			margin: 32px 0;
-		}
-
-		.first-hr {
-			width: 100vw;
-			margin-top: 8px;
-		}
 		.second-hr {
-			width: 60vw;
+			margin: 16px 0;
+			width: 60%;
 		}
 	}
 `;
 
-export const User = styled.div`
+export const User = styled(Link)`
+	background-color: ${(p) => p.theme.colors.main};
 	display: flex;
+	flex-direction: row;
 	align-items: center;
-	gap: 1em;
+	justify-content: flex-start;
+	padding-left: 1em;
+	height: 64px;
+	gap: 16px;
+	border-radius: 8px 8px 0 0;
+	color: white;
 
 	img {
-		width: 64px;
-		height: 64px;
-		border-radius: 50%;
+		width: 50px;
+		height: 50px;
 	}
 
 	@media screen and (max-width: 768px) {
-		img {
-			width: 48px;
-			height: 48px;
-			border-radius: 50%;
-		}
+		height: 80px;
 		width: 100%;
-		padding: 0 16px;
+		border-radius: 0;
+		padding: 0;
 		justify-content: center;
-	}
-`;
-
-// prettier-ignore
-export const User__Infos = styled.div`
-	a, p {
-		color: white;
+		background-color: #202020;
+		border-bottom: 1px solid white;
 	}
 `;
 
@@ -111,6 +81,7 @@ export const LinksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	padding: 1em;
 
 
 	a, button {
@@ -157,7 +128,49 @@ export const LinksContainer = styled.div`
 	}
 `;
 
-export const PopupButton = styled.button`
+export const PlayContainer = styled.button`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin: 0 0 -8px 0;
 	background-color: transparent;
 	border: none;
+`;
+
+export const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+`;
+
+export const Button = styled.button`
+	background: none;
+	border: none;
+	font-size: 16px;
+  @media only screen and (max-width: 768px) {
+		font-size: 8px;
+  }
+`
+
+export const GameMode = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s ease-in-out;
+	padding: 0 8px;
+	margin: 0 8px;
+	gap: 4px;
+	border-left: 1px solid white;
+
+	&.active {
+		margin: 8px;
+		max-height: 500px;
+	}
+  @media only screen and (max-width: 768px) {
+		border-left: none;
+		gap: 8px;
+  }
+	
 `;

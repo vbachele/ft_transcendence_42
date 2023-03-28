@@ -6,14 +6,12 @@ export const Leaderboard = styled.div`
 	position: relative;
 	top: -150px;
 
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#f6f6f7' : '#252526'};
+	background-color: ${(p) => p.theme.colors.secondary};
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	border-radius: 8px;
 
 	display: flex;
 	flex-direction: column;
-	gap: 32px;
 	padding: 16px 20px;
 	text-align: center;
 
@@ -34,20 +32,30 @@ export const Leaderboard = styled.div`
 
 export const FirstPlayer = styled(Link)`
 	text-decoration: none;
-	color: ${(p) => p.theme.colors.secondary};
-	justify-content: center;
+	color: ${(p) => p.theme.colors.text};
+`;
+
+export const Crown = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	justify-content: center;
+	align-items: center;
+
+	svg {
+		position: relative;
+		top: 32px;
+		left: 24px;
+		transform: rotate(17deg);
+		width: 64px;
+		height: 64px;
+	}
 
 	img {
-		align-self: center;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 		margin: 16px 0;
 		width: 128px;
 		height: 128px;
 		border-radius: 50%;
-
-		box-shadow: 0 0 10px #ffbf00, 0 0 20px #ffbf00, 0 0 40px #ffbf00;
 	}
 `;
 
@@ -60,9 +68,8 @@ export const TopFive = styled.div`
 `;
 
 export const MiniRank = styled(Link)`
-	background-color: ${(p) =>
-		p.theme.name === 'light' ? '#ececee' : '#1c1c1d'};
-	color: ${(p) => p.theme.colors.secondary};
+	background-color: ${(p) => p.theme.colors.third};
+	color: ${(p) => p.theme.colors.text};
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
 	text-decoration: none;
 	display: flex;
@@ -83,12 +90,17 @@ export const MiniRank = styled(Link)`
 			display: block;
 		}
 	}
+
+	:hover {
+		background-color: ${(p) => p.theme.colors.hover};
+	}
 `;
 
 export const Avatar = styled.img`
 	width: 48px;
 	height: 48px;
 	border-radius: 50%;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const User = styled.div`

@@ -1,6 +1,5 @@
-import {Injectable, Post} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {PrismaService} from 'src/database/prisma.service';
-import {Request} from 'express';
 
 @Injectable({})
 export class FriendService {
@@ -31,6 +30,7 @@ export class FriendService {
 					},
 				},
 			});
+
 			return updatedUser;
 		} catch (error) {
 			throw error;

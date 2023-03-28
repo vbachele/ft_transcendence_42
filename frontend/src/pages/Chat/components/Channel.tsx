@@ -30,10 +30,7 @@ function Channel({lobby}: ChannelProps) {
 
 	function onJoinLobbyPass(event: React.MouseEvent) {
 		setPopup(true);
-		console.log("POPUP", popup);
-		
 	}
-
 
 	return (
 		<S.Channel

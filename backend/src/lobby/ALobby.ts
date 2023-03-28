@@ -42,7 +42,7 @@ export abstract class ALobby {
   }
 
   public removeClient(client: AuthenticatedSocket): ALobby {
-    this.clients.delete(client.id);
+    this.clients.delete(client.data.name);
     client.leave(this.id);
     return this;
   }

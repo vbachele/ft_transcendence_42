@@ -1,6 +1,7 @@
 import {
 	ConnectedSocket,
 	MessageBody,
+	OnGatewayDisconnect,
 	SubscribeMessage,
 	WebSocketGateway,
 	WsException,
@@ -13,16 +14,24 @@ import {ClientGameEvents, ServerGameEvents} from './events/game.events';
 import {GameService} from './game.service';
 import {ValidationPipe} from '@nestjs/common';
 import {LobbyService} from '../lobby/lobby.service';
-import {GameLobby} from './gameLobby';
+import {GameLobby, GameLobbyDto} from './gameLobby';
+import {GameMode} from './types/game.type';
 
 @WebSocketGateway()
-export class GameGateway {
-	private readonly queue: AuthenticatedSocket[] = [];
+export class GameGateway implements OnGatewayDisconnect {
+	private readonly queue = {
+		[GameMode.AgainstTheClock]: [] as AuthenticatedSocket[],
+		[GameMode.ScoreLimit]: [] as AuthenticatedSocket[],
+	};
 
 	constructor(
 		private readonly gameService: GameService,
 		private readonly lobbyService: LobbyService
 	) {}
+
+	handleDisconnect(client: AuthenticatedSocket) {
+		this.gameService.leaveLobby(client);
+	}
 
 	@SubscribeMessage(ClientGameEvents.Invite)
 	onInviteToLobby(
@@ -64,7 +73,7 @@ export class GameGateway {
 		return {
 			event: ServerGameEvents.Setup,
 			data: gameSetup,
-		}
+		};
 	}
 
 	@SubscribeMessage(ClientGameEvents.Ready)
@@ -85,26 +94,53 @@ export class GameGateway {
 	}
 
 	@SubscribeMessage(ClientGameEvents.SearchGame)
-	async onSearchGame(@ConnectedSocket() client: AuthenticatedSocket) {
-		this.queue.push(client);
-		if (this.queue.length >= 2) {
+	async onSearchGame(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody(new ValidationPipe()) body: GameLobbyDto
+	) {
+		console.log(`game request`);
+		this.queue[body.mode].push(client);
+		if (this.queue[body.mode].length >= 2) {
 			const lobby = await this.lobbyService.create('game', {
-				mode: 'duo',
+				mode: body.mode,
 			});
 			console.log(`Lobby created: ${lobby.id}`);
-			const player1 = this.queue.shift();
-			const player2 = this.queue.shift();
-			if (!player1 || !player2)
+			const player1 = this.queue[body.mode].shift();
+			const player2 = this.queue[body.mode].shift();
+			if (!player1 || !player2 || player1 === player2)
 				throw new WsException('An error occurred during matchmaking');
 			console.log(
 				`player1: ${player1.data.name}, player2: ${player2.data.name}`
 			);
 			lobby.addClient(player1);
 			lobby.addClient(player2);
+			player1.data.gameLobby = lobby as GameLobby;
+			player2.data.gameLobby = lobby as GameLobby;
 			lobby.dispatchToLobby(ServerGameEvents.GameFound, {
 				lobbyId: lobby.id,
 			});
 		}
+	}
+
+	@SubscribeMessage(ClientGameEvents.CancelSearch)
+	onCancelSearch(@ConnectedSocket() client: AuthenticatedSocket) {
+		this.queue[GameMode.AgainstTheClock] = this.queue[
+			GameMode.AgainstTheClock
+		].filter((c) => c !== client);
+		this.queue[GameMode.ScoreLimit] = this.queue[GameMode.ScoreLimit].filter(
+			(c) => c !== client
+		);
+		console.log(`Client [${client.data.name}] canceled search`);
+	}
+
+	@SubscribeMessage(ClientGameEvents.CancelInvitation)
+	onCancelInvitation(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('lobbyId') lobbyId: string,
+		@MessageBody('invitedClientName') invitedClientName: string
+	) {
+		console.log(`Client [${client.data.name}] canceled invitation`);
+		this.gameService.cancelInvitation(client, lobbyId, invitedClientName);
 	}
 
 	@SubscribeMessage(ClientGameEvents.LeaveGame)
@@ -113,15 +149,16 @@ export class GameGateway {
 		@MessageBody('lobbyId') lobbyId: string
 	) {
 		console.log(`Client [${client.data.name}] left the game`);
-		const lobby = this.lobbyService.getLobby(lobbyId) as GameLobby;
-		if (lobby.state === 'running') {
-			lobby.dispatchToLobby(ServerGameEvents.GamePaused, {
-				lobbyId: lobby.id,
-			});
-		} else {
-			lobby.dispatchToLobby(ServerEvents.LobbyMessage, {
-				message: `${client.data.name} left the game`,
-			});
-		}
+		// const lobby = this.lobbyService.getLobby(lobbyId) as GameLobby;
+		// if (lobby.state === 'running') {
+		// 	lobby.dispatchToLobby(ServerGameEvents.GamePaused, {
+		// 		lobbyId: lobby.id,
+		// 	});
+		// } else {
+		// 	lobby.dispatchToLobby(ServerEvents.LobbyMessage, {
+		// 		message: `${client.data.name} left the game`,
+		// 	});
+		// }
+		this.gameService.leaveLobby(client);
 	}
 }

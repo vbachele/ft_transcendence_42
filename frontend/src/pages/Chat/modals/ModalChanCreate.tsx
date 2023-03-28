@@ -7,6 +7,8 @@ import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import { H5, H6, Subtitle } from 'styles/font.styles';
+import {fetchUserByName} from 'helpers/fetchUserByName';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 const StyledTogglePrivate = styled.div`
 	display: flex;
@@ -82,9 +84,12 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 		setIsModalOpen(false);
 	};
 
-	async function handleSubmit(data: any) {	
-		let closeModal = true;	
-		const response = socket?.emit(ClientEvents.CreateLobby, {
+	async function handleSubmit(data: any) {
+		const user = await fetchUserByName(name, name);
+		let closeModal = true;
+		const hasCreateAchievement = user?.achievements.includes('CREATE');
+
+		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'chat',
 			data: {
 				maxClients: 1024,
@@ -96,9 +101,9 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 			}, (response:any ) => {
 				console.log("response", response.status); // ok
 			  });
-		
-		
-		socket?.on('exception', (data) => {	
+
+
+		socket?.on('exception', (data) => {
 			if (data.status === 'forbidden') {
 					setError(true);
 					closeModal = false;
@@ -111,6 +116,14 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				setIsModalOpen(false)}
 				, 500)
 
+		console.info(`Channel created`);
+
+		if (user && !hasCreateAchievement) {
+			unlockAchievement('CREATE', user, socket);
+			setAchievements({achievements: [...user.achievements]});
+		}
+
+		setIsModalOpen(false);
 	}
 
 	return (
@@ -158,3 +171,6 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	);
 }
 export default ModalChanCreate;
+function setAchievements(arg0: {achievements: string[]}) {
+	throw new Error('Function not implemented.');
+}

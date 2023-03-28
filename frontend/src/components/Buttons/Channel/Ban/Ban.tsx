@@ -8,8 +8,8 @@ interface IProps {
 function Ban({id}: IProps) {
 	return (
 		<button>
-			<Icon />
-			<F.Text>Ban</F.Text>
+			<Icon style={{fill: '#ff4d4f'}} />
+			<F.Text style={{color: '#ff4d4f'}}>Ban</F.Text>
 		</button>
 	);
 }

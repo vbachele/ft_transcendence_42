@@ -13,6 +13,7 @@ import * as F from 'styles/font.styles';
 
 interface IProps {
 	user: IUser;
+	status: string;
 	friendUsers: IUser[];
 	dropdownVisible: boolean;
 	setDropdownVisible: (value: React.SetStateAction<boolean>) => void;
@@ -20,6 +21,7 @@ interface IProps {
 
 const UserDropdown = ({
 	user,
+	status,
 	friendUsers,
 	dropdownVisible,
 	setDropdownVisible,
@@ -64,13 +66,13 @@ const UserDropdown = ({
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user.name) && user.status === 'online' && (
+					{isUserIn(friendUsers, user.name) && status === 'online' && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
 							}}
 						>
-							<Buttons.Invite id={user.name} />
+							<Buttons.Invite name={user.name} />
 						</S.OptionButton>
 					)}
 				</>
@@ -80,13 +82,13 @@ const UserDropdown = ({
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user.name) && user.status === 'ingame' && (
+					{isUserIn(friendUsers, user.name) && status === 'ingame' && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);
 							}}
 						>
-							<Buttons.Spectate user={user.name} />
+							<Buttons.Spectate user={user} />
 						</S.OptionButton>
 					)}
 				</>

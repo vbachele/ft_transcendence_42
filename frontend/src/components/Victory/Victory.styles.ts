@@ -177,7 +177,10 @@ export const Text = styled.div`
 
 export const Wrapper = styled.div`
   background-color: #171717;
+	position: absolute;
+	inset: 0;
   display: flex;
+	z-index: 500;
   align-items: center;
   justify-content: center;
   height: 100vh;

@@ -32,7 +32,7 @@
 			"id": 5,
 			"api": "TOP5",
 			"name": "Conqueror",
-			"description": "Reach the top 5 of the global leaderboard",
+			"description": "Reach the top 5 of the leaderboard",
 			"image": "https://cdn-icons-png.flaticon.com/512/7346/7346399.png"
 		},
 		{

@@ -15,7 +15,7 @@ export class AuthService {
     private googleService: GoogleService
   ) {}
 
-/* DATABASE Creation function */ 
+/* DATABASE Creation function */
 async createDataBase42User(
   user42: any,
   token: string,
@@ -34,14 +34,14 @@ async createDataBase42User(
         email: user42.email,
       },
     });
-    
+
     return user;
   } catch (error) {
     throw new HttpException(
     {
       status: HttpStatus.BAD_REQUEST,
       error: "Error to create the user to the database"
-    }, HttpStatus.BAD_REQUEST); 
+    }, HttpStatus.BAD_REQUEST);
     };
 }
 
@@ -49,19 +49,19 @@ async createDataBase42User(
     const token: string = req.cookies.token;
     const user42infos = await this.Oauth42.access42UserInformation(token);
     if (user42infos)
-      { 
+      {
         const finalUser = await this.Oauth42.createDataBase42User(    user42infos,
         token,
         req.body.name,
         req.body.isRegistered);
         console.log("INSIDE THE WRONG FUNCTION 42 USER");
-        
+
         return res.status(200).json({
         statusCode: 200,
         path: finalUser,
       });
     }
-    await this.googleService.handleGoogleUserCreation(res, req); 
+    await this.googleService.handleGoogleUserCreation(res, req);
   }
 
   async RedirectConnectingUser(
@@ -81,7 +81,7 @@ async createDataBase42User(
 
   async checkIfTokenValid(@Req() req: Request, @Res() res: Response) {
     const token: string = req.cookies.token;
-    
+
     const token42Valid = await this.Oauth42.access42UserInformation(token); // check token from user if user is from 42
     const dataGoogleValid = await this.googleService.getUserFromGoogleByCookies(req); // check now if the token from google is valid
     if (!token42Valid && !dataGoogleValid) {
@@ -95,24 +95,32 @@ async createDataBase42User(
       path: request.url,
     });
   }
-  
+
   /* GET FUNCTIONS */
-  
+
   async getUserByToken(req: Request) {
-    const accessToken = req.cookies.token;
     try {
+      const accessToken = req.cookies.token;
       const user = await this.prisma.user.findFirst({
         where: {
           accessToken: accessToken,
         },
       });
+      // if (!user)
+      // {
+      //   throw new HttpException(
+      //     {
+      //       status: HttpStatus.BAD_REQUEST,
+      //       error: "Error to get the user by token"},
+      //      HttpStatus.BAD_REQUEST);
+      //     };
       return user;
     } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: "Error to get the user by token"},
-         HttpStatus.BAD_REQUEST); 
+         HttpStatus.BAD_REQUEST);
         };
   }
 
@@ -129,7 +137,7 @@ async createDataBase42User(
         expires: new Date(new Date().getTime() + 60 * 24 * 7 * 1000), // expires in 7 days
         httpOnly: true, // for security
       });
-      
+
   }
 
   async updateCookies(@Res() res: Response, token: any, userInfos: any) {
@@ -141,15 +149,15 @@ async createDataBase42User(
         });
         return user;
       }
-      else 
+      else
         return (null);
     } catch (error)
     {
         throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
         error: "Error to update the cookes"},
-        HttpStatus.BAD_REQUEST); 
-    }   
+        HttpStatus.BAD_REQUEST);
+    }
     }
 
   async deleteCookies(@Res() res: Response) {

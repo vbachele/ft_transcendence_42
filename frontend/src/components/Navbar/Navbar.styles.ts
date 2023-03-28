@@ -36,7 +36,7 @@ export const Menu = styled.div`
 
 	svg {
 		border-radius: 50%;
-		fill: ${(props) => props.theme.colors.secondary};
+		fill: ${(props) => props.theme.colors.text};
 	}
 
 	img {
@@ -55,7 +55,7 @@ export const Divider = styled.div`
 	height: 2px;
 	border-radius: 4px;
 	transform: rotate(-90deg);
-	background-color: ${(p) => p.theme.colors.secondary};
+	background-color: ${(p) => p.theme.colors.text};
 	@media screen and (max-width: 768px) {
 		display: none;
 	}
@@ -73,6 +73,6 @@ export const StyledToggleTheme = styled.label`
 	}
 
 	svg:hover {
-		fill: #dc4f19;
+		fill: ${p => p.theme.colors.main};
 	}
 `;

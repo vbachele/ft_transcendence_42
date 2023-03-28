@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { ServerEvents } from "../events/lobby.events";
 import { ALobby } from "../ALobby";
+import {GameLobby} from '../../game/gameLobby';
 
 type TCallback = (res: any) => void;
 
@@ -11,7 +12,7 @@ type TCallback = (res: any) => void;
 export type AuthenticatedSocket = Socket & {
   data: {
     name: string;
-    lobbies: Map<string, ALobby>;
+    gameLobby?: GameLobby;
   };
 
   addLobby: (lobby: ALobby) => void;

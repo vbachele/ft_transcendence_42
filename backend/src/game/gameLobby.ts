@@ -1,37 +1,43 @@
 import {ALobby} from '../lobby/ALobby';
-import {ForbiddenException, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {IsString} from 'class-validator';
 import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {WebsocketService} from '../websocket/websocket.service';
 import {ConnectedSocket, WsException} from '@nestjs/websockets';
 import {ServerGameEvents} from './events/game.events';
 import {Pong} from './pong';
-import Matter = require('matter-js');
-import {Events} from 'matter-js';
-import {serialize} from 'class-transformer';
+import {GameMode} from './types/game.type';
+import {PrismaService} from '../database/prisma.service';
+import {GameErrorType, GameException} from './errors/game.error';
 
 export class GameLobbyDto {
 	@IsString()
-	mode: string;
+	mode: GameMode;
 }
 
 type PlayerState = 'ready' | 'notReady';
 
 @Injectable()
 export class GameLobby extends ALobby {
-	data: GameLobbyDto;
 	instance: Pong;
-	state: 'waiting' | 'running' | 'paused';
+	state: 'waiting' | 'running' | 'paused' | 'ready';
+	mode: GameMode;
 	playerStates: Map<string, PlayerState> = new Map();
 
 	constructor(
 		data: GameLobbyDto,
-		private readonly websocketService: WebsocketService
+		private readonly websocketService: WebsocketService,
+		private readonly prismaService: PrismaService,
 	) {
 		super(websocketService.server, 2);
-		this.data = data;
-		this.instance = new Pong(this.dispatchToLobby.bind(this));
+		this.mode = data.mode;
+		this.instance = new Pong(this.dispatchToLobby.bind(this), this.mode, prismaService);
 		this.state = 'waiting';
+	}
+
+	stopGame() {
+		this.instance.stop();
+		this.state = 'paused';
 	}
 
 	runGame() {
@@ -56,16 +62,20 @@ export class GameLobby extends ALobby {
 	}
 
 	gameSetup() {
-		[...this.clients.values()][0].data.paddle = 'left';
-		[...this.clients.values()][1].data.paddle = 'right';
+		const leftPlayer = [...this.clients.values()][0];
+		const rightPlayer = [...this.clients.values()][1];
+		this.instance.setPlayer(leftPlayer, 'left');
+		this.instance.setPlayer(rightPlayer, 'right');
 		return {
 			ball: {
 				position: this.instance.ball.position,
-				velocity: this.instance.ball.velocity,
+				velocity: {x: 0, y: 0},
 				size: this.instance.ball.radius * 2,
 			},
 			leftPaddle: this.instance.paddles['left'],
 			rightPaddle: this.instance.paddles['right'],
+			timer:
+				this.mode === GameMode.AgainstTheClock ? this.instance.timeLimit : '',
 		};
 	}
 
@@ -74,9 +84,7 @@ export class GameLobby extends ALobby {
 		client: AuthenticatedSocket
 	) {
 		if (!this.clients.has(client.data.name))
-			throw new WsException(
-				`Client [${client.data.name}] doesn't belong to the lobby`
-			);
+			throw new GameException(GameErrorType.Forbidden);
 	}
 
 	dispatchToOpponent<T>(

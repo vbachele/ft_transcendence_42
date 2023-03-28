@@ -1,4 +1,3 @@
-import {useUserInfos} from 'contexts/User/userContent';
 import {useLocation} from 'react-router-dom';
 import {Empty} from 'antd';
 import useFetchUsers from 'hooks/useFetchUsers';

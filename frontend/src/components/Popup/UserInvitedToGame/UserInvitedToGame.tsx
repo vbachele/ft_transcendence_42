@@ -8,9 +8,10 @@ import Popup from '../components/Popup/Popup';
 import {ServerEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/context';
 import {createSearchParams, useNavigate} from 'react-router-dom';
-import {ILobbyData} from "../../../types/models";
+import {ILobbyData, IUser} from '../../../types/models';
+import {ClientGameEvents} from '../../../events/game.events';
 
-function UserInvitedToGame() {
+function UserInvitedToGame({user}: {user: IUser}) {
 	const [showComponent, setShowComponent] = useState(false);
 	const {socket} = useContext(SocketContext).SocketState;
 	const {hasInvited, setHasInvited} = usePopup();
@@ -21,7 +22,7 @@ function UserInvitedToGame() {
 	useEffect(() => {
 		socket?.on(ServerEvents.InvitationResponse, (data) => {
 			console.info(`Invitation response - [${data.response}]`);
-			console.log(`Lobby data `, data.lobby)
+			console.log(`Lobby data `, data.lobby);
 			setLobby(data.lobby);
 			setResponse(data.response);
 		});
@@ -53,6 +54,10 @@ function UserInvitedToGame() {
 	}, [response]);
 
 	function onCancel() {
+		socket?.emit(ClientGameEvents.CancelInvitation, {
+			lobbyId: lobby?.id,
+			invitedClientName: user.name,
+		});
 		setHasInvited(false);
 	}
 
@@ -63,7 +68,7 @@ function UserInvitedToGame() {
 	return (
 		<Popup
 			title="Waiting for..."
-			subtitle="Vbachele to send him to hell"
+			subtitle={`${user.name} to send him to hell`}
 			loadingBar={<LoadingBar />}
 			stopPropagation={true}
 			overlay={true}

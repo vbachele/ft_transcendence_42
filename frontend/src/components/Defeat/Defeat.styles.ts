@@ -176,6 +176,8 @@ export const Text = styled.div`
 `;
 
 export const Wrapper = styled.div`
+  position: absolute;
+	inset: 0;
 	background-color: #171717;
 	display: flex;
 	align-items: center;

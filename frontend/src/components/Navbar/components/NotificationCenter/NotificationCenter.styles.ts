@@ -5,23 +5,27 @@ export const Container = styled.div`
 	position: relative;
 	height: 24px;
 
+	h4 {
+		margin: 0 auto;
+	}
+
 	.bell {
 		cursor: pointer;
 		user-select: none;
 		border-radius: 0;
-		fill: ${(p) => p.theme.colors.secondary};
+		fill: ${(p) => p.theme.colors.text};
 		width: 24px;
 		height: 24px;
 
 		:hover {
-			fill: #dc4f19;
+			fill: ${(p) => p.theme.colors.main};
 		}
 	}
 `;
 
 export const NotifCounter = styled.div`
 	user-select: none;
-	background-color: #dc4f19;
+	background-color: ${(p) => p.theme.colors.main};
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -42,44 +46,125 @@ export const NotifCounter = styled.div`
 	}
 `;
 
-export const PanelContainer = styled.div`
-	background-color: #000;
-	border-radius: 8px;
-	padding: 8px;
-	width: max-content;
-	position: absolute;
-	right: 0;
-	z-index: 50;
-
+export const NotifCenterPanel = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	position: absolute;
+	right: 0;
+	width: max-content;
+	gap: 10px;
+	border-radius: 8px;
+	color: white;
+	background-color: #151515;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	z-index: 50;
 
 	button {
-		margin: auto;
+		margin: 16px auto;
+		background: none;
+		border: none;
+		font-size: 16px;
+		color: white;
+		font-weight: 500;
+		cursor: pointer;
+
+		:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.top-button {
+		display: none;
+	}
+
+	@media screen and (max-width: 768px) {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		border-radius: 0;
+		z-index: 65;
+
+		.top-button {
+			display: block;
+		}
+		.bottom-button {
+			display: none;
+		}
 	}
 `;
 
 export const NotifsContainer = styled.div`
 	display: flex;
-	flex-direction: column-reverse;
-	gap: 8px;
+	flex-direction: column;
+	gap: 16px;
+	padding: 1em;
+	max-height: 50vh;
+	overflow-y: auto;
+
+	@media screen and (max-width: 768px) {
+		max-height: max-content;
+		margin: 0 10%;
+	}
 `;
 
 export const Notif = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 8px;
+	justify-content: space-between;
 
-	.sender {
-		display: flex;
-		gap: 8px;
-		font-weight: bold;
+	p {
+		color: white;
 	}
 `;
 
 export const NotifLink = styled(Link)`
-	color: ${(p) => p.theme.colors.secondary};
 	display: flex;
 	align-items: center;
+	color: white;
+
+	img,
+	svg {
+		width: 40px;
+		height: 40px;
+	}
+`;
+
+export const SmallScreenButtons = styled.div`
+	display: none;
+	flex-direction: row;
+
+	.close {
+		position: fixed;
+		top: 8px;
+		right: 16px;
+		margin: 0;
+
+		svg {
+			fill: white;
+			width: 30px;
+			height: 30px;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		display: flex;
+	}
+`;
+
+export const Title = styled.div`
+	background-color: ${(p) => p.theme.colors.main};
+	display: flex;
+	height: 48px;
+	text-align: center;
+	align-items: center;
+	border-radius: 8px 8px 0 0;
+
+	@media screen and (max-width: 768px) {
+		background-color: #202020;
+		border-bottom: 1px solid white;
+		display: flex;
+		border-radius: 0;
+	}
 `;

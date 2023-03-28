@@ -8,6 +8,7 @@ import { ServerChatEvents } from "./events/chat.events";
 import {WebsocketService} from '../websocket/websocket.service';
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
+import { ClientEvents } from "src/lobby/events/lobby.events";
 
 @Injectable()
 export class ChatService {
@@ -71,7 +72,7 @@ export class ChatService {
     }
   }
 
-  // Channel Password functions 
+  // Channel Password functions
 
   public async checkPassword(@Req() req: Request, @Res() res: Response, chanName: string, password: string){
     try {
@@ -83,7 +84,7 @@ export class ChatService {
         {
           status: HttpStatus.BAD_REQUEST,
           error: "Password are not the same"
-        }, HttpStatus.BAD_REQUEST); 
+        }, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -97,7 +98,7 @@ export class ChatService {
         {
           status: HttpStatus.BAD_REQUEST,
           error: "Password are not the same"
-        }, HttpStatus.BAD_REQUEST); 
+        }, HttpStatus.BAD_REQUEST);
     }
     return response;
   }
@@ -114,4 +115,30 @@ export class ChatService {
     await this.prismaLobbyService.updateDescription(description, chanName)
     res.status(200).json({status : "description changed"})
   }
+  public async kickUser(userNameToKick: string, lobbyId: string) {
+    try {
+      this.prismaLobbyService.deleteUserFromLobby(lobbyId, userNameToKick);
+      const userToKick = this.websocketService.getClient(userNameToKick);
+      if (!userToKick) return;
+      // this.websocketService.server.to(userToKick.id).emit(ServerChatEvents.UserKicked, {lobbyId: lobbyId});
+      this.lobbyService.leave(lobbyId, userToKick);
+    }
+    catch (e) {
+      throw new WsException(`Error when trying to kick user: ` + e.message);
+    }
+  }
+
+  public async kickFromLobby(userNameToKick: string, lobbyId: string) {
+    try {
+      const userToKick = this.websocketService.getClient(userNameToKick);
+      if (!userToKick) return;
+      this.websocketService.server
+      .to(userToKick.id)
+      .emit(ServerChatEvents.KickedFromLobby, {lobbyId: lobbyId});
+    }
+    catch (e) {
+      throw new WsException(`Error when trying to kick user: ` + e.message);
+    }
+  }
+
 }
