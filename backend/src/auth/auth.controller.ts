@@ -18,7 +18,7 @@ export class AuthController {
   /***  Create the user in database from the page registration ***/
   @Get("getuserbytoken")
   async getUserByToken(@Req() req: Request) {
-    return this.authService.getUserByToken(req);
+    return await this.authService.getUserByToken(req);
   }
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
@@ -45,7 +45,7 @@ export class AuthController {
 
   @Get("logout")
   async deleteCookies(@Req() req: Request, @Res() res: Response) {
-    this.authService.deleteCookies(res);
+    await this.authService.deleteCookies(res);
   }
 
   @Get("token")

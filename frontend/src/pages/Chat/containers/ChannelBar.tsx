@@ -53,6 +53,7 @@ function ChannelBar() {
 				{[...lobbyList]
 					.filter((lobby) => lobby.type === 'channel')
 					.filter((lobby) => searchFilter(lobby.name))
+					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((lobby, index) => (
 						<Channel key={lobby.name} lobby={lobby} />
 					))}
