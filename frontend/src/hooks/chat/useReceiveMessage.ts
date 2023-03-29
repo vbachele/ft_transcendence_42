@@ -3,6 +3,9 @@ import SocketContext from '../../contexts/Socket/context';
 import {ServerChatEvents} from '../../events/chat.events';
 import ChatContext, {ILobby} from '../../contexts/Chat/context';
 import {act} from 'react-dom/test-utils';
+import useFetchBlockedOf from '../useFetchBlockedOf';
+import {useUserInfos} from '../../contexts/User/userContent';
+import {fetchBlockList} from '../../helpers/fetchBlockList';
 
 export interface IMessage {
 	id: number;
@@ -15,6 +18,16 @@ export interface IMessage {
 export function useReceiveMessage(activeLobby: ILobby | undefined) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const [messages, setMessages] = useState<IMessage[]>([]);
+	const username = useUserInfos().userName.userName;
+	const [blockList, setBlockList] = useState<any[]>([]);
+
+	useEffect(() => {
+		fetchBlockList(socket!).then((data) => {
+			if (data) {
+				setBlockList(data);
+			}
+		});
+	}, []);
 
 	useEffect(() => {
 		setMessages([]);
@@ -25,9 +38,14 @@ export function useReceiveMessage(activeLobby: ILobby | undefined) {
 	}, [activeLobby]);
 
 	useEffect(() => {
-		socket?.on(ServerChatEvents.IncomingMessage, (data) => {
-			if (activeLobby?.id === data.message.lobbyId) {
-				setMessages((message) => [...message, data.message]);
+		socket?.on(ServerChatEvents.IncomingMessage, (body) => {
+			if (
+				activeLobby?.id === body.message.lobbyId &&
+				!blockList?.find((blocked) => blocked === body.message.authorName)
+			) {
+				console.log(`block list = `, blockList);
+				console.log(`body.message.authorName = `, body.message.authorName);
+				setMessages((message) => [...message, body.message]);
 			}
 		});
 		return () => {

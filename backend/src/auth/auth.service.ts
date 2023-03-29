@@ -161,7 +161,15 @@ async createDataBase42User(
     }
 
   async deleteCookies(@Res() res: Response) {
-    res.clearCookie("token").clearCookie("FullToken").end();
+    try {
+      res.clearCookie("token").clearCookie("FullToken").end();
+    } catch (error)
+    {
+      throw new HttpException({
+      status: HttpStatus.BAD_REQUEST,
+      error: "Error to update the cookes"},
+      HttpStatus.BAD_REQUEST);
+  }
   }
 }
 

@@ -9,6 +9,7 @@ import FireGif from '../components/FireGif/FireGif';
 import SocketContext from '../../../contexts/Socket/context';
 import {ClientGameEvents, ServerGameEvents} from '../../../events/game.events';
 import {createSearchParams, useNavigate} from 'react-router-dom';
+import Versus from 'components/Versus';
 
 // BACKEND : Ajouter que lorsque play on a le statut red
 // BACKEND : Ajouter le statut : recherche une partie
@@ -17,6 +18,7 @@ import {createSearchParams, useNavigate} from 'react-router-dom';
 function SearchPlayer({}) {
 	const {popup, setPopup} = useContext(PopupContext);
 	const [showComponent, setShowComponent] = useState(false);
+	const [displayVersus, setVersus] = useState(false)
 	const {socket} = useContext(SocketContext).SocketState;
 	const navigate = useNavigate();
 
@@ -24,6 +26,8 @@ function SearchPlayer({}) {
 		socket?.on(ServerGameEvents.GameFound, (data) => {
 			console.log(`game found`, data);
 			setPopup({toggle: false});
+			setVersus(true);
+			setTimeout(() => {}, 3000)
 			navigate({
 				pathname: '/game',
 				search: createSearchParams({
@@ -60,6 +64,7 @@ function SearchPlayer({}) {
 			>
 				<Text weight="500">Cancel</Text>
 			</PopupButton>
+			{displayVersus && <Versus></Versus>}
 		</Popup>
 	) : // {/* {showComponent ? <GameFound /> : ""} */}
 	null;

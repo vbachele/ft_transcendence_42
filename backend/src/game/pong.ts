@@ -6,7 +6,7 @@ import {PrismaService} from '../database/prisma.service';
 const PLAYGROUND_SIZE = {x: 1280, y: 720};
 const PADDLE_SIZE = {x: 27, y: 140};
 const PADDLE_BORDER_SPACING = 40;
-let BALL_SPEED = {x: 300, y: 300};
+const BALL_SPEED = {x: 300, y: 300};
 const BALL_SIZE = 40;
 const BALL_STARTING_POSITION = {
 	x: PLAYGROUND_SIZE.x / 2,
@@ -14,12 +14,12 @@ const BALL_STARTING_POSITION = {
 } as const;
 const FRAME_RATE = 1000 / 60;
 const PADDLE_SPEED = 15;
-const BALL_ACCELERATION = 1.05;
+const BALL_ACCELERATION = 1.15;
 
 export class Pong {
 	public ball = {
 		position: {...BALL_STARTING_POSITION},
-		velocity: {x: 0, y: 0},
+		velocity: {...BALL_SPEED},
 		radius: BALL_SIZE / 2,
 	};
 	public paddles = {
@@ -49,7 +49,7 @@ export class Pong {
 		left: AuthenticatedSocket | undefined;
 		right: AuthenticatedSocket | undefined;
 	} = {['left']: undefined, ['right']: undefined};
-	public timeLimit = 1.50 * 60 * 1000;
+	public timeLimit = 1.5 * 60 * 1000;
 	private timerRef: NodeJS.Timeout;
 
 	constructor(
@@ -74,7 +74,7 @@ export class Pong {
 	}
 
 	private async observeWinner() {
-		if (this.mode === GameMode.AgainstTheClock && this.timeLimit > 1000) return;
+		if (this.mode === GameMode.AgainstTheClock && this.timeLimit > 0) return;
 		if (
 			this.mode === GameMode.ScoreLimit &&
 			this.score[0] < this.scoreLimit &&
@@ -86,9 +86,17 @@ export class Pong {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['left']?.data.name,
 			});
+			await this.prismaService.user.update({
+				where: { name: this.players['left']?.data.name },
+				data: { wins: { increment: 1 } },
+			});
 		} else if (this.score[0] < this.score[1]) {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['right']?.data.name,
+			});
+			await this.prismaService.user.update({
+				where: { name: this.players['right']?.data.name },
+				data: { wins: { increment: 1 } },
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
@@ -105,14 +113,40 @@ export class Pong {
 				rightScore: this.score[1],
 			},
 		});
+
+		this.updateUser(this.players['left']?.data.name!);
+		this.updateUser(this.players['right']?.data.name!);
+
 		this.players['left']!.data.paddle = undefined;
 		this.players['right']!.data.paddle = undefined;
 		return 'game_over';
 	}
 
+	private async updateUser(username: string) {
+		const user = await this.prismaService.user.findUnique({
+			where: { name: username },
+		});
+		const games = (user?.games || 0) + 1;
+		const wins = user?.wins || 0;
+		const gamesWon = games > 0 ? wins / games : 0;
+		const ratio = gamesWon.toFixed(2);
+		const score = Math.round((games * 10 + wins * 40) * (parseFloat(ratio) + 1));
+
+		await this.prismaService.user.update({
+			where: { name: username },
+			data: {
+				score,
+				games: games,
+				ratio: parseFloat(ratio),
+			},
+		});
+	}
+
 	private async playerScored(player: 'left' | 'right') {
 		this.stop();
 		this.score[player === 'left' ? 0 : 1]++;
+		player === 'left' ? BALL_SPEED.x = 300 : BALL_SPEED.x = -300;
+		this.ball.velocity = {...BALL_SPEED};
 		this.dispatchToLobby(ServerGameEvents.UpdateScore, {score: this.score});
 		const gameState = await this.observeWinner();
 		if (gameState === 'game_over') return;
@@ -154,7 +188,7 @@ export class Pong {
 				paddles.left.position.y + PADDLE_SIZE.y + delta
 		) {
 			ball.position.x = paddles.left.position.x - ball.radius;
-			BALL_SPEED = this.computeVelocity(BALL_SPEED);
+			this.ball.velocity = this.computeVelocity(this.ball.velocity);
 			return true;
 		}
 		if (
@@ -164,7 +198,7 @@ export class Pong {
 				paddles.right.position.y + PADDLE_SIZE.y + delta
 		) {
 			ball.position.x = paddles.right.position.x + PADDLE_SIZE.x + ball.radius;
-			BALL_SPEED = this.computeVelocity(BALL_SPEED);
+			this.ball.velocity = this.computeVelocity(this.ball.velocity);
 			return true;
 		}
 		return false;
@@ -176,7 +210,7 @@ export class Pong {
 		if (this.detectPaddleEdgeCollision()) return;
 		if (
 			ball.position.x - ball.radius <=
-			paddles.left.position.x + PADDLE_SIZE.x &&
+				paddles.left.position.x + PADDLE_SIZE.x &&
 			ball.position.x >= paddles.left.position.x + PADDLE_SIZE.x
 		) {
 			if (
@@ -185,11 +219,11 @@ export class Pong {
 					paddles.left.position.y + PADDLE_SIZE.y
 			) {
 				ball.position.x = paddles.left.position.x + PADDLE_SIZE.x + ball.radius;
-				BALL_SPEED.x = this.clamp(-BALL_SPEED.x * BALL_ACCELERATION, -800, 800);
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -800, 800);
 			}
 		}
-		if (ball.position.x + ball.radius >=
-			paddles.right.position.x &&
+		if (
+			ball.position.x + ball.radius >= paddles.right.position.x &&
 			ball.position.x <= paddles.right.position.x
 		) {
 			if (
@@ -199,7 +233,7 @@ export class Pong {
 					paddles.right.position.y + PADDLE_SIZE.y - delta
 			) {
 				ball.position.x = paddles.right.position.x - ball.radius;
-				BALL_SPEED.x = this.clamp(-BALL_SPEED.x * BALL_ACCELERATION, -800, 800);
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -800, 800);
 			}
 		}
 	}
@@ -212,10 +246,10 @@ export class Pong {
 			this.playerScored('left');
 		}
 		if (this.ball.position.y - this.ball.radius <= 0) {
-			BALL_SPEED.y = -BALL_SPEED.y;
+			this.ball.velocity.y = -this.ball.velocity.y;
 		}
 		if (this.ball.position.y + this.ball.radius >= PLAYGROUND_SIZE.y) {
-			BALL_SPEED.y = -BALL_SPEED.y;
+			this.ball.velocity.y = -this.ball.velocity.y;
 		}
 	}
 
@@ -244,13 +278,17 @@ export class Pong {
 	private update(progress: number) {
 		this.detectWallCollision();
 		this.detectPaddleCollision();
+		// 	this.dispatchToLobby(ServerGameEvents.PaddleHit, {
+		// 		side: this.ball.position.x < PLAYGROUND_SIZE.x / 2 ? 'left' : 'right',
+		// 	});
+		// }
 		this.updateBallPosition({
-			x: BALL_SPEED.x * progress,
-			y: BALL_SPEED.y * progress,
+			x: this.ball.velocity.x * progress,
+			y: this.ball.velocity.y * progress,
 		});
 		this.dispatchToLobby(ServerGameEvents.MoveBall, {
 			position: this.ball.position,
-			velocity: BALL_SPEED,
+			velocity: this.ball.velocity,
 		});
 	}
 
@@ -259,13 +297,13 @@ export class Pong {
 	 * @private loop() is called every FRAME_RATE milliseconds
 	 */
 	private loop() {
+		if (this.pause) return;
 		const now = Date.now();
 		if (this.previousTick + FRAME_RATE <= now) {
 			const progress = (now - this.previousTick) / 1000;
 			this.previousTick = now;
 			this.update(progress);
 		}
-		if (this.pause) return;
 		if (Date.now() - this.previousTick < FRAME_RATE - 16) {
 			this.timeout = setTimeout(() => {
 				this.loop();
@@ -309,8 +347,13 @@ export class Pong {
 		this.loop.bind(this)();
 	}
 
+	public kill() {
+		clearTimeout(this.timerRef);
+	}
+
 	public stop() {
 		this.ball.position = {...BALL_STARTING_POSITION};
+		this.ball.velocity = {...BALL_SPEED};
 		this.dispatchToLobby(ServerGameEvents.MoveBall, {
 			position: BALL_STARTING_POSITION,
 			velocity: {x: 0, y: 0},

@@ -1,30 +1,36 @@
-import * as S from './History.styles';
-import * as F from 'styles/font.styles';
 import Card from './Card';
 import {Empty} from 'antd';
+import {useContext, useEffect, useState} from 'react';
+import SocketContext from 'contexts/Socket/context';
+import {IGame, IUser} from 'types/models';
+import {ClientGameEvents} from 'events/game.events';
+import * as S from './History.styles';
+import * as F from 'styles/font.styles';
 
-interface IMatch {
-	user: string;
-	myScore: number;
-	userScore: number;
-	id: number;
-	date: Date;
+interface IProps {
+	user: IUser;
 }
 
-// prettier-ignore
-const matches: IMatch[] = [
-	{id: 23, user: 'Melato', myScore: 5, userScore: 8, date: new Date},
-	{id: 27, user: 'Harmour', myScore: 5, userScore: 6, date: new Date('2023-03-12T19:30:00.000Z')},
-	{id: 24, user: 'Lemoir', myScore: 10, userScore: 3, date: new Date('2023-03-09T18:45:00.000Z')},
-	{id: 25, user: 'Bess', myScore: 7, userScore: 5, date: new Date('2023-03-08T20:00:00.000Z')},
-	{id: 26, user: 'Gready', myScore: 5, userScore: 6, date: new Date('2023-03-07T19:30:00.000Z')},
-];
+const History = ({user}: IProps) => {
+	const {socket} = useContext(SocketContext).SocketState;
+	const [games, setGames] = useState<IGame[]>([]);
+	const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
-const History = () => {
-	let isEmpty: boolean = true;
-	if (matches.length >= 1) {
-		isEmpty = false;
-	}
+	useEffect(() => {
+		console.log('user', user.name);
+		if (socket) {
+			socket?.emit(
+				ClientGameEvents.FetchGames,
+				{name: user.name},
+				(data: {games: IGame[]}) => {
+					setGames(data.games);
+				}
+			);
+		}
+	}, []);
+
+	console.log(games);
+	console.log(isEmpty);
 
 	return (
 		<S.Container>
@@ -33,7 +39,9 @@ const History = () => {
 			</F.Subtitle>
 			<S.History empty={isEmpty}>
 				{!isEmpty &&
-					matches.map((match: IMatch) => <Card match={match} key={match.id} />)}
+					games.map((match: IGame) => (
+						<Card user={user} match={match} key={match.id} />
+					))}
 				{isEmpty && <Empty className="empty" description="No matches played" />}
 			</S.History>
 		</S.Container>

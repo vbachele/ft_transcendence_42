@@ -13,6 +13,7 @@ import {UseGuards, ValidationPipe} from '@nestjs/common';
 import {SendMessageDto} from './dto/chat.dto';
 import {ChatService} from './chat.service';
 import {AdminGuard} from './guards/admin.guard';
+import {BlockedService} from '../social/blocked/blocked.service';
 
 /**
  * @brief Gateway for the chat module
@@ -28,7 +29,8 @@ import {AdminGuard} from './guards/admin.guard';
 export class ChatGateway implements OnGatewayConnection {
 	constructor(
 		private readonly prismaLobbyService: PrismaLobbyService,
-		private readonly chatService: ChatService
+		private readonly chatService: ChatService,
+		private readonly blockService: BlockedService
 	) {}
 
 	handleConnection(@ConnectedSocket() client: AuthenticatedSocket) {
@@ -71,8 +73,15 @@ export class ChatGateway implements OnGatewayConnection {
 		};
 	}
 	@SubscribeMessage(ClientChatEvents.FetchUsers)
-	async onFetchUsers(@MessageBody('lobbyId') lobbyId: string) {
-		const userList = await this.prismaLobbyService.fetchUsersInLobby(lobbyId);
+	async onFetchUsers(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('lobbyId') lobbyId: string
+	) {
+		const userList = await this.prismaLobbyService.fetchUsersInLobby(
+			client.data.name,
+			lobbyId
+		);
+
 		return {
 			event: ServerChatEvents.UserList,
 			data: {users: userList?.users, lobbyId: lobbyId},
@@ -160,5 +169,16 @@ export class ChatGateway implements OnGatewayConnection {
 			event: ServerChatEvents.UserSetAdmin,
 			data: 'User has been set as admin',
 		};
+	}
+
+	@SubscribeMessage(ClientChatEvents.FetchBlockedUsers)
+	async onFetchBlockedUsers(
+		@ConnectedSocket() client: AuthenticatedSocket
+	) {
+		const blockList = await this.blockService.getBlockList(client.data.name);
+		return {
+			event: ServerChatEvents.BlockedUsers,
+			data: blockList,
+		}
 	}
 }

@@ -11,6 +11,7 @@ import * as S from './Navbar.styles';
 import {INotification} from 'types/models';
 import SocketContext from 'contexts/Socket/context';
 import {openNotification} from 'helpers/openNotification';
+import App from 'App';
 
 interface IProps {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;

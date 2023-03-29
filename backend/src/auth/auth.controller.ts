@@ -18,7 +18,7 @@ export class AuthController {
   /***  Create the user in database from the page registration ***/
   @Get("getuserbytoken")
   async getUserByToken(@Req() req: Request) {
-    return this.authService.getUserByToken(req);
+    return await this.authService.getUserByToken(req);
   }
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
@@ -40,12 +40,15 @@ export class AuthController {
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);
     this.authService.updateCookies(res, token, userExists);
+    const host = req.get('host')
+    console.log("HOST is", host);
+
     this.authService.RedirectConnectingUser(res, userExists?.email);
   }
 
   @Get("logout")
   async deleteCookies(@Req() req: Request, @Res() res: Response) {
-    this.authService.deleteCookies(res);
+    await this.authService.deleteCookies(res);
   }
 
   @Get("token")

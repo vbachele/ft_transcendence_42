@@ -3,6 +3,7 @@ import React, {FormEvent, useState} from 'react';
 import {IUser} from 'types/models';
 import User from '../components/User';
 import * as S from '../components/components.styles';
+import useFetchUsers from '../../../hooks/useFetchUsers';
 
 export const displayStatus = (params: string) => {
 	if (params == 'online')
@@ -26,6 +27,7 @@ function ModalUserSearch({
 	type,
 }: ModalUserSearchProps) {
 	const [search, setSearch] = useState<string>('');
+
 		
 	function handleChange(event: FormEvent<HTMLInputElement>) {
 		setSearch(event.currentTarget.value);

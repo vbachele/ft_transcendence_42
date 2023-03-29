@@ -96,11 +96,13 @@ export class GameService {
 	public leaveLobby(@ConnectedSocket() client: AuthenticatedSocket) {
 		if (!client.data.gameLobby) return;
 		const lobby = this.lobbyService.getLobby(client.data.gameLobby.id) as GameLobby;
-		if (lobby.state === 'waiting') return;
+		lobby.dispatchToLobby(ServerGameEvents.ClientLeft, {client: client.data.name})
 		if (lobby.state === 'running') {
 			lobby.stopGame();
 		}
+		lobby.instance?.kill()
 		lobby.removeClient(client);
+		delete client.data.gameLobby;
 		client.data.gameLobby = undefined;
 		if (lobby.clients.size === 0) {
 			this.lobbyService.delete(lobby.id);

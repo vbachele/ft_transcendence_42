@@ -58,12 +58,6 @@ function BlockUser({user, hideDrawer, onBlock}: IProps) {
 			hideDrawer();
 		}
 
-		socket?.emit(ClientSocialEvents.SendNotif, {
-			sender: userName.userName,
-			receiver: user.name,
-			type: 'REMOVE',
-		});
-
 		openNotification('error', `${user.name} has been blocked`);
 	};
 

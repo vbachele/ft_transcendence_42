@@ -10,7 +10,7 @@ export class BlockedController {
 
 	@Get(':name')
 	async getBlocked(@Req() req: Request) {
-		return this.blockedService.getBlockedOfUser(req.params.name);
+		return await this.blockedService.getBlockedOfUser(req.params.name);
 	}
 
 	@Patch(':user1/block/:user2')

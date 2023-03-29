@@ -7,7 +7,7 @@ const getInfosFromDB = async (navigate: NavigateFunction) => {
 	console.log('response', response);
 	if (response.statusCode === 400)
 	{
-		navigate("/login");
+		// navigate("/login");
 	}
 	return response;
 };

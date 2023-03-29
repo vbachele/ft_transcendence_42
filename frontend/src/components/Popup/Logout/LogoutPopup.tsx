@@ -19,7 +19,7 @@ function LogoutPopup(props: IProps) {
 		let user = {otp_validated: false};
 		backend.deleteTokenCookie();
 		const response = await backend.patchUser(userName.userName, user);
-		if (response.status === 'fail') console.error(response.error);
+		if (response.statusCode === 400) console.error(response.error);
 	}
 
 	return (

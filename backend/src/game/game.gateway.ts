@@ -15,7 +15,10 @@ import {GameService} from './game.service';
 import {ValidationPipe} from '@nestjs/common';
 import {LobbyService} from '../lobby/lobby.service';
 import {GameLobby, GameLobbyDto} from './gameLobby';
+import {PrismaService} from '../database/prisma.service';
 import {GameMode} from './types/game.type';
+import {WebsocketService} from '../websocket/websocket.service';
+import {ALobby} from '../lobby/ALobby';
 
 @WebSocketGateway()
 export class GameGateway implements OnGatewayDisconnect {
@@ -26,7 +29,9 @@ export class GameGateway implements OnGatewayDisconnect {
 
 	constructor(
 		private readonly gameService: GameService,
-		private readonly lobbyService: LobbyService
+		private readonly lobbyService: LobbyService,
+		private readonly prismaService: PrismaService,
+		private readonly websocketService: WebsocketService
 	) {}
 
 	handleDisconnect(client: AuthenticatedSocket) {
@@ -34,10 +39,11 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientGameEvents.Invite)
-	onInviteToLobby(
+	async onInviteToLobby(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) data: GameInviteDto
-	): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
+	) {
+		await this.websocketService.updateStatus(client, 'busy');
 		console.log(data.invitedClientName);
 		this.gameService.invite(client, data.invitedClientName, data.lobbyId);
 		return {
@@ -98,6 +104,7 @@ export class GameGateway implements OnGatewayDisconnect {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) body: GameLobbyDto
 	) {
+		await this.websocketService.updateStatus(client, 'busy');
 		console.log(`game request`);
 		this.queue[body.mode].push(client);
 		if (this.queue[body.mode].length >= 2) {
@@ -149,16 +156,36 @@ export class GameGateway implements OnGatewayDisconnect {
 		@MessageBody('lobbyId') lobbyId: string
 	) {
 		console.log(`Client [${client.data.name}] left the game`);
-		// const lobby = this.lobbyService.getLobby(lobbyId) as GameLobby;
-		// if (lobby.state === 'running') {
-		// 	lobby.dispatchToLobby(ServerGameEvents.GamePaused, {
-		// 		lobbyId: lobby.id,
-		// 	});
-		// } else {
-		// 	lobby.dispatchToLobby(ServerEvents.LobbyMessage, {
-		// 		message: `${client.data.name} left the game`,
-		// 	});
-		// }
 		this.gameService.leaveLobby(client);
+	}
+
+	@SubscribeMessage(ClientGameEvents.FetchGames)
+	async onFetchGames(@MessageBody('name') name: string) {
+		const games = await this.prismaService.game.findMany({
+			where: {
+				OR: [{leftPlayerName: name}, {rightPlayerName: name}],
+			},
+		});
+		return {games};
+	}
+	@SubscribeMessage(ClientGameEvents.Spectate)
+	onSpectate(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('lobbyId') lobbyId: string
+	) {
+		this.lobbyService.join(lobbyId, client);
+		console.log(`Client [${client.data.name}] spectating`);
+	}
+
+	@SubscribeMessage(ClientGameEvents.LobbyFromUser)
+	onLobbyFromUser(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('username') username: string
+	) {
+		const user = this.websocketService.getClient(username);
+		return {
+			event: ServerGameEvents.LobbyFromUser,
+			data: {lobbyId: user?.data.gameLobby?.id},
+		}
 	}
 }
