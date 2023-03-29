@@ -24,46 +24,43 @@ class Particle {
 	private readonly position: {x: number; y: number};
 	private readonly style: string;
 	public size: number;
+	private angle: number;
 	constructor(
-		private readonly ball: {
-			position: {x: number; y: number};
-			size: number;
-			velocity: {x: number; y: number};
-		},
-		private readonly canvas: HTMLCanvasElement
+		position: {x: number; y: number},
+		dispersion: {x: number; y: number},
+		private readonly sizeRange: {min: number; max: number},
+		private readonly canvas: HTMLCanvasElement,
+
+		private readonly velocity?: {x: number; y: number},
+		private readonly speed?: number
 	) {
-		this.position = {
-			x: ball.position.x + getRandomInt(-ball.size / 2, ball.size / 2),
-			y: ball.position.y + getRandomInt(-ball.size / 2, ball.size / 2),
-		};
-		this.size = getRandomInt(4, 10);
+		this.angle = Math.atan2(this.velocity?.x!, this.velocity?.y!);
+		this.size = getRandomInt(sizeRange.min, sizeRange.max);
 		this.style = `rgba(240, 240, 240, 0.2`;
+		this.position = {
+			x: position.x + getRandomInt(-dispersion.x, dispersion.x),
+			y: position.y + getRandomInt(-dispersion.y, dispersion.y),
+		};
 	}
 
 	public draw() {
 		if (this.canvas.getContext('2d')) {
 			const ctx = this.canvas.getContext('2d')!;
-			// const {x, y} = {x: this.size * 0.15 , y: this.size * 4};
-			// const angle = Math.atan2(this.ball.velocity.x, this.ball.velocity.y);
+			const {x, y} = {x: 2, y: this.size};
 			ctx.save();
-			ctx.fillStyle = this.style;
-			ctx.shadowColor = 'rgba(255, 255, 255, 1)';
-			ctx.shadowBlur = 20;
-			ctx.beginPath();
-			ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
 			ctx.fill();
 			ctx.closePath();
-			// ctx.translate(this.position.x, this.position.y);
-			// ctx.rotate(-angle);
-			// ctx.fillStyle = this.style;
-			// ctx.fillRect(-x/2, -y/2, x, y);
+			ctx.translate(this.position.x, this.position.y);
+			ctx.rotate(-this.angle);
+			ctx.fillStyle = this.style;
+			ctx.fillRect(-x / 2, -y / 2, x, y);
 			ctx.restore();
 		}
 	}
 
 	public update() {
 		if (this.size > 0) {
-			let s = this.size - 0.3;
+			let s = this.size - (this.speed ? this.speed : 0.3);
 			this.size = s <= 0 ? 0 : s;
 		}
 	}
@@ -90,18 +87,25 @@ export class Pong {
 	private particles = [] as Particle[];
 	private score = [0, 0];
 	private timer = 0;
+	private paddleHit = '';
 
-	constructor(socket: Socket, lobbyId: string, timer?: number) {
+	constructor(
+		socket: Socket,
+		lobbyId: string,
+		spec: {isSpec: boolean},
+		timer?: number
+	) {
 		this.socket = socket;
 		this.lobbyId = lobbyId;
 		this.timer = timer || 0;
-		this.initPaddleController();
-		this.paddleController();
 		this.updateScale();
 		this.scalePlayground();
 		if (this.paddle) {
 			this.paddle.src = Paddle;
 		}
+		if (spec.isSpec) return;
+		this.initPaddleController();
+		this.paddleController();
 	}
 
 	private updateScale() {
@@ -136,11 +140,32 @@ export class Pong {
 	}
 
 	private drawParticles() {
+		if (
+			this.particles.length < 10 &&
+			(this.ball.velocity.x !== 0 || this.ball.velocity.y !== 0)
+		) {
+			for (let i = 0; i < 2; i++) {
+				const length = ((200 * Math.abs(this.ball.velocity.x)) / 6000) * 4.5;
+				this.particles.push(
+					new Particle(
+						{
+							x: this.ball.position.x - this.ball.velocity.x * 0.07,
+							y: this.ball.position.y - this.ball.velocity.y * 0.07,
+						},
+						{x: this.ball.size / 2, y: this.ball.size / 2},
+						{min: 0, max: length},
+						this.canvas,
+						this.ball.velocity,
+						0.3
+					)
+				);
+			}
+		}
 		this.particles.forEach((p) => {
 			p.draw();
 			p.update();
 		});
-		if (this.particles.length >= 150) {
+		if (this.particles.length >= 10) {
 			this.particles.shift();
 			this.particles.shift();
 		}
@@ -161,10 +186,6 @@ export class Pong {
 			);
 			ctx.fill();
 			ctx.stroke();
-		}
-		if (this.particles.length < 150) {
-			this.particles.push(new Particle(this.ball, this.canvas));
-			this.particles.push(new Particle(this.ball, this.canvas));
 		}
 	}
 
@@ -212,6 +233,29 @@ export class Pong {
 			100
 		);
 		ctx.restore();
+	}
+
+	private drawPaddleHit(
+		position: {x: number; y: number},
+		canvas: HTMLCanvasElement
+	) {
+		const particles = [] as Particle[];
+		for (let i = 0; i < 20; i++) {
+			particles.push(
+				new Particle(
+					position,
+					{x: 0, y: 0},
+					{min: 1, max: 6},
+					canvas,
+					{x: 0, y: 0},
+					1
+				)
+			);
+		}
+		for (let i = 0; i < particles.length; i++) {
+			particles[i].draw();
+			particles[i].update();
+		}
 	}
 
 	private drawTimer() {
@@ -284,7 +328,34 @@ export class Pong {
 		this.drawScore();
 		this.drawBall();
 		this.drawPaddles();
-		this.drawParticles();
+		if (
+			!(
+				this.ball.position.x >= this.canvas.width / 2 - 5 &&
+				this.ball.position.x <= this.canvas.width / 2 + 5 &&
+				this.ball.position.y >= this.canvas.height / 2 - 5 &&
+				this.ball.position.y <= this.canvas.height / 2 + 5
+			)
+		) {
+			console.log(`in zone`);
+			this.drawParticles();
+		} else {
+			this.particles = [];
+		}
+		// if (this.paddleHit) {
+		// 	this.drawPaddleHit(
+		// 		this.paddleHit === 'left'
+		// 			? {
+		// 					x: this.leftPaddle.position.x,
+		// 					y: this.leftPaddle.position.y + this.leftPaddle.size.y / 2,
+		// 			  }
+		// 			: {
+		// 					x: this.rightPaddle.position.x,
+		// 					y: this.rightPaddle.position.y + this.rightPaddle.size.y / 2,
+		// 			  },
+		// 		this.canvas
+		// 	);
+		// 	// this.paddleHit = '';
+		// }
 		this.animationFrame = requestAnimationFrame(() => this.gameLoop());
 	}
 
@@ -333,6 +404,10 @@ export class Pong {
 
 	public updateTimer(timer: number) {
 		this.timer = timer;
+	}
+
+	public updatePaddleHit(side: 'left' | 'right') {
+		this.paddleHit = side;
 	}
 
 	public start() {

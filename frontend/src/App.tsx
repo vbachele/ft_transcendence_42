@@ -33,6 +33,7 @@ function App() {
 					<Route path="/social" element={<Pages.Social />} />
 					{/*<Route path='/users' element={<UserMocks />} />,*/}
 					<Route path="/game" element={<Pages.Game />} />
+					<Route path="/spectate" element={<Pages.Spectate />} />
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
 					<Route

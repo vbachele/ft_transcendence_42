@@ -186,6 +186,7 @@ export const DMContainer = styled.div`
 `;
 
 export const Avatar = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 	width: 48px;

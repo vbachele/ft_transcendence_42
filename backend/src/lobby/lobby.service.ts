@@ -86,16 +86,14 @@ export class LobbyService {
 
 
 	public delete(lobbyId: string) {
+		const lobby = this.getLobby(lobbyId);
+		if (lobby instanceof GameLobby) {
+			lobby.clients.forEach(async (client) => {
+				await this.websocketService.updateStatus(client, 'online');
+			});
+			delete lobby.instance;
+		}
 		this.lobbies.delete(lobbyId);
 		console.info(`Lobby [${lobbyId}] deleted`);
-	}
-
-	public async dispatchLobbyList(username: string) {
-		const client = this.websocketService.getClient(username);
-		if (!client) return;
-		const lobbies = await this.prismaLobbyService.fetchLobbies();
-		this.websocketService.server
-			.to(client.id)
-			.emit(ServerChatEvents.LobbyList, lobbies);
 	}
 }

@@ -44,6 +44,7 @@ function UserPanel() {
 				<Buttons.Invite name={userInPanel.name} />
 				<Buttons.Message user={userInPanel.name} />
 				{/*{userInPanel.status === 'ingame' && <Spectate user={userInPanel.name} />}*/}
+				<Buttons.Spectate user={userInPanel} />
 				<Buttons.AddFriend user={userInPanel} />
 				<Buttons.RemoveFriend user={userInPanel} />
 				<Buttons.BlockUser user={userInPanel} />
