@@ -45,7 +45,6 @@ function ChatContextComponent(props: IChatContextComponentProps) {
 			ChatDispatch({type: 'add_lobby', payload: data.lobby});
 		});
 		return () => {
-			socket?.off(ServerChatEvents.KickedFromLobby);
 			socket?.off(ServerEvents.AddedToLobby);
 			socket?.off(ServerChatEvents.LobbyCreated);
 			socket?.off(ServerChatEvents.LobbyList);

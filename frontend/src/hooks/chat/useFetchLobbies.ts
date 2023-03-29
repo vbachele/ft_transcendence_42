@@ -15,7 +15,7 @@ export function useFetchLobbies() {
 		return () => {
 			socket?.off(ServerChatEvents.LobbyList);
 		}
-	}, []);
+	}, [socket]);
 
 	return lobbies;
 }

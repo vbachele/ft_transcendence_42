@@ -183,9 +183,12 @@ export class GameGateway implements OnGatewayDisconnect {
 		@MessageBody('username') username: string
 	) {
 		const user = this.websocketService.getClient(username);
+		console.log(
+			`Client [${client.data.name}] requested lobby from user, lobbyId: ${user?.data.gameLobby?.id}`
+		);
 		return {
 			event: ServerGameEvents.LobbyFromUser,
 			data: {lobbyId: user?.data.gameLobby?.id},
-		}
+		};
 	}
 }

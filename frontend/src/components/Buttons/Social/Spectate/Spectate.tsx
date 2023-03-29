@@ -35,10 +35,14 @@ function Spectate({user}: IProps) {
 			ServerGameEvents.LobbyFromUser
 		);
 
-		// if (!exists || !isUserIn(friends, user.name) || user.status !== 'ingame') {
-		// 	openNotification('warning', `${user.name} can't be spectated`);
-		// 	return;
-		// }
+		if (!exists || user.status !== 'ingame') {
+			openNotification('warning', `${user.name} can't be spectated`);
+			return;
+		}
+		if (data && !hasWatchAchievement) {
+			unlockAchievement('WATCH', data, socket);
+			setAchievements({achievements: [...data.achievements]});
+		}
 		navigate({
 			pathname: '/spectate',
 			search: createSearchParams({
@@ -46,10 +50,6 @@ function Spectate({user}: IProps) {
 			}).toString(),
 		});
 
-		if (data && !hasWatchAchievement) {
-			unlockAchievement('WATCH', data, socket);
-			setAchievements({achievements: [...data.achievements]});
-		}
 	};
 
 	return (

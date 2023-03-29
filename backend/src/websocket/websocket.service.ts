@@ -69,6 +69,14 @@ export class WebsocketService {
 		}
 	}
 
+	public updateClient(username: string) {
+		const client = this.getClient(username);
+		if (!client) return;
+		this.clients.delete(client.data.name);
+		client.data.name = username;
+		this.addUser(client);
+	}
+
 	private async setOnline(@ConnectedSocket() client: AuthenticatedSocket) {
 		try {
 			const updatedUser = await this.prisma.user.update({
