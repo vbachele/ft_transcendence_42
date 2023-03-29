@@ -3,9 +3,11 @@ import { LobbyGateway } from "./lobby.gateway";
 import { LobbyService } from "./lobby.service";
 import { factory } from "./lobby.creator";
 import { PrismaLobbyService } from "../database/lobby/prismaLobby.service";
+import {PrismaLobbyModule} from '../database/lobby/prismaLobby.module';
 
 @Module({
-  providers: [LobbyGateway, LobbyService, factory, PrismaLobbyService],
+  imports: [PrismaLobbyModule],
+  providers: [LobbyGateway, LobbyService, factory],
   exports: [LobbyService],
 })
 export class LobbyModule {}

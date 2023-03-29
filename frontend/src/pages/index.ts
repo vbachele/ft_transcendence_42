@@ -11,6 +11,7 @@ import DoubleAuth from './DoubleAuth/DoubleAuth';
 import Home from 'pages/Home/Home';
 import Landing from './Landing/Landing';
 import Social from './Social/Social';
+import Spectate from './Game/Spectate';
 
 export default {
 	Registration,
@@ -21,6 +22,7 @@ export default {
 	Navbar,
 	Headings,
 	Game,
+	Spectate,
 	Chat,
 	DoubleAuth,
 	Home,

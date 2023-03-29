@@ -32,8 +32,9 @@ function App() {
 					<Route path="/settings" element={<Pages.Settings />} />
 					<Route path="/headings" element={<Pages.Headings />} />
 					<Route path="/social" element={<Pages.Social />} />
-					{/*<Route path='/users' element={<UserMocks />} />,*/}
+					<Route path='/users' element={<UserMocks />} />,
 					<Route path="/game" element={<Pages.Game />} />
+					<Route path="/spectate" element={<Pages.Spectate />} />
 					<Route path="*" element={<Pages.NotFound />} />
 					<Route path="/fake_login" element={<FakeLogin />} />
 					<Route
@@ -52,8 +53,8 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			element: <UserMocks />,
-			// element: <Pages.Landing />,
+			// element: <UserMocks />,
+			element: <Pages.Landing />,
 		},
 		{
 			path: '/',
@@ -70,9 +71,9 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-				<PrivateRoute>
-					<Pages.DoubleAuth />
-				</PrivateRoute>
+					<PrivateRoute>
+						<Pages.DoubleAuth />
+					</PrivateRoute>
 			),
 		},
 		{

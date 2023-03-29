@@ -4,10 +4,12 @@ import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {ConnectedSocket, WsException} from '@nestjs/websockets';
 import {PrismaService} from 'src/database/prisma.service';
 import {Socket} from 'dgram';
+import {BlockedService} from '../social/blocked/blocked.service';
 
 @Injectable()
 export class WebsocketService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(private readonly prisma: PrismaService,
+							private readonly blockedService: BlockedService) {}
 
 	public server: Server;
 	public clients: Map<string, AuthenticatedSocket> = new Map<
@@ -38,6 +40,16 @@ export class WebsocketService {
 			: client.broadcast.emit(event);
 	}
 
+	public async emitWithBlacklist(event: string, sender: string, payload?: Object) {
+		this.clients.forEach(async (client) => {
+			const blacklist = await this.blockedService.getBlockList(client.data.name);
+			if (blacklist?.includes(sender)) return;
+			console.log(`emmiting to ${client.data.name}`)
+			this.server.to(client.id).emit(event, payload);
+		});
+
+	}
+
 	public async updateStatus(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		type: string
@@ -55,6 +67,14 @@ export class WebsocketService {
 			default:
 				break;
 		}
+	}
+
+	public updateClient(username: string) {
+		const client = this.getClient(username);
+		if (!client) return;
+		this.clients.delete(client.data.name);
+		client.data.name = username;
+		this.addUser(client);
 	}
 
 	private async setOnline(@ConnectedSocket() client: AuthenticatedSocket) {

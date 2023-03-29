@@ -121,7 +121,6 @@ export const backend = {
 	// Token
 	async deleteTokenCookie(): Promise<any> {
 		const response = await api.get('/auth/logout');
-		return await response.json();
 	},
 	async getUserByToken(): Promise<any> {
 		const response = await api.get('/auth/getuserbytoken');

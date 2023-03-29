@@ -11,6 +11,7 @@ import {asyncEmit} from '../../../helpers/asyncEmit';
 import {ClientChatEvents, ServerChatEvents} from '../../../events/chat.events';
 import useFetchUserByName from '../../../hooks/useFetchUserByName';
 import {displayStatus} from '../modals/ModalUserSearch';
+import {IUser} from '../../../types/models';
 
 interface ChannelProps {
 	lobby: ILobby;
@@ -21,7 +22,7 @@ function Channel({lobby}: ChannelProps) {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const name = useUserInfos().userName.userName;
 	const [popup, setPopup] = useState<boolean>(false);
-	const user = useFetchUserByName(directMessageName(lobby.name));
+	const user = useFetchUserByName(directMessageName(lobby.users));
 	const [unreadMessages, setUnreadMessages] = useState<number>(0);
 	const {activeLobby} = useContext(ChatContext).ChatState;
 
@@ -33,10 +34,10 @@ function Channel({lobby}: ChannelProps) {
 		});
 	}, [socket]);
 
-	function directMessageName(lobbyName: string) {
-		const displayedName = lobbyName.split('+');
-		if (displayedName[0] === name) return displayedName[1];
-		else return displayedName[0];
+	function directMessageName(users: IUser[]) {
+		if (!users) return;
+		if (users[0].name === name) return users[1].name;
+		else return users[0].name;
 	}
 
 	function onJoinLobby() {
@@ -89,7 +90,7 @@ function Channel({lobby}: ChannelProps) {
 						<S.ProfilePic src={user.data?.image} />
 						{displayStatus(user.data?.status!)}
 					<div style={{marginLeft: '16px'}}>
-						{directMessageName(lobby.name)}
+						{directMessageName(lobby.users)}
 					</div>
 					</S.Avatar>
 					{unreadMessages > 0 && (

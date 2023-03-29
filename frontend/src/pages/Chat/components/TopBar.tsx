@@ -73,7 +73,7 @@ function TopBar() {
 						userList={userList.filter((user) => user.name !== name)}
 						type={'openUserPanel'}
 					/>
-					<F.Text>{userList.length}</F.Text>
+					<F.Text>{userList.filter(user => user.name !== name).length}</F.Text>
 					<Profile />
 				</S.UserList>
 			</C.TopBar>

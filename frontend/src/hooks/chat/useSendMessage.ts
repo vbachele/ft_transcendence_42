@@ -4,7 +4,7 @@ import {ClientChatEvents} from "../../events/chat.events";
 
 export function useSendMessage(lobbyId: string) {
 	const {socket} = useContext(SocketContext).SocketState;
-	const [message, setMessage] = useState('');
+	const [message, setMessage] = useState<string>('');
 
 	const sendMessage = (event: React.FormEvent) => {
 		event.preventDefault();

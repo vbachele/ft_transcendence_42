@@ -23,7 +23,7 @@ const Registration = () => {
 
   async function checkUserToken() {
     const response = await backend.checkToken();
-    if (response.statusCode == "400" || response.statusCode == "403") {
+    if (response.statusCode == 400 || response.statusCode == 403) {
       navigate("/login");
       return;
     }

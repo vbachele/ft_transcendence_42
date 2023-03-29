@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Arrow from '../../../assets/send_message_arrow.svg';
 import {Input as AntdInput} from 'antd';
-import {AiFillInfoCircle} from 'react-icons/ai';
 import {DownOutlined} from '@ant-design/icons';
 
 export const StyledUser = styled.button`
@@ -51,6 +50,7 @@ export const ChatBarInput = styled.input`
 	border: 1px solid #e6e6e6;
 	border-radius: 12px;
 	padding: 8px 16px;
+	padding-right: 35px;
 	font-size: 1.2em;
 `;
 
@@ -149,7 +149,6 @@ export const UserList = styled.button`
 	}
 `;
 
-export const infoIcon = styled(AiFillInfoCircle)``;
 export const DropdownAdmin = styled.div`
 	display: flex;
 	flex-direction: row;

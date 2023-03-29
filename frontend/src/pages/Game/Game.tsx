@@ -8,6 +8,9 @@ import Victory from 'components/Victory/Victory';
 import Defeat from 'components/Defeat/Defeat';
 import {useUserInfos} from 'contexts/User/userContent';
 import Draw from '../../components/Draw/Draw';
+import {useUpdateGameState} from './hooks/useUpdateGameState';
+import {useSetupContext} from './hooks/useSetupContext';
+import {openNotification} from '../../helpers/openNotification';
 
 export interface Lobby {
 	id: string;
@@ -19,8 +22,6 @@ export interface Lobby {
 function Game() {
 	const {socket} = useContext(SocketContext).SocketState;
 	const pongRef = useRef<Pong>();
-	const [searchParams] = useSearchParams();
-	const [lobbyId, setLobbyId] = useState('');
 	const [showVictory, setShowVictory] = useState(false);
 	const [showDefeat, setShowDefeat] = useState(false);
 	const [showDraw, setShowDraw] = useState(false);
@@ -28,20 +29,13 @@ function Game() {
 	const canvas = document.getElementById('playground') as HTMLCanvasElement;
 	const username = useUserInfos().userName.userName;
 	const navigate = useNavigate();
+	const {lobbyId} = useSetupContext(canvas);
 
-	useEffect(() => {
-		const lobbyId = searchParams.get('lobbyId');
-		console.log(`lobbyId: ${lobbyId}`);
-		setLobbyId(searchParams.get('lobbyId')!);
-		if (canvas) {
-			canvas.width = canvas.offsetWidth;
-			canvas.height = canvas.offsetHeight;
-		}
-	}, []);
+	useUpdateGameState(pongRef);
 
 	useEffect(() => {
 		if (!lobbyId) return;
-		pongRef.current = new Pong(socket!, lobbyId!);
+		pongRef.current = new Pong(socket!, lobbyId!, {isSpec: false});
 		socket?.emit(ClientGameEvents.FetchSetup, {lobbyId: lobbyId});
 		socket?.on(ServerGameEvents.Setup, (data) => {
 			pongRef.current?.moveBall(data.ball.position, data.ball.velocity);
@@ -56,33 +50,17 @@ function Game() {
 		};
 	}, [lobbyId]);
 
-	function movePaddle(paddle: HTMLElement, position: {x: number; y: number}) {
-		paddle.style.transform = `translate(${
-			position.x - paddle.clientWidth! / 2
-		}px, ${position.y - paddle.clientHeight! / 2}px)`;
-	}
-
 	useEffect(() => {
-		socket?.on(ServerGameEvents.Timer, (data) => {
-			console.log(`data = `, data);
-			pongRef.current?.updateTimer(data.time);
-		});
-		socket?.on('exception', (data) => {
-			if (data.status === 'game.forbidden' || 'bad_request')
-				navigate('/notfound');
-		});
-		socket?.on(ServerGameEvents.MoveBall, (data) => {
-			pongRef.current?.moveBall(data.position, data.velocity);
-		});
-		socket?.on(ServerGameEvents.MovePaddle, (data) => {
-			pongRef.current?.movePaddle(data.paddle, data.position);
-		});
-		socket?.on(ServerGameEvents.UpdateScore, (data) => {
-			pongRef.current?.updateScore(data.score);
+		socket?.on(ServerGameEvents.ClientLeft, () => {
+			navigate('/');
+			openNotification(
+				'info',
+				'Your opponent has left the battlefield. Coward!',
+				'topRight'
+			);
 		});
 		socket?.on(ServerGameEvents.GameResult, (data) => {
 			pongRef.current?.stop();
-			console.log(`game result = `, data);
 			switch (data.winner) {
 				case 'draw':
 					setShowDraw(true);
@@ -95,13 +73,8 @@ function Game() {
 			}
 		});
 		return () => {
-			socket?.off(ServerGameEvents.MoveBall);
-			socket?.off(ServerGameEvents.MovePaddle);
-			socket?.off(ServerGameEvents.UpdateScore);
-			socket?.off(ServerGameEvents.Timer);
 			socket?.off(ServerGameEvents.GameResult);
-			pongRef.current?.stop();
-			delete pongRef.current;
+			socket?.off(ServerGameEvents.ClientLeft);
 		};
 	}, [socket]);
 

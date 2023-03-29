@@ -9,13 +9,15 @@ import {WebsocketService} from '../websocket/websocket.service';
 import {Request, Response} from 'express';
 import * as bcrypt from 'bcrypt';
 import {ClientEvents} from 'src/lobby/events/lobby.events';
+import {BlockedService} from '../social/blocked/blocked.service';
 
 @Injectable()
 export class ChatService {
 	constructor(
 		private readonly prismaLobbyService: PrismaLobbyService,
 		private readonly lobbyService: LobbyService,
-		private readonly websocketService: WebsocketService
+		private readonly websocketService: WebsocketService,
+		private readonly blockService: BlockedService
 	) {}
 
 	async sendMessage(content: string, lobbyId: string, username: string) {
@@ -54,9 +56,9 @@ export class ChatService {
 		const directMessages = await this.prismaLobbyService.fetchDirectMessages(
 			username
 		);
+
 		return channels.concat(directMessages);
 	}
-
 
 	public async isInLobby(username: string, lobbyId: string): Promise<boolean> {
 		try {
