@@ -53,8 +53,12 @@ export const backend = {
 	},
 
 	// Blocked
-	async getBlockedOf(name: string): Promise<IUser[]> {
+	async getBlocked(name: string): Promise<IUser[]> {
 		const response = await api.get('/blocked/' + name);
+		return await response.json();
+	},
+	async getBlockedOf(name: string): Promise<IUser[]> {
+		const response = await api.get('/blocked/of/' + name);
 		return await response.json();
 	},
 	async blockUser(user1: string, user2: string): Promise<IUser> {
