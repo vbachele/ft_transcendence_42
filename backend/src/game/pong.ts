@@ -126,9 +126,7 @@ export class Pong {
 		const user = await this.prismaService.user.findUnique({
 			where: { name: username },
 		});
-
 		const games = (user?.games || 0) + 1;
-
 		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
