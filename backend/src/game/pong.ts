@@ -100,7 +100,7 @@ export class Pong {
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
-				winner: 'draw',
+				winner: 'draw', scores: this.score, players: this.players
 			});
 		}
 		await this.prismaService.game.create({
@@ -134,16 +134,8 @@ export class Pong {
 		const score = Math.round(
 			(games * 50 + wins * 200) /
 				(parseFloat(ratio) + 1) *
-				(achievements / 15 + 1)
+				(achievements / 13 + 1)
 		);
-
-		console.log('--------------user:', user);
-		console.log('achievements:', achievements);
-		console.log('games:', games);
-		console.log('wins:', wins);
-		console.log('gamesWon:', gamesWon);
-		console.log('ratio:', ratio);
-		console.log('score:', score);
 
 		await this.prismaService.user.update({
 			where: {name: username},

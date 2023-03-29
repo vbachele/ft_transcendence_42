@@ -20,6 +20,7 @@ enum ELinkTypes {
 	BANNED = '/',
 	KICKED = '/',
 	ADMIN = '/',
+	MUTED = '/',
 }
 
 function getLinkOption(notif: INotification, userName: string) {
@@ -35,6 +36,8 @@ function getLinkOption(notif: INotification, userName: string) {
 		case 'KICKED':
 			return '';
 		case 'ADMIN':
+			return '';
+		case 'MUTED':
 			return '';
 		default:
 			return '';
@@ -57,6 +60,7 @@ const Notif = ({notif}: IProps) => {
 		notif.type === 'FRIEND_DENY' ||
 		notif.type === 'REMOVE';
 	const isChannel =
+		notif.type === 'MUTED' ||
 		notif.type === 'BANNED' ||
 		notif.type === 'KICKED' ||
 		notif.type === 'ADMIN';

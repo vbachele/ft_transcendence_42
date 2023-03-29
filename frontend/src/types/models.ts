@@ -33,7 +33,8 @@ export interface INotification {
 		| 'MESSAGE'
 		| 'BANNED'
 		| 'KICKED'
-		| 'ADMIN';
+		| 'ADMIN'
+		| 'MUTED';
 }
 
 export interface IGame {
