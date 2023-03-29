@@ -49,7 +49,7 @@ export class Pong {
 		left: AuthenticatedSocket | undefined;
 		right: AuthenticatedSocket | undefined;
 	} = {['left']: undefined, ['right']: undefined};
-	public timeLimit = 1.50 * 60 * 1000;
+	public timeLimit = 1.5 * 60 * 1000;
 	private timerRef: NodeJS.Timeout;
 
 	constructor(
@@ -87,16 +87,16 @@ export class Pong {
 				winner: this.players['left']?.data.name,
 			});
 			await this.prismaService.user.update({
-				where: { name: this.players['left']?.data.name },
-				data: { wins: { increment: 1 } },
+				where: {name: this.players['left']?.data.name},
+				data: {wins: {increment: 1}},
 			});
 		} else if (this.score[0] < this.score[1]) {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['right']?.data.name,
 			});
 			await this.prismaService.user.update({
-				where: { name: this.players['right']?.data.name },
-				data: { wins: { increment: 1 } },
+				where: {name: this.players['right']?.data.name},
+				data: {wins: {increment: 1}},
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
@@ -124,16 +124,29 @@ export class Pong {
 
 	private async updateUser(username: string) {
 		const user = await this.prismaService.user.findUnique({
-			where: { name: username },
+			where: {name: username},
 		});
+		const achievements = user?.achievements.length || 0;
 		const games = (user?.games || 0) + 1;
 		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
-		const score = Math.round((games * 10 + wins * 40) * (parseFloat(ratio) + 1));
+		const score = Math.round(
+			(games * 50 + wins * 200) /
+				(parseFloat(ratio) + 1) *
+				(achievements / 15 + 1)
+		);
+
+		console.log('--------------user:', user);
+		console.log('achievements:', achievements);
+		console.log('games:', games);
+		console.log('wins:', wins);
+		console.log('gamesWon:', gamesWon);
+		console.log('ratio:', ratio);
+		console.log('score:', score);
 
 		await this.prismaService.user.update({
-			where: { name: username },
+			where: {name: username},
 			data: {
 				score,
 				games: games,
@@ -208,7 +221,7 @@ export class Pong {
 		if (this.detectPaddleEdgeCollision()) return;
 		if (
 			ball.position.x - ball.radius <=
-			paddles.left.position.x + PADDLE_SIZE.x &&
+				paddles.left.position.x + PADDLE_SIZE.x &&
 			ball.position.x >= paddles.left.position.x + PADDLE_SIZE.x
 		) {
 			if (
@@ -220,8 +233,8 @@ export class Pong {
 				BALL_SPEED.x = this.clamp(-BALL_SPEED.x * BALL_ACCELERATION, -800, 800);
 			}
 		}
-		if (ball.position.x + ball.radius >=
-			paddles.right.position.x &&
+		if (
+			ball.position.x + ball.radius >= paddles.right.position.x &&
 			ball.position.x <= paddles.right.position.x
 		) {
 			if (
