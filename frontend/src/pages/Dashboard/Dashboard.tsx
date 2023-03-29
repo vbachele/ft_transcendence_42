@@ -23,7 +23,7 @@ const Dashboard = () => {
 					<S.SubContainer>
 						<Stats user={data} />
 						<Leaderboard user={data} />
-						<History />
+						<History user={data}/>
 						<Achievements user={data} />
 					</S.SubContainer>
 				</S.Container>

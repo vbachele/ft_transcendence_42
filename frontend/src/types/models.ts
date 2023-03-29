@@ -36,6 +36,16 @@ export interface INotification {
 		| 'ADMIN';
 }
 
+export interface IGame {
+	id: number;
+	createdAt: Date;
+	finishedAt: Date;
+	leftPlayerName: string;
+	rightPlayerName: string;
+	leftScore: number;
+	rightScore: number;
+}
+
 export type TCallback = ({}) => void;
 
 export interface ILobbyData {

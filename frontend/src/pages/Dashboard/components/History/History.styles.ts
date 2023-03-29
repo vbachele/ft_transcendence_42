@@ -68,7 +68,6 @@ interface ICardProps {
 export const Card = styled(Link)<ICardProps>`
 	color: ${(p) => p.theme.colors.text};
 	background-color: ${(p) => p.theme.colors.secondary};
-
 	box-shadow: ${(p) =>
 		p.result === 'win'
 			? 'rgba(75, 174, 79, 1) 0px 0px 6px'
@@ -76,6 +75,7 @@ export const Card = styled(Link)<ICardProps>`
 
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	text-align: center;
 	padding: 16px;
@@ -88,16 +88,14 @@ export const Card = styled(Link)<ICardProps>`
 
 	img {
 		border-radius: 50%;
-		width: 96px;
-		height: 96px;
+		width: 80px;
+		height: 80px;
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	}
 
 	transition: all 0.1s linear;
-
 	:hover {
 		background-color: ${(p) => p.theme.colors.hover};
-
 		transform: translateY(-8px);
 	}
 
