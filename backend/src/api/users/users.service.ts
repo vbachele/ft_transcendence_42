@@ -28,7 +28,7 @@ export class UserService {
 			throw new HttpException(
 				{
 					status: HttpStatus.BAD_REQUEST,
-					error: 'Error To catch users',
+					error: 'Error to catch users',
 				},
 				HttpStatus.BAD_REQUEST
 			);

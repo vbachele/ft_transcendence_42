@@ -77,6 +77,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	const [form] = Form.useForm();
 	const {socket} = useContext(SocketContext).SocketState;
 	const name = useUserInfos().userName.userName;
+	const setAchievements = useUserInfos().setAchievements;
 	const [error, setError] = useState<boolean>(false);
 
 	const handleCancel = (event: React.MouseEvent) => {
@@ -142,7 +143,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 					label={'Channel name'}
 					rules={[{required: true, message: 'Missing channel name'}]}
 				>
-					<StyledInput prefix={'#'} placeholder="new-channel" />
+					<StyledInput prefix={'#'} maxLength={20} placeholder="new-channel" />
 				</Form.Item>
 				<Form.Item
 					name={'description'}
@@ -171,6 +172,3 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	);
 }
 export default ModalChanCreate;
-function setAchievements(arg0: {achievements: string[]}) {
-	throw new Error('Function not implemented.');
-}

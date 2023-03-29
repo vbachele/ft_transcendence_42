@@ -7,6 +7,7 @@ export enum ClientGameEvents {
 	LeaveGame = "client.game.leaveGame",
 	CancelSearch = "client.game.cancelSearch",
 	CancelInvitation = "client.game.cancelInvitation",
+	FetchGames = "client.game.fetchGames",
 	Spectate = "client.game.spectate",
 	LobbyFromUser = "client.game.lobbyFromUser",
 }

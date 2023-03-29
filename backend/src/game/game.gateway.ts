@@ -15,6 +15,7 @@ import {GameService} from './game.service';
 import {ValidationPipe} from '@nestjs/common';
 import {LobbyService} from '../lobby/lobby.service';
 import {GameLobby, GameLobbyDto} from './gameLobby';
+import {PrismaService} from '../database/prisma.service';
 import {GameMode} from './types/game.type';
 import {WebsocketService} from '../websocket/websocket.service';
 import {ALobby} from '../lobby/ALobby';
@@ -29,6 +30,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	constructor(
 		private readonly gameService: GameService,
 		private readonly lobbyService: LobbyService,
+		private readonly prismaService: PrismaService,
 		private readonly websocketService: WebsocketService
 	) {}
 
@@ -157,6 +159,15 @@ export class GameGateway implements OnGatewayDisconnect {
 		this.gameService.leaveLobby(client);
 	}
 
+	@SubscribeMessage(ClientGameEvents.FetchGames)
+	async onFetchGames(@MessageBody('name') name: string) {
+		const games = await this.prismaService.game.findMany({
+			where: {
+				OR: [{leftPlayerName: name}, {rightPlayerName: name}],
+			},
+		});
+		return {games};
+	}
 	@SubscribeMessage(ClientGameEvents.Spectate)
 	onSpectate(
 		@ConnectedSocket() client: AuthenticatedSocket,

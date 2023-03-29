@@ -4,7 +4,6 @@ import {ReactComponent as RatioIcon} from '../../assets/ratio.svg';
 import {IUser} from 'types/models';
 import * as S from './Stats.styles';
 import * as F from 'styles/font.styles';
-import * as UI from 'styles/buttons.styles';
 
 interface IProps {
 	user: IUser;

@@ -13,12 +13,12 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	const location = useLocation();
 
 	async function checkUserToken() {
-		const response = await backend.checkToken();
-		if (response.statusCode == 400 || response.statusCode == "403") {
+		// const response = await backend.checkToken();
+		// if (response.statusCode == 400 || response.statusCode == "403") {
 
-		navigate("/login");
-		  return;
-		}
+		// navigate("/login");
+		//   return;
+		// }
 		setIsLoading(false);
 		setTokenExists(true);
 	}

@@ -53,13 +53,21 @@ function ChannelBar() {
 				{[...lobbyList]
 					.filter((lobby) => lobby.type === 'channel')
 					.filter((lobby) => searchFilter(lobby.name))
+					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((lobby, index) => (
 						<Channel key={lobby.name} lobby={lobby} />
 					))}
 			</C.ChannelList>
-			<C.ExpandButton onClick={() => setExpandChan(!expandChan)}>
-				{expandChan ? 'Less' : 'More'}
-			</C.ExpandButton>
+			{[...lobbyList].filter((lobby) => lobby.type === 'channel').length > 2 ||
+			([...lobbyList].filter((lobby) => lobby.type === 'channel').length > 1 &&
+				[...lobbyList].filter((lobby) => lobby.type === 'direct_message')
+					.length > 1) ? (
+				<C.ExpandButton onClick={() => setExpandChan(!expandChan)}>
+					{expandChan ? 'Less' : 'More'}
+				</C.ExpandButton>
+			) : (
+				''
+			)}
 			<C.Header>
 				<F.H3>
 					Direct messages (
@@ -79,9 +87,18 @@ function ChannelBar() {
 						<Channel key={lobby.name} lobby={lobby} />
 					))}
 			</C.ChannelList>
-			<C.ExpandButton onClick={() => setExpandDm(!expandDm)}>
-				{expandDm ? 'Less' : 'More'}
-			</C.ExpandButton>
+			{[...lobbyList].filter((lobby) => lobby.type === 'direct_message')
+				.length > 2 ||
+			([...lobbyList].filter((lobby) => lobby.type === 'direct_message')
+				.length > 1 &&
+				[...lobbyList].filter((lobby) => lobby.type === 'channel').length >
+					1) ? (
+				<C.ExpandButton onClick={() => setExpandDm(!expandDm)}>
+					{expandDm ? 'Less' : 'More'}
+				</C.ExpandButton>
+			) : (
+				''
+			)}
 		</C.LateralBar>
 	);
 }
