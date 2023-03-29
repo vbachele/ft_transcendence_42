@@ -123,14 +123,13 @@ export class Pong {
 	}
 
 	private async updateUser(username: string) {
-		console.log('updating user', username);
-
 		const user = await this.prismaService.user.findUnique({
 			where: { name: username },
 		});
 
-		const games = user.games || 0;
-		const wins = user.wins || 0;
+		const games = (user?.games || 0) + 1;
+
+		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
 		const score = Math.round((games * 10 + wins * 40) * (parseFloat(ratio) + 1));
@@ -139,7 +138,7 @@ export class Pong {
 			where: { name: username },
 			data: {
 				score,
-				games: { increment: 1 },
+				games: games,
 				ratio: parseFloat(ratio),
 			},
 		});

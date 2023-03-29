@@ -1,5 +1,5 @@
 import {Route, Routes, useRoutes} from 'react-router-dom';
-import {ConfigProvider, theme as antdTheme} from 'antd';
+import {ConfigProvider, notification, theme as antdTheme} from 'antd';
 import {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
@@ -13,6 +13,7 @@ import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/Component';
 import Pages from 'pages';
 import Popup from 'components/Popup';
+import { NotificationPlacement } from 'antd/es/notification/interface';
 
 function App() {
 	const defaultTheme = 'dark';
@@ -51,8 +52,8 @@ function App() {
 	const routes = useRoutes([
 		{
 			path: '/login',
-			// element: <UserMocks />,
-			element: <Pages.Landing />,
+			element: <UserMocks />,
+			// element: <Pages.Landing />,
 		},
 		{
 			path: '/',
@@ -100,12 +101,12 @@ function App() {
 									: antdTheme.darkAlgorithm,
 						}}
 					>
-						{/* <SocketContextComponent> */}
-						<GlobalStyle />
-						<Popup.GameInvite />
-						<Popup.SearchPlayer />
-						{routes}
-						{/* </SocketContextComponent> */}
+						<SocketContextComponent>
+							<GlobalStyle />
+							<Popup.GameInvite />
+							<Popup.SearchPlayer />
+							{routes}
+						</SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>
 			</PopupContextProvider>

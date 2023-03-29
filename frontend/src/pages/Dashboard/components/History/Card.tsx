@@ -4,41 +4,47 @@ import {ReactComponent as WinIcon} from '../../assets/win.svg';
 import {ReactComponent as LossIcon} from '../../assets/loss.svg';
 import * as S from './History.styles';
 import * as F from 'styles/font.styles';
-
-interface IMatch {
-	user: string;
-	myScore: number;
-	userScore: number;
-	id: number;
-	date: Date;
-}
+import {IGame, IUser} from 'types/models';
+import {useUserInfos} from 'contexts/User/userContent';
 
 interface IProps {
-	match: IMatch;
+	user: IUser;
+	match: IGame;
 }
 
-const Card = ({match}: IProps) => {
-	const {data: user, isLoading, error} = useFetchUserByName(match.user);
-	const result: string = match.myScore > match.userScore ? 'win' : 'loss';
-	const formattedDate: string = formatDistanceToNowStrict(match.date);
+const Card = ({user, match}: IProps) => {
+	const date = new Date(match.createdAt);
+	const formattedDate = formatDistanceToNowStrict(date, {
+		addSuffix: true,
+	});
+
+	const isLeftPlayer = match.leftPlayerName === user.name;
+	const opponentName = isLeftPlayer
+		? match.rightPlayerName
+		: match.leftPlayerName;
+	const opponentScore = isLeftPlayer ? match.rightScore : match.leftScore;
+	const userScore = isLeftPlayer ? match.leftScore : match.rightScore;
+	const result = userScore > opponentScore ? 'win' : 'loss';
+
+	const {data: opponent} = useFetchUserByName(opponentName);
 
 	return (
 		<S.CardContainer>
-			{user && (
-				<S.Card to={`/dashboard/${user.name}`} result={result}>
-					<img src={user.image} />
-					<F.Subtitle>{formattedDate} ago</F.Subtitle>
-					<F.H5>{user.name}</F.H5>
+			{opponent && (
+				<S.Card to={`/dashboard/${opponentName}`} result={result}>
+					<img src={opponent?.image} />
+					<F.H5>{opponentName}</F.H5>
 					<S.Result>
-						<F.Text weight="500">
-							{match.myScore}
+						<F.H4>
+							{userScore}
 							{' - '}
-							{match.userScore}
-						</F.Text>
+							{opponentScore}
+						</F.H4>
 					</S.Result>
+					<F.Subtitle>{formattedDate}</F.Subtitle>
 				</S.Card>
 			)}
-			{user && (result === 'win' ? <WinIcon /> : <LossIcon />)}
+			{opponent && (result === 'win' ? <WinIcon /> : <LossIcon />)}
 		</S.CardContainer>
 	);
 };

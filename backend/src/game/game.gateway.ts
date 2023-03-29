@@ -28,7 +28,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	constructor(
 		private readonly gameService: GameService,
 		private readonly lobbyService: LobbyService,
-		private readonly prismaService: PrismaService,
+		private readonly prismaService: PrismaService
 	) {}
 
 	handleDisconnect(client: AuthenticatedSocket) {
@@ -165,14 +165,11 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientGameEvents.FetchGames)
-	async onFetchGames(@ConnectedSocket() client: AuthenticatedSocket) {
+	async onFetchGames(@MessageBody('name') name: string) {
 		const games = await this.prismaService.game.findMany({
 			where: {
-				OR: [
-					{ leftPlayerName: client.data.name },
-					{ rightPlayerName: client.data.name },
-				],
-			}
+				OR: [{leftPlayerName: name}, {rightPlayerName: name}],
+			},
 		});
 		return {games};
 	}
