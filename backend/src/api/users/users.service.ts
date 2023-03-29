@@ -2,12 +2,14 @@ import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {Request} from 'express';
 import {PrismaService} from 'src/database/prisma.service';
 import {BlockedService} from 'src/social/blocked/blocked.service';
+import {WebsocketService} from '../../websocket/websocket.service';
 
 @Injectable({})
 export class UserService {
 	constructor(
-		private prisma: PrismaService,
-		private blockedService: BlockedService
+		private readonly prisma: PrismaService,
+		private readonly blockedService: BlockedService,
+		private readonly websocketService: WebsocketService,
 	) {}
 
 	async getAllUsers(blockedOf: string) {
@@ -67,6 +69,7 @@ export class UserService {
 					HttpStatus.BAD_REQUEST
 				);
 			}
+			this.websocketService.updateClient(user.name!);
 			return user;
 		} catch (error) {
 			throw new HttpException(

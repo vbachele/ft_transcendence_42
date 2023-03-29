@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import {useUpdateGameState} from './hooks/useUpdateGameState';
 import {useSetupContext} from './hooks/useSetupContext';
+import {openNotification} from '../../helpers/openNotification';
 
 export interface Lobby {
 	id: string;
@@ -33,6 +34,11 @@ function Spectate() {
 	useEffect(() => {
 		socket?.on(ServerGameEvents.ClientLeft, () => {
 			navigate('/');
+			openNotification(
+				'info',
+				'Live disruption. One of the players went out to buy milk...',
+				'topRight'
+			);
 		});
 		socket?.on(ServerGameEvents.GameResult, (data) => {
 			pongRef.current?.stop();
