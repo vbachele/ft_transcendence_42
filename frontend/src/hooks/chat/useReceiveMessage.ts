@@ -21,13 +21,13 @@ export function useReceiveMessage(activeLobby: ILobby | undefined) {
 	const username = useUserInfos().userName.userName;
 	const [blockList, setBlockList] = useState<any[]>([]);
 
-	useEffect(() => {
-		fetchBlockList(socket!).then((data) => {
-			if (data) {
-				setBlockList(data);
-			}
-		});
-	}, []);
+	// useEffect(() => {
+	// 	fetchBlockList(socket!).then((data) => {
+	// 		if (data) {
+	// 			setBlockList(data);
+	// 		}
+	// 	});
+	// }, []);
 
 	useEffect(() => {
 		setMessages([]);

@@ -12,15 +12,16 @@ async function fetchUser(name: string, blockedOf: string) {
 	}
 }
 
-function useFetchUserByName(name: string) {
+function useFetchUserByName(name?: string) {
 	const {userName} = useUserInfos();
 	const [data, setData] = useState<IUser | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
+		if (!name) return;
 		async function fetchData() {
-			const {data, error} = await fetchUser(name, userName.userName);
+			const {data, error} = await fetchUser(name!, userName.userName);
 
 			setData(data);
 			setError(error);
