@@ -19,7 +19,7 @@ type PlayerState = 'ready' | 'notReady';
 
 @Injectable()
 export class GameLobby extends ALobby {
-	instance: Pong;
+	instance?: Pong;
 	state: 'waiting' | 'running' | 'paused' | 'ready';
 	mode: GameMode;
 	playerStates: Map<string, PlayerState> = new Map();
@@ -36,12 +36,12 @@ export class GameLobby extends ALobby {
 	}
 
 	stopGame() {
-		this.instance.stop();
+		this.instance?.stop();
 		this.state = 'paused';
 	}
 
 	runGame() {
-		this.instance.start();
+		this.instance?.start();
 		this.state = 'running';
 	}
 
@@ -52,30 +52,30 @@ export class GameLobby extends ALobby {
 	) {
 		if (this.state !== 'running') return;
 		this.validateClient(client);
-		this.instance.movePaddle(client.data.paddle, direction);
+		this.instance?.movePaddle(client.data.paddle, direction);
 		const paddle =
-			this.instance.paddles[client.data.paddle as 'left' | 'right'];
+			this.instance?.paddles[client.data.paddle as 'left' | 'right'];
 		this.dispatchToLobby(ServerGameEvents.MovePaddle, {
 			paddle: client.data.paddle,
-			position: paddle.position,
+			position: paddle!.position,
 		});
 	}
 
 	gameSetup() {
 		const leftPlayer = [...this.clients.values()][0];
 		const rightPlayer = [...this.clients.values()][1];
-		this.instance.setPlayer(leftPlayer, 'left');
-		this.instance.setPlayer(rightPlayer, 'right');
+		this.instance?.setPlayer(leftPlayer, 'left');
+		this.instance?.setPlayer(rightPlayer, 'right');
 		return {
 			ball: {
-				position: this.instance.ball.position,
+				position: this.instance?.ball.position,
 				velocity: {x: 0, y: 0},
-				size: this.instance.ball.radius * 2,
+				size: this.instance?.ball.radius! * 2,
 			},
-			leftPaddle: this.instance.paddles['left'],
-			rightPaddle: this.instance.paddles['right'],
+			leftPaddle: this.instance?.paddles['left'],
+			rightPaddle: this.instance?.paddles['right'],
 			timer:
-				this.mode === GameMode.AgainstTheClock ? this.instance.timeLimit : '',
+				this.mode === GameMode.AgainstTheClock ? this.instance?.timeLimit : '',
 		};
 	}
 

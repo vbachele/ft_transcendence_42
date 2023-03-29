@@ -7,5 +7,6 @@ import {BlockedService} from './blocked.service';
 	imports: [PrismaModule],
 	controllers: [BlockedController],
 	providers: [BlockedService],
+	exports: [BlockedService],
 })
 export class BlockedModule {}

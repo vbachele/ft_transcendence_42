@@ -122,16 +122,26 @@ export class ChatLobby extends ALobby {
 	): Promise<ALobby> {
 		super.addClient(client);
 		await this.prismaLobbyService.pushUserToLobby(client.data.name, this.id);
-		const lobby = await this.prismaLobbyService.fetchLobbyFromId(this.id);
+		const lobby = await this.prismaLobbyService.fetchLobbyFromId(
+			client.data.name,
+			this.id
+		);
 		const adminList = await this.prismaLobbyService.fetchAdminsInLobby(this.id);
 		this.server.to(client.id).emit(ServerEvents.AddedToLobby, {
 			lobby: {...lobby, admins: adminList?.admins.map((admin) => admin.name)},
 		});
-		const userList = await this.prismaLobbyService.fetchUsersInLobby(this.id);
-		this.server.emit(ServerChatEvents.UserList, {
-			users: userList?.users,
-			lobbyId: this.id,
-		});
+		const userList = await this.prismaLobbyService.fetchUsersInLobby(
+			client.data.name,
+			this.id
+		);
+		await this.websocketService.emitWithBlacklist(
+			ServerChatEvents.UserList,
+			client.data.name,
+			{
+				users: userList?.users,
+				lobbyId: this.id,
+			}
+		);
 		return this;
 	}
 }

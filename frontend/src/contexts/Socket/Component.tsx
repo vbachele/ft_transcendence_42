@@ -6,9 +6,7 @@ import {
 	SocketReducer,
 } from './context';
 import {useUserInfos} from '../User/userContent';
-import { backend } from 'lib/backend';
-import getInfosFromDB from 'contexts/User/GetuserFromDB';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export interface ISocketContextComponentProps extends PropsWithChildren {}
 
@@ -16,8 +14,6 @@ const SocketContextComponent: React.FunctionComponent<
 	ISocketContextComponentProps
 > = (props) => {
 	const {children} = props;
-	const [tokenValid, setTokenValid] = useState(false)
-	const navigate = useNavigate();
 
 	const [SocketState, SocketDispatch] = useReducer(
 		SocketReducer,
@@ -33,16 +29,12 @@ const SocketContextComponent: React.FunctionComponent<
 			name: name,
 		},
 	});
-	// useEffect(() => {
-	// 	const user = getInfosFromDB(navigate)
-	// 	user.then((res) => {
-	// 		console.log("RESULT", res);
-	// 		if (res)
-	// 			setTokenValid(true)
-	// 	});
-	// })
+
 	useEffect(() => {
-		if (!name) return;
+		if (!name) {
+			setLoading(false);
+			return;
+		}
 		socket.io.opts.query!.name = name;
 		socket.connect();
 		SocketDispatch({type: 'update_socket', payload: socket});
@@ -111,13 +103,10 @@ const SocketContextComponent: React.FunctionComponent<
 	if (loading) return <p>Loading socket IO...</p>;
 
 	return (
-		<>
-		{!tokenValid && <SocketContextProvider value={{SocketState, SocketDispatch}}>
-		{children}
-		</SocketContextProvider>}
-	</>
+		<SocketContextProvider value={{SocketState, SocketDispatch}}>
+			{children}
+		</SocketContextProvider>
 	);
-	return <></>
 };
 
 export default SocketContextComponent;

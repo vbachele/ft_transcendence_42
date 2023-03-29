@@ -8,14 +8,19 @@ import * as bcrypt from 'bcrypt';
 import {PrismaService} from 'src/database/prisma.service';
 import {Lobby} from '../../chat/chatLobby';
 import {WsException} from '@nestjs/websockets';
+import {BlockedService} from '../../social/blocked/blocked.service';
+import {ServerChatEvents} from '../../chat/events/chat.events';
+import {WebsocketService} from '../../websocket/websocket.service';
 
 @Injectable()
 export class PrismaLobbyService {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(
+		private readonly prismaService: PrismaService,
+		private readonly blockService: BlockedService
+	) {}
 
 	async pushLobby(lobby: Lobby, owner: string) {
 		try {
-			console.log(`owner is `, owner);
 			const channel = await this.prismaService.lobby.create({
 				data: {
 					...lobby,
@@ -89,7 +94,7 @@ export class PrismaLobbyService {
 		username: string,
 		lobbyId: string
 	): Promise<LobbyModel | null> {
-		console.log(`pushing admin ${username} to lobby ${lobbyId}`);
+		console.info(`pushing admin ${username} to lobby ${lobbyId}`);
 		try {
 			return await this.prismaService.lobby.update({
 				where: {
@@ -153,6 +158,11 @@ export class PrismaLobbyService {
 	}
 
 	async fetchChannels(username: string): Promise<LobbyModel[]> {
+		const blockedOf = await this.blockService.getBlockedOfUser(username);
+		const blockedBy = await this.blockService.getBlockedByUser(username);
+		const users: string[] = [];
+		blockedOf?.forEach((user) => (user.name ? users.push(user.name) : 0));
+		blockedBy?.forEach((user) => (user.name ? users.push(user.name) : 0));
 		return this.prismaService.lobby.findMany({
 			where: {
 				type: 'channel',
@@ -163,13 +173,20 @@ export class PrismaLobbyService {
 				},
 			},
 			include: {
-				messages: true,
+				messages: {
+					where: {
+						NOT: {
+							authorName: {in: users},
+						},
+					},
+				},
 			},
 		});
+		// authorName: [blockedBy?.map((user) => user.name)],
 	}
 
-	async fetchDirectMessages(username: string): Promise<LobbyModel[]> {
-		return this.prismaService.lobby.findMany({
+	async fetchDirectMessages(username: string) {
+		const dmList = await this.prismaService.lobby.findMany({
 			where: {
 				type: 'direct_message',
 				users: {
@@ -178,7 +195,14 @@ export class PrismaLobbyService {
 			},
 			include: {
 				messages: true,
+				users: true,
 			},
+		});
+		const blockList = await this.blockService.getBlockList(username);
+		return dmList.filter((dm) => {
+			return dm.users.every((user) => {
+				return blockList.every((name) => name !== user.name);
+			});
 		});
 	}
 
@@ -186,13 +210,23 @@ export class PrismaLobbyService {
 		return this.prismaService.lobby.findMany();
 	}
 
-	async fetchLobbyFromId(lobbyId: string): Promise<LobbyModel | null> {
+	async fetchLobbyFromId(
+		username: string,
+		lobbyId: string
+	): Promise<LobbyModel | null> {
+		const blockList = await this.blockService.getBlockList(username);
 		return this.prismaService.lobby.findUnique({
 			where: {
 				id: lobbyId,
 			},
 			include: {
-				messages: true,
+				messages: {
+					where: {
+						NOT: {
+							authorName: {in: blockList},
+						},
+					},
+				},
 			},
 		});
 	}
@@ -215,13 +249,20 @@ export class PrismaLobbyService {
 		});
 	}
 
-	async fetchUsersInLobby(lobbyId: string) {
+	async fetchUsersInLobby(username: string, lobbyId: string) {
+		const blockList = await this.blockService.getBlockList(username);
 		return this.prismaService.lobby.findUnique({
 			where: {
 				id: lobbyId,
 			},
 			select: {
-				users: true,
+				users: {
+					where: {
+						NOT: {
+							name: {in: blockList},
+						},
+					},
+				},
 			},
 		});
 	}
@@ -342,7 +383,7 @@ export class PrismaLobbyService {
 			},
 			include: {
 				users: true,
-			}
+			},
 		});
 	}
 
@@ -366,7 +407,7 @@ export class PrismaLobbyService {
 			},
 			include: {
 				users: true,
-			}
+			},
 		});
 	}
 }
