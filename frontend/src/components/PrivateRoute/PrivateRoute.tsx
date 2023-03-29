@@ -25,13 +25,6 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 
 	async function check2FAEnabled() {
 		const path = location.pathname;
-		if (
-			path === '/2FA' &&
-			verified2FA.verified2FA === false &&
-			doubleAuth.doubleAuth === false
-		) {
-			navigate('/');
-		}
 		if (verified2FA.verified2FA === false && doubleAuth.doubleAuth === true) {
 			console.log("inside");
 
@@ -40,6 +33,13 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 
 			navigate('/2FA');
 			return;
+		}
+		if (
+			path === '/2FA' &&
+			verified2FA.verified2FA === false &&
+			doubleAuth.doubleAuth === false
+		) {
+			navigate('/');
 		}
 	}
 

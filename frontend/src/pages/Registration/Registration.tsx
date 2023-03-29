@@ -14,11 +14,12 @@ const Registration = () => {
   const [tokenExists, setTokenExists] = useState(false);
 
   async function checkUserRegistration() {
-    const user = await backend.getUserByToken();
-    if (user.name) {
-      navigate("/");
-      return;
-    }
+    // const user = await backend.getUserByToken();
+
+    // if (user.name) {
+    //   navigate("/");
+    //   return;
+    // }
   }
 
   async function checkUserToken() {
