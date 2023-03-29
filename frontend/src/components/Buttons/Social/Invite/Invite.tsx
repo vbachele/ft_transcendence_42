@@ -81,8 +81,12 @@ function Invite({name}: IProps) {
 					className={showGameModes ? 'active' : ''}
 					style={{margin: '0', gap: '8px'}}
 				>
-					<Button onClick={onPlayAgainstTheClock}>Against the clock</Button>
-					<Button onClick={onPlayScoreLimit}>Score limit</Button>
+					<Button onClick={onPlayAgainstTheClock}>
+						Against the clock
+					</Button>
+					<Button onClick={onPlayScoreLimit}>
+						Score limit
+					</Button>
 				</S.GameMode>
 			</Content>
 		</StyleInvite>

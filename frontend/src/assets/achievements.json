@@ -30,83 +30,76 @@
 		},
 		{
 			"id": 5,
-			"api": "TOP5",
-			"name": "Conqueror",
-			"description": "Reach the top 5 of the leaderboard",
-			"image": "https://cdn-icons-png.flaticon.com/512/7346/7346399.png"
-		},
-		{
-			"id": 6,
 			"api": "WATCH",
 			"name": "Cheerleader",
 			"description": "Watch a game",
 			"image": "https://cdn-icons-png.flaticon.com/512/9182/9182274.png"
 		},
 		{
-			"id": 7,
+			"id": 6,
 			"api": "ADD",
 			"name": "Follow me",
 			"description": "Add a friend",
 			"image": "https://cdn-icons-png.flaticon.com/512/7080/7080669.png"
 		},
 		{
-			"id": 8,
+			"id": 7,
 			"api": "TEAM",
 			"name": "Squad",
 			"description": "Add 3 friends",
 			"image": "https://cdn-icons-png.flaticon.com/512/9050/9050482.png"
 		},
 		{
-			"id": 9,
+			"id": 8,
 			"api": "DUEL",
 			"name": "Duel",
 			"description": "Challenge a friend",
 			"image": "https://cdn-icons-png.flaticon.com/512/9329/9329110.png"
 		},
 		{
-			"id": 10,
+			"id": 9,
 			"api": "BLOCK",
 			"name": "Hater",
 			"description": "Block a user",
 			"image": "https://cdn-icons-png.flaticon.com/512/6144/6144518.png"
 		},
 		{
-			"id": 11,
+			"id": 10,
 			"api": "CREATE",
 			"name": "Creator",
 			"description": "Create a channel",
 			"image": "https://cdn-icons-png.flaticon.com/512/8336/8336849.png"
 		},
 		{
-			"id": 12,
+			"id": 11,
 			"api": "JOIN",
 			"name": "Hello World !",
 			"description": "Join a channel",
 			"image": "https://cdn-icons-png.flaticon.com/512/7083/7083630.png"
 		},
 		{
-			"id": 13,
+			"id": 12,
 			"api": "AVATAR",
 			"name": "New Look",
 			"description": "Change your avatar",
 			"image": "https://cdn-icons-png.flaticon.com/512/7098/7098115.png"
 		},
 		{
-			"id": 14,
+			"id": 13,
 			"api": "RENAME",
 			"name": "Anonymous",
 			"description": "Change your nickame",
 			"image": "https://cdn-icons-png.flaticon.com/512/7347/7347162.png"
 		},
 		{
-			"id": 15,
+			"id": 14,
 			"api": "2FA",
 			"name": "Never safe enough",
 			"description": "Enable 2FA",
 			"image": "https://cdn-icons-png.flaticon.com/512/6931/6931621.png"
 		},
 		{
-			"id": 16,
+			"id": 15,
 			"api": "JACK",
 			"name": "C'est la piquette Jack",
 			"description": "Win a game without the opponent scoring once",

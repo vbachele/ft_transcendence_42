@@ -128,13 +128,24 @@ export const LinksContainer = styled.div`
 	}
 `;
 
-export const PlayContainer = styled.button`
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  margin: 0 0 -8px 0;
+export const PlayContainer = styled.div`
+	color: white;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 16px;
+	padding: 0 0 -8px 0;
+	top: 8px;
 	background-color: transparent;
 	border: none;
+
+	@media screen and (max-width: 768px) {
+		text-align: center;
+		justify-content: center;
+		button {
+			font-size: larger;
+		}
+	}
 `;
 
 export const Content = styled.div`
@@ -147,10 +158,10 @@ export const Button = styled.button`
 	background: none;
 	border: none;
 	font-size: 16px;
-  @media only screen and (max-width: 768px) {
+	@media only screen and (max-width: 768px) {
 		font-size: 8px;
-  }
-`
+	}
+`;
 
 export const GameMode = styled.div`
 	display: flex;
@@ -158,19 +169,19 @@ export const GameMode = styled.div`
 	align-items: flex-start;
 	overflow: hidden;
 	max-height: 0;
-	transition: max-height 0.3s ease-in-out;
 	padding: 0 8px;
 	margin: 0 8px;
 	gap: 4px;
 	border-left: 1px solid white;
+	transition: max-height 0.3s ease-in-out;
 
 	&.active {
 		margin: 8px;
 		max-height: 500px;
 	}
-  @media only screen and (max-width: 768px) {
+
+	@media only screen and (max-width: 768px) {
 		border-left: none;
 		gap: 8px;
-  }
-	
+	}
 `;

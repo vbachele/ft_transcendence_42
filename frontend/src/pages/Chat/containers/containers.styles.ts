@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import PlusSign from 'assets/new_discussion.svg';
 
-
 export const LateralBar = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -30,7 +29,7 @@ export const ChannelList = styled.div`
 		transition: max-height 0.15s ease-in-out;
 		//overflow: auto;
 	}
-	
+
 	&.active {
 		overflow: unset;
 		//overflow: auto;
@@ -39,23 +38,23 @@ export const ChannelList = styled.div`
 `;
 
 export const Header = styled.div`
-  display: none;
-  @media only screen and (min-height: 480px) {
-    display: flex;
-    padding: 8px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    .buttons {
-      transition: all 0.3s linear;
+	display: none;
+	@media only screen and (min-height: 480px) {
+		display: flex;
+		padding: 8px;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		.buttons {
+			transition: all 0.3s linear;
 
-      :hover {
-        transform: scale(1.1);
-        background-color: ${(p) =>
+			:hover {
+				transform: scale(1.1);
+				background-color: ${(p) =>
 					p.theme.name === 'light' ? '#e5e7eb' : '#bfc1c4'};
-      }
-    }
-}
+			}
+		}
+	}
 `;
 
 export const UserPanel = styled.div`
@@ -64,8 +63,9 @@ export const UserPanel = styled.div`
 	overflow: auto;
 	@media only screen and (min-width: 768px) {
 		border-left: solid 1px;
-    border-color: ${(p) => (p.theme.name === 'light' ? '#e5e7eb' : '#403F40')};
+		border-color: ${(p) => (p.theme.name === 'light' ? '#e5e7eb' : '#403F40')};
 		width: 320px;
+		min-width: 300px;
 	}
 `;
 export const MainFieldLayout = styled.div`
