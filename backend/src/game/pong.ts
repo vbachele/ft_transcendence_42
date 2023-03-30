@@ -2,6 +2,7 @@ import {ServerGameEvents} from './events/game.events';
 import {GameMode} from './types/game.type';
 import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {PrismaService} from '../database/prisma.service';
+import { WebsocketService } from 'src/websocket/websocket.service';
 
 const PLAYGROUND_SIZE = {x: 1280, y: 720};
 const PADDLE_SIZE = {x: 27, y: 140};
@@ -55,7 +56,8 @@ export class Pong {
 	constructor(
 		private readonly dispatchToLobby: (event: string, data: any) => void,
 		mode: GameMode,
-		private readonly prismaService: PrismaService
+		private readonly prismaService: PrismaService,
+		private readonly websocketService: WebsocketService
 	) {
 		this.mode = mode;
 	}
@@ -116,6 +118,8 @@ export class Pong {
 
 		this.updateUser(this.players['left']?.data.name!);
 		this.updateUser(this.players['right']?.data.name!);
+		await this.websocketService.updateStatus(this.players['left']!, 'online');
+		await this.websocketService.updateStatus(this.players['right']!, 'online');
 
 		this.players['left']!.data.paddle = undefined;
 		this.players['right']!.data.paddle = undefined;
@@ -123,6 +127,7 @@ export class Pong {
 	}
 
 	private async updateUser(username: string) {
+
 		const user = await this.prismaService.user.findUnique({
 			where: {name: username},
 		});

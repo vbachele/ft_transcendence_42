@@ -34,29 +34,37 @@ export interface Lobby {
 }
 
 async function checkAchievements(username: string, winner: string, socket: any) {
-	const user = await fetchUserByName(username, 'username');
+	setTimeout(async () => {
+		const user = await fetchUserByName(username, 'username');
 
-	const games = user?.games! + 1;
-	const wins = user?.wins!;
-	const losses = games - wins;
+		const games = user?.games!;
+		const wins = user?.wins!;
+		const losses = games - wins;
 
-	const hasNoobAchievement = user?.achievements?.includes('NOOB');
-	const hasGamerAchievement = user?.achievements?.includes('GAMER');
-	const hasWinnerAchievement = user?.achievements?.includes('WIN');
-	const hasLoserAchievement = user?.achievements?.includes('LOSE');
+		console.log('winner is', winner);
+		console.log('my name is', user?.name);
+		console.log('i have played', games, 'games');
+		console.log('i have won', wins, 'games');
+		console.log('i have lost', losses, 'games');
 
-	if (user && !hasNoobAchievement && games >= 1) {
-		unlockAchievement('NOOB', user, socket);
-	}
-	if (user && !hasGamerAchievement && games >= 10) {
-		unlockAchievement('GAMER', user, socket);
-	}
-	if (user && !hasWinnerAchievement && wins >= 5) {
-		unlockAchievement('WIN', user, socket);
-	}
-	if (user && !hasLoserAchievement && losses >= 5) {
-		unlockAchievement('LOSE', user, socket);
-	}
+		const hasNoobAchievement = user?.achievements?.includes('NOOB');
+		const hasGamerAchievement = user?.achievements?.includes('GAMER');
+		const hasWinnerAchievement = user?.achievements?.includes('WIN');
+		const hasLoserAchievement = user?.achievements?.includes('LOSE');
+
+		if (user && !hasNoobAchievement && games >= 1) {
+			unlockAchievement('NOOB', user, socket);
+		}
+		if (user && !hasGamerAchievement && games >= 10) {
+			unlockAchievement('GAMER', user, socket);
+		}
+		if (user && !hasWinnerAchievement && wins >= 5) {
+			unlockAchievement('WIN', user, socket);
+		}
+		if (user && !hasLoserAchievement && losses >= 5) {
+			unlockAchievement('LOSE', user, socket);
+		}
+	}, 10_000);
 }
 
 function Game() {

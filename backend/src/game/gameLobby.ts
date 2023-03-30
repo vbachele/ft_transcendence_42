@@ -31,7 +31,7 @@ export class GameLobby extends ALobby {
 	) {
 		super(websocketService.server, 2);
 		this.mode = data.mode;
-		this.instance = new Pong(this.dispatchToLobby.bind(this), this.mode, prismaService);
+		this.instance = new Pong(this.dispatchToLobby.bind(this), this.mode, prismaService, websocketService);
 		this.state = 'waiting';
 	}
 
