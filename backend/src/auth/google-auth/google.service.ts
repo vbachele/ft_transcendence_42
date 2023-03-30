@@ -14,10 +14,10 @@ export class GoogleService {
   ) {}
 
 
-/* CREATE USER FROM GOOGLE IN DATABASE */  
+/* CREATE USER FROM GOOGLE IN DATABASE */
 
-async handleGoogleUserCreation(@Res() res: Response, @Req() req: Request) { 
-  
+async handleGoogleUserCreation(@Res() res: Response, @Req() req: Request) {
+
   try {
     const userGoogleInfos = await this.getUserFromGoogleByCookies(req)
     if (userGoogleInfos) {
@@ -38,7 +38,7 @@ async handleGoogleUserCreation(@Res() res: Response, @Req() req: Request) {
       {
         status: HttpStatus.BAD_REQUEST,
         error: "Error to create the user to the database"
-      }, HttpStatus.BAD_REQUEST); 
+      }, HttpStatus.BAD_REQUEST);
     };
 }
 
@@ -69,11 +69,11 @@ async createDataBaseUserFromGoogle(
       {
         status: HttpStatus.BAD_REQUEST,
         error: "Error to create the user to the database"
-      }, HttpStatus.BAD_REQUEST); 
+      }, HttpStatus.BAD_REQUEST);
       };
 }
 
-/* GET FUNCTIONS  */ 
+/* GET FUNCTIONS  */
 
   async getOauth2ClientGoogle() {
     const oauth2Client = new google.auth.OAuth2(
@@ -81,13 +81,13 @@ async createDataBaseUserFromGoogle(
       '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',
       'http://localhost:5173/api/auth/google/redirect'
     );
-    
+
     // generate a url that asks permissions for Blogger and Google Calendar scopes
     const scopes = [
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ];
-    
+
     const url = oauth2Client.generateAuthUrl({
       // 'online' (default) or 'offline' (gets refresh_token)
       access_type: 'offline',
@@ -124,7 +124,7 @@ async createDataBaseUserFromGoogle(
   }
 
   async getUserFromGoogleByCookies(@Req() req: Request) {
-    const token: string = req.cookies.FullToken;    
+    const token: string = req.cookies.FullToken;
     const data = await this.getUserFromGoogle(token)
     return data;
   }

@@ -2,6 +2,7 @@ import {ServerGameEvents} from './events/game.events';
 import {GameMode} from './types/game.type';
 import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {PrismaService} from '../database/prisma.service';
+import { WebsocketService } from 'src/websocket/websocket.service';
 
 const PLAYGROUND_SIZE = {x: 1280, y: 720};
 const PADDLE_SIZE = {x: 27, y: 140};
@@ -55,7 +56,8 @@ export class Pong {
 	constructor(
 		private readonly dispatchToLobby: (event: string, data: any) => void,
 		mode: GameMode,
-		private readonly prismaService: PrismaService
+		private readonly prismaService: PrismaService,
+		private readonly websocketService: WebsocketService
 	) {
 		this.mode = mode;
 	}
@@ -100,7 +102,7 @@ export class Pong {
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
-				winner: 'draw',
+				winner: 'draw', scores: this.score, players: this.players
 			});
 		}
 		await this.prismaService.game.create({
@@ -114,8 +116,10 @@ export class Pong {
 			},
 		});
 
-		await this.updateUser(this.players['left']?.data.name!);
-		await this.updateUser(this.players['right']?.data.name!);
+		this.updateUser(this.players['left']?.data.name!);
+		this.updateUser(this.players['right']?.data.name!);
+		await this.websocketService.updateStatus(this.players['left']!, 'online');
+		await this.websocketService.updateStatus(this.players['right']!, 'online');
 
 		this.players['left']!.data.paddle = undefined;
 		this.players['right']!.data.paddle = undefined;
@@ -123,15 +127,19 @@ export class Pong {
 	}
 
 	private async updateUser(username: string) {
+
 		const user = await this.prismaService.user.findUnique({
 			where: {name: username},
 		});
+		const achievements = user?.achievements.length || 0;
 		const games = (user?.games || 0) + 1;
 		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
 		const score = Math.round(
-			(games * 10 + wins * 40) * (parseFloat(ratio) + 1)
+			(games * 50 + wins * 200) /
+				(parseFloat(ratio) + 1) *
+				(achievements / 13 + 1)
 		);
 
 		await this.prismaService.user.update({

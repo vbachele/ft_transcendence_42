@@ -87,7 +87,7 @@ const Homepage = () => {
 			<S.UserInfo to={`/dashboard/${userName.userName}`}>
 				<S.UserName>{userName?.userName}</S.UserName>
 				<S.UserAchievements>
-					{achievements && achievements.achievements.length} / 15 ACHIEVEMENTS
+					{achievements && achievements.achievements.length} / 13 ACHIEVEMENTS
 				</S.UserAchievements>
 			</S.UserInfo>
 		</S.Container>

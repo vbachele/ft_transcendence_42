@@ -24,9 +24,8 @@ export class DisableService {
 					error: "Error to disable the 2FA"},
 					 HttpStatus.BAD_REQUEST);
 			}
-
 	}
-	
+
 	async updateUser(@Req() req: Request) {
 		try {
 			const { userName } = req.body;

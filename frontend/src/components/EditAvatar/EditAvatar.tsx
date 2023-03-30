@@ -22,13 +22,26 @@ export const EditAvatar = (props: Props) => {
 	const [loading, setLoading] = useState(false);
 	const [uploadApproved, setUploadApproved] = useState(false);
 
+
 	/* in first render add the default image */
 	useEffect(() => {
-		if (!image.image)
+
+		function defineRandomString (){
+			const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			let randomString = '';
+			for (let i = 0; i < 7; i++) {
+			  const randomIndex = Math.floor(Math.random() * alphabet.length);
+			  randomString += alphabet[randomIndex];
+			}
+			return randomString;
+		  }
+		if (!image.image){
+			const randomString = defineRandomString()
 			setImage({
 				image:
-					'https://res.cloudinary.com/djdxw1y13/image/upload/v1676390380/Transcendence/default-avatar_hsktjo.png',
+					`https://robohash.org/${randomString}?bgset=bg1`,
 			});
+		}
 	}, []);
 
 	const setLoadingTrue = () => {

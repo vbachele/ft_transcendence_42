@@ -14,8 +14,9 @@ const Toggle = () => {
 
 	const handleToggle = async () => {
 		if (!doubleAuth.doubleAuth)
-		{	
-			const generate = await backend.generate2FA(userName);setEmail(generate.email);
+		{
+			const generate = await backend.generate2FA(userName);
+			setEmail(generate.email);
 			setEmail(generate.email);
 		}
 		setIsOpen(!isOpen);

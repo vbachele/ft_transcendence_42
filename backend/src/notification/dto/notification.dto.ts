@@ -19,6 +19,7 @@ export class NotificationDto {
 		'BANNED',
 		'KICKED',
 		'ADMIN',
+		'MUTED',
 	])
 	type: string;
 }

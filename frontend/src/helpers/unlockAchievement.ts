@@ -17,8 +17,13 @@ const unlockAchievement = async (achName: string, user: IUser, socket: any) => {
 	userAchList?.push(achievement!.api);
 
 	// patch user
+	const score = Math.round(
+		((user.games * 50 + user.wins * 200) / (user.ratio + 1)) *
+			(userAchList.length / 15 + 1)
+	);
 	const patch = {
 		achievements: userAchList,
+		score: score,
 	};
 	backend.patchUser(user.name, patch);
 

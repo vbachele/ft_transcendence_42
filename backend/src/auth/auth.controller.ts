@@ -29,20 +29,13 @@ export class AuthController {
   @Get("callback")
   async getToken(@Req() req: Request, @Res() res: Response) {
     const codeFromUrl = req.query.code as string;
-    console.log("je recup le code de 42", codeFromUrl);
-
     const token = await this.Oauth42.accessToken(codeFromUrl);
-    console.log("je recup ensuite mon token", token);
-
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token
     );
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);
     this.authService.updateCookies(res, token, userExists);
-    const host = req.get('host')
-    console.log("HOST is", host);
-
     this.authService.RedirectConnectingUser(res, userExists?.email);
   }
 

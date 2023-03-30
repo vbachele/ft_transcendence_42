@@ -3,7 +3,6 @@ import unlockAchievement from 'helpers/unlockAchievement';
 import {ReactComponent as Icon} from './block.svg';
 import {backend} from 'lib/backend';
 import {IUser} from 'types/models';
-import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 import isUserIn from 'helpers/isUserIn';
 import {openNotification} from 'helpers/openNotification';
 import {userExists} from 'helpers/userExists';
@@ -12,6 +11,7 @@ import SocketContext from 'contexts/Socket/context';
 import * as F from 'styles/font.styles';
 import {fetchUserByName} from 'helpers/fetchUserByName';
 import {ClientSocialEvents} from 'events/social.events';
+import useFetchBlockedOf from 'hooks/useFetchBlockedOf';
 
 interface IProps {
 	user: IUser;

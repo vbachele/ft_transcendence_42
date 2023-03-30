@@ -8,6 +8,14 @@ import {usePopup} from 'contexts/Popup/Popup';
 import * as S from 'pages/Home/Home.styles';
 import {GameMode} from 'pages/Game/types/game.type';
 import styled from 'styled-components';
+import { userExists } from 'helpers/userExists';
+import { fetchFriends } from 'helpers/fetchFriends';
+import { fetchUserByName } from 'helpers/fetchUserByName';
+import { useUserInfos } from 'contexts/User/userContent';
+import { IUser } from 'types/models';
+import isUserIn from 'helpers/isUserIn';
+import { openNotification } from 'helpers/openNotification';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 const StyleInvite = styled.div`
 	display: flex;
@@ -27,15 +35,21 @@ const Button = styled.button`
 `;
 
 interface IProps {
-	name: string;
+	user: IUser;
 }
 
-function Invite({name}: IProps) {
+function Invite({user}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
+	const {userName, setAchievements} = useUserInfos();
 	const {setHasInvited} = usePopup();
 	const [showGameModes, setShowGameModes] = useState(false);
 
-	function onInvite(mode: GameMode) {
+	async function onInvite(mode: GameMode) {
+		const exists = userExists(user.name, userName.userName);
+		const friends = await fetchFriends(userName.userName);
+		const data = await fetchUserByName(userName.userName, userName.userName);
+		const hasDuelAchievement = data?.achievements.includes('DUEL');
+
 		socket?.emit(ClientEvents.CreateLobby, {
 			type: 'game',
 			data: {
@@ -48,10 +62,19 @@ function Invite({name}: IProps) {
 				console.info(`Sending invitation request`);
 				socket?.emit(ClientGameEvents.Invite, {
 					lobbyId: data.lobbyId,
-					invitedClientName: name,
+					invitedClientName: user.name,
 				});
 			}
 		});
+		if (!exists || !isUserIn(friends, user.name) || user.status !== 'online') {
+			openNotification('warning', `${user.name} can't be invited`);
+			return;
+		}
+
+		if (data && !hasDuelAchievement) {
+			unlockAchievement('DUEL', data, socket);
+			setAchievements({achievements: [...data.achievements]});
+		}
 	}
 
 	function onPlay() {
