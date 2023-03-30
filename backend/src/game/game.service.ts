@@ -43,6 +43,7 @@ export class GameService {
 		lobbyId: string,
 		invitedClientName: string
 	) {
+		console.log(`Canceling invitation to [${invitedClientName}]`);
 		const invitedClient = this.websocketService.getClient(invitedClientName);
 		if (!invitedClient) {
 			throw new WsException(`User [${invitedClientName}] not found`);
@@ -60,6 +61,7 @@ export class GameService {
 		data: any
 	) {
 		const lobby = this.lobbyService.getLobby(data.lobby) as GameLobby;
+		if (!lobby) throw new WsException('Lobby not found');
 		const invitationSender = [...lobby.clients.values()][0];
 		console.log(`sender: ${invitationSender.data.name}`);
 		console.log(`client: ${client.data.name}`);

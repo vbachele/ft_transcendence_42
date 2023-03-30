@@ -2,13 +2,12 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Text} from 'styles/font.styles';
 import {PopupButton} from 'styles/buttons.styles';
 import LoadingBar from '../components/LoadingBar/LoadingBar';
-import GameFound from '../components/GameFound/GameFound';
 import Popup from '../components/Popup/Popup';
 import SocketContext from '../../../contexts/Socket/context';
 import {ClientEvents} from '../../../events/socket.events';
 import {usePopup} from '../../../contexts/Popup/Popup';
 import {ServerGameEvents} from '../../../events/game.events';
-import {useNavigate, createSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useTheme} from 'styled-components';
 import {InvitationRequest} from '../../../pages/Game/types/game.type';
 import Versus from '../../Versus';
@@ -51,6 +50,7 @@ function GameIncomingInvite() {
 	}, [invited]);
 
 	function dispatchResponse(status: string) {
+		console.log(`request = `, request);
 		socket?.emit(ClientEvents.InvitationResponse, {
 			status: status,
 			lobby: request?.lobbyId,

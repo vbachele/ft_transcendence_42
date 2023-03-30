@@ -166,12 +166,13 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientGameEvents.CancelInvitation)
-	onCancelInvitation(
+	async onCancelInvitation(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody('lobbyId') lobbyId: string,
 		@MessageBody('invitedClientName') invitedClientName: string
 	) {
 		console.log(`Client [${client.data.name}] canceled invitation`);
+		await this.websocketService.updateStatus(client, 'online');
 		this.gameService.cancelInvitation(client, lobbyId, invitedClientName);
 	}
 
