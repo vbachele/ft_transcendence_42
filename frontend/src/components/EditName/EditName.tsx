@@ -131,7 +131,12 @@ const EditName = (props: Props) => {
 						value={value}
 						onChange={handleChange}
 						placeholder="Enter your nickname"
-						maxLength={8}
+						onKeyDown={(e) => {
+							if (!/^[a-zA-Z]/g.test(e.key)) {
+								e.preventDefault();
+							}
+						}}
+						maxLength={12}
 						minLength={2}
 						required
 					/>

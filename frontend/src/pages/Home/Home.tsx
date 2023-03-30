@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useUserInfos} from 'contexts/User/userContent';
 import {usePopup} from 'contexts/Popup/Popup';
 import Popup from 'components/Popup';
@@ -24,14 +24,16 @@ const Homepage = () => {
 		setShowGameModes(false);
 	}
 
-	function onPlayAgainstTheClock() {
+	function onPlayAgainstTheClock(event: React.MouseEvent) {
+		event.stopPropagation();
 		socket?.emit(ClientGameEvents.SearchGame, {
 			mode: GameMode.AgainstTheClock,
 		});
 		setPopup({toggle: true});
 	}
 
-	function onPlayScoreLimit() {
+	function onPlayScoreLimit(event: React.MouseEvent) {
+		event.stopPropagation();
 		socket?.emit(ClientGameEvents.SearchGame, {
 			mode: GameMode.ScoreLimit,
 		});

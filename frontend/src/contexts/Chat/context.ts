@@ -33,14 +33,16 @@ export type TChatContextActions =
 	| 'update_active_lobby'
 	| 'add_lobby'
 	| 'update_user_panel'
-	| 'active_user_in_panel';
+	| 'active_user_in_panel'
+	| 'delete_lobby';
 
 export type TChatContextPayload =
 	| ILobby
 	| Set<ILobby>
 	| boolean
 	| IUser
-	| undefined;
+	| undefined
+	| string;
 
 export interface IChatContextActions {
 	type: TChatContextActions;
@@ -69,6 +71,15 @@ export const ChatReducer = (
 			return {
 				...state,
 				lobbyList: new Set([...state.lobbyList, action.payload as ILobby]),
+			};
+		case 'delete_lobby':
+			return {
+				...state,
+				lobbyList: new Set(
+					[...state.lobbyList].filter(
+						(lobby) => lobby.id !== (action.payload as string)
+					)
+				),
 			};
 		default:
 			return {...state};

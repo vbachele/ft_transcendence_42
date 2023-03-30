@@ -24,7 +24,7 @@ export class ChatService {
 		const lobby = this.lobbyService.getLobby(lobbyId);
 		const message = await this.prismaLobbyService.pushMessage(
 			lobbyId,
-			content,
+			content.substring(0, 4096),
 			username
 		);
 		lobby.dispatchToLobby(ServerChatEvents.IncomingMessage, {
@@ -148,6 +148,7 @@ export class ChatService {
 				users: lobby.users,
 				lobbyId: lobbyId,
 			});
+			`User - [${userToKick}] - has been kicked from the lobby - [${lobbyId}]`;
 		} catch (e) {
 			throw new WsException(`Error when trying to kick user: ` + e.message);
 		}
@@ -185,8 +186,21 @@ export class ChatService {
 				users: lobby.users,
 				lobbyId: lobbyId,
 			});
+			`User - [${userToBan}] - has been banned from the lobby - [${lobbyId}]`;
 		} catch (e) {
 			throw new WsException(`Error when trying to ban user: ` + e.message);
+		}
+	}
+
+	public async deleteLobby(lobbyId: string) {
+		try {
+			await this.prismaLobbyService.deleteLobby(lobbyId);
+			this.lobbyService.delete(lobbyId);
+			this.websocketService.server.emit(ServerChatEvents.LobbyDeleted, {
+				lobbyId: lobbyId,
+			});
+		} catch (e) {
+			throw new WsException(`Error when trying to delete lobby: ` + e.message);
 		}
 	}
 }

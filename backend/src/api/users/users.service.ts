@@ -35,6 +35,25 @@ export class UserService {
 		}
 	}
 
+	async getUser(name: string) {
+		try {
+			const user = await this.prisma.user.findFirst({
+				where: {
+					name,
+				},
+			});
+			return user;
+		} catch (error) {
+			throw new HttpException(
+				{
+					status: HttpStatus.BAD_REQUEST,
+					error: 'Error to find user',
+				},
+				HttpStatus.BAD_REQUEST
+			);
+		}
+	}
+
 	async getUserByName(name: string, blockedOf: string) {
 		try {
 			const users = await this.getAllUsers(blockedOf);

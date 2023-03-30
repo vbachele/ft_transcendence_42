@@ -87,16 +87,16 @@ export class Pong {
 				winner: this.players['left']?.data.name,
 			});
 			await this.prismaService.user.update({
-				where: { name: this.players['left']?.data.name },
-				data: { wins: { increment: 1 } },
+				where: {name: this.players['left']?.data.name},
+				data: {wins: {increment: 1}},
 			});
 		} else if (this.score[0] < this.score[1]) {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
 				winner: this.players['right']?.data.name,
 			});
 			await this.prismaService.user.update({
-				where: { name: this.players['right']?.data.name },
-				data: { wins: { increment: 1 } },
+				where: {name: this.players['right']?.data.name},
+				data: {wins: {increment: 1}},
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
@@ -124,16 +124,18 @@ export class Pong {
 
 	private async updateUser(username: string) {
 		const user = await this.prismaService.user.findUnique({
-			where: { name: username },
+			where: {name: username},
 		});
 		const games = (user?.games || 0) + 1;
 		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
-		const score = Math.round((games * 10 + wins * 40) * (parseFloat(ratio) + 1));
+		const score = Math.round(
+			(games * 10 + wins * 40) * (parseFloat(ratio) + 1)
+		);
 
 		await this.prismaService.user.update({
-			where: { name: username },
+			where: {name: username},
 			data: {
 				score,
 				games: games,
@@ -145,9 +147,11 @@ export class Pong {
 	private async playerScored(player: 'left' | 'right') {
 		this.stop();
 		this.score[player === 'left' ? 0 : 1]++;
-		player === 'left' ? BALL_SPEED.x = 300 : BALL_SPEED.x = -300;
+		player === 'left' ? (BALL_SPEED.x = 300) : (BALL_SPEED.x = -300);
 		this.ball.velocity = {...BALL_SPEED};
-		this.dispatchToLobby(ServerGameEvents.UpdateScore, {score: this.score});
+		this.dispatchToLobby(ServerGameEvents.UpdateScore, {
+			score: {left: this.score[0], right: this.score[1]},
+		});
 		const gameState = await this.observeWinner();
 		if (gameState === 'game_over') return;
 		setTimeout(() => {
@@ -219,7 +223,11 @@ export class Pong {
 					paddles.left.position.y + PADDLE_SIZE.y
 			) {
 				ball.position.x = paddles.left.position.x + PADDLE_SIZE.x + ball.radius;
-				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -800, 800);
+				this.ball.velocity.x = this.clamp(
+					-this.ball.velocity.x * BALL_ACCELERATION,
+					-800,
+					800
+				);
 			}
 		}
 		if (
@@ -233,7 +241,11 @@ export class Pong {
 					paddles.right.position.y + PADDLE_SIZE.y - delta
 			) {
 				ball.position.x = paddles.right.position.x - ball.radius;
-				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -800, 800);
+				this.ball.velocity.x = this.clamp(
+					-this.ball.velocity.x * BALL_ACCELERATION,
+					-800,
+					800
+				);
 			}
 		}
 	}

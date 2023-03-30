@@ -41,13 +41,16 @@ function ChatContextComponent(props: IChatContextComponentProps) {
 			ChatDispatch({type: 'update_active_lobby', payload: data.lobby});
 		});
 		socket?.on(ServerChatEvents.LobbyCreated, (data: any) => {
-			console.log(`updating lobby list with `, data.lobby);
 			ChatDispatch({type: 'add_lobby', payload: data.lobby});
 		});
+		socket?.on(ServerChatEvents.LobbyDeleted, (data: any) => {
+			ChatDispatch({type: 'delete_lobby', payload: data.lobbyId});
+		})
 		return () => {
 			socket?.off(ServerEvents.AddedToLobby);
 			socket?.off(ServerChatEvents.LobbyCreated);
 			socket?.off(ServerChatEvents.LobbyList);
+			socket?.off(ServerChatEvents.LobbyDeleted);
 		};
 	}, [socket]);
 
