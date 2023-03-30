@@ -26,10 +26,10 @@ export class DisableService {
 			}
 
 	}
-	
+
 	async updateUser(@Req() req: Request) {
 		try {
-			const { userName } = req.body;
+			const { userName } = req.body;//
 			const updatedUser = await this.prisma.user.update({
 			where: {name : userName},
 			data: {
