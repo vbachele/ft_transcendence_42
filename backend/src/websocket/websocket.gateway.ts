@@ -39,11 +39,11 @@ export class WebsocketGateway
 		this.websocketService.removeUser(client);
 		const users = Object.keys(this.websocketService.clients);
 		this.websocketService.sendMessage(client, 'user_disconnected', users);
-		this.websocketService.updateStatus(client, 'offline');
+		await this.websocketService.updateStatus(client, 'offline');
 	}
 
 	@SubscribeMessage('handshake')
-	handleHandshake(
+	async handleHandshake(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody() data: string
 	) {
@@ -62,6 +62,6 @@ export class WebsocketGateway
 		console.info('Sending callback for handshake...');
 		this.server.to(client.id).emit('handshake', client.data.name, users);
 		this.websocketService.sendMessage(client, 'user_connected', users);
-		this.websocketService.updateStatus(client, 'online');
+		await this.websocketService.updateStatus(client, 'online');
 	}
 }

@@ -116,8 +116,8 @@ export class Pong {
 			},
 		});
 
-		this.updateUser(this.players['left']?.data.name!);
-		this.updateUser(this.players['right']?.data.name!);
+		await this.updateUser(this.players['left']?.data.name!);
+		await this.updateUser(this.players['right']?.data.name!);
 		await this.websocketService.updateStatus(this.players['left']!, 'online');
 		await this.websocketService.updateStatus(this.players['right']!, 'online');
 

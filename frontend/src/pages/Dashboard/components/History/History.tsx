@@ -33,19 +33,18 @@ const History = ({user}: IProps) => {
 
 	async function filterBlocked(games: IGame[]) {
 		const blocked = await fetchBlocked(userName.userName);
-
-		return games.filter((game) => {
+		games.filter((game) => {
 			return (
 				!blocked?.some((user) => user.name === game.leftPlayerName) &&
 				!blocked?.some((user) => user.name === game.rightPlayerName)
 			);
 		});
+		games.reverse();
+		games.splice(5);
+		return games;
 	}
 
-	games.reverse();
-	games.splice(5);
 	const isEmpty = games.length === 0;
-
 	return (
 		<S.Container>
 			<F.Subtitle weight="700" fontSize="30px">

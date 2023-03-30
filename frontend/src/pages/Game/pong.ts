@@ -2,6 +2,7 @@ import {Socket} from 'socket.io-client';
 import {ClientGameEvents} from '../../events/game.events';
 import React, {useRef} from 'react';
 import Paddle from './assets/stick.png';
+import { useTheme } from 'styled-components';
 
 const PLAYGROUND_SIZE = {x: 1280, y: 720};
 const BALL_SIZE = 40;
@@ -34,9 +35,11 @@ class Particle {
 		private readonly velocity?: {x: number; y: number},
 		private readonly speed?: number
 	) {
+		const theme = localStorage.getItem("theme") || "dark";
+
 		this.angle = Math.atan2(this.velocity?.x!, this.velocity?.y!);
 		this.size = getRandomInt(sizeRange.min, sizeRange.max);
-		this.style = `rgba(240, 240, 240, 0.2`;
+		this.style = theme === 'light' ? `rgba(110, 110, 110, 0.2)` : `rgba(240, 240, 240, 0.2)`;
 		this.position = {
 			x: position.x + getRandomInt(-dispersion.x, dispersion.x),
 			y: position.y + getRandomInt(-dispersion.y, dispersion.y),
@@ -172,9 +175,11 @@ export class Pong {
 	}
 
 	private drawBall() {
+		const theme = localStorage.getItem("theme") || "dark";
+
 		if (this.canvas.getContext('2d')) {
 			const ctx = this.canvas.getContext('2d')!;
-			ctx.fillStyle = 'white';
+			ctx.fillStyle = theme === 'light' ? 'black' : 'white';
 			ctx.beginPath();
 			ctx.arc(
 				this.ball.position.x,
@@ -317,7 +322,6 @@ export class Pong {
 				this.ball.position.y <= this.canvas.height / 2 + 5
 			)
 		) {
-			console.log(`in zone`);
 			this.drawParticles();
 		} else {
 			this.particles = [];
