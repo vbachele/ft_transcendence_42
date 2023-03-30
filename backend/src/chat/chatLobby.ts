@@ -46,7 +46,7 @@ export class ChatLobby extends ALobby {
 	constructor(
 		data: ChatLobbyDto,
 		private readonly prismaLobbyService: PrismaLobbyService,
-		private readonly websocketService: WebsocketService
+		private readonly websocketService: WebsocketService,
 	) {
 		super(websocketService.server, data.maxClients);
 		if (data.id) {
@@ -88,9 +88,11 @@ export class ChatLobby extends ALobby {
 		const hashPassword = await this.hashPassword(
 			data.password?.replace(/\s+/g, '').substring(0, 256)
 		);
+		if (data.type === 'channel')
+			data.name.replace(/[^a-zA-Z]/g, '').substring(0, 14);
 		return {
 			id: this.id,
-			name: data.name.replace(/[^a-zA-Z]/g, '').substring(0, 14),
+			name: data.name,
 			description: data.description,
 			createdAt: this.createdAt,
 			maxClients: this.maxClients,
@@ -104,6 +106,8 @@ export class ChatLobby extends ALobby {
 		const users = lobby.name.split('+');
 		const receiver = this.websocketService.getClient(users[0])!;
 		const sender = this.websocketService.getClient(users[1])!;
+		console.log(`receiver sender`);
+		console.log(receiver, sender)
 		if (receiver)
 			this.server
 				.to(receiver.id)
@@ -132,18 +136,13 @@ export class ChatLobby extends ALobby {
 		this.server.to(client.id).emit(ServerEvents.AddedToLobby, {
 			lobby: {...lobby, admins: adminList?.admins.map((admin) => admin.name)},
 		});
-		const userList = await this.prismaLobbyService.fetchUsersInLobby(
-			client.data.name,
-			this.id
-		);
-		await this.websocketService.emitWithBlacklist(
-			ServerChatEvents.UserList,
-			client.data.name,
-			{
-				users: userList?.users,
-				lobbyId: this.id,
-			}
-		);
+		if (lobby?.type === 'channel') {
+			const userList = await this.prismaLobbyService.fetchUsersInLobby(
+				client.data.name,
+				this.id
+			);
+			await this.websocketService.emitUserListToLobby(userList!.users, this.id);
+		}
 		return this;
 	}
 }

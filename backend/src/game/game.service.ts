@@ -38,7 +38,7 @@ export class GameService {
 			});
 	}
 
-	public cancelInvitation(
+	public async cancelInvitation(
 		client: AuthenticatedSocket,
 		lobbyId: string,
 		invitedClientName: string
@@ -53,6 +53,8 @@ export class GameService {
 			.emit(ServerGameEvents.InvitationCancelled, {
 				lobby: {id: lobbyId, type: 'game'},
 			});
+		await this.websocketService.updateStatus(client, 'online');
+		await this.websocketService.updateStatus(invitedClient, 'online');
 		this.lobbyService.delete(lobbyId);
 	}
 
@@ -63,16 +65,8 @@ export class GameService {
 		const lobby = this.lobbyService.getLobby(data.lobby) as GameLobby;
 		if (!lobby) throw new WsException('Lobby not found');
 		const invitationSender = [...lobby.clients.values()][0];
-		console.log(`sender: ${invitationSender.data.name}`);
-		console.log(`client: ${client.data.name}`);
 		let leftPlayer = undefined;
 		let rightPlayer = undefined;
-		switch (data.status) {
-			case 'accepted':
-				break;
-			case 'declined':
-				this.lobbyService.delete(data.lobby);
-		}
 		if (data.status === 'accepted') {
 			this.lobbyService.join(data.lobby, client);
 			leftPlayer = await this.userService.getUser(invitationSender.data.name);

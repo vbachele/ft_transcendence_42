@@ -32,6 +32,7 @@ function GameIncomingInvite() {
 		socket?.on(ServerGameEvents.InvitationCancelled, () => {
 			console.info(`Invitation cancelled`);
 			setRequest(undefined);
+			clearTimeout(timeout.current);
 			setInvited(false);
 		});
 		return () => {
@@ -61,8 +62,8 @@ function GameIncomingInvite() {
 
 	function onJoin() {
 		clearTimeout(timeout.current);
-		GameDispatch({type: 'update_lobby', payload: request?.lobbyId})
-		GameDispatch({type: 'update_left_player', payload: request?.leftPlayer})
+		GameDispatch({type: 'update_lobby', payload: request?.lobbyId});
+		GameDispatch({type: 'update_left_player', payload: request?.leftPlayer});
 		GameDispatch({type: 'update_right_player', payload: request?.rightPlayer});
 		dispatchResponse('accepted');
 		setDisplayGameIntro(true);

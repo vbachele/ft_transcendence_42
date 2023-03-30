@@ -1,6 +1,8 @@
 import {
 	ConnectedSocket,
-	MessageBody, OnGatewayConnection, OnGatewayDisconnect,
+	MessageBody,
+	OnGatewayConnection,
+	OnGatewayDisconnect,
 	OnGatewayInit,
 	SubscribeMessage,
 	WebSocketGateway,
@@ -15,6 +17,8 @@ import {LobbyValidationPipe} from './dto/lobby.pipe';
 import {JoinLobbyDto, LeaveLobbyDto, LobbyDto} from './dto/lobby.dto';
 import {ValidationPipe} from '@nestjs/common';
 import {ErrorType, LobbyException} from './errors/lobby.error';
+import {PrismaLobbyService} from '../database/lobby/prismaLobby.service';
+import {ChatLobbyDto} from '../chat/chatLobby';
 
 /**
  * @brief This is where all the lobby requests are handled
@@ -28,7 +32,10 @@ export class LobbyGateway implements OnGatewayInit {
 		await this.lobbyService.loadLobbies();
 	}
 
-	constructor(protected readonly lobbyService: LobbyService) {}
+	constructor(
+		protected readonly lobbyService: LobbyService,
+		private readonly prismaLobbyService: PrismaLobbyService
+	) {}
 
 	/**
 	 * @brief Listen to CreateLobby event and proceed to creation when triggered
@@ -59,12 +66,11 @@ export class LobbyGateway implements OnGatewayInit {
 				},
 			};
 		} catch (e) {
-			throw new LobbyException(ErrorType.LobbyAlreadyExist);``
+			throw new LobbyException(ErrorType.LobbyAlreadyExist);
 		}
 		// if (!lobby) throw new WsException("Lobby creation error");
 		// else this.lobbyService.join(lobby.id, client);
 	}
-
 
 	@SubscribeMessage(ClientEvents.JoinLobby)
 	onJoinLobby(

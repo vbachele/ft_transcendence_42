@@ -5,11 +5,15 @@ import {ConnectedSocket, WsException} from '@nestjs/websockets';
 import {PrismaService} from 'src/database/prisma.service';
 import {Socket} from 'dgram';
 import {BlockedService} from '../social/blocked/blocked.service';
+import {ServerChatEvents} from '../chat/events/chat.events';
+import {User} from '@prisma/client';
 
 @Injectable()
 export class WebsocketService {
-	constructor(private readonly prisma: PrismaService,
-							private readonly blockedService: BlockedService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly blockedService: BlockedService
+	) {}
 
 	public server: Server;
 	public clients: Map<string, AuthenticatedSocket> = new Map<
@@ -40,14 +44,26 @@ export class WebsocketService {
 			: client.broadcast.emit(event);
 	}
 
-	public async emitWithBlacklist(event: string, sender: string, payload?: Object) {
-		this.clients.forEach(async (client) => {
-			const blacklist = await this.blockedService.getBlockList(client.data.name);
-			if (blacklist?.includes(sender)) return;
-			console.log(`emmiting to ${client.data.name}`)
-			this.server.to(client.id).emit(event, payload);
-		});
+	public async emitUserList(
+		client: AuthenticatedSocket,
+		userList: User[],
+		lobbyId: string
+	) {
+		if (!client) return;
+		const blacklist = await this.blockedService.getBlockList(client.data.name);
+		console.log(`emmiting to ${client.data.name}`);
+		this.server
+			.to(client.id)
+			.emit(ServerChatEvents.UserList, {
+				users: userList.filter((user: any) => !blacklist.includes(user.name)),
+				lobbyId,
+			});
+	}
 
+	public async emitUserListToLobby(userList: User[], lobbyId: string) {
+		this.clients.forEach((client: AuthenticatedSocket) => {
+			this.emitUserList(client, userList, lobbyId);
+		})
 	}
 
 	public async updateStatus(
