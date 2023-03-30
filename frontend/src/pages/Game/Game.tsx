@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import SocketContext from 'contexts/Socket/context';
 import {Pong} from './pong';
-import {ScrollRestoration, useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import Victory from 'components/Victory/Victory';
 import Defeat from 'components/Defeat/Defeat';
@@ -10,21 +10,12 @@ import Draw from '../../components/Draw/Draw';
 import {useUpdateGameState} from './hooks/useUpdateGameState';
 import {useSetupContext} from './hooks/useSetupContext';
 import {openNotification} from '../../helpers/openNotification';
-import {
-	Avatar,
-	Header,
-	Name,
-	Score,
-	ScoreContainer,
-	StyledGame,
-	Vs,
-} from './Game.styles';
+import {StyledGame} from './Game.styles';
 import Versus from 'components/Versus';
 import {useGameContext} from '../../contexts/Game/context';
-import useFetchUserByName from 'hooks/useFetchUserByName';
-import { IUser } from 'types/models';
-import { fetchUserByName } from 'helpers/fetchUserByName';
+import {fetchUserByName} from 'helpers/fetchUserByName';
 import unlockAchievement from 'helpers/unlockAchievement';
+import Score from './components/Score';
 
 export interface Lobby {
 	id: string;
@@ -33,7 +24,11 @@ export interface Lobby {
 	clients: string[];
 }
 
-async function checkAchievements(username: string, winner: string, socket: any) {
+async function checkAchievements(
+	username: string,
+	winner: string,
+	socket: any
+) {
 	setTimeout(async () => {
 		const user = await fetchUserByName(username, 'username');
 
@@ -53,16 +48,16 @@ async function checkAchievements(username: string, winner: string, socket: any) 
 		const hasLoserAchievement = user?.achievements?.includes('LOSE');
 
 		if (user && !hasNoobAchievement && games >= 1) {
-			unlockAchievement('NOOB', user, socket);
+			await unlockAchievement('NOOB', user, socket);
 		}
 		if (user && !hasGamerAchievement && games >= 10) {
-			unlockAchievement('GAMER', user, socket);
+			await unlockAchievement('GAMER', user, socket);
 		}
 		if (user && !hasWinnerAchievement && wins >= 5) {
-			unlockAchievement('WIN', user, socket);
+			await unlockAchievement('WIN', user, socket);
 		}
 		if (user && !hasLoserAchievement && losses >= 5) {
-			unlockAchievement('LOSE', user, socket);
+			await unlockAchievement('LOSE', user, socket);
 		}
 	}, 10_000);
 }
@@ -86,7 +81,7 @@ function Game() {
 	useUpdateGameState(pongRef, setScore);
 
 	useEffect(() => {
-		if (!lobby.id) return;
+		if (!lobby.id || !leftPlayer || !rightPlayer) return;
 		setTimeout(() => {
 			setShowIntro(false);
 		}, 2_300);
@@ -131,9 +126,7 @@ function Game() {
 				default:
 					setShowDefeat(true);
 			}
-
 			checkAchievements(username, data.winner, socket);
-
 		});
 		return () => {
 			socket?.off(ServerGameEvents.GameResult);
@@ -141,29 +134,11 @@ function Game() {
 		};
 	}, [socket]);
 
+	if (!lobby.id || !leftPlayer || !rightPlayer) return null;
+
 	return (
 		<div>
-			<Header>
-				<Avatar
-					className={'left__player'}
-					alt={'left player avatar'}
-					src={leftPlayer?.image}
-				/>
-				<ScoreContainer>
-					<Score>{score.left}</Score>
-					<Name className={'left__player'}>{leftPlayer?.name}</Name>
-				</ScoreContainer>
-				<Vs>VS</Vs>
-				<ScoreContainer>
-					<Score>{score.right}</Score>
-					<Name className={'right__player'}>{rightPlayer?.name}</Name>
-				</ScoreContainer>
-				<Avatar
-					className={'right__player'}
-					alt={'right player avatar'}
-					src={rightPlayer?.image}
-				/>
-			</Header>
+			<Score score={score} leftPlayer={leftPlayer} rightPlayer={rightPlayer} />
 			<StyledGame id="container">
 				<canvas
 					id="playground"

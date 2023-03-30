@@ -3,6 +3,7 @@ import {ServerGameEvents} from '../../../events/game.events';
 import SocketContext from '../../../contexts/Socket/context';
 import {Pong} from '../pong';
 import {useNavigate} from 'react-router-dom';
+import {openNotification} from 'helpers/openNotification';
 
 export function useUpdateGameState(
 	pongRef: React.MutableRefObject<Pong | undefined>,
@@ -14,7 +15,8 @@ export function useUpdateGameState(
 	useEffect(() => {
 		socket?.on('exception', (data) => {
 			if (data.status === 'game.forbidden' || 'bad_request')
-				navigate('/notfound');
+				openNotification('error', 'Error when loading game', 'topRight');
+			navigate('/');
 		});
 		socket?.on(ServerGameEvents.Timer, (data) => {
 			pongRef.current?.updateTimer(data.time);
