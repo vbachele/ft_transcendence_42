@@ -44,7 +44,6 @@ export class WebsocketService {
 		this.clients.forEach(async (client) => {
 			const blacklist = await this.blockedService.getBlockList(client.data.name);
 			if (blacklist?.includes(sender)) return;
-			console.log(`emmiting to ${client.data.name}`)
 			this.server.to(client.id).emit(event, payload);
 		});
 

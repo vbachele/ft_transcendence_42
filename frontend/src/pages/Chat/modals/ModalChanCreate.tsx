@@ -107,7 +107,6 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 				},
 			},
 			(response: any) => {
-				console.log('response', response.status); // ok
 			}
 		);
 
@@ -145,8 +144,7 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 			<Form form={form} layout={'vertical'} onFinish={handleSubmit}>
 				{error && (
 					<Subtitle style={{color: '#dc4f19'}}>
-						{' '}
-						Channel name already taken{' '}
+						Channel name already taken
 					</Subtitle>
 				)}
 				<Form.Item

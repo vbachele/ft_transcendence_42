@@ -29,10 +29,6 @@ export const GameReducer = (
 	state: IGameContextState,
 	action: IGameContextActions
 ) => {
-	console.log(
-		`Game context updated - Action: ${action.type} - Payload: `,
-		action.payload
-	);
 
 	switch (action.type) {
 		case 'update_left_player':

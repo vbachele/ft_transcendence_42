@@ -67,9 +67,6 @@ async createDataBase42User(
     @Res() res: Response,
     email: string | null | undefined
   ) {
-    console.log(`${req.protocol}://${req.get('Host')}${req.originalUrl}`);
-
-
     if (!email) res.redirect(301, `http://e1r1p7.clusters.42paris.fr:5173/registration`);
     else res.redirect(301, `http://e1r1p7.clusters.42paris.fr:5173/`);
   }

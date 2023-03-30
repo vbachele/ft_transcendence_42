@@ -317,7 +317,6 @@ export class Pong {
 				this.ball.position.y <= this.canvas.height / 2 + 5
 			)
 		) {
-			console.log(`in zone`);
 			this.drawParticles();
 		} else {
 			this.particles = [];

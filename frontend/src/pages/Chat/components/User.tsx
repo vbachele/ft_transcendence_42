@@ -25,7 +25,6 @@ function User({user, setIsModalOpen, type}: IProps) {
 		event.stopPropagation();
 		const lobbyName = [user.name + '+' + name, name + '+' + user.name];
 		if ([...lobbyList].find((lobby) => lobbyName.includes(lobby.name))) {
-			console.log(`lobby found`);
 			ChatDispatch({
 				type: 'update_active_lobby',
 				payload: [...lobbyList].find((lobby) => lobbyName.includes(lobby.name)),

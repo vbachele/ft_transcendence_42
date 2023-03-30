@@ -28,17 +28,11 @@ export class AuthController {
   /***  After the user said yes to connect to 42 API, we attribute the token and we check if he exists in the database ***/
   @Get("callback")
   async getToken(@Req() req: Request, @Res() res: Response) {
-    console.log("JYSUIS");
-
     const codeFromUrl = req.query.code as string;
-    console.log("code is", codeFromUrl);
-    
     const token = await this.Oauth42.accessToken(codeFromUrl);
-    console.log("user42TOken", token);
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token
     );
-    console.log("user42infos", user42infos);
 
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);

@@ -57,11 +57,6 @@ async function checkAchievements(username: string, winner: string, socket: any) 
 	if (user && !hasLoserAchievement && losses >= 5) {
 		unlockAchievement('LOSE', user, socket);
 	}
-	console.log('winner is', winner);
-	console.log('my name is', user?.name);
-	console.log('i have played', games, 'games');
-	console.log('i have won', wins, 'games');
-	console.log('i have lost', losses, 'games');
 }
 
 function Game() {
@@ -83,7 +78,6 @@ function Game() {
 	useUpdateGameState(pongRef, setScore);
 
 	useEffect(() => {
-		console.log(`GAME LOBBY = `, lobby.id);
 		if (!lobby.id) return;
 		setTimeout(() => {
 			setShowIntro(false);

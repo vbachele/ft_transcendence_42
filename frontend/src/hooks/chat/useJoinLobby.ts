@@ -16,7 +16,6 @@ export function useJoinLobby() {
 
 	const joinLobby = (event: React.MouseEvent) => {
 		event.preventDefault();
-		console.log(lobbyList);
 
 		let lobbyName = [event.currentTarget.textContent!];
 
@@ -26,7 +25,6 @@ export function useJoinLobby() {
 			lobbyName[0] = event.currentTarget.textContent! + '+' + name;
 			lobbyName.push(name + '+' + event.currentTarget.textContent!);
 		}
-		console.log(lobbyName);
 		const lobbyId = [...lobbyList].find((lobby) =>
 			lobbyName.includes(lobby.name)
 		)?.id;

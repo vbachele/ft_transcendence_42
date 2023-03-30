@@ -14,7 +14,6 @@ export function useFetchLobbyUserList() {
 	useEffect(() => {
 		socket?.emit(ClientChatEvents.FetchUsers, {lobbyId: activeLobby?.id});
 		socket?.on(ServerChatEvents.UserList, (data) => {
-			console.log(`data = `, data);
 			if (data.lobbyId === activeLobby?.id)
 				setUserList(data.users);
 		})
@@ -38,7 +37,7 @@ export function useFetchLobbyUserListExceptMe() {
 		socket?.on(ServerChatEvents.UserListExceptMe, (data) => {
 			setUserList(data.users);
 		})
-		
+
 		return () => {
 			socket?.off(ServerChatEvents.UserListExceptMe);
 		}
