@@ -135,7 +135,7 @@ function Game() {
 		};
 	}, [socket]);
 
-	if (!leftPlayer || !rightPlayer) return null;
+	if (!lobby.id || !leftPlayer || !rightPlayer) return null;
 
 	return (
 		<div>
