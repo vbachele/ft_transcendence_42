@@ -10,6 +10,7 @@ import {useUserInfos} from 'contexts/User/userContent';
 import Draw from '../../components/Draw/Draw';
 import {useUpdateGameState} from './hooks/useUpdateGameState';
 import {useSetupContext} from './hooks/useSetupContext';
+import {openNotification} from '../../helpers/openNotification';
 
 export interface Lobby {
 	id: string;
@@ -52,6 +53,11 @@ function Game() {
 	useEffect(() => {
 		socket?.on(ServerGameEvents.ClientLeft, () => {
 			navigate('/');
+			openNotification(
+				'info',
+				'Your opponent has left the battlefield. Coward!',
+				'topRight'
+			);
 		});
 		socket?.on(ServerGameEvents.GameResult, (data) => {
 			pongRef.current?.stop();
