@@ -1,11 +1,9 @@
 import styled, {ThemeContext} from 'styled-components';
-import {useCallback, useContext, useEffect, useLayoutEffect} from 'react';
+import {useContext} from 'react';
 import * as F from 'styles/font.styles';
 import {useUserInfos} from 'contexts/User/userContent';
 import useFetchUserByName from 'hooks/useFetchUserByName';
-import {backend} from 'lib/backend';
-import {useState} from 'react';
-import {IUser} from 'types/models';
+
 
 const ImgContainer = styled.img`
 	width: 40px;
@@ -36,10 +34,22 @@ interface MessageProps {
 }
 
 function TextWithBackgroundBox({content, authorName, date}: MessageProps) {
-	const dateUTC = new Date(date);
 	const {userName} = useUserInfos();
 	const {data} = useFetchUserByName(authorName);
 	const theme = useContext(ThemeContext);
+
+	const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZone: 'Europe/Paris',
+    };
+
+    const formattedDate = new Intl.DateTimeFormat('fr-FR', options).format(now);
 
 	return (
 		<Container
@@ -105,9 +115,7 @@ function TextWithBackgroundBox({content, authorName, date}: MessageProps) {
 								: 'white',
 					}}
 				>
-					{dateUTC.getDate()}/{dateUTC.getUTCMonth() + (1 % 12)}/
-					{dateUTC.getUTCFullYear()} - {dateUTC.getUTCHours() + (1 % 12)}:
-					{dateUTC.getUTCMinutes()}:{dateUTC.getUTCSeconds()}
+					{formattedDate}
 				</F.Subtitle>
 			</BoxContainer>
 		</Container>

@@ -54,8 +54,6 @@ async createDataBase42User(
         token,
         req.body.name,
         req.body.isRegistered);
-        console.log("INSIDE THE WRONG FUNCTION 42 USER");
-
         return res.status(200).json({
         statusCode: 200,
         path: finalUser,

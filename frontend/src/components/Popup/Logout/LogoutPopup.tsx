@@ -33,17 +33,17 @@ function LogoutPopup(props: IProps) {
 					Cancel
 				</Text>
 			</PopupButton>
-			<PopupButton className="logout" backgroundColor={'#DC4F19'}>
-				<Link
+			<Link
 					onClick={handleLogout}
 					to="/login"
 					style={{textDecoration: 'none'}}
 				>
+			<PopupButton className="logout" backgroundColor={'#DC4F19'}>
 					<Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)">
 						Log out
 					</Text>
-				</Link>
 			</PopupButton>
+			</Link>
 		</Popup>
 	);
 }

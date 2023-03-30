@@ -31,15 +31,12 @@ export class Mail2FaGenerateService {
 			 HttpStatus.BAD_REQUEST);
 		}
 	}
-
 		// update the database and hash the password
 
 	async getUserEmail(@Req() req: Request) : Promise<string>
 	{
 		try {
 			const { userName } = req.body;
-			console.log("MY username is", userName);
-
 			const user = await this.prisma.user.findUnique({ where: { name : userName} }); // to change by the name or real ID
 			if (!user)
 			{
@@ -68,11 +65,10 @@ export class Mail2FaGenerateService {
 		return result;
 	  }
 
-	sendEmailToUser(email: string, @Req() req: Request, code2FA: string) {
+	async sendEmailToUser(email: string, @Req() req: Request, code2FA: string) {
 		const {userName} = req.body;
 		let htmlWithCode = myHTML.replace('{{code2FA}}', code2FA);
   		htmlWithCode = htmlWithCode.replace('{{userName}}', userName);
-
 
 		this.mailerService.sendMail({
 			to: `${email}`,

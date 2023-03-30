@@ -24,18 +24,16 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	}
 
 	async function check2FAEnabled() {
+
 		const path = location.pathname;
 		const response = await backend.getUserByToken();
-		console.log("verified 2FA", response.otp_validated);
-		console.log("DoubleAuth 2FA", response.otp_enabled);
 
-
+		const userName = {
+			userName : response.name
+		}
 		if (response.otp_validated === false && response.otp_enabled === true) {
-			console.log("inside");
 
-			await backend.generate2FA(response.userName);
-			console.log("after");
-
+			await backend.generate2FA(userName);
 			navigate('/2FA');
 			return;
 		}
