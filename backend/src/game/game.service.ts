@@ -67,14 +67,18 @@ export class GameService {
 		let rightPlayer = undefined;
 		switch (data.status) {
 			case 'accepted':
-				this.lobbyService.join(data.lobby, client);
 				break;
 			case 'declined':
 				this.lobbyService.delete(data.lobby);
 		}
 		if (data.status === 'accepted') {
+			this.lobbyService.join(data.lobby, client);
 			leftPlayer = await this.userService.getUser(invitationSender.data.name);
 			rightPlayer = await this.userService.getUser(client.data.name);
+		} else if (data.status === 'declined') {
+			this.lobbyService.delete(data.lobby);
+			await this.websocketService.updateStatus(invitationSender, 'online');
+			await this.websocketService.updateStatus(client, 'online');
 		}
 		this.websocketService.server
 			.to(invitationSender.id)

@@ -52,12 +52,21 @@ export class GameGateway implements OnGatewayDisconnect {
 		@MessageBody(new ValidationPipe()) data: GameInviteDto
 	) {
 		const player = await this.userService.getUser(data.invitedClientName);
-		if (!player || player.status === 'offline' || player.status === 'busy') {
+		const invitedClient = this.websocketService.getClient(
+			data.invitedClientName
+		);
+		if (
+			!player ||
+			player.status === 'offline' ||
+			player.status === 'busy' ||
+			!invitedClient
+		) {
 			throw new WsException(
 				`Player ${data.invitedClientName} is not available`
 			);
 		}
 		await this.websocketService.updateStatus(client, 'busy');
+		await this.websocketService.updateStatus(invitedClient, 'busy');
 		console.log(data.invitedClientName);
 		await this.gameService.invite(client, data.invitedClientName, data.lobbyId);
 		return {
