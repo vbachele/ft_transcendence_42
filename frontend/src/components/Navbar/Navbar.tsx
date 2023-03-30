@@ -27,6 +27,7 @@ enum ETypes {
 	BANNED = 'error',
 	KICKED = 'info',
 	ADMIN = 'info',
+	MUTED = 'info',
 }
 
 const Navbar = ({setTheme}: IProps) => {

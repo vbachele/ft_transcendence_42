@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import SocketContext from 'contexts/Socket/context';
 import {Pong} from './pong';
-import {useNavigate} from 'react-router-dom';
+import {ScrollRestoration, useNavigate, useSearchParams} from 'react-router-dom';
 import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import Victory from 'components/Victory/Victory';
 import Defeat from 'components/Defeat/Defeat';
@@ -21,12 +21,47 @@ import {
 } from './Game.styles';
 import Versus from 'components/Versus';
 import {useGameContext} from '../../contexts/Game/context';
+import useFetchUserByName from 'hooks/useFetchUserByName';
+import { IUser } from 'types/models';
+import { fetchUserByName } from 'helpers/fetchUserByName';
+import unlockAchievement from 'helpers/unlockAchievement';
 
 export interface Lobby {
 	id: string;
 	createdAt: string;
 	createdBy: string;
 	clients: string[];
+}
+
+async function checkAchievements(username: string, winner: string, socket: any) {
+	const user = await fetchUserByName(username, 'username');
+
+	const games = user?.games! + 1;
+	const wins = user?.wins!;
+	const losses = games - wins;
+
+	const hasNoobAchievement = user?.achievements?.includes('NOOB');
+	const hasGamerAchievement = user?.achievements?.includes('GAMER');
+	const hasWinnerAchievement = user?.achievements?.includes('WIN');
+	const hasLoserAchievement = user?.achievements?.includes('LOSE');
+
+	if (user && !hasNoobAchievement && games >= 1) {
+		unlockAchievement('NOOB', user, socket);
+	}
+	if (user && !hasGamerAchievement && games >= 10) {
+		unlockAchievement('GAMER', user, socket);
+	}
+	if (user && !hasWinnerAchievement && wins >= 5) {
+		unlockAchievement('WIN', user, socket);
+	}
+	if (user && !hasLoserAchievement && losses >= 5) {
+		unlockAchievement('LOSE', user, socket);
+	}
+	console.log('winner is', winner);
+	console.log('my name is', user?.name);
+	console.log('i have played', games, 'games');
+	console.log('i have won', wins, 'games');
+	console.log('i have lost', losses, 'games');
 }
 
 function Game() {
@@ -40,6 +75,7 @@ function Game() {
 	const canvas = document.getElementById('playground') as HTMLCanvasElement;
 	const [score, setScore] = useState({left: 0, right: 0});
 	const username = useUserInfos().userName.userName;
+
 	const navigate = useNavigate();
 	useSetupContext(canvas);
 	const {lobby, leftPlayer, rightPlayer} = useGameContext().GameState;
@@ -93,6 +129,9 @@ function Game() {
 				default:
 					setShowDefeat(true);
 			}
+
+			checkAchievements(username, data.winner, socket);
+
 		});
 		return () => {
 			socket?.off(ServerGameEvents.GameResult);

@@ -1,11 +1,12 @@
-import {formatDistanceToNowStrict} from 'date-fns';
 import useFetchUserByName from 'hooks/useFetchUserByName';
 import {ReactComponent as WinIcon} from '../../assets/win.svg';
 import {ReactComponent as LossIcon} from '../../assets/loss.svg';
+import {ReactComponent as DrawIcon} from '../../assets/draw.svg';
+import {IGame, IUser} from 'types/models';
+import {formatDistanceToNowStrict} from 'date-fns';
+import {useUserInfos} from 'contexts/User/userContent';
 import * as S from './History.styles';
 import * as F from 'styles/font.styles';
-import {IGame, IUser} from 'types/models';
-import {useUserInfos} from 'contexts/User/userContent';
 
 interface IProps {
 	user: IUser;
@@ -24,7 +25,12 @@ const Card = ({user, match}: IProps) => {
 		: match.leftPlayerName;
 	const opponentScore = isLeftPlayer ? match.rightScore : match.leftScore;
 	const userScore = isLeftPlayer ? match.leftScore : match.rightScore;
-	const result = userScore > opponentScore ? 'win' : 'loss';
+	const result =
+		userScore > opponentScore
+			? 'win'
+			: userScore < opponentScore
+			? 'loss'
+			: 'draw';
 
 	const {data: opponent} = useFetchUserByName(opponentName);
 
@@ -44,7 +50,14 @@ const Card = ({user, match}: IProps) => {
 					<F.Subtitle>{formattedDate}</F.Subtitle>
 				</S.Card>
 			)}
-			{opponent && (result === 'win' ? <WinIcon /> : <LossIcon />)}
+			{opponent &&
+				(result === 'win' ? (
+					<WinIcon />
+				) : result === 'loss' ? (
+					<LossIcon />
+				) : (
+					<DrawIcon />
+				))}
 		</S.CardContainer>
 	);
 };

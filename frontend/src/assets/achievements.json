@@ -72,38 +72,24 @@
 		},
 		{
 			"id": 11,
-			"api": "JOIN",
-			"name": "Hello World !",
-			"description": "Join a channel",
-			"image": "https://cdn-icons-png.flaticon.com/512/7083/7083630.png"
-		},
-		{
-			"id": 12,
 			"api": "AVATAR",
 			"name": "New Look",
 			"description": "Change your avatar",
 			"image": "https://cdn-icons-png.flaticon.com/512/7098/7098115.png"
 		},
 		{
-			"id": 13,
+			"id": 12,
 			"api": "RENAME",
 			"name": "Anonymous",
 			"description": "Change your nickame",
 			"image": "https://cdn-icons-png.flaticon.com/512/7347/7347162.png"
 		},
 		{
-			"id": 14,
+			"id": 13,
 			"api": "2FA",
 			"name": "Never safe enough",
 			"description": "Enable 2FA",
 			"image": "https://cdn-icons-png.flaticon.com/512/6931/6931621.png"
-		},
-		{
-			"id": 15,
-			"api": "JACK",
-			"name": "C'est la piquette Jack",
-			"description": "Win a game without the opponent scoring once",
-			"image": "https://cdn-icons-png.flaticon.com/512/8189/8189843.png"
 		}
 	]
 }

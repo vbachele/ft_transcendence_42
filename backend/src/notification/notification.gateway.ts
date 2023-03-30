@@ -18,9 +18,10 @@ enum EMessages {
 	FRIEND_DENY = 'denied your friend request',
 	REMOVE = 'You are no longer friends with',
 	MESSAGE = 'sent you a message',
+	MUTED = "You've been muted in",
 	BANNED = "You've been banned from",
 	KICKED = "You've been kicked out from",
-	ADMIN = 'You are now the admin of',
+	ADMIN = 'You are now admin in',
 }
 
 interface INotification {
@@ -40,7 +41,7 @@ function formatNotifMessage(
 		['FRIEND_REQUEST', 'FRIEND_ACCEPT', 'FRIEND_DENY', 'MESSAGE'].includes(type)
 	) {
 		return `${sender} ${message}`;
-	} else if (['REMOVE', 'BANNED', 'KICKED', 'ADMIN'].includes(type)) {
+	} else if (['REMOVE', 'BANNED', 'KICKED', 'ADMIN', 'MUTED'].includes(type)) {
 		return `${message} ${sender}`;
 	} else if (type === 'ACHIEVEMENT') {
 		return `${message}`;

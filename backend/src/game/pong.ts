@@ -100,7 +100,7 @@ export class Pong {
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
-				winner: 'draw',
+				winner: 'draw', scores: this.score, players: this.players
 			});
 		}
 		await this.prismaService.game.create({
@@ -126,12 +126,15 @@ export class Pong {
 		const user = await this.prismaService.user.findUnique({
 			where: {name: username},
 		});
+		const achievements = user?.achievements.length || 0;
 		const games = (user?.games || 0) + 1;
 		const wins = user?.wins || 0;
 		const gamesWon = games > 0 ? wins / games : 0;
 		const ratio = gamesWon.toFixed(2);
 		const score = Math.round(
-			(games * 10 + wins * 40) * (parseFloat(ratio) + 1)
+			(games * 50 + wins * 200) /
+				(parseFloat(ratio) + 1) *
+				(achievements / 13 + 1)
 		);
 
 		await this.prismaService.user.update({

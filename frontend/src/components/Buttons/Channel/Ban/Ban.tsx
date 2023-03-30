@@ -1,14 +1,15 @@
 import * as F from 'styles/font.styles';
 import {ReactComponent as Icon} from './ban.svg';
 import {useKickUser} from '../../../../hooks/chat/useKickUser';
+import { ILobby } from 'contexts/Chat/context';
 
 interface IProps {
 	username: string;
-	lobbyId: string;
+	lobby: ILobby;
 }
 
-function Ban({username, lobbyId}: IProps) {
-	const {kickUser} = useKickUser(username, lobbyId, 'ban');
+function Ban({username, lobby}: IProps) {
+	const {kickUser} = useKickUser(username, lobby, 'ban');
 
 	return (
 		<button onClick={kickUser}>
