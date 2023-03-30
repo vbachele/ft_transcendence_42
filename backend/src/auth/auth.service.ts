@@ -106,14 +106,14 @@ async createDataBase42User(
           accessToken: accessToken,
         },
       });
-      // if (!user)
-      // {
-      //   throw new HttpException(
-      //     {
-      //       status: HttpStatus.BAD_REQUEST,
-      //       error: "Error to get the user by token"},
-      //      HttpStatus.BAD_REQUEST);
-      //     };
+      if (!user)
+      {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: "Error to get the user by token"},
+           HttpStatus.BAD_REQUEST);
+          };
       return user;
     } catch (error) {
       throw new HttpException(
