@@ -14,6 +14,7 @@ function ChatInputBar() {
 				placeholder="Message"
 				onChange={(event) => setMessage(event.currentTarget.value)}
 				value={message}
+				maxLength={4096}
 			/>
 			<S.SendButton type="submit" />
 		</S.Form>

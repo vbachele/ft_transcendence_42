@@ -217,24 +217,6 @@ export class Pong {
 		}
 	}
 
-	private drawScore() {
-		const ctx = this.canvas.getContext('2d')!;
-		if (!ctx) return;
-		ctx.save();
-		ctx.shadowColor = 'rgba(230, 230, 230, 0.6)';
-		ctx.shadowBlur = 4;
-		ctx.shadowOffsetY = 3;
-		ctx.shadowOffsetX = 3;
-		ctx.font = '60px Montserrat';
-		ctx.textAlign = 'center';
-		ctx.fillText(
-			`${this.score[0]} : ${this.score[1]}`,
-			this.canvas.width / 2,
-			100
-		);
-		ctx.restore();
-	}
-
 	private drawPaddleHit(
 		position: {x: number; y: number},
 		canvas: HTMLCanvasElement
@@ -325,7 +307,6 @@ export class Pong {
 		}
 		this.clearCanvas();
 		this.drawTimer();
-		this.drawScore();
 		this.drawBall();
 		this.drawPaddles();
 		if (
@@ -398,9 +379,6 @@ export class Pong {
 		this.ball.velocity = velocity;
 	}
 
-	public updateScore(score: [number, number]) {
-		this.score = score;
-	}
 
 	public updateTimer(timer: number) {
 		this.timer = timer;

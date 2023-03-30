@@ -19,6 +19,8 @@ type PopupContextType = {
 	setInvited: React.Dispatch<React.SetStateAction<boolean>>;
 	hasInvited: boolean;
 	setHasInvited: React.Dispatch<React.SetStateAction<boolean>>;
+	showGameIntro: boolean;
+	setShowGameIntro: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export const PopupContext = createContext({} as PopupContextType);
 
@@ -26,6 +28,7 @@ export const PopupContextProvider = ({children}: PopupContextProviderProps) => {
 	const [popup, setPopup] = useState<Toggle>({toggle: false});
 	const [invited, setInvited] = useState<boolean>(false);
 	const [hasInvited, setHasInvited] = useState<boolean>(false);
+	const [showGameIntro, setShowGameIntro] = useState<boolean>(false);
 
 	return (
 		<PopupContext.Provider
@@ -36,6 +39,8 @@ export const PopupContextProvider = ({children}: PopupContextProviderProps) => {
 				setInvited,
 				hasInvited,
 				setHasInvited,
+				showGameIntro,
+				setShowGameIntro,
 			}}
 		>
 			{children}

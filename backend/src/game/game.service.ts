@@ -7,15 +7,17 @@ import {MovePaddleDto} from './dto/game.dto';
 import {GameLobby} from './gameLobby';
 import {ConnectedSocket, WsException} from '@nestjs/websockets';
 import {WebsocketService} from '../websocket/websocket.service';
+import {UserService} from '../api/users/users.service';
 
 @Injectable()
 export class GameService {
 	constructor(
 		private readonly websocketService: WebsocketService,
-		private readonly lobbyService: LobbyService
+		private readonly lobbyService: LobbyService,
+		private readonly userService: UserService
 	) {}
 
-	public invite(
+	public async invite(
 		client: AuthenticatedSocket,
 		invitedClientName: string,
 		lobbyId: string
@@ -25,14 +27,22 @@ export class GameService {
 			throw new WsException(`User [${invitedClientName}] not found`);
 		}
 		console.log(`Invited client [${invitedClientName}]`);
+		const leftPlayer = await this.userService.getUser(client.data.name);
+		const rightPlayer = await this.userService.getUser(invitedClientName);
 		this.websocketService.server
 			.to(invitedClient.id)
 			.emit(ServerGameEvents.Invitation, {
-				lobby: {id: lobbyId, type: 'game'},
+				lobbyId: lobbyId,
+				leftPlayer: leftPlayer,
+				rightPlayer: rightPlayer,
 			});
 	}
 
-	public cancelInvitation(client: AuthenticatedSocket, lobbyId: string, invitedClientName: string) {
+	public cancelInvitation(
+		client: AuthenticatedSocket,
+		lobbyId: string,
+		invitedClientName: string
+	) {
 		const invitedClient = this.websocketService.getClient(invitedClientName);
 		if (!invitedClient) {
 			throw new WsException(`User [${invitedClientName}] not found`);
@@ -45,22 +55,35 @@ export class GameService {
 		this.lobbyService.delete(lobbyId);
 	}
 
-	public dispatchInvitationResponse(client: AuthenticatedSocket, data: any) {
-		const lobby = this.lobbyService.getLobby(data.lobby.id) as GameLobby;
-		lobby.dispatchToLobby(ServerEvents.InvitationResponse, {
-			response: data.status,
-			lobby: data.lobby,
-		});
-		setTimeout(() => {
-			switch (data.status) {
-				case 'accepted':
-					this.lobbyService.join(data.lobby.id, client);
-					break;
-				case 'declined':
-					console.log(`declined`);
-					this.lobbyService.delete(data.lobby.id);
-			}
-		}, 1_000);
+	public async dispatchInvitationResponse(
+		client: AuthenticatedSocket,
+		data: any
+	) {
+		const lobby = this.lobbyService.getLobby(data.lobby) as GameLobby;
+		const invitationSender = [...lobby.clients.values()][0];
+		console.log(`sender: ${invitationSender.data.name}`);
+		console.log(`client: ${client.data.name}`);
+		let leftPlayer = undefined;
+		let rightPlayer = undefined;
+		switch (data.status) {
+			case 'accepted':
+				this.lobbyService.join(data.lobby, client);
+				break;
+			case 'declined':
+				this.lobbyService.delete(data.lobby);
+		}
+		if (data.status === 'accepted') {
+			leftPlayer = await this.userService.getUser(invitationSender.data.name);
+			rightPlayer = await this.userService.getUser(client.data.name);
+		}
+		this.websocketService.server
+			.to(invitationSender.id)
+			.emit(ServerEvents.InvitationResponse, {
+				state: data.status,
+				lobbyId: data.lobby,
+				leftPlayer: leftPlayer,
+				rightPlayer: rightPlayer,
+			});
 	}
 
 	public gameSetup(
@@ -81,7 +104,10 @@ export class GameService {
 		const lobby = this.lobbyService.getLobby(lobbyId) as GameLobby;
 		lobby.playerStates.set(client.data.name, 'ready');
 		const playerStates = Array.from(lobby.playerStates.values());
-		if (playerStates.every((state) => state === 'ready')) {
+		if (
+			playerStates.every((state) => state === 'ready') &&
+			playerStates.length >= 2
+		) {
 			lobby.runGame();
 		}
 		console.info(`Game started in lobby [${lobbyId}]`);
@@ -95,12 +121,16 @@ export class GameService {
 
 	public leaveLobby(@ConnectedSocket() client: AuthenticatedSocket) {
 		if (!client.data.gameLobby) return;
-		const lobby = this.lobbyService.getLobby(client.data.gameLobby.id) as GameLobby;
-		lobby.dispatchToLobby(ServerGameEvents.ClientLeft, {client: client.data.name})
+		const lobby = this.lobbyService.getLobby(
+			client.data.gameLobby.id
+		) as GameLobby;
+		lobby.dispatchToLobby(ServerGameEvents.ClientLeft, {
+			client: client.data.name,
+		});
 		if (lobby.state === 'running') {
 			lobby.stopGame();
 		}
-		lobby.instance?.kill()
+		lobby.instance?.kill();
 		lobby.removeClient(client);
 		delete client.data.gameLobby;
 		client.data.gameLobby = undefined;

@@ -161,6 +161,9 @@ export const DropdownButton = styled.button`
 	box-shadow: none;
 	text-decoration: none;
 	color: inherit;
+	font-size: 1em;
+	padding: 8px;
+	cursor: pointer;
 `;
 
 export const DropdownIcon = styled(DownOutlined)`

@@ -10,7 +10,7 @@ import * as C from './containers.styles';
 import ChatContext from 'contexts/Chat/context';
 import {useKickUser} from '../../../hooks/chat/useKickUser';
 import {useUserInfos} from 'contexts/User/userContent';
-import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
+import InviteToPlay from 'components/Popup/InviteToPlay/InviteToPlay';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
@@ -70,7 +70,7 @@ function UserPanel() {
 						</>
 					)}
 			</S.FriendOptions>
-			<UserInvitedToGame user={userInPanel} />
+			<InviteToPlay user={userInPanel} />
 		</C.UserPanel>
 	);
 }

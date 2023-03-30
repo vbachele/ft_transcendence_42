@@ -1,15 +1,13 @@
-import GameInvite from './GameInvite/GameInvite';
+import GameIncomingInvite from './GameIncomingInvite/GameIncomingInvite';
 import LogoutPopup from './Logout/LogoutPopup';
-import SearchPlayer from './SearchPlayer/SearchPlayer';
-import UserInvitedToGame from './UserInvitedToGame/UserInvitedToGame';
-import Countdown from './Countdown/Countdown';
+import Matchmaking from './Matchmaking/Matchmaking';
+import InviteToPlay from './InviteToPlay/InviteToPlay';
 import AuthPopup from './Auth/AuthPopup';
 
 export default {
-	GameInvite,
+	GameInvite: GameIncomingInvite,
 	LogoutPopup,
-	SearchPlayer,
-	UserInvitedToGame,
-	Countdown,
+	SearchPlayer: Matchmaking,
+	UserInvitedToGame: InviteToPlay,
 	AuthPopup,
 };

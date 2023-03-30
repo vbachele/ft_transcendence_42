@@ -130,13 +130,11 @@ export class ChatGateway implements OnGatewayConnection {
 			case 'ban':
 				await this.chatService.banUser(userToKick, lobbyId);
 				console.info(
-					`User - [${userToKick}] - has been banned from the lobby - [${lobbyId}]`
 				);
 				break;
 			case 'kick':
 				await this.chatService.kickUser(userToKick, lobbyId);
 				console.info(
-					`User - [${userToKick}] - has been kicked from the lobby - [${lobbyId}]`
 				);
 		}
 		return {
@@ -169,6 +167,14 @@ export class ChatGateway implements OnGatewayConnection {
 			event: ServerChatEvents.UserSetAdmin,
 			data: 'User has been set as admin',
 		};
+	}
+
+	@UseGuards(AdminGuard)
+	@SubscribeMessage(ClientChatEvents.DeleteLobby)
+	async onDeleteLobby(
+		@MessageBody('lobbyId') lobbyId: string
+	) {
+		await this.chatService.deleteLobby(lobbyId);
 	}
 
 	@SubscribeMessage(ClientChatEvents.FetchBlockedUsers)

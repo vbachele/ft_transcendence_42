@@ -388,11 +388,25 @@ export class PrismaLobbyService {
 	}
 
 	async deleteLobby(id: string): Promise<LobbyModel> {
-		return this.prismaService.lobby.delete({
-			where: {
-				id: id,
-			},
-		});
+		try {
+			await this.prismaService.lobby.update({
+				where: {
+					id: id,
+				},
+				data: {
+					messages: {
+						deleteMany: {},
+					},
+				},
+			});
+			return await this.prismaService.lobby.delete({
+				where: {
+					id: id,
+				},
+			});
+		} catch (error) {
+			throw new WsException(`Error when deleting lobby ${id}`);
+		}
 	}
 
 	async deleteUserFromLobby(lobbyId: string, userToDelete: string) {

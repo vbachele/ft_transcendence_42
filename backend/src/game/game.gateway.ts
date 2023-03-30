@@ -19,6 +19,7 @@ import {PrismaService} from '../database/prisma.service';
 import {GameMode} from './types/game.type';
 import {WebsocketService} from '../websocket/websocket.service';
 import {ALobby} from '../lobby/ALobby';
+import {UserService} from '../api/users/users.service';
 
 @WebSocketGateway()
 export class GameGateway implements OnGatewayDisconnect {
@@ -31,11 +32,19 @@ export class GameGateway implements OnGatewayDisconnect {
 		private readonly gameService: GameService,
 		private readonly lobbyService: LobbyService,
 		private readonly prismaService: PrismaService,
-		private readonly websocketService: WebsocketService
+		private readonly websocketService: WebsocketService,
+		private readonly userService: UserService,
 	) {}
 
 	handleDisconnect(client: AuthenticatedSocket) {
 		this.gameService.leaveLobby(client);
+		this.queue[GameMode.AgainstTheClock] = this.queue[
+			GameMode.AgainstTheClock
+		].filter((c) => c !== client);
+		this.queue[GameMode.ScoreLimit] = this.queue[GameMode.ScoreLimit].filter(
+			(c) => c !== client
+		);
+		console.log(`Client [${client.data.name}] canceled search`);
 	}
 
 	@SubscribeMessage(ClientGameEvents.Invite)
@@ -45,7 +54,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	) {
 		await this.websocketService.updateStatus(client, 'busy');
 		console.log(data.invitedClientName);
-		this.gameService.invite(client, data.invitedClientName, data.lobbyId);
+		await this.gameService.invite(client, data.invitedClientName, data.lobbyId);
 		return {
 			event: ServerEvents.LobbyMessage,
 			data: {
@@ -55,12 +64,12 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientEvents.InvitationResponse)
-	onInvitationResponse(
+	async onInvitationResponse(
 		client: AuthenticatedSocket,
 		data: any
-	): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
-		console.log(data);
-		this.gameService.dispatchInvitationResponse(client, data);
+	) {
+		console.log(`invitation response : `, data);
+		await this.gameService.dispatchInvitationResponse(client, data);
 		return {
 			event: ServerEvents.LobbyMessage,
 			data: {
@@ -123,8 +132,14 @@ export class GameGateway implements OnGatewayDisconnect {
 			lobby.addClient(player2);
 			player1.data.gameLobby = lobby as GameLobby;
 			player2.data.gameLobby = lobby as GameLobby;
+			const leftPlayer = await this.userService.getUser(player1.data.name);
+			const rightPlayer = await this.userService.getUser(player2.data.name);
 			lobby.dispatchToLobby(ServerGameEvents.GameFound, {
 				lobbyId: lobby.id,
+				players: {
+					leftPlayer: leftPlayer,
+					rightPlayer: rightPlayer,
+				},
 			});
 		}
 	}
