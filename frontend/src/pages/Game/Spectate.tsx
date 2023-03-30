@@ -19,17 +19,17 @@ function Spectate() {
 	const pongRef = useRef<Pong>();
 	const container = document.getElementById('container');
 	const canvas = document.getElementById('playground') as HTMLCanvasElement;
-	const {lobbyId} = useSetupContext(canvas);
+	useSetupContext(canvas);
 	const navigate = useNavigate();
 
-	useUpdateGameState(pongRef);
-
-	useEffect(() => {
-		if (!lobbyId) return;
-		pongRef.current = new Pong(socket!, lobbyId!, {isSpec: true});
-		socket?.emit(ClientGameEvents.Spectate, {lobbyId: lobbyId});
-		pongRef.current?.start();
-	}, [lobbyId]);
+	// useUpdateGameState(pongRef);
+	//
+	// useEffect(() => {
+	// 	if (!lobbyId) return;
+	// 	pongRef.current = new Pong(socket!, lobbyId!, {isSpec: true});
+	// 	socket?.emit(ClientGameEvents.Spectate, {lobbyId: lobbyId});
+	// 	pongRef.current?.start();
+	// }, [lobbyId]);
 
 	useEffect(() => {
 		socket?.on(ServerGameEvents.ClientLeft, () => {

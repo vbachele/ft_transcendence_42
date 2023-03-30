@@ -27,9 +27,10 @@ function Chat() {
 
 	useEffect(() => {
 		socket?.on(ServerChatEvents.KickedFromLobby, (data: any) => {
-			console.log('data : ', data);
-			console.log('activeLobby : ', activeLobby?.id);
-
+			if (data.lobbyId !== activeLobby?.id) return;
+			ChatDispatch({type: 'update_active_lobby', payload: undefined});
+		});
+		socket?.on(ServerChatEvents.LobbyDeleted, (data: any) => {
 			if (data.lobbyId !== activeLobby?.id) return;
 			ChatDispatch({type: 'update_active_lobby', payload: undefined});
 		});

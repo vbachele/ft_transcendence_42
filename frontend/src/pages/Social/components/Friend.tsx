@@ -1,4 +1,4 @@
-import UserInvitedToGame from '../../../components/Popup/UserInvitedToGame/UserInvitedToGame';
+import InviteToPlay from '../../../components/Popup/InviteToPlay/InviteToPlay';
 import {ReactComponent as Close} from 'assets/close.svg';
 import ActivityStatus from 'components/ActivityStatus';
 import {useTheme} from 'styled-components';
@@ -72,7 +72,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 						onBlock={onBlock}
 					/>
 				</S.FriendOptions>
-				<UserInvitedToGame user={friend}/>
+				<InviteToPlay user={friend}/>
 			</Drawer>
 		</>
 	);

@@ -9,35 +9,30 @@ import {ClientEvents} from '../../../events/socket.events';
 import {usePopup} from '../../../contexts/Popup/Popup';
 import {ServerGameEvents} from '../../../events/game.events';
 import {useNavigate, createSearchParams} from 'react-router-dom';
-import { useTheme } from 'styled-components';
+import {useTheme} from 'styled-components';
+import {InvitationRequest} from '../../../pages/Game/types/game.type';
+import Versus from '../../Versus';
+import {useGameContext} from '../../../contexts/Game/context';
 
-interface ILobbyData {
-	id: string;
-	type: string;
-}
-
-const GameInvite = () => {
+function GameIncomingInvite() {
 	const theme = useTheme();
-	const [showComponent, setShowComponent] = useState(false);
 	const {socket} = useContext(SocketContext).SocketState;
 	const {invited, setInvited} = usePopup();
-	const [lobby, setLobby] = useState<ILobbyData | null>(null);
 	const timeout = useRef<NodeJS.Timeout>();
 	const navigate = useNavigate();
-
-	const renderCounter = useRef(0);
-	renderCounter.current = ++renderCounter.current;
-	console.log(`User Invite has loaded [${renderCounter.current}] times`);
+	const [displayGameIntro, setDisplayGameIntro] = useState(false);
+	const [request, setRequest] = useState<InvitationRequest | undefined>();
+	const GameDispatch = useGameContext().GameDispatch;
 
 	useEffect(() => {
-		socket?.on(ServerGameEvents.Invitation, (data) => {
-			console.info(`Invitation received`);
-			console.log(`Lobby data: `, data);
-			setLobby(data.lobby);
+		socket?.on(ServerGameEvents.Invitation, (data: InvitationRequest) => {
+			console.info(`Invitation received`, data);
+			setRequest(data);
 			setInvited(true);
 		});
 		socket?.on(ServerGameEvents.InvitationCancelled, () => {
 			console.info(`Invitation cancelled`);
+			setRequest(undefined);
 			setInvited(false);
 		});
 		return () => {
@@ -56,30 +51,26 @@ const GameInvite = () => {
 	}, [invited]);
 
 	function dispatchResponse(status: string) {
-		console.log(`lobby is `, lobby);
 		socket?.emit(ClientEvents.InvitationResponse, {
 			status: status,
-			lobby: lobby,
+			lobby: request?.lobbyId,
 		});
 		console.info(`Invitation response sent`);
-		setLobby(null);
+		setRequest(undefined);
 	}
 
 	function onJoin() {
 		clearTimeout(timeout.current);
+		GameDispatch({type: 'update_lobby', payload: request?.lobbyId})
+		GameDispatch({type: 'update_left_player', payload: request?.leftPlayer})
+		GameDispatch({type: 'update_right_player', payload: request?.rightPlayer});
 		dispatchResponse('accepted');
-		setShowComponent(true);
-		const close = setTimeout(() => {
-			setShowComponent(false);
-			setInvited(false);
-			clearTimeout(close);
-			navigate({
-				pathname: '/game',
-				search: createSearchParams({
-					lobbyId: lobby!.id,
-				}).toString(),
-			});
-		}, 4_000);
+		setDisplayGameIntro(true);
+		setInvited(false);
+		setTimeout(() => {
+			setDisplayGameIntro(false);
+			navigate('/game');
+		}, 3_000);
 	}
 
 	function onCancel() {
@@ -88,27 +79,25 @@ const GameInvite = () => {
 		setInvited(false);
 	}
 
-	if (!invited) {
-		return null;
-	}
+	if (invited)
+		return (
+			<Popup
+				title="Join game?"
+				subtitle={`${request?.leftPlayer.name} has just invited you`}
+				loadingBar={<LoadingBar />}
+				stopPropagation={true}
+				overlay={true}
+			>
+				<PopupButton border="1px solid #e5e7eb" onClick={onCancel}>
+					<Text weight="500">Cancel</Text>
+				</PopupButton>
+				<PopupButton backgroundColor={theme.colors.main} onClick={onJoin}>
+					<Text weight="500"> JOIN </Text>
+				</PopupButton>
+			</Popup>
+		);
+	else if (displayGameIntro) return <Versus animation={'close'} />;
+	else return null;
+}
 
-	return (
-		<Popup
-			title="Join game?"
-			subtitle="Username has just invited you"
-			loadingBar={<LoadingBar />}
-			stopPropagation={true}
-			overlay={true}
-		>
-			<PopupButton border="1px solid #e5e7eb" onClick={onCancel}>
-				<Text weight="500">Cancel</Text>
-			</PopupButton>
-			<PopupButton backgroundColor={theme.colors.main} onClick={onJoin}>
-				<Text weight="500"> JOIN </Text>
-			</PopupButton>
-			{showComponent ? <GameFound /> : ''}
-		</Popup>
-	);
-};
-
-export default GameInvite;
+export default GameIncomingInvite;

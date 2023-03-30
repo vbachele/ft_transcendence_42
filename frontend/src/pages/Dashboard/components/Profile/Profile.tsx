@@ -10,7 +10,7 @@ import {ReactComponent as FriendIcon} from '../../assets/friend.svg';
 import * as S from './Profiles.styles';
 import * as F from 'styles/font.styles';
 import Buttons from 'components/Buttons';
-import UserInvitedToGame from 'components/Popup/UserInvitedToGame/UserInvitedToGame';
+import InviteToPlay from 'components/Popup/InviteToPlay/InviteToPlay';
 
 interface IProps {
 	user: IUser;
@@ -72,7 +72,7 @@ const Profile = ({user}: IProps) => {
 					</S.VDivLink>
 				</S.VDiv>
 			)}
-			<UserInvitedToGame user={user}/>
+			<InviteToPlay user={user}/>
 		</S.Profile>
 	);
 };

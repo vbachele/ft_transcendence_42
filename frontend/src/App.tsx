@@ -1,5 +1,5 @@
 import {Route, Routes, useRoutes} from 'react-router-dom';
-import {ConfigProvider, notification, theme as antdTheme} from 'antd';
+import {ConfigProvider, theme as antdTheme} from 'antd';
 import {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from 'styles/global';
 import {dark, light} from 'styles/theme';
@@ -13,7 +13,7 @@ import {UserContextProvider} from 'contexts/User/userContent';
 import ChatContextComponent from 'contexts/Chat/Component';
 import Pages from 'pages';
 import Popup from 'components/Popup';
-import { NotificationPlacement } from 'antd/es/notification/interface';
+import GameContextComponent from './contexts/Game/Component';
 
 function App() {
 	const defaultTheme = 'dark';
@@ -32,7 +32,7 @@ function App() {
 					<Route path="/settings" element={<Pages.Settings />} />
 					<Route path="/headings" element={<Pages.Headings />} />
 					<Route path="/social" element={<Pages.Social />} />
-					<Route path='/users' element={<UserMocks />} />,
+					<Route path="/users" element={<UserMocks />} />,
 					<Route path="/game" element={<Pages.Game />} />
 					<Route path="/spectate" element={<Pages.Spectate />} />
 					<Route path="*" element={<Pages.NotFound />} />
@@ -71,9 +71,9 @@ function App() {
 		{
 			path: '/2FA',
 			element: (
-					<PrivateRoute>
-						<Pages.DoubleAuth />
-					</PrivateRoute>
+				<PrivateRoute>
+					<Pages.DoubleAuth />
+				</PrivateRoute>
 			),
 		},
 		{
@@ -103,10 +103,12 @@ function App() {
 						}}
 					>
 						<SocketContextComponent>
-							<GlobalStyle />
-							<Popup.GameInvite />
-							<Popup.SearchPlayer />
-							{routes}
+							<GameContextComponent>
+								<GlobalStyle />
+								<Popup.GameInvite />
+								<Popup.SearchPlayer />
+								{routes}
+							</GameContextComponent>
 						</SocketContextComponent>
 					</ConfigProvider>
 				</ThemeProvider>

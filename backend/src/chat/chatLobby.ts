@@ -85,10 +85,12 @@ export class ChatLobby extends ALobby {
 		return null;
 	}
 	private async initLobby(data: ChatLobbyDto): Promise<Lobby> {
-		const hashPassword = await this.hashPassword(data.password);
+		const hashPassword = await this.hashPassword(
+			data.password?.replace(/\s+/g, '').substring(0, 256)
+		);
 		return {
 			id: this.id,
-			name: data.name,
+			name: data.name.replace(/[^a-zA-Z]/g, '').substring(0, 14),
 			description: data.description,
 			createdAt: this.createdAt,
 			maxClients: this.maxClients,

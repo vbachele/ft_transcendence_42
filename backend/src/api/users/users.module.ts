@@ -10,5 +10,6 @@ import { PrismaModule } from 'src/database/prisma.module';
 	imports: [PrismaModule, CloudinaryModule, BlockedModule],
 	controllers: [UserController],
 	providers: [UserService, BlockedService],
+	exports: [UserService],
 })
 export class UserModule {}

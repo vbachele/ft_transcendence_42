@@ -4,7 +4,10 @@ import SocketContext from '../../../contexts/Socket/context';
 import {Pong} from '../pong';
 import {useNavigate} from 'react-router-dom';
 
-export function useUpdateGameState(pongRef: React.MutableRefObject<Pong | undefined>) {
+export function useUpdateGameState(
+	pongRef: React.MutableRefObject<Pong | undefined>,
+	setScore: React.Dispatch<React.SetStateAction<{left: number; right: number}>>
+) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const navigate = useNavigate();
 
@@ -23,7 +26,8 @@ export function useUpdateGameState(pongRef: React.MutableRefObject<Pong | undefi
 			pongRef.current?.movePaddle(data.paddle, data.position);
 		});
 		socket?.on(ServerGameEvents.UpdateScore, (data) => {
-			pongRef.current?.updateScore(data.score);
+			setScore(data.score);
+			// pongRef.current?.updateScore(data.score);
 		});
 		socket?.on(ServerGameEvents.PaddleHit, (data) => {
 			pongRef.current?.updatePaddleHit(data.side);

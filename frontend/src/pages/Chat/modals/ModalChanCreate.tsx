@@ -6,7 +6,7 @@ import {ClientEvents} from '../../../events/socket.events';
 import SocketContext from '../../../contexts/Socket/context';
 import TextArea from 'antd/es/input/TextArea';
 import {useUserInfos} from '../../../contexts/User/userContent';
-import { H5, H6, Subtitle } from 'styles/font.styles';
+import {H5, H6, Subtitle} from 'styles/font.styles';
 import {fetchUserByName} from 'helpers/fetchUserByName';
 import unlockAchievement from 'helpers/unlockAchievement';
 
@@ -79,6 +79,9 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 	const name = useUserInfos().userName.userName;
 	const setAchievements = useUserInfos().setAchievements;
 	const [error, setError] = useState<boolean>(false);
+	const [channelName, setChannelName] = useState<string>('');
+	const [description, setDescription] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 
 	const handleCancel = (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -90,32 +93,35 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 		let closeModal = true;
 		const hasCreateAchievement = user?.achievements.includes('CREATE');
 
-		socket?.emit(ClientEvents.CreateLobby, {
-			type: 'chat',
-			data: {
-				maxClients: 1024,
-				owner: name,
-				privacy: data.password ? 'private' : 'public',
-				init: 'true',
-				type: 'channel',
-				...data, }
-			}, (response:any ) => {
-				console.log("response", response.status); // ok
-			  });
-
+		socket?.emit(
+			ClientEvents.CreateLobby,
+			{
+				type: 'chat',
+				data: {
+					maxClients: 1024,
+					owner: name,
+					privacy: data.password ? 'private' : 'public',
+					init: 'true',
+					type: 'channel',
+					...data,
+				},
+			},
+			(response: any) => {
+				console.log('response', response.status); // ok
+			}
+		);
 
 		socket?.on('exception', (data) => {
 			if (data.status === 'forbidden') {
-					setError(true);
-					closeModal = false;
-					return;
+				setError(true);
+				closeModal = false;
+				return;
 			}
 			console.info(`Channel created`);
 		});
 		setTimeout(() => {
-			if (closeModal)
-				setIsModalOpen(false)}
-				, 500)
+			if (closeModal) setIsModalOpen(false);
+		}, 500);
 
 		console.info(`Channel created`);
 
@@ -137,13 +143,27 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 			onCancel={handleCancel}
 		>
 			<Form form={form} layout={'vertical'} onFinish={handleSubmit}>
-				{error && <Subtitle style={{color:"#dc4f19"}}> Channel name already taken </Subtitle> }
+				{error && (
+					<Subtitle style={{color: '#dc4f19'}}>
+						{' '}
+						Channel name already taken{' '}
+					</Subtitle>
+				)}
 				<Form.Item
 					name={'name'}
 					label={'Channel name'}
 					rules={[{required: true, message: 'Missing channel name'}]}
 				>
-					<StyledInput prefix={'#'} maxLength={20} placeholder="new-channel" />
+					<StyledInput
+						prefix={'#'}
+						maxLength={14}
+						placeholder="new-channel"
+						onKeyPress={(e) => {
+							if (!/^[a-zA-Z]/g.test(e.key)) {
+								e.preventDefault();
+							}
+						}}
+					/>
 				</Form.Item>
 				<Form.Item
 					name={'description'}
@@ -164,7 +184,15 @@ function ModalChanCreate({isModalOpen, setIsModalOpen}: ModalChanCreateProps) {
 						label={'Password'}
 						rules={[{required: true, message: 'Missing channel password'}]}
 					>
-						<StyledPasswordInput placeholder="Enter a password" />
+						<StyledPasswordInput
+							placeholder="Enter a password"
+							onKeyPress={(e) => {
+								if (e.key === ' ') {
+									e.preventDefault();
+								}
+							}}
+							maxLength={256}
+						/>
 					</Form.Item>
 				)}
 			</Form>
