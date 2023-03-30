@@ -13,7 +13,7 @@ import {UseGuards, ValidationPipe} from '@nestjs/common';
 import {SendMessageDto} from './dto/chat.dto';
 import {ChatService} from './chat.service';
 import {AdminGuard} from './guards/admin.guard';
-import {BlockedService} from '../social/blocked/blocked.service';
+import {BlockedService} from '../social/blocked/blocked.service';//
 
 /**
  * @brief Gateway for the chat module

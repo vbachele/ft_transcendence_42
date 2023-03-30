@@ -33,7 +33,7 @@ export class GameGateway implements OnGatewayDisconnect {
 		private readonly lobbyService: LobbyService,
 		private readonly prismaService: PrismaService,
 		private readonly websocketService: WebsocketService,
-		private readonly userService: UserService,
+		private readonly userService: UserService
 	) {}
 
 	handleDisconnect(client: AuthenticatedSocket) {
@@ -64,10 +64,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientEvents.InvitationResponse)
-	async onInvitationResponse(
-		client: AuthenticatedSocket,
-		data: any
-	) {
+	async onInvitationResponse(client: AuthenticatedSocket, data: any) {
 		console.log(`invitation response : `, data);
 		await this.gameService.dispatchInvitationResponse(client, data);
 		return {
@@ -189,21 +186,36 @@ export class GameGateway implements OnGatewayDisconnect {
 		@MessageBody('lobbyId') lobbyId: string
 	) {
 		this.lobbyService.join(lobbyId, client);
+		const lobby = this.lobbyService.getLobby(lobbyId);
+
 		console.log(`Client [${client.data.name}] spectating`);
 	}
 
 	@SubscribeMessage(ClientGameEvents.LobbyFromUser)
-	onLobbyFromUser(
+	async onLobbyFromUser(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody('username') username: string
 	) {
 		const user = this.websocketService.getClient(username);
+		if (!user || !user.data.gameLobby)
+			throw new WsException('User is not in game');
 		console.log(
 			`Client [${client.data.name}] requested lobby from user, lobbyId: ${user?.data.gameLobby?.id}`
 		);
+		const lobby = user.data.gameLobby;
+		const leftPlayer = await this.userService.getUser(
+			[...lobby.clients.values()][0].data.name
+		);
+		const rightPlayer = await this.userService.getUser(
+			[...lobby.clients.values()][1].data.name
+		);
 		return {
 			event: ServerGameEvents.LobbyFromUser,
-			data: {lobbyId: user?.data.gameLobby?.id},
+			data: {
+				lobbyId: lobby.id,
+				leftPlayer: leftPlayer,
+				rightPlayer: rightPlayer,
+			},
 		};
 	}
 }

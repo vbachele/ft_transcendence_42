@@ -9,7 +9,7 @@ const myHTML = fs.readFileSync('/usr/src/app/src/doubleAuth/mail2FA/generate/ind
 
 @Injectable()
 export class Mail2FaGenerateService {
-	constructor(private readonly mailerService : MailerService, 
+	constructor(private readonly mailerService : MailerService,
 		private prisma: PrismaService) {}
 
 /* SEND 2FA ACTIVATION EMAIL in settings page */
@@ -17,7 +17,7 @@ export class Mail2FaGenerateService {
 	{
 		try {
 			const email = await this.getUserEmail(req);
-			const code2FA = this.generateRandomCode(6); 
+			const code2FA = this.generateRandomCode(6);
 			this.sendEmailToUser(email, req, code2FA);
 			await this.storeCodeToDataBase(code2FA, req)
 			res.status(200).json({
@@ -30,15 +30,21 @@ export class Mail2FaGenerateService {
 			error: "Invalid email"},
 			 HttpStatus.BAD_REQUEST);
 		}
-	}	
-		
+	}
 		// update the database and hash the password
 
-	async getUserEmail(@Req() req: Request) : Promise<string> 
+	async getUserEmail(@Req() req: Request) : Promise<string>
 	{
 		try {
 			const { userName } = req.body;
 			const user = await this.prisma.user.findUnique({ where: { name : userName} }); // to change by the name or real ID
+			if (!user)
+			{
+				throw new HttpException({
+					status: HttpStatus.BAD_REQUEST,
+					error: "Invalid email, it must be 42 email or google email"},
+					 HttpStatus.BAD_REQUEST);
+			}
 			return user?.email!;
 
 		} catch (error) {
@@ -59,12 +65,11 @@ export class Mail2FaGenerateService {
 		return result;
 	  }
 
-	sendEmailToUser(email: string, @Req() req: Request, code2FA: string) {
+	async sendEmailToUser(email: string, @Req() req: Request, code2FA: string) {
 		const {userName} = req.body;
 		let htmlWithCode = myHTML.replace('{{code2FA}}', code2FA);
   		htmlWithCode = htmlWithCode.replace('{{userName}}', userName);
 
-		
 		this.mailerService.sendMail({
 			to: `${email}`,
 			from: 'versus.transcendence@gmail.com',

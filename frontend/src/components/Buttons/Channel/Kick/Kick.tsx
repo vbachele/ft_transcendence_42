@@ -1,14 +1,15 @@
+import { ILobby } from 'contexts/Chat/context';
 import {GiArrowhead} from 'react-icons/gi';
 import * as F from 'styles/font.styles';
 import {useKickUser} from '../../../../hooks/chat/useKickUser';
 
 interface IProps {
 	username: string;
-	lobbyId: string;
+	lobby: ILobby;
 }
 
-function Kick({username, lobbyId}: IProps) {
-	const {kickUser} = useKickUser(username, lobbyId, 'kick');
+function Kick({username, lobby}: IProps) {
+	const {kickUser} = useKickUser(username, lobby, 'kick');
 
 	return (
 		<button onClick={kickUser}>

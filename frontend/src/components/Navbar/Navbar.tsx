@@ -27,6 +27,7 @@ enum ETypes {
 	BANNED = 'error',
 	KICKED = 'info',
 	ADMIN = 'info',
+	MUTED = 'info',
 }
 
 const Navbar = ({setTheme}: IProps) => {
@@ -71,8 +72,8 @@ const Navbar = ({setTheme}: IProps) => {
 				</S.Brand>
 			</Link>
 			<S.Menu>
-				<ToggleTheme setTheme={setTheme} />
-				<S.Divider />
+				{/* <ToggleTheme setTheme={setTheme} />
+				<S.Divider /> */}
 				<NotificationCenter
 					notifications={notifications}
 					setNotifications={setNotifications}

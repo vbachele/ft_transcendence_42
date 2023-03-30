@@ -13,33 +13,36 @@ const PrivateRoute: FC<{children: React.ReactElement}> = ({children}) => {
 	const location = useLocation();
 
 	async function checkUserToken() {
-		// const response = await backend.checkToken();
-		// if (response.statusCode == 400 || response.statusCode == "403") {
+		const response = await backend.checkToken();
+		if (response.statusCode == 400 || response.statusCode == "403") {
 
-		// navigate("/login");
-		//   return;
-		// }
+		navigate("/login");
+		  return;
+		}
 		setIsLoading(false);
 		setTokenExists(true);
 	}
 
 	async function check2FAEnabled() {
+
 		const path = location.pathname;
-		if (
-			path === '/2FA' &&
-			verified2FA.verified2FA === false &&
-			doubleAuth.doubleAuth === false
-		) {
-			navigate('/');
+		const response = await backend.getUserByToken();
+
+		const userName = {
+			userName : response.name
 		}
-		if (verified2FA.verified2FA === false && doubleAuth.doubleAuth === true) {
-			console.log("inside");
+		if (response.otp_validated === false && response.otp_enabled === true) {
 
 			await backend.generate2FA(userName);
-			console.log("after");
-
 			navigate('/2FA');
 			return;
+		}
+		if (
+			path === '/2FA' &&
+			response.otp_validated === false &&
+			response.otp_enabled === false
+		) {
+			navigate('/');
 		}
 	}
 

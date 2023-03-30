@@ -3,19 +3,28 @@ import {ReactComponent as Icon} from './mute.svg';
 import {useContext} from 'react';
 import SocketContext from '../../../../contexts/Socket/context';
 import {ClientChatEvents} from '../../../../events/chat.events';
+import { ILobby } from 'contexts/Chat/context';
+import { openNotification } from 'helpers/openNotification';
+import { ClientSocialEvents } from 'events/social.events';
 
 interface IProps {
 	username: string;
-	lobbyId: string;
+	lobby: ILobby;
 }
 
-function Mute({username, lobbyId}: IProps) {
+function Mute({username, lobby}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 
 	function muteUser() {
 		socket?.emit(ClientChatEvents.MuteUser, {
 			nameToMute: username,
-			lobbyId: lobbyId,
+			lobbyId: lobby.id,
+		});
+		openNotification('info', `${username} has been muted in ${lobby.name}`);
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: lobby.name,
+			receiver: username,
+			type: 'MUTED',
 		});
 	}
 

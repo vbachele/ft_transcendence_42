@@ -3,7 +3,7 @@ import SocketContext from '../../contexts/Socket/context';
 import {ServerChatEvents} from '../../events/chat.events';
 import ChatContext, {ILobby} from '../../contexts/Chat/context';
 import {act} from 'react-dom/test-utils';
-import useFetchBlockedOf from '../useFetchBlockedOf';
+import useFetchBlockedOf from '../useFetchBlocked';
 import {useUserInfos} from '../../contexts/User/userContent';
 import {fetchBlockList} from '../../helpers/fetchBlockList';
 

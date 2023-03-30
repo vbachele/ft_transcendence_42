@@ -1,16 +1,15 @@
 import {useContext} from 'react';
-import * as F from 'styles/font.styles';
-
 import Buttons from 'components/Buttons';
-import * as S from '../../Social/Social.styles';
 import ActivityStatus from 'components/ActivityStatus';
 import {Divider} from 'antd';
 import {ReactComponent as Close} from 'assets/close.svg';
-import * as C from './containers.styles';
 import ChatContext from 'contexts/Chat/context';
 import {useKickUser} from '../../../hooks/chat/useKickUser';
 import {useUserInfos} from 'contexts/User/userContent';
 import InviteToPlay from 'components/Popup/InviteToPlay/InviteToPlay';
+import * as F from 'styles/font.styles';
+import * as S from '../../Social/Social.styles';
+import * as C from './containers.styles';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
@@ -29,7 +28,7 @@ function UserPanel() {
 					}
 				/>
 			</S.DrawerTitle>
-			<S.FriendDetails >
+			<S.FriendDetails>
 				<img
 					className="drawer__avatar"
 					src={userInPanel.image}
@@ -40,11 +39,13 @@ function UserPanel() {
 			<Divider style={{backgroundColor: '#bbbbbb'}} />
 			<S.FriendOptions>
 				<Buttons.ViewProfile user={userInPanel} />
-				{/*{userInPanel.status === 'online' && <Invite name={userInPanel.name} />}*/}
-				<Buttons.Invite name={userInPanel.name} />
+				{userInPanel.status === 'online' && (
+					<Buttons.Invite user={userInPanel} />
+				)}
 				<Buttons.Message user={userInPanel.name} />
-				{/*{userInPanel.status === 'ingame' && <Spectate user={userInPanel.name} />}*/}
-				<Buttons.Spectate user={userInPanel} />
+				{userInPanel.status === 'ingame' && (
+					<Buttons.Spectate user={userInPanel} />
+				)}
 				<Buttons.AddFriend user={userInPanel} />
 				<Buttons.RemoveFriend user={userInPanel} />
 				<Buttons.BlockUser user={userInPanel} />
@@ -53,19 +54,19 @@ function UserPanel() {
 						<>
 							<Buttons.Mute
 								username={userInPanel.name}
-								lobbyId={activeLobby?.id}
+								lobby={activeLobby}
 							/>
 							<Buttons.Ban
 								username={userInPanel.name}
-								lobbyId={activeLobby?.id}
+								lobby={activeLobby}
 							/>
 							<Buttons.Kick
 								username={userInPanel.name}
-								lobbyId={activeLobby?.id}
+								lobby={activeLobby}
 							/>
 							<Buttons.AdminRights
 								username={userInPanel.name}
-								lobbyId={activeLobby?.id}
+								lobby={activeLobby}
 							/>
 						</>
 					)}

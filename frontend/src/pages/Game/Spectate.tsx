@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import SocketContext from 'contexts/Socket/context';
 import {Pong} from './pong';
 import {useNavigate} from 'react-router-dom';
@@ -6,6 +6,9 @@ import {ClientGameEvents, ServerGameEvents} from 'events/game.events';
 import {useUpdateGameState} from './hooks/useUpdateGameState';
 import {useSetupContext} from './hooks/useSetupContext';
 import {openNotification} from '../../helpers/openNotification';
+import {useGameContext} from '../../contexts/Game/context';
+import Score from './components/Score';
+import {StyledGame} from './Game.styles';
 
 export interface Lobby {
 	id: string;
@@ -21,15 +24,18 @@ function Spectate() {
 	const canvas = document.getElementById('playground') as HTMLCanvasElement;
 	useSetupContext(canvas);
 	const navigate = useNavigate();
+	const [score, setScore] = useState({left: 0, right: 0});
 
-	// useUpdateGameState(pongRef);
-	//
-	// useEffect(() => {
-	// 	if (!lobbyId) return;
-	// 	pongRef.current = new Pong(socket!, lobbyId!, {isSpec: true});
-	// 	socket?.emit(ClientGameEvents.Spectate, {lobbyId: lobbyId});
-	// 	pongRef.current?.start();
-	// }, [lobbyId]);
+	const {lobby, leftPlayer, rightPlayer} = useGameContext().GameState;
+
+	useUpdateGameState(pongRef, setScore);
+
+	useEffect(() => {
+		if (!lobby.id) return;
+		pongRef.current = new Pong(socket!, lobby.id, {isSpec: true});
+		socket?.emit(ClientGameEvents.Spectate, {lobbyId: lobby.id});
+		pongRef.current?.start();
+	}, [lobby.id]);
 
 	useEffect(() => {
 		socket?.on(ServerGameEvents.ClientLeft, () => {
@@ -51,24 +57,19 @@ function Spectate() {
 		};
 	}, [socket]);
 
+	if (!lobby.id || !leftPlayer || !rightPlayer) return null;
+
 	return (
 		<div>
-			<div
-				id="container"
-				style={{
-					aspectRatio: '16 / 9',
-					maxHeight: '80vh',
-					boxShadow: '0 0 10px 10px rgba(100, 100, 100, 0.8)',
-					margin: '32px auto',
-				}}
-			>
+			<Score score={score} leftPlayer={leftPlayer} rightPlayer={rightPlayer} />
+			<StyledGame id="container">
 				<canvas
 					id="playground"
 					width={container ? container.clientWidth : 1280}
 					height={container ? container.clientHeight : 720}
 					style={{width: '100%', height: '100%'}}
 				/>
-			</div>
+			</StyledGame>
 		</div>
 	);
 }

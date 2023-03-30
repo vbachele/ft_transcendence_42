@@ -33,7 +33,6 @@ import {PrismaService} from './database/prisma.service';
 		PrismaModule,
 		CloudinaryModule,
 		WebsocketModule,
-		// DoubleAuthModule,
 		Mail2FaModule,
 		ChatModule,
 	],

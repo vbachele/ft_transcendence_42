@@ -71,7 +71,9 @@ export const Card = styled(Link)<ICardProps>`
 	box-shadow: ${(p) =>
 		p.result === 'win'
 			? 'rgba(75, 174, 79, 1) 0px 0px 6px'
-			: 'rgba(224, 79, 95, 1) 0px 0px 6px'};
+			: p.result === 'loss'
+			? 'rgba(224, 79, 95, 1) 0px 0px 6px'
+			: 'rgba(254, 192, 6, 1) 0px 0px 6px'};
 
 	display: flex;
 	flex-direction: column;

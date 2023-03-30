@@ -9,6 +9,11 @@ export class BlockedController {
 	constructor(private blockedService: BlockedService) {}
 
 	@Get(':name')
+	async getBlockedOf(@Req() req: Request) {
+		return await this.blockedService.getBlocked(req.params.name);
+	}
+
+	@Get('of/:name')
 	async getBlocked(@Req() req: Request) {
 		return await this.blockedService.getBlockedOfUser(req.params.name);
 	}

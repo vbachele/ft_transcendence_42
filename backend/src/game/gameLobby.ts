@@ -31,7 +31,7 @@ export class GameLobby extends ALobby {
 	) {
 		super(websocketService.server, 2);
 		this.mode = data.mode;
-		this.instance = new Pong(this.dispatchToLobby.bind(this), this.mode, prismaService);
+		this.instance = new Pong(this.dispatchToLobby.bind(this), this.mode, prismaService, websocketService);
 		this.state = 'waiting';
 	}
 
@@ -64,6 +64,7 @@ export class GameLobby extends ALobby {
 	gameSetup() {
 		const leftPlayer = [...this.clients.values()][0];
 		const rightPlayer = [...this.clients.values()][1];
+		if (!leftPlayer || !rightPlayer) throw new WsException('Not enough players');
 		this.instance?.setPlayer(leftPlayer, 'left');
 		this.instance?.setPlayer(rightPlayer, 'right');
 		return {

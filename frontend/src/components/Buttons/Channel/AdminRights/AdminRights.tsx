@@ -3,13 +3,16 @@ import {ReactComponent as Icon} from './admin.svg';
 import React, {useContext} from 'react';
 import SocketContext from '../../../../contexts/Socket/context';
 import {ClientChatEvents} from '../../../../events/chat.events';
+import { ILobby } from 'contexts/Chat/context';
+import { openNotification } from 'helpers/openNotification';
+import { ClientSocialEvents } from 'events/social.events';
 
 interface IProps {
 	username: string;
-	lobbyId: string;
+	lobby: ILobby;
 }
 
-function AdminRights({username, lobbyId}: IProps) {
+function AdminRights({username, lobby}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 
 	function setAdmin(event: React.MouseEvent) {
@@ -17,7 +20,13 @@ function AdminRights({username, lobbyId}: IProps) {
 		event.stopPropagation();
 		socket?.emit(ClientChatEvents.SetAdmin, {
 			nameToSetAdmin: username,
-			lobbyId: lobbyId,
+			lobbyId: lobby.id,
+		});
+		openNotification('info', `${username} is now admin in ${lobby.name}`);
+		socket?.emit(ClientSocialEvents.SendNotif, {
+			sender: lobby.name,
+			receiver: username,
+			type: 'ADMIN',
 		});
 	}
 
