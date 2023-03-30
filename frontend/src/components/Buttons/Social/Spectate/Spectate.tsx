@@ -23,13 +23,13 @@ function Spectate({user}: IProps) {
 	const {socket} = useContext(SocketContext).SocketState;
 	const {userName, setAchievements} = useUserInfos();
 	const navigate = useNavigate();
+		const GameDispatch = useGameContext().GameDispatch;
 
 	const handleClick = async () => {
 		const exists = await userExists(user.name, userName.userName);
 		const friends = await fetchFriends(userName.userName);
 		const data = await fetchUserByName(userName.userName, userName.userName);
 		const hasWatchAchievement = data?.achievements.includes('WATCH');
-		const GameDispatch = useGameContext().GameDispatch;
 
 		const game: SpectateResponse = await asyncEmit(
 			socket!,
@@ -43,7 +43,7 @@ function Spectate({user}: IProps) {
 			return;
 		}
 		if (data && !hasWatchAchievement) {
-			unlockAchievement('WATCH', data, socket);
+			await unlockAchievement('WATCH', data, socket);
 			setAchievements({achievements: [...data.achievements]});
 		}
 		GameDispatch({type: 'update_left_player', payload: game.leftPlayer});

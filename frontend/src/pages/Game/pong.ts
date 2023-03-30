@@ -36,7 +36,7 @@ class Particle {
 	) {
 		this.angle = Math.atan2(this.velocity?.x!, this.velocity?.y!);
 		this.size = getRandomInt(sizeRange.min, sizeRange.max);
-		this.style = `rgba(240, 240, 240, 0.2`;
+		this.style = `rgba(240, 240, 240, 0.2)`;
 		this.position = {
 			x: position.x + getRandomInt(-dispersion.x, dispersion.x),
 			y: position.y + getRandomInt(-dispersion.y, dispersion.y),
