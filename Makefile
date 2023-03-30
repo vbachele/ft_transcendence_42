@@ -4,7 +4,7 @@ UNAME := $(shell uname -s)
 all:
 ifeq ($(shell grep POSTGRES_DIR .env > /dev/null; echo $$?), 1)
 	@read -p "Enter Postgres folder path: " POSTGRES_DIR; \
-	sudo mkdir -p $$POSTGRES_DIR/postgres_vol; \
+	mkdir -p $$POSTGRES_DIR/postgres_vol; \
 	echo "\nPOSTGRES_DIR=$$POSTGRES_DIR/postgres_vol" >> ./.env
 endif
 ifneq ($(shell cat ./frontend/.env > /dev/null 2>&1; echo $$?), 0)
@@ -29,12 +29,12 @@ endif
 endif
 	docker system prune -a
 	docker volume prune
-	sudo rm -rf ${POSTGRES_DIR}
-	sudo rm -rf ./backend/.env
-	sudo rm -rf ./frontend/.env
-	sudo rm -rf ./backend/dist
-	sudo rm -rf ./backend/node_modules
-	sudo rm -rf ./frontend/node_modules
+	rm -rf ${POSTGRES_DIR}
+	rm -rf ./backend/.env
+	rm -rf ./frontend/.env
+	rm -rf ./backend/dist
+	rm -rf ./backend/node_modules
+	rm -rf ./frontend/node_modules
 
 re: clean all
 

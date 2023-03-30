@@ -14,3 +14,5 @@ export interface InvitationRequest {
 export interface InvitationResponse extends InvitationRequest {
 	state: 'accepted' | 'declined';
 }
+
+export interface SpectateResponse extends InvitationResponse {}

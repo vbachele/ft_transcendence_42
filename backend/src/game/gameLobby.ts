@@ -64,6 +64,7 @@ export class GameLobby extends ALobby {
 	gameSetup() {
 		const leftPlayer = [...this.clients.values()][0];
 		const rightPlayer = [...this.clients.values()][1];
+		if (!leftPlayer || !rightPlayer) throw new WsException('Not enough players');
 		this.instance?.setPlayer(leftPlayer, 'left');
 		this.instance?.setPlayer(rightPlayer, 'right');
 		return {

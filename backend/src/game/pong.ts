@@ -114,8 +114,8 @@ export class Pong {
 			},
 		});
 
-		this.updateUser(this.players['left']?.data.name!);
-		this.updateUser(this.players['right']?.data.name!);
+		await this.updateUser(this.players['left']?.data.name!);
+		await this.updateUser(this.players['right']?.data.name!);
 
 		this.players['left']!.data.paddle = undefined;
 		this.players['right']!.data.paddle = undefined;
