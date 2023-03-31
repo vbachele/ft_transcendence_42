@@ -18,6 +18,7 @@ services:
       - ft_transcendence
     depends_on:
       - postgres
+    restart: always
 
   frontend:
     container_name: frontend
@@ -36,6 +37,7 @@ services:
       - ft_transcendence
     depends_on:
       - backend
+    restart: always
 
   postgres:
     container_name: database
