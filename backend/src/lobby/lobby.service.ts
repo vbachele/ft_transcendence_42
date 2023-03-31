@@ -68,7 +68,6 @@ export class LobbyService {
 			await (lobby as ChatLobby).init(payload as ChatLobbyDto);
 		}
 		this.lobbies.set(lobby.id, lobby);
-		console.log(`lobby created`);
 		return lobby;
 	}
 

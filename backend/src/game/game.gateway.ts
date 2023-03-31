@@ -79,7 +79,6 @@ export class GameGateway implements OnGatewayDisconnect {
 
 	@SubscribeMessage(ClientEvents.InvitationResponse)
 	async onInvitationResponse(client: AuthenticatedSocket, data: any) {
-		console.log(`invitation response : `, data);
 		await this.gameService.dispatchInvitationResponse(client, data);
 		return {
 			event: ServerEvents.LobbyMessage,

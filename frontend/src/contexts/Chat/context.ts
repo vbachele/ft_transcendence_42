@@ -11,7 +11,7 @@ export interface ILobby {
 	privacy: string;
 	type: string;
 	messages: any[];
-	users: any[];
+	users: IUser[];
 }
 
 export interface IChatContextState {

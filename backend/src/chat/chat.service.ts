@@ -96,7 +96,7 @@ export class ChatService {
 
 	public async comparePassword(chanName: string, password: string) {
 		const response: Lobby | null =
-			await this.prismaLobbyService.fetchLobbyByName(password, chanName);
+			await this.prismaLobbyService.fetchLobbyByName(chanName);
 		const isMatch = await bcrypt.compare(password, response?.password!);
 		if (!isMatch) {
 			throw new HttpException(

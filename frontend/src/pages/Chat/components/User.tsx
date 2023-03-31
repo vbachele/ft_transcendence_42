@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import SocketContext from '../../../contexts/Socket/context';
-import {ClientEvents} from '../../../events/socket.events';
+import {ClientEvents, ServerEvents} from '../../../events/socket.events';
 import * as S from '../components/components.styles';
 import * as F from '../../../styles/font.styles';
 import {displayStatus} from '../modals/ModalUserSearch';
@@ -8,6 +8,8 @@ import {IUser} from '../../../types/models';
 import {StyledUser} from './components.styles';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ChatContext from '../../../contexts/Chat/context';
+import {asyncEmit} from '../../../helpers/asyncEmit';
+import {ClientChatEvents, ServerChatEvents} from '../../../events/chat.events';
 
 interface IProps {
 	user: IUser;
@@ -21,29 +23,38 @@ function User({user, setIsModalOpen, type}: IProps) {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const name = useUserInfos().userName.userName;
 
-	function createDirectMessage(event: React.MouseEvent) {
+	async function createDirectMessage(event: React.MouseEvent) {
 		event.stopPropagation();
-		const lobbyName = [user.name + '+' + name, name + '+' + user.name];
-		if ([...lobbyList].find((lobby) => lobbyName.includes(lobby.name))) {
-			ChatDispatch({
-				type: 'update_active_lobby',
-				payload: [...lobbyList].find((lobby) => lobbyName.includes(lobby.name)),
-			});
-		} else {
-			socket?.emit(ClientEvents.CreateLobby, {
-				type: 'chat',
-				data: {
-					maxClients: 2,
-					owner: name,
-					privacy: 'private',
-					init: 'true',
-					type: 'direct_message',
-					name: user.name + '+' + name,
-					description: user.name,
-				},
-			});
+		console.log(`create direct message with ${user.name}`);
+		const lobby = {
+			type: 'chat',
+			data: {
+				maxClients: 2,
+				owner: name,
+				privacy: 'private',
+				init: 'true',
+				type: 'direct_message',
+				name: user.name + '+' + name,
+				description: user.name,
+			},
+		};
+		try {
+			const res = await asyncEmit(
+				socket!,
+				ClientChatEvents.FetchLobby,
+				{lobbyName: lobby.data.name},
+				ServerChatEvents.Lobby
+			);
+			console.log(`res = `, res);
+			if (res.lobby) {
+				socket?.emit(ClientEvents.JoinLobby, {lobbyId: res.lobby.id});
+			} else {
+				socket?.emit(ClientEvents.CreateLobby, lobby);
+			}
+			setIsModalOpen(false);
+		} catch (error) {
+			console.error(error);
 		}
-		setIsModalOpen(false);
 	}
 
 	function openUserPanel(event: React.MouseEvent) {

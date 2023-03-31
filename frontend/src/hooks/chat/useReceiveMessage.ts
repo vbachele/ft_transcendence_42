@@ -27,7 +27,7 @@ export function useReceiveMessage(activeLobby: ILobby | undefined) {
 				setBlockList(data);
 			}
 		});
-	}, []);
+	}, [activeLobby]);
 
 	useEffect(() => {
 		setMessages([]);

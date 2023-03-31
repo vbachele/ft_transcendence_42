@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import * as F from 'styles/font.styles';
 import * as S from '../components/components.styles';
 import * as C from '../containers/containers.styles';
@@ -13,6 +13,8 @@ import useFetchUserByName from 'hooks/useFetchUserByName';
 import {backend} from '../../../lib/backend';
 import ModalDescription from '../modals/ModalDescription';
 import AdminPanel from './AdminPanel';
+import {IUser} from '../../../types/models';
+import {getDirectMessageContact} from '../helpers/getDirectMessageContact';
 
 function TopBar() {
 	const {responsive} = useResponsiveLayout();
@@ -22,14 +24,15 @@ function TopBar() {
 	const name = useUserInfos().userName.userName;
 	const {userList} = useFetchLobbyUserList();
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
-	const {data} = useFetchUserByName(directMessageName(activeLobby!.name));
+	const [dmUser, setDmUser] = useState<IUser | undefined>(undefined);
 	const [dropdownVisible, setDropdownVisible] = useState(false);
 
-	function directMessageName(lobbyName: string) {
-		const displayedName = lobbyName.split('+');
-		if (displayedName[0] === name) return displayedName[1];
-		else return displayedName[0];
-	}
+	useEffect(() => {
+		if (activeLobby?.type === 'direct_message' && activeLobby?.users) {
+			const dmContact = getDirectMessageContact(activeLobby?.users, name);
+			setDmUser(dmContact);
+		}
+	}, [activeLobby]);
 
 	function clearActiveLobby() {
 		updateActiveLobby({
@@ -39,11 +42,10 @@ function TopBar() {
 	}
 
 	async function openUserPanel() {
-		const user: any = await backend.getUserByName(
-			directMessageName(activeLobby!.name),
-			name
-		);
-		ChatDispatch({type: 'active_user_in_panel', payload: user});
+		console.log('dm user = ', dmUser)
+		console.log(` users = `, activeLobby?.users)
+		if (!dmUser) return;
+		ChatDispatch({type: 'active_user_in_panel', payload: dmUser});
 		ChatDispatch({type: 'update_user_panel', payload: true});
 	}
 
@@ -73,7 +75,9 @@ function TopBar() {
 						userList={userList.filter((user) => user.name !== name)}
 						type={'openUserPanel'}
 					/>
-					<F.Text>{userList.filter(user => user.name !== name).length}</F.Text>
+					<F.Text>
+						{userList.filter((user) => user.name !== name).length}
+					</F.Text>
 					<Profile />
 				</S.UserList>
 			</C.TopBar>
@@ -87,8 +91,8 @@ function TopBar() {
 							<BurgerMenu />
 						</button>
 					)}
-					<S.ProfilePic src={data?.image} />
-					<F.Text weight="700">{data?.name}</F.Text>
+					<S.ProfilePic src={dmUser?.image} />
+					<F.Text weight="700">{dmUser?.name}</F.Text>
 				</S.ChannelName>
 				<button
 					style={{
