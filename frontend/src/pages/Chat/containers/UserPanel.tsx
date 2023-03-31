@@ -10,11 +10,14 @@ import InviteToPlay from 'components/Popup/InviteToPlay/InviteToPlay';
 import * as F from 'styles/font.styles';
 import * as S from '../../Social/Social.styles';
 import * as C from './containers.styles';
+import useFetchFriendsOf from 'hooks/useFetchFriendsOf';
+import isUserIn from 'helpers/isUserIn';
 
 function UserPanel() {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const {userInPanel, activeLobby} = useContext(ChatContext).ChatState;
 	const {userName} = useUserInfos().userName;
+	const {data: friends} = useFetchFriendsOf(userName);
 
 	if (!userInPanel) return null;
 
@@ -46,11 +49,11 @@ function UserPanel() {
 				{userInPanel.status === 'ingame' && (
 					<Buttons.Spectate user={userInPanel} />
 				)}
-				<Buttons.AddFriend user={userInPanel} />
-				<Buttons.RemoveFriend user={userInPanel} />
+				{!isUserIn(friends, userInPanel.name) && <Buttons.AddFriend user={userInPanel} />}
+				{isUserIn(friends, userInPanel.name) && <Buttons.RemoveFriend user={userInPanel} />}
 				<Buttons.BlockUser user={userInPanel} />
 				{activeLobby?.admins &&
-					activeLobby?.admins.find((adminName) => adminName === userName) && (
+					activeLobby?.admins.find((adminName) => adminName === userName) && activeLobby.type === 'channel' && (
 						<>
 							<Buttons.Mute
 								username={userInPanel.name}
