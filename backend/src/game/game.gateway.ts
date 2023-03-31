@@ -5,10 +5,9 @@ import {
 	SubscribeMessage,
 	WebSocketGateway,
 	WsException,
-	WsResponse,
 } from '@nestjs/websockets';
 import {ClientEvents, ServerEvents} from '../lobby/events/lobby.events';
-import {AuthenticatedSocket, ServerPayloads} from '../lobby/types/lobby.type';
+import {AuthenticatedSocket} from '../lobby/types/lobby.type';
 import {FetchSetupDto, GameInviteDto, MovePaddleDto} from './dto/game.dto';
 import {ClientGameEvents, ServerGameEvents} from './events/game.events';
 import {GameService} from './game.service';
@@ -18,7 +17,6 @@ import {GameLobby, GameLobbyDto} from './gameLobby';
 import {PrismaService} from '../database/prisma.service';
 import {GameMode} from './types/game.type';
 import {WebsocketService} from '../websocket/websocket.service';
-import {ALobby} from '../lobby/ALobby';
 import {UserService} from '../api/users/users.service';
 
 @WebSocketGateway()
@@ -52,7 +50,22 @@ export class GameGateway implements OnGatewayDisconnect {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) data: GameInviteDto
 	) {
+		const player = await this.userService.getUser(data.invitedClientName);
+		const invitedClient = this.websocketService.getClient(
+			data.invitedClientName
+		);
+		if (
+			!player ||
+			player.status === 'offline' ||
+			player.status === 'busy' ||
+			!invitedClient
+		) {
+			throw new WsException(
+				`Player ${data.invitedClientName} is not available`
+			);
+		}
 		await this.websocketService.updateStatus(client, 'busy');
+		await this.websocketService.updateStatus(invitedClient, 'busy');
 		console.log(data.invitedClientName);
 		await this.gameService.invite(client, data.invitedClientName, data.lobbyId);
 		return {
@@ -65,7 +78,6 @@ export class GameGateway implements OnGatewayDisconnect {
 
 	@SubscribeMessage(ClientEvents.InvitationResponse)
 	async onInvitationResponse(client: AuthenticatedSocket, data: any) {
-		console.log(`invitation response : `, data);
 		await this.gameService.dispatchInvitationResponse(client, data);
 		return {
 			event: ServerEvents.LobbyMessage,
@@ -153,7 +165,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientGameEvents.CancelInvitation)
-	onCancelInvitation(
+	async onCancelInvitation(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody('lobbyId') lobbyId: string,
 		@MessageBody('invitedClientName') invitedClientName: string

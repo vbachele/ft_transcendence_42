@@ -2,16 +2,16 @@ import * as S from './components.styles';
 import ChatContext, {ILobby} from 'contexts/Chat/context';
 import {useContext, useEffect, useState} from 'react';
 import SocketContext from '../../../contexts/Socket/context';
-import {ClientEvents, ServerEvents} from '../../../events/socket.events';
+import {ClientEvents} from '../../../events/socket.events';
 import {useUserInfos} from '../../../contexts/User/userContent';
 import ModalChanPass from '../modals/ModalChanPass';
 import {AiTwotoneLock} from 'react-icons/ai';
-import {ServerGameEvents} from '../../../events/game.events';
 import {asyncEmit} from '../../../helpers/asyncEmit';
 import {ClientChatEvents, ServerChatEvents} from '../../../events/chat.events';
-import useFetchUserByName from '../../../hooks/useFetchUserByName';
 import {displayStatus} from '../modals/ModalUserSearch';
+import {getDirectMessageContact} from '../helpers/getDirectMessageContact';
 import {IUser} from '../../../types/models';
+import {backend} from '../../../lib/backend';
 
 interface ChannelProps {
 	lobby: ILobby;
@@ -22,9 +22,23 @@ function Channel({lobby}: ChannelProps) {
 	const ChatDispatch = useContext(ChatContext).ChatDispatch;
 	const name = useUserInfos().userName.userName;
 	const [popup, setPopup] = useState<boolean>(false);
-	const user = useFetchUserByName(directMessageName(lobby.users));
 	const [unreadMessages, setUnreadMessages] = useState<number>(0);
 	const {activeLobby} = useContext(ChatContext).ChatState;
+	const [dmUser, setDmUser] = useState<IUser | undefined>(undefined);
+
+	useEffect(() => {
+		const fetchDmContact = async () => {
+			const username = lobby.name.split('+');
+			const contact = await backend.getUser(
+				username[0] === name ? username[1] : username[0]
+			);
+			if (!contact) return;
+			setDmUser(contact);
+		};
+		if (lobby.type === 'direct_message') {
+			fetchDmContact();
+		}
+	}, []);
 
 	useEffect(() => {
 		socket?.on(ServerChatEvents.IncomingMessage, (data) => {
@@ -33,12 +47,6 @@ function Channel({lobby}: ChannelProps) {
 			}
 		});
 	}, [socket]);
-
-	function directMessageName(users: IUser[]) {
-		if (!users) return;
-		if (users[0].name === name) return users[1].name;
-		else return users[0].name;
-	}
 
 	function onJoinLobby() {
 		socket?.emit(ClientEvents.JoinLobby, {lobbyId: lobby.id});
@@ -73,7 +81,7 @@ function Channel({lobby}: ChannelProps) {
 			}
 		>
 			{lobby.type === 'channel' ? (
-				<S.DMContainer >
+				<S.DMContainer>
 					#{lobby.name}
 					<div style={{display: 'flex'}}>
 						{lobby.privacy === 'private' && (
@@ -87,14 +95,14 @@ function Channel({lobby}: ChannelProps) {
 			) : (
 				<S.DMContainer>
 					<S.Avatar>
-						<S.ProfilePic src={user.data?.image} />
-						{displayStatus(user.data?.status!)}
-					<div style={{marginLeft: '16px'}}>
-						{directMessageName(lobby.users)}
-					</div>
+						<S.ProfilePic src={dmUser?.image} />
+						{displayStatus(dmUser?.status!)}
+						<div style={{marginLeft: '16px'}}>{dmUser?.name}</div>
 					</S.Avatar>
 					{unreadMessages > 0 && (
-						<S.UnreadMessages><p>{unreadMessages}</p></S.UnreadMessages>
+						<S.UnreadMessages>
+							<p>{unreadMessages}</p>
+						</S.UnreadMessages>
 					)}
 				</S.DMContainer>
 			)}

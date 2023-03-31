@@ -227,6 +227,7 @@ export class PrismaLobbyService {
 						},
 					},
 				},
+				users: true,
 			},
 		});
 	}
@@ -309,12 +310,15 @@ export class PrismaLobbyService {
 	}
 
 	/* Password Channel Part */
-	async fetchLobbyByName(password: string, chanName: string) {
+	async fetchLobbyByName(chanName: string) {
 		try {
 			return await this.prismaService.lobby.findFirst({
 				where: {
 					name: chanName,
 				},
+				include: {
+					users: true,
+				}
 			});
 		} catch (error) {
 			throw new HttpException(

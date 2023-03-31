@@ -10,6 +10,7 @@ export enum ClientChatEvents {
 	MuteUser = "client.chat.muteUser",
 	FetchBlockedUsers = "client.chat.fetchBlockedUsers",
 	DeleteLobby = "client.chat.deleteLobby",
+	FetchLobby = "client.chat.fetchLobby",
 }
 
 export enum ServerChatEvents {
@@ -23,4 +24,5 @@ export enum ServerChatEvents {
 	InLobby = "server.chat.inLobby",
 	BlockedUsers = "server.chat.blockedUsers",
 	LobbyDeleted = "server.chat.lobbyDeleted",
+	Lobby = "server.chat.lobby",
 }

@@ -29,8 +29,6 @@ function ChannelBar() {
 	};
 
 	function handleChange(event: FormEvent<HTMLInputElement>) {
-		console.log(`lobbyList = `, lobbyList);
-
 		setSearch(event.currentTarget.value);
 		setPrivateChan(!privateChan);
 	}

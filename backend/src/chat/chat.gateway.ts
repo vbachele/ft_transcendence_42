@@ -13,7 +13,7 @@ import {UseGuards, ValidationPipe} from '@nestjs/common';
 import {SendMessageDto} from './dto/chat.dto';
 import {ChatService} from './chat.service';
 import {AdminGuard} from './guards/admin.guard';
-import {BlockedService} from '../social/blocked/blocked.service';//
+import {BlockedService} from '../social/blocked/blocked.service'; //
 
 /**
  * @brief Gateway for the chat module
@@ -61,6 +61,19 @@ export class ChatGateway implements OnGatewayConnection {
 			);
 		} catch (e) {
 			throw new WsException(`Error sending message`);
+		}
+	}
+
+	@SubscribeMessage(ClientChatEvents.FetchLobby)
+	async onFetchLobby(
+		@ConnectedSocket() client: AuthenticatedSocket,
+		@MessageBody('lobbyName') lobbyName: string
+	) {
+		console.log(`lobbyname ${lobbyName}`)
+		const lobby = await this.prismaLobbyService.fetchLobbyByName(lobbyName);
+		return {
+			event: ServerChatEvents.Lobby,
+			data: {lobby: lobby},
 		}
 	}
 
@@ -126,16 +139,14 @@ export class ChatGateway implements OnGatewayConnection {
 		@MessageBody('lobbyId') lobbyId: string,
 		@MessageBody('type') type: 'kick' | 'ban'
 	) {
+		console.log(`kick user ${userToKick} from ${lobbyId} type ${type}`);
 		switch (type) {
 			case 'ban':
 				await this.chatService.banUser(userToKick, lobbyId);
-				console.info(
-				);
 				break;
 			case 'kick':
 				await this.chatService.kickUser(userToKick, lobbyId);
-				console.info(
-				);
+				break;
 		}
 		return {
 			event: ServerChatEvents.UserBanned,
@@ -171,20 +182,16 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@UseGuards(AdminGuard)
 	@SubscribeMessage(ClientChatEvents.DeleteLobby)
-	async onDeleteLobby(
-		@MessageBody('lobbyId') lobbyId: string
-	) {
+	async onDeleteLobby(@MessageBody('lobbyId') lobbyId: string) {
 		await this.chatService.deleteLobby(lobbyId);
 	}
 
 	@SubscribeMessage(ClientChatEvents.FetchBlockedUsers)
-	async onFetchBlockedUsers(
-		@ConnectedSocket() client: AuthenticatedSocket
-	) {
+	async onFetchBlockedUsers(@ConnectedSocket() client: AuthenticatedSocket) {
 		const blockList = await this.blockService.getBlockList(client.data.name);
 		return {
 			event: ServerChatEvents.BlockedUsers,
 			data: blockList,
-		}
+		};
 	}
 }
