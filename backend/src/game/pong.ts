@@ -50,7 +50,7 @@ export class Pong {
 		left: AuthenticatedSocket | undefined;
 		right: AuthenticatedSocket | undefined;
 	} = {['left']: undefined, ['right']: undefined};
-	public timeLimit = 1.5 * 60 * 1000;
+	public timeLimit = 1 * 60 * 1000;
 	private timerRef: NodeJS.Timeout;
 
 	constructor(
@@ -64,14 +64,16 @@ export class Pong {
 
 	private timer() {
 		this.timerRef = setTimeout(() => {
-			this.timeLimit -= 1000;
-			this.dispatchToLobby(ServerGameEvents.Timer, {time: this.timeLimit});
-			if (this.timeLimit <= 0) {
+			if (this.timeLimit > 0) {
+				this.timeLimit -= 1000;
+				this.dispatchToLobby(ServerGameEvents.Timer, {time: this.timeLimit});
+			this.timer();
+			} else {
+
 				this.observeWinner().catch(console.error);
 				clearTimeout(this.timerRef);
 				return;
 			}
-			this.timer();
 		}, 1_000);
 	}
 
@@ -102,7 +104,7 @@ export class Pong {
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
-				winner: 'draw', scores: this.score, players: this.players
+				winner: 'draw'
 			});
 		}
 		await this.prismaService.game.create({
@@ -115,6 +117,7 @@ export class Pong {
 				rightScore: this.score[1],
 			},
 		});
+		console.log(`FINISHED`)
 
 		await this.updateUser(this.players['left']?.data.name!);
 		await this.updateUser(this.players['right']?.data.name!);
@@ -141,7 +144,6 @@ export class Pong {
 				(parseFloat(ratio) + 1) *
 				(achievements / 13 + 1)
 		);
-
 		await this.prismaService.user.update({
 			where: {name: username},
 			data: {

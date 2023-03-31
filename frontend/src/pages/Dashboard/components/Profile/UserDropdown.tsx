@@ -90,7 +90,7 @@ const UserDropdown = ({
 		},
 		{
 			key: 'INVITE',
-			disabled: !(isUserIn(friendUsers, user.name) && status === 'online'),
+			disabled: !(status === 'online'),
 			label: 'Invite to play',
 			children: [
 				{
@@ -114,7 +114,7 @@ const UserDropdown = ({
 		{
 			label: (
 				<>
-					{isUserIn(friendUsers, user.name) && status === 'ingame' && (
+					{status === 'ingame' && (
 						<S.OptionButton
 							onClick={() => {
 								setDropdownVisible(false);

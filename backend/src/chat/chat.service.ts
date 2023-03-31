@@ -10,6 +10,7 @@ import {Request, Response} from 'express';
 import * as bcrypt from 'bcrypt';
 import {ClientEvents} from 'src/lobby/events/lobby.events';
 import {BlockedService} from '../social/blocked/blocked.service';
+import { ErrorType, LobbyException } from 'src/lobby/errors/lobby.error';
 
 @Injectable()
 export class ChatService {
@@ -22,6 +23,7 @@ export class ChatService {
 
 	async sendMessage(content: string, lobbyId: string, username: string) {
 		const lobby = this.lobbyService.getLobby(lobbyId);
+		if (!lobby) throw new LobbyException(ErrorType.LobbyNotFound)
 		const message = await this.prismaLobbyService.pushMessage(
 			lobbyId,
 			content.substring(0, 4096),
@@ -43,6 +45,7 @@ export class ChatService {
 		);
 		lobbies?.lobbies.forEach((lobbyModel) => {
 			const lobby = this.lobbyService.getLobby(lobbyModel.id);
+			if (!lobby) return;
 			lobby.addClient(client);
 		});
 	}
