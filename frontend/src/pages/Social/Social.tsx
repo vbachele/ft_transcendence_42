@@ -202,7 +202,6 @@ function Social() {
 					}`}
 					key="PENDING"
 					empty={isEmptyPendings(pendingsSent, pendingsReceived)}
-
 				>
 					{pendingsSent &&
 						pendingsSent

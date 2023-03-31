@@ -52,10 +52,6 @@ export class WebsocketService {
 				client.data.name
 			);
 			if (blacklist?.includes(sender)) return;
-<<<<<<< HEAD
-=======
-			console.log(`emmiting to ${client.data.name}`);
->>>>>>> 8d8319ba10530e21167ba8f7455f2eff01866d77
 			this.server.to(client.id).emit(event, payload);
 		});
 	}

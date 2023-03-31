@@ -231,7 +231,7 @@ export class Pong {
 					paddles.left.position.y + PADDLE_SIZE.y
 			) {
 				ball.position.x = paddles.left.position.x + PADDLE_SIZE.x + ball.radius;
-				this.ball.velocity.x = -this.ball.velocity.x * BALL_ACCELERATION;
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -1400, 1400);
 			}
 		}
 		if (
@@ -244,8 +244,9 @@ export class Pong {
 				ball.position.y - ball.radius + delta <=
 					paddles.right.position.y + PADDLE_SIZE.y - delta
 			) {
+				console.log(`ball velocity = `, this.ball.velocity.x);
 				ball.position.x = paddles.right.position.x - ball.radius;
-				this.ball.velocity.x = -this.ball.velocity.x * BALL_ACCELERATION;
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -1400, 1400);
 			}
 		}
 	}
