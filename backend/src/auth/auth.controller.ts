@@ -33,10 +33,11 @@ export class AuthController {
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token
     );
+
     this.authService.createCookies(res, token);
     const userExists = await this.userService.getUserByEmail(user42infos.email);
     this.authService.updateCookies(res, token, userExists);
-    this.authService.RedirectConnectingUser(res, userExists?.email);
+    this.authService.RedirectConnectingUser(req,res, userExists?.email);
   }
 
   @Get("logout")
@@ -59,6 +60,6 @@ export class AuthController {
     this.authService.createCookies(res, userInfos);
     const userExists = await this.userService.getUserByEmail(userInfos.email);
     this.authService.updateCookies(res, token, userExists);
-    this.authService.RedirectConnectingUser(res, userExists?.email);
+    this.authService.RedirectConnectingUser(req, res, userExists?.email);
   }
 }

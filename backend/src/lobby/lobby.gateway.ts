@@ -68,16 +68,14 @@ export class LobbyGateway implements OnGatewayInit {
 		} catch (e) {
 			throw new LobbyException(ErrorType.LobbyAlreadyExist);
 		}
-		// if (!lobby) throw new WsException("Lobby creation error");
-		// else this.lobbyService.join(lobby.id, client);
 	}
 
 	@SubscribeMessage(ClientEvents.JoinLobby)
-	onJoinLobby(
+	async onJoinLobby(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) data: JoinLobbyDto
-	): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
-		this.lobbyService.join(data.lobbyId, client);
+	) {
+		await this.lobbyService.join(data.lobbyId, client);
 
 		return {
 			event: ServerEvents.LobbyMessage,
@@ -88,11 +86,11 @@ export class LobbyGateway implements OnGatewayInit {
 	}
 
 	@SubscribeMessage(ClientEvents.LeaveLobby)
-	onLeaveLobby(
+	async onLeaveLobby(
 		client: AuthenticatedSocket,
 		@MessageBody(new ValidationPipe()) data: LeaveLobbyDto
-	): WsResponse<ServerPayloads[ServerEvents.LobbyMessage]> {
-		this.lobbyService.leave(data.lobbyId, client);
+	) {
+		await this.lobbyService.leave(data.lobbyId, client);
 
 		console.info(
 			`User - [${client.data.name}] - left the lobby - [${data.lobbyId}]`

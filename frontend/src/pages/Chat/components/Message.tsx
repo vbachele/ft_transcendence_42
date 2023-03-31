@@ -38,7 +38,7 @@ function TextWithBackgroundBox({content, authorName, date}: MessageProps) {
 	const {data} = useFetchUserByName(authorName);
 	const theme = useContext(ThemeContext);
 
-	const now = new Date();
+	const now = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
         month: '2-digit',

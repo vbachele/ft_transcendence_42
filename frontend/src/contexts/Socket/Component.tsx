@@ -64,10 +64,8 @@ const SocketContextComponent: React.FunctionComponent<
 
 		socket.emit('handshake');
 		socket.on('handshake', (name: string, users: string[]) => {
-			console.log('User handshake callback message received');
 			SocketDispatch({type: 'update_name', payload: name});
 			SocketDispatch({type: 'update_users', payload: users});
-
 			setLoading(false);
 			console.info(`Handshake completed.`);
 		});
@@ -75,7 +73,6 @@ const SocketContextComponent: React.FunctionComponent<
 
 	useEffect(() => {
 		socket.on('user_connected', (users: string[]) => {
-			console.log(`New user connected.`);
 			SocketDispatch({type: 'update_users', payload: users});
 		});
 
@@ -85,7 +82,6 @@ const SocketContextComponent: React.FunctionComponent<
 		});
 
 		socket.on('user_disconnected', (users: string[]) => {
-			console.log(`A user has disconnected`);
 			SocketDispatch({type: 'update_users', payload: users});
 		});
 		socket.on('exception', (error: string) => {

@@ -169,7 +169,7 @@ function Social() {
 					onSearch={onSearch}
 				/>
 			)}
-			<S.StyledCollapse ghost={true}>
+			<S.StyledCollapse ghost={true} activeKey={['FRIENDS', 'PENDING', 'BLOCKED']}>
 				<S.StyledPanel
 					header={`Friends - ${
 						friendUsers &&

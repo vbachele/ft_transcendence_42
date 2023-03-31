@@ -72,8 +72,8 @@ const Navbar = ({setTheme}: IProps) => {
 				</S.Brand>
 			</Link>
 			<S.Menu>
-				{/* <ToggleTheme setTheme={setTheme} />
-				<S.Divider /> */}
+				<ToggleTheme setTheme={setTheme} />
+				<S.Divider />
 				<NotificationCenter
 					notifications={notifications}
 					setNotifications={setNotifications}

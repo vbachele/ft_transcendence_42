@@ -69,16 +69,16 @@ export class WebsocketService {
 	public async updateStatus(
 		@ConnectedSocket() client: AuthenticatedSocket,
 		type: string
-	) {
-		switch (type) {
-			case 'online':
-				this.setOnline(client);
+		) {
+			switch (type) {
+				case 'online':
+					await this.setOnline(client);
 				break;
 			case 'busy':
-				this.setBusy(client);
+				await this.setBusy(client);
 				break;
 			case 'offline':
-				this.setOffline(client);
+				await this.setOffline(client);
 				break;
 			default:
 				break;
@@ -95,7 +95,7 @@ export class WebsocketService {
 
 	private async setOnline(@ConnectedSocket() client: AuthenticatedSocket) {
 		try {
-			const updatedUser = await this.prisma.user.update({
+			await this.prisma.user.update({
 				where: {name: client.data.name},
 				data: {
 					status: 'online',
@@ -105,7 +105,7 @@ export class WebsocketService {
 				status: 'online',
 				user: client.data.name,
 			});
-			return updatedUser;
+			console.log(`${client.data.name} is now online`);
 		} catch (error) {
 			throw new WsException('Failed to update status of user');
 		}
@@ -113,7 +113,7 @@ export class WebsocketService {
 
 	private async setBusy(@ConnectedSocket() client: AuthenticatedSocket) {
 		try {
-			const updatedUser = await this.prisma.user.update({
+			await this.prisma.user.update({
 				where: {name: client.data.name},
 				data: {
 					status: 'ingame',
@@ -123,7 +123,7 @@ export class WebsocketService {
 				status: 'ingame',
 				user: client.data.name,
 			});
-			return updatedUser;
+			console.log(`${client.data.name} is now ingame`);
 		} catch (error) {
 			throw new WsException('Failed to update status of user');
 		}
@@ -133,7 +133,7 @@ export class WebsocketService {
 		setTimeout(async () => {
 			if (!this.getClient(client.data.name)) {
 				try {
-					const updatedUser = await this.prisma.user.update({
+					await this.prisma.user.update({
 						where: {name: client.data.name},
 						data: {
 							status: 'offline',
@@ -143,7 +143,7 @@ export class WebsocketService {
 						status: 'offline',
 						user: client.data.name,
 					});
-					return updatedUser;
+					console.log(`${client.data.name} is now offline`);
 				} catch (error) {
 					throw new WsException('Failed to update status of user');
 				}

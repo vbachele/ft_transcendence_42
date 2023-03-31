@@ -69,11 +69,21 @@ export class ChatGateway implements OnGatewayConnection {
 		@ConnectedSocket() client: AuthenticatedSocket,
 		@MessageBody('lobbyName') lobbyName: string
 	) {
-		console.log(`lobbyname ${lobbyName}`)
-		const lobby = await this.prismaLobbyService.fetchLobbyByName(lobbyName);
+		const users = lobbyName.split('+');
+		const firstLobbyName = users[0] + '+' + users[1];
+		const secondLobbyname = users[1] + '+' + users[0];
+
+		const firstLobby = await this.prismaLobbyService.fetchLobbyByName(firstLobbyName);
+		const secondLobby = await this.prismaLobbyService.fetchLobbyByName(secondLobbyname);
+		let lobby = null;
+		if (firstLobby)
+			lobby = firstLobby;
+		else if (secondLobby)
+			lobby = secondLobby;
+			console.log(`lobby = `, lobby);
 		return {
 			event: ServerChatEvents.Lobby,
-			data: {lobby: lobby},
+			data: {lobby},
 		}
 	}
 

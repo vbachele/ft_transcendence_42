@@ -16,7 +16,6 @@ function GameContextComponent(props: IGameContextComponentProps) {
 
 	useEffect(() => {
 		socket?.on(ServerGameEvents.GameFound, (data: any) => {
-			console.log(`game found = `, data);
 			GameDispatch({type: 'update_left_player', payload: data.players.leftPlayer as IUser});
 			GameDispatch({type: 'update_right_player', payload: data.players.rightPlayer as IUser});
 			GameDispatch({type: 'update_lobby', payload: data.lobbyId});

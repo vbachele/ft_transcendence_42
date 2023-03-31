@@ -63,11 +63,12 @@ async createDataBase42User(
   }
 
   async RedirectConnectingUser(
+    @Req() req: Request,
     @Res() res: Response,
     email: string | null | undefined
   ) {
-    if (!email) res.redirect(301, `http://localhost:5173/registration`);
-    else res.redirect(301, `http://localhost:5173/`);
+    if (!email) res.redirect(301, `http://e1r2p7.clusters.42paris.fr:5173/registration`);
+    else res.redirect(301, `http://e1r2p7.clusters.42paris.fr:5173/`);
   }
 
 /* CHECK FUNCTIONS */

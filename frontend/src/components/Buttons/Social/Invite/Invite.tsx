@@ -66,7 +66,7 @@ function Invite({user}: IProps) {
 				});
 			}
 		});
-		if (!exists || !isUserIn(friends, user.name) || user.status !== 'online') {
+		if (!exists || user.status !== 'online') {
 			openNotification('warning', `${user.name} can't be invited`);
 			return;
 		}

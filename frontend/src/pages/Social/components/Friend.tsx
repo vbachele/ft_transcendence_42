@@ -59,6 +59,7 @@ function Friend({friend, onBlock, onRemove}: IProps) {
 				<S.FriendOptions>
 					<Buttons.ViewProfile user={friend} />
 					{status === 'online' && <Buttons.Invite user={friend} />}
+					{/* <Buttons.Invite user={friend} /> */}
 					{status === 'ingame' && <Buttons.Spectate user={friend} />}
 					<Buttons.Message user={friend.name} />
 					<Buttons.RemoveFriend

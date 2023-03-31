@@ -81,7 +81,6 @@ function Game() {
 	useUpdateGameState(pongRef, setScore);
 
 	useEffect(() => {
-		console.log(`GAME LOBBY = `, lobby.id);
 		if (!lobby.id || !leftPlayer || !rightPlayer) return;
 		setTimeout(() => {
 			setShowIntro(false);

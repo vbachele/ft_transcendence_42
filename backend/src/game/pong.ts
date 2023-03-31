@@ -50,7 +50,7 @@ export class Pong {
 		left: AuthenticatedSocket | undefined;
 		right: AuthenticatedSocket | undefined;
 	} = {['left']: undefined, ['right']: undefined};
-	public timeLimit = 1.5 * 60 * 1000;
+	public timeLimit = 1 * 60 * 1000;
 	private timerRef: NodeJS.Timeout;
 
 	constructor(
@@ -64,14 +64,16 @@ export class Pong {
 
 	private timer() {
 		this.timerRef = setTimeout(() => {
-			this.timeLimit -= 1000;
-			this.dispatchToLobby(ServerGameEvents.Timer, {time: this.timeLimit});
-			if (this.timeLimit <= 0) {
+			if (this.timeLimit > 0) {
+				this.timeLimit -= 1000;
+				this.dispatchToLobby(ServerGameEvents.Timer, {time: this.timeLimit});
+			this.timer();
+			} else {
+
 				this.observeWinner().catch(console.error);
 				clearTimeout(this.timerRef);
 				return;
 			}
-			this.timer();
 		}, 1_000);
 	}
 
@@ -102,7 +104,7 @@ export class Pong {
 			});
 		} else {
 			this.dispatchToLobby(ServerGameEvents.GameResult, {
-				winner: 'draw', scores: this.score, players: this.players
+				winner: 'draw'
 			});
 		}
 		await this.prismaService.game.create({
@@ -115,9 +117,10 @@ export class Pong {
 				rightScore: this.score[1],
 			},
 		});
+		console.log(`FINISHED`)
 
-		this.updateUser(this.players['left']?.data.name!);
-		this.updateUser(this.players['right']?.data.name!);
+		await this.updateUser(this.players['left']?.data.name!);
+		await this.updateUser(this.players['right']?.data.name!);
 		await this.websocketService.updateStatus(this.players['left']!, 'online');
 		await this.websocketService.updateStatus(this.players['right']!, 'online');
 
@@ -141,7 +144,6 @@ export class Pong {
 				(parseFloat(ratio) + 1) *
 				(achievements / 13 + 1)
 		);
-
 		await this.prismaService.user.update({
 			where: {name: username},
 			data: {
@@ -231,11 +233,7 @@ export class Pong {
 					paddles.left.position.y + PADDLE_SIZE.y
 			) {
 				ball.position.x = paddles.left.position.x + PADDLE_SIZE.x + ball.radius;
-				this.ball.velocity.x = this.clamp(
-					-this.ball.velocity.x * BALL_ACCELERATION,
-					-800,
-					800
-				);
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -1400, 1400);
 			}
 		}
 		if (
@@ -248,12 +246,9 @@ export class Pong {
 				ball.position.y - ball.radius + delta <=
 					paddles.right.position.y + PADDLE_SIZE.y - delta
 			) {
+				console.log(`ball velocity = `, this.ball.velocity.x);
 				ball.position.x = paddles.right.position.x - ball.radius;
-				this.ball.velocity.x = this.clamp(
-					-this.ball.velocity.x * BALL_ACCELERATION,
-					-800,
-					800
-				);
+				this.ball.velocity.x = this.clamp(-this.ball.velocity.x * BALL_ACCELERATION, -1400, 1400);
 			}
 		}
 	}

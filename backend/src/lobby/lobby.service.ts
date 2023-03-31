@@ -53,9 +53,8 @@ export class LobbyService {
 		});
 	}
 
-	public getLobby(lobbyId: string): ALobby {
+	public getLobby(lobbyId: string): ALobby  | undefined{
 		const lobby = this.lobbies.get(lobbyId);
-		if (!lobby) throw new LobbyException(ErrorType.LobbyNotFound, lobbyId);
 		return lobby;
 	}
 
@@ -71,14 +70,16 @@ export class LobbyService {
 		return lobby;
 	}
 
-	public join(lobbyId: string, client: AuthenticatedSocket) {
+	public async join(lobbyId: string, client: AuthenticatedSocket) {
 		const lobby = this.getLobby(lobbyId);
+		if (!lobby) throw new LobbyException(ErrorType.LobbyNotFound)
 		lobby.addClient(client);
 		console.info(`Client [${client.data.name}] joined lobby [${lobbyId}]`);
 	}
 
-	public leave(lobbyId: string, client: AuthenticatedSocket) {
+	public async leave(lobbyId: string, client: AuthenticatedSocket) {
 		const lobby = this.getLobby(lobbyId);
+		if (!lobby) throw new LobbyException(ErrorType.LobbyNotFound)
 		lobby.removeClient(client);
 		console.info(`Client [${client.data.name}] left lobby [${lobbyId}]`);
 	}

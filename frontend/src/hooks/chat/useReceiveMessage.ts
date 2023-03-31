@@ -43,8 +43,7 @@ export function useReceiveMessage(activeLobby: ILobby | undefined) {
 				activeLobby?.id === body.message.lobbyId &&
 				!blockList?.find((blocked) => blocked === body.message.authorName)
 			) {
-				console.log(`block list = `, blockList);
-				console.log(`body.message.authorName = `, body.message.authorName);
+
 				setMessages((message) => [...message, body.message]);
 			}
 		});

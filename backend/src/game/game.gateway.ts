@@ -34,15 +34,16 @@ export class GameGateway implements OnGatewayDisconnect {
 		private readonly userService: UserService
 	) {}
 
-	handleDisconnect(client: AuthenticatedSocket) {
+	async handleDisconnect(client: AuthenticatedSocket) {
 		this.gameService.leaveLobby(client);
 		this.queue[GameMode.AgainstTheClock] = this.queue[
 			GameMode.AgainstTheClock
 		].filter((c) => c !== client);
 		this.queue[GameMode.ScoreLimit] = this.queue[GameMode.ScoreLimit].filter(
 			(c) => c !== client
-		);
-		console.log(`Client [${client.data.name}] canceled search`);
+			);
+			console.log(`Client [${client.data.name}] canceled search`);
+			await this.websocketService.updateStatus(client, 'online');
 	}
 
 	@SubscribeMessage(ClientGameEvents.Invite)
@@ -154,7 +155,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage(ClientGameEvents.CancelSearch)
-	onCancelSearch(@ConnectedSocket() client: AuthenticatedSocket) {
+	async onCancelSearch(@ConnectedSocket() client: AuthenticatedSocket) {
 		this.queue[GameMode.AgainstTheClock] = this.queue[
 			GameMode.AgainstTheClock
 		].filter((c) => c !== client);
@@ -162,6 +163,7 @@ export class GameGateway implements OnGatewayDisconnect {
 			(c) => c !== client
 		);
 		console.log(`Client [${client.data.name}] canceled search`);
+		await this.websocketService.updateStatus(client, 'online');
 	}
 
 	@SubscribeMessage(ClientGameEvents.CancelInvitation)
@@ -172,6 +174,7 @@ export class GameGateway implements OnGatewayDisconnect {
 	) {
 		console.log(`Client [${client.data.name}] canceled invitation`);
 		this.gameService.cancelInvitation(client, lobbyId, invitedClientName);
+		await this.websocketService.updateStatus(client, 'online');
 	}
 
 	@SubscribeMessage(ClientGameEvents.LeaveGame)

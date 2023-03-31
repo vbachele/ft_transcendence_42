@@ -53,10 +53,6 @@ export const ChatReducer = (
 	state: IChatContextState,
 	action: IChatContextActions
 ) => {
-	console.log(
-		`Chat context updated - Action: ${action.type} - Payload: `,
-		action.payload
-	);
 
 	switch (action.type) {
 		case 'update_lobby_list':
