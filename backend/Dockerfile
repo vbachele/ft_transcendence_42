@@ -39,4 +39,4 @@ RUN npx prisma generate
 
 #USER node
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:prod"]

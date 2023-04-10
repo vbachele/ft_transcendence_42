@@ -5,7 +5,7 @@ services:
     container_name: nginx
     image: nginx
     ports:
-      - "8080:80"
+      - "443:443"
     networks:
       - ft_transcendence
     volumes:
@@ -21,7 +21,7 @@ services:
     build:
       context: ./backend
       target: production 
-    command: node dist/main
+        #command: node dist/main
         #volumes:
       #- ./backend:/usr/src/app
       #- /usr/src/app/node_modules
