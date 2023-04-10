@@ -1,6 +1,6 @@
 # ft_transcendence_42
 
-# project validated - 100 % with only outstanding
+# project validated - 100 %
 ft_transcendence from 42 school is the last project of the common core
 
 ## Documentation
