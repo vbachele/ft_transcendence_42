@@ -1,42 +1,60 @@
 version: "3.8"
 
 services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "8080:80"
+    networks:
+      - ft_transcendence
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - frontend_dist:/usr/share/nginx/html
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+
   backend:
     container_name: backend
     build:
       context: ./backend
-      target: development
-    volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      target: production 
+    command: node dist/main
+        #volumes:
+      #- ./backend:/usr/src/app
+      #- /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-    command: npm run start:dev
+        #command: npm run start
     env_file:
       - .env
     networks:
       - ft_transcendence
     depends_on:
       - postgres
+    stdin_open: true
     restart: always
 
   frontend:
     container_name: frontend
     build:
       context: ./frontend
-      target: development
+      target: production 
     volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - ${FRONTEND_PORT}:${FRONTEND_PORT}
-    command: npm run dev
+      - frontend_dist:/usr/src/app/dist
+        #- /usr/src/app/node_modules
+        #ports:
+        #- ${FRONTEND_PORT}:${FRONTEND_PORT}
+        #command: npm run
     env_file:
       - .env
     networks:
       - ft_transcendence
     depends_on:
       - backend
+    stdin_open: true
     restart: always
 
   postgres:
@@ -56,7 +74,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - "8080:8080"
+      - "6080:6080"
     networks:
       - ft_transcendence
 
@@ -66,8 +84,4 @@ networks:
 
 volumes:
   postgres:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: ${POSTGRES_DIR}
+  frontend_dist:

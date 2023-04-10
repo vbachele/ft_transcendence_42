@@ -35,6 +35,8 @@ COPY --chown=node:node . .
 
 COPY --chown=node:node --from=development /usr/src/app/dist ./dist
 
-USER node
+RUN npx prisma generate
+
+#USER node
 
 CMD ["node", "dist/main"]
