@@ -17,4 +17,4 @@ You should agree to have a harmonized design:
 - SVG files for your images as this you can change the color and the size really easily.
 - For your width, height etc... take always aa multiple of 8 (this is a rule from real designer).
 
-## How to connect to google API<a name="googleAPI"></a>
+## How to connect to google API <a id="googleAPI"></a>
