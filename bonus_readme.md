@@ -3,7 +3,7 @@
 ## Summary
 
 [1. Figma (Our design)](#figma)  
-[2. Connection with google Oauth API](#googleAPI)
+[2. Connection with google Oauth API](#google)
 
 ## OUR FIGMA <a name="figma"></a>
 
@@ -17,4 +17,4 @@ You should agree to have a harmonized design:
 - SVG files for your images as this you can change the color and the size really easily.
 - For your width, height etc... take always aa multiple of 8 (this is a rule from real designer).
 
-## How to connect to google API <a name="googleAPI"></a>
+## How to connect to google API <a name="google"></a>
