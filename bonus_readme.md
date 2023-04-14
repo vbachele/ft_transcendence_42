@@ -2,7 +2,7 @@
 
 ## Summary
 
-[1. Figma (Our design)](#figma)
+[1. Figma (Our design)](#figma) 
 [2. Connection with google Oauth API](#googleAPI)
 
 ## OUR FIGMA {#figma}
