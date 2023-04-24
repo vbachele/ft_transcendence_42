@@ -7,7 +7,7 @@
 
 ## OUR FIGMA <a name="figma"></a>
 
-You can retreive our design for free in our figma, if you can follow the advices below ! 
+You can retreive our design for free in [our figma page](https://www.figma.com/community/file/1232336481479291339), if you can follow the advices below ! 
 
 ### Some advices
 You should agree to have a harmonized design: 
