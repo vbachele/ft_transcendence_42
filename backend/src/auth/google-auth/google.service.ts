@@ -79,7 +79,7 @@ async createDataBaseUserFromGoogle(
     const oauth2Client = new google.auth.OAuth2(
       '28591145240-gpha0h1g8rkbldlvvc5dfc59gkaf4n7s.apps.googleusercontent.com',
       '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',
-      'http://localhost:5173/api/auth/google/redirect'
+      'https://versus-transcendence.com/auth/google/redirect'
     );
 
     // generate a url that asks permissions for Blogger and Google Calendar scopes
@@ -93,6 +93,7 @@ async createDataBaseUserFromGoogle(
       access_type: 'offline',
       scope: scopes
     });
+    console.log("URL is", url);
     return oauth2Client;
   }
 

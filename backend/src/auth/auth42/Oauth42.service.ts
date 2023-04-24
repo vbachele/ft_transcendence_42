@@ -15,7 +15,8 @@ export class Oauth42Service {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `grant_type=authorization_code&client_id=${process.env.API42_ID}&client_secret=${process.env.API42_SECRET}&code=${req}&redirect_uri=${process.env.API42_URI}`,
       });
-      const data = await response.json();      
+      const data = await response.json();     
+     console.log("MY USER DATA IS :", data); 
       if (!data)
       {
         throw new HttpException(

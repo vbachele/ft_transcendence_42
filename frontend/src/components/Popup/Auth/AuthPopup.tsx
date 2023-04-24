@@ -39,12 +39,12 @@ function AuthPopup(props: IProps) {
         </Text>
 		<img src={Logo42} width={"20px"} height={"20px"} style={{ filter: "invert(100%)" }} />
       </PopupButton>
-      {/* <PopupButton className="Google" border="1px solid #e5e7eb"  onClick={OauthGoogle}>
+      <PopupButton className="Google" border="1px solid #e5e7eb"  onClick={OauthGoogle}>
         	<Text weight="500" fontSize="clamp(0.9rem, 1.5vw, 1.1rem)" style={{ marginRight: "8px" }}>
 			With
           </Text>
 		  <img src={GoogleLogo} width={"20px"} height={"20px"}/>
-      </PopupButton> */}
+      </PopupButton> 
     </Popup>
   )
 }

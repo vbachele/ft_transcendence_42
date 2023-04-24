@@ -18,7 +18,7 @@ export class AuthController {
   /***  Create the user in database from the page registration ***/
   @Get("getuserbytoken")
   async getUserByToken(@Req() req: Request) {
-    return await this.authService.getUserByToken(req);
+	  return await this.authService.getUserByToken(req);
   }
   @Post("Oauth")
   async userOauthCreationInDataBase(@Req() req: Request, @Res() res: Response, @Body() UserDto: UserDto) {
@@ -28,7 +28,7 @@ export class AuthController {
   /***  After the user said yes to connect to 42 API, we attribute the token and we check if he exists in the database ***/
   @Get("callback")
   async getToken(@Req() req: Request, @Res() res: Response) {
-    const codeFromUrl = req.query.code as string;
+	  const codeFromUrl = req.query.code as string;
     const token = await this.Oauth42.accessToken(codeFromUrl);
     const user42infos = await this.Oauth42.access42UserInformation(
       token.access_token

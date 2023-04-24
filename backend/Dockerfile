@@ -14,6 +14,8 @@ COPY --chown=node:node .env .env
 
 RUN npx prisma generate
 
+ENV NODE_OPTIONS=--max_old_space_size=2048
+
 RUN npm run build
 
 EXPOSE 3000
