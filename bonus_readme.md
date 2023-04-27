@@ -2,7 +2,7 @@
 
 ## Summary
 
-[1. Figma (Our design)](https://www.figma.com/community/file/1232336481479291339)
+[1. Figma (Our design)](https://www.figma.com/community/file/1232336481479291339)  
 [2. Connection with google Oauth API](#google)
 
 ## OUR FIGMA <a name="figma"></a>
