@@ -7,14 +7,14 @@ Our website: [https://versus-transcendence.com/](https://versus-transcendence.co
 
 ## SUMMARY
 
-1. Our website. 
-  a. [Login](#Login). 
-  b. [Homepage](#Homepage).  
-  c. [Settings](#Settings). 
-  d. [Chat](#Chat). 
-  e. [Game](#Game). 
-  f. [Friends](#Friends). 
-  e. Leaderboard(#Leaderboard). 
+1. Our website.  
+  a. [Login](#Login).  
+  b. [Homepage](#Homepage).   
+  c. [Settings](#Settings).  
+  d. [Chat](#Chat).  
+  e. [Game](#Game).  
+  f. [Friends](#Friends).  
+  e. [Leaderboard](#Leaderboard).  
 3. [HOW DID WE PLANIFY THE PROJECT](project_planification.md)
 
 [BONUS FILE](bonus_readme.md)
