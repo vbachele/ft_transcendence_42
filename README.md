@@ -24,6 +24,8 @@ Our website: [https://versus-transcendence.com/](https://versus-transcendence.co
 
 ### The Website
 #### Login
+In our project you can login with google but also with you google account (see how to do it in our [bonus file](bonus_readme.md)
+![homepage_Image](https://cdn.discordapp.com/attachments/1101125011449839687/1102981801380691978/Capture_decran_2023-05-02_a_17.31.44.png)
 #### Homepage
 #### Settings
 #### Chat
