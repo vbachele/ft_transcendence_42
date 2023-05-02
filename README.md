@@ -1,7 +1,7 @@
 # ft_transcendence_42
 
 # project validated - 100 %
-ft_transcendence from 42 school is the last project of the common core. Go on our project on online transcendance [website](https://versus-transcendence.com/)
+ft_transcendence from 42 school is the last project of the common core. Go on our project on online transcendance [website](https://versus-transcendence.com/) (all is working except websocket[game and chat])
 
 ## SUMMARY
 
