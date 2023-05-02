@@ -7,15 +7,25 @@ Our website: [https://versus-transcendence.com/](https://versus-transcendence.co
 
 ## SUMMARY
 
-1. [HOW DID WE PLANIFY THE PROJECT](project_planification.md)
-2. DOCKER
-3. FRONTEND
-4. BACKEND
+1. Our website
+  a. Login 
+  b. homepage 
+  c. Settings
+  d. Chat
+  e. Game
+  f. Friends
+  e. Leaderboard
+3. [HOW DID WE PLANIFY THE PROJECT](project_planification.md)
 
-[Link BONUS FILE](bonus_readme.md)
+[BONUS FILE](bonus_readme.md)
 - Our figma (design with components) free of use for you
 - How to do the authentication with google API.
 - How to test in 42 on multiple computers at the same time
-- How to set up correctly your directories and files.
 
-
+### The Website
+#### Login
+#### Homepage
+#### Settings
+#### Chat
+#### Game
+#### Friends 
