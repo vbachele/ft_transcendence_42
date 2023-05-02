@@ -24,10 +24,18 @@ Our website: [https://versus-transcendence.com/](https://versus-transcendence.co
 
 ### The Website
 #### Login
-In our project you can login with google but also with you google account (see how to do it in our [bonus file](bonus_readme.md)
-![homepage_Image](https://cdn.discordapp.com/attachments/1101125011449839687/1102981801380691978/Capture_decran_2023-05-02_a_17.31.44.png)
+You can login with 42API (Go to 42 API website to check more how to do it) but also with you google account (see how to do it in our [bonus file](bonus_readme.md))
+![homepage_Image](https://cdn.discordapp.com/attachments/1101125011449839687/1102981801380691978/Capture_decran_2023-05-02_a_17.31.44.png).  
+
 #### Homepage
+In our Homepage you can go directly to the other part of the website or logout. If you logout, your cookies will be cleaned. 
+
 #### Settings
+In the settings page, you can :  
+- Change your pseudo by a new one.  
+- Enable the 2FA.  
+- Modify your profile picture.  
+
 #### Chat
 #### Game
 #### Friends
