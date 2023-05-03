@@ -39,6 +39,7 @@ In the settings page, you can :
 ![Settings_Image](https://media.discordapp.net/attachments/1101125011449839687/1103331876497788998/Capture_decran_2023-05-03_a_16.45.57.png?width=2048&height=1138)
 
 #### Chat
+![Chat_Image](https://media.discordapp.net/attachments/1101125011449839687/1103334205196337284/Capture_decran_2023-05-03_a_16.56.03.png?width=2038&height=1138)
 #### Game
 #### Friends
 ![Friends_Page](https://media.discordapp.net/attachments/1101125011449839687/1103333824693289101/Capture_decran_2023-05-03_a_16.54.30.png?width=2048&height=1138)
