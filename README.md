@@ -41,6 +41,11 @@ In the settings page, you can :
 #### Chat
 #### Game
 #### Friends
+![Friends_Page](https://media.discordapp.net/attachments/1101125011449839687/1103333824693289101/Capture_decran_2023-05-03_a_16.54.30.png?width=2048&height=1138)
 #### Leaderboard
 On our leaderboard, you can check the ranking of all the player and filter by name and by coalition
 ![Leaderboard_Images](https://media.discordapp.net/attachments/1101125011449839687/1103332089031561257/Capture_decran_2023-05-03_a_16.47.36.png?width=2052&height=1138)
+#### Carreer (Profile page)
+On this page you can check your profile or the one of another player + the achievements
+![Carreer Page](https://media.discordapp.net/attachments/1101125011449839687/1103332889086673017/Capture_decran_2023-05-03_a_16.50.42.png?width=2038&height=1138) 
+![Carreer_Page2](https://cdn.discordapp.com/attachments/1101125011449839687/1103333489002168383/Capture_decran_2023-05-03_a_16.53.07.png)
