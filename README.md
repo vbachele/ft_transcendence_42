@@ -36,7 +36,11 @@ In the settings page, you can :
 - Enable the 2FA.  
 - Modify your profile picture.  
 
+![Settings_Image](https://media.discordapp.net/attachments/1101125011449839687/1103331876497788998/Capture_decran_2023-05-03_a_16.45.57.png?width=2048&height=1138)
+
 #### Chat
 #### Game
 #### Friends
 #### Leaderboard
+On our leaderboard, you can check the ranking of all the player and filter by name and by coalition
+![Leaderboard_Images](https://media.discordapp.net/attachments/1101125011449839687/1103332089031561257/Capture_decran_2023-05-03_a_16.47.36.png?width=2052&height=1138)
