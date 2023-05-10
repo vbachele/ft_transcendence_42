@@ -29,6 +29,7 @@ You can login with 42API (Go to 42 API website to check more how to do it) but a
 
 #### Homepage
 In our Homepage you can go directly to the other part of the website or logout. If you logout, your cookies will be cleaned. 
+![Homepagelogged](https://cdn.discordapp.com/attachments/1101125011449839687/1105831608847704074/Capture_decran_2023-05-10_a_14.19.19.png)
 
 #### Settings
 In the settings page, you can :  
