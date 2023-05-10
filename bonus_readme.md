@@ -4,6 +4,7 @@
 
 [1. Figma (Our design)](https://www.figma.com/community/file/1232336481479291339)  
 [2. Connection with google Oauth API](#google)
+[3. How to connect and test your website on multiple computers at 42](#connect)
 
 ## OUR FIGMA <a name="figma"></a>
 
@@ -68,3 +69,13 @@ async getUserFromGoogle(tokens: any) {
     return oauth2Client;
   }
 ```
+
+## How to connect and test your website on multiple computers at 42 <a name="connect"></a>
+- To connect and allow people to go on your computer at 42 you need to do the following steps:
+1. Change your URI on the 42 application (In 42 website, in the settings part) by putting the computer of 42 instead of redirecting on localhost. exemple:
+Change your URI "http://localhost:5173/api/auth/callback" by "http://E1r2P7:5173/api/auth/callback"(depending on your current location in 42)
+2. Change your redirection etc.. in your program and .env file to replace the "localhost" by for exemple E1r2P7
+3. Then it should work and you will be able to connect to your application on every computer at 42 at your adress (for exemple) http://E1r2P7:5173/ 
+
+
+
