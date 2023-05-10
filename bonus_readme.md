@@ -3,7 +3,7 @@
 ## Summary
 
 [1. Figma (Our design)](https://www.figma.com/community/file/1232336481479291339)  
-[2. Connection with google Oauth API](#google)
+[2. Connection with google Oauth API](#google). 
 [3. How to connect and test your website on multiple computers at 42](#connect)
 
 ## OUR FIGMA <a name="figma"></a>
